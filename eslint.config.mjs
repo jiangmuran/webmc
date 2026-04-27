@@ -54,6 +54,15 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-misused-promises': 'off',
+      // We deliberately use indexed for-loops in hot paths — for-of on
+      // arrays + typed arrays allocates an iterator on each call. Don't
+      // let the linter rewrite our perf-tuned loops.
+      '@typescript-eslint/prefer-for-of': 'off',
+      // Type-vs-interface stylistic; we use both interchangeably.
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      // Generic-on-constructor stylistic — auto-fix often breaks code
+      // that depends on the variable's declared type.
+      '@typescript-eslint/consistent-generic-constructors': 'off',
     },
   },
   {

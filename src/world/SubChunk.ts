@@ -105,11 +105,7 @@ export class SubChunk {
   // decode). Bypasses the per-cell sec.set() loop which paid palette
   // lookup + bit-pack write for every of 4096 cells. Direct assignment
   // is microseconds. Counts non-air for the inventory-stat tracking.
-  static fromRaw(
-    palette: BlockState[],
-    bits: BitsPerIndex,
-    indices: Uint32Array | null,
-  ): SubChunk {
+  static fromRaw(palette: BlockState[], bits: BitsPerIndex, indices: Uint32Array | null): SubChunk {
     const sc = new SubChunk(AIR);
     sc._palette = new Palette(palette);
     sc._bits = bits;

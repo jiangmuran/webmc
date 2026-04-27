@@ -25,10 +25,7 @@ export type PopulateFn = (chunk: Chunk) => Promise<void> | void;
 // Stable comparator hoisted out of rebuildPending — was a fresh
 // arrow `(a, b) => a.priority - b.priority` allocated each chunk-
 // boundary cross. Pure ordering of priority ascending.
-function comparePendingPriority(
-  a: { priority: number },
-  b: { priority: number },
-): number {
+function comparePendingPriority(a: { priority: number }, b: { priority: number }): number {
   return a.priority - b.priority;
 }
 

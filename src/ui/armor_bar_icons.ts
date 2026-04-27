@@ -4,7 +4,9 @@ export const ICONS = 10;
 // Reused result. SurvivalHud.render fires this every frame when
 // armor is visible; tests + caller read the array synchronously and
 // don't keep the reference.
-const ARMOR_ICONS_SCRATCH: ('full' | 'half' | 'empty')[] = new Array<'full' | 'half' | 'empty'>(ICONS).fill('empty');
+const ARMOR_ICONS_SCRATCH: ('full' | 'half' | 'empty')[] = new Array<'full' | 'half' | 'empty'>(
+  ICONS,
+).fill('empty');
 
 export function armorIcons(points: number): ('full' | 'half' | 'empty')[] {
   const clamped = Math.max(0, Math.min(MAX_ARMOR, Math.floor(points)));

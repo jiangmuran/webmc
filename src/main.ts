@@ -61,7 +61,11 @@ import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/b
 import { tickGrassBlock } from './blocks/grass_spread';
 import { absorbWater } from './blocks/sponge';
 import { shouldDecay as leafShouldDecay, MAX_DISTANCE as LEAF_MAX_DIST } from './blocks/leaf_decay';
-import { shouldFreezeWater, shouldMeltIce, FREEZE_RANDOM_TICK_CHANCE } from './blocks/ice_form_melt';
+import {
+  shouldFreezeWater,
+  shouldMeltIce,
+  FREEZE_RANDOM_TICK_CHANCE,
+} from './blocks/ice_form_melt';
 import { rollMobXpFor } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
@@ -1263,10 +1267,7 @@ const playerState = new PlayerState({
     // Creative + spectator are also "keepInventory" modes per vanilla:
     // /kill or void death in creative used to wipe a builder's hotbar.
     const keepOnDeath =
-      mobDamageMultiplier === 0 ||
-      gameRules.keepInventory ||
-      isCreative ||
-      isSpectator;
+      mobDamageMultiplier === 0 || gameRules.keepInventory || isCreative || isSpectator;
     if (keepOnDeath) {
       const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
       const main = inventory.main.map((s) => (s ? { ...s } : null));
@@ -1573,7 +1574,9 @@ const chestStoragesByPos = new Map<number, (ItemStack | null)[]>();
 // 22 bits x (±2M) + 22 bits z (±2M) + 9 bits y (0..511). Fits inside
 // safe-int. Was a template literal per chest access.
 function chestKey(x: number, y: number, z: number): number {
-  return ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff);
+  return (
+    ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff)
+  );
 }
 function getChestStorage(blockName: string, x: number, y: number, z: number): (ItemStack | null)[] {
   if (blockName === 'webmc:ender_chest') return enderChestStorage;
@@ -1878,13 +1881,14 @@ const HOSTILE_SPAWN_CHOICES: readonly ('zombie' | 'skeleton' | 'creeper' | 'spid
   'creeper',
   'spider',
 ];
-const PASSIVE_SPAWN_CHOICES: readonly (
-  | 'pig'
-  | 'cow'
-  | 'sheep'
-  | 'chicken'
-  | 'rabbit'
-)[] = ['pig', 'cow', 'sheep', 'sheep', 'chicken', 'rabbit'];
+const PASSIVE_SPAWN_CHOICES: readonly ('pig' | 'cow' | 'sheep' | 'chicken' | 'rabbit')[] = [
+  'pig',
+  'cow',
+  'sheep',
+  'sheep',
+  'chicken',
+  'rabbit',
+];
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -2581,7 +2585,10 @@ const breakTicksCtxScratch = {
 // fires both per frame; was building two fresh {nowMs, trigger}
 // literals every frame.
 const shouldSaveTimerArg: { nowMs: number; trigger: 'timer' } = { nowMs: 0, trigger: 'timer' };
-const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = { nowMs: 0, trigger: 'threshold' };
+const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = {
+  nowMs: 0,
+  trigger: 'threshold',
+};
 // Reused mobWorld.spawn position scratch. spawn() copies the input
 // via spread, so passing a shared scratch is safe and avoids fresh
 // {x,y,z} literals per spawn (egg hatch, /summon, natural spawning,
@@ -2765,7 +2772,11 @@ const knockbackQueryScratch: {
 const frameLookTmp = new THREE.Vector3();
 // Reused per-frame fp.update options object — was a fresh object
 // literal per frame, ~60 throwaway objects/sec for nothing.
-const fpUpdateOpts: { isSolid: typeof isSolid; isFluid: typeof isFluid; isClimbable: typeof isClimbable } = {
+const fpUpdateOpts: {
+  isSolid: typeof isSolid;
+  isFluid: typeof isFluid;
+  isClimbable: typeof isClimbable;
+} = {
   isSolid,
   isFluid,
   isClimbable,
@@ -2904,7 +2915,9 @@ const leafBfsStackD: number[] = [];
 // x and z get 22 bits each (±2M). Same encoding the chunk renderer
 // uses elsewhere — fits in Number.MAX_SAFE_INTEGER.
 function leafBfsKey(x: number, y: number, z: number): number {
-  return ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff);
+  return (
+    ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff)
+  );
 }
 // Reused per-frame boss-bar update payload. Was a fresh object
 // literal per frame any time a boss/custom-boss-bar was visible.
@@ -2931,7 +2944,10 @@ const bossBarPayload: {
 // time the player had a leashed mob (walking your wolf around).
 const leashAnchorScratch = { x: 0, y: 0, z: 0 };
 const leashBrokenScratch: number[] = [];
-const leashCtxScratch: { anchorPos: { x: number; y: number; z: number }; mobPos: { x: number; y: number; z: number } } = {
+const leashCtxScratch: {
+  anchorPos: { x: number; y: number; z: number };
+  mobPos: { x: number; y: number; z: number };
+} = {
   anchorPos: leashAnchorScratch,
   mobPos: { x: 0, y: 0, z: 0 },
 };
@@ -3232,7 +3248,14 @@ const interaction = new InteractionController(
         const mMaxY = m.position.y + m.def.aabb.halfY;
         const mMinZ = m.position.z - m.def.aabb.halfZ;
         const mMaxZ = m.position.z + m.def.aabb.halfZ;
-        if (mMaxX > minX && mMinX < maxX && mMaxY > minY && mMinY < maxY && mMaxZ > minZ && mMinZ < maxZ)
+        if (
+          mMaxX > minX &&
+          mMinX < maxX &&
+          mMaxY > minY &&
+          mMinY < maxY &&
+          mMaxZ > minZ &&
+          mMinZ < maxZ
+        )
           return true;
       }
       return false;
@@ -3606,10 +3629,7 @@ const interaction = new InteractionController(
         return true;
       }
       // Trident with Riptide (active when player is in water OR rain): propel forward.
-      if (
-        heldName === 'trident' &&
-        (fp.inFluid === 'water' || isRain || isThunder)
-      ) {
+      if (heldName === 'trident' && (fp.inFluid === 'water' || isRain || isThunder)) {
         const look = fp.lookVector(eventLookTmp);
         const power = 18;
         fp.velocity.x += look.x * power;
@@ -3871,8 +3891,7 @@ const interaction = new InteractionController(
         if (fireId !== undefined) {
           world.set(bx, by + 1, bz, makeState(fireId, 0));
           touchWorldEdit(bx, by + 1, bz, fireId);
-          if (fcId !== undefined && (vitalsActive))
-            consumeInventoryItem(fcId, 1);
+          if (fcId !== undefined && vitalsActive) consumeInventoryItem(fcId, 1);
           sfx.play('click');
           hand.swing();
           subtitles.push('Ignited');
@@ -4159,8 +4178,7 @@ const interaction = new InteractionController(
           }
           if (spawned > 0) {
             const itemId = itemRegistry.byName('webmc:bone_meal');
-            if (itemId !== undefined && (vitalsActive))
-              consumeInventoryItem(itemId, 1);
+            if (itemId !== undefined && vitalsActive) consumeInventoryItem(itemId, 1);
             for (let i = 0; i < 12; i++)
               blockParticles.emitPlace(
                 bx + (Math.random() - 0.5) * 4,
@@ -4356,7 +4374,11 @@ const interaction = new InteractionController(
             fp.position.x + (ix - fp.position.x) * t,
             fp.position.y + (iy - fp.position.y) * t,
             fp.position.z + (iz - fp.position.z) * t,
-            heldName === 'snowball' ? [240, 250, 255] : heldName === 'egg' ? [240, 220, 180] : [60, 200, 180],
+            heldName === 'snowball'
+              ? [240, 250, 255]
+              : heldName === 'egg'
+                ? [240, 220, 180]
+                : [60, 200, 180],
           );
         }
         if (vitalsActive) {
@@ -4725,8 +4747,7 @@ canvas.addEventListener('mousedown', (e) => {
           saddledMobs.add(aimedMob.id);
           mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
           const sId = itemRegistry.byName('webmc:saddle');
-          if (sId !== undefined && (vitalsActive))
-            consumeInventoryItem(sId, 1);
+          if (sId !== undefined && vitalsActive) consumeInventoryItem(sId, 1);
           chatInput.addLine(`Saddled ${kind}`, '#80ff80');
           hand.swing();
           return;
@@ -4888,11 +4909,10 @@ canvas.addEventListener('mousedown', (e) => {
     // Vanilla creative: left-click insta-kills any mob (any weapon, any
     // damage). Without the override, creative players had to grind down
     // a wither's 600 HP one normal hit at a time.
-    const baseDmg =
-      isCreative
-        ? 9999
-        : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
-          maceBonus;
+    const baseDmg = isCreative
+      ? 9999
+      : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
+        maceBonus;
     if (critMult > 1 && !isCreative) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
@@ -7481,7 +7501,11 @@ const applyMeshResponse = (response: MesherResponse): void => {
 };
 // Stable per-frame pickup callbacks for droppedItems.tick + xpOrbs
 // .tick. Were inline arrow closures allocated per frame.
-const droppedItemPickupCallback = (out: { itemId: number; count: number; damage?: number }): number => {
+const droppedItemPickupCallback = (out: {
+  itemId: number;
+  count: number;
+  damage?: number;
+}): number => {
   // Preserve damage on pickup. Was hard-coded to 0, so dropping a
   // 50% durability tool and walking back over it healed it for free.
   pickupAddArg.itemId = out.itemId;
@@ -7674,6 +7698,9 @@ function snapshotVitals(): PersistedVitals {
   };
 }
 
+// Session save counter shown in the HUD as `save{N}`. e2e tests poll
+// for this string to confirm persistence is wired.
+let sessionSaveCount = 0;
 async function savePlayerNow(): Promise<void> {
   if (!worldMeta) return;
   await persistDB.putPlayer({
@@ -7687,6 +7714,7 @@ async function savePlayerNow(): Promise<void> {
     inventory: snapshotInventory(),
     vitals: snapshotVitals(),
   });
+  sessionSaveCount++;
 }
 
 let lastPlayerSaveAt = performance.now();
@@ -8190,131 +8218,131 @@ const MOB_DROP_TABLES: Record<
   readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
 > = {
   zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    skeleton: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    creeper: [{ name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] }],
-    spider: [
-      { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
-      { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
-    ],
-    pig: [{ name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] }],
-    cow: [
-      { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    sheep: [
-      { name: 'wool', min: 1, max: 1, color: [240, 240, 240] },
-      // Vanilla also drops 1-2 raw_mutton on kill — was missing.
-      { name: 'raw_mutton', min: 1, max: 2, color: [180, 90, 90] },
-    ],
-    chicken: [
-      { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
-      { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
-    ],
-    wolf: [],
-    enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
-    ghast: [
-      { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
-      { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
-    ],
-    blaze: [{ name: 'blaze_rod', min: 0, max: 1, color: [240, 180, 40] }],
-    piglin: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
-    ],
-    wither_skeleton: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
-    ],
-    rabbit: [
-      // 'rabbit' was the cooked-meat item id — drops should use the
-      // raw form (raw_rabbit). Other passive drops (raw_beef etc) all
-      // use the raw_* convention, so this was the lone outlier.
-      { name: 'raw_rabbit', min: 0, max: 1, color: [200, 160, 130] },
-      { name: 'rabbit_hide', min: 0, max: 1, color: [180, 140, 110] },
-      // Vanilla 10% drop chance for rabbit_foot — needed for leaping
-      // potion brewing (M12) but already a registered item, just was
-      // missing from the drop table.
-      { name: 'rabbit_foot', min: 0, max: 1, color: [220, 180, 150] },
-    ],
-    fox: [],
-    horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
-    bee: [],
-    cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
-    parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
-    witch: [
-      { name: 'glass_bottle', min: 0, max: 2, color: [220, 240, 250] },
-      { name: 'redstone', min: 0, max: 2, color: [200, 30, 30] },
-      { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
-    ],
-    husk: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    drowned: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'copper_ingot', min: 0, max: 1, color: [180, 100, 70] },
-    ],
-    stray: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    bogged: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    breeze: [
-      { name: 'wind_charge', min: 0, max: 2, color: [200, 220, 255] },
-      { name: 'breeze_rod', min: 0, max: 1, color: [180, 220, 255] },
-    ],
-    armadillo: [{ name: 'armadillo_scute', min: 0, max: 1, color: [180, 140, 110] }],
-    sniffer: [],
-    dolphin: [{ name: 'cod', min: 0, max: 1, color: [196, 160, 106] }],
-    cod: [{ name: 'cod', min: 1, max: 1, color: [196, 160, 106] }],
-    salmon: [{ name: 'salmon', min: 1, max: 1, color: [208, 106, 74] }],
-    pufferfish: [{ name: 'pufferfish', min: 1, max: 1, color: [255, 215, 70] }],
-    tropical_fish: [{ name: 'tropical_fish', min: 1, max: 1, color: [255, 128, 64] }],
-    squid: [{ name: 'ink_sac', min: 1, max: 3, color: [25, 25, 25] }],
-    glow_squid: [{ name: 'glow_ink_sac', min: 1, max: 3, color: [80, 230, 220] }],
-    magma_cube: [{ name: 'magma_cream', min: 0, max: 1, color: [220, 90, 50] }],
-    slime: [{ name: 'slime_ball', min: 0, max: 2, color: [120, 220, 100] }],
-    silverfish: [],
-    cave_spider: [
-      { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
-      { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
-    ],
-    phantom: [{ name: 'phantom_membrane', min: 0, max: 1, color: [200, 180, 220] }],
-    mooshroom: [
-      { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    panda: [{ name: 'bamboo', min: 0, max: 2, color: [148, 192, 90] }],
-    villager: [],
-    zombie_villager: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    pillager: [
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-      { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
-    ],
-    vindicator: [{ name: 'emerald', min: 0, max: 1, color: [80, 220, 120] }],
-    evoker: [
-      { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
-      { name: 'totem_of_undying', min: 1, max: 1, color: [220, 200, 80] },
-    ],
-    iron_golem: [
-      { name: 'poppy', min: 0, max: 2, color: [220, 30, 30] },
-      { name: 'iron_ingot', min: 3, max: 5, color: [220, 220, 220] },
-    ],
-    snow_golem: [{ name: 'snowball', min: 0, max: 15, color: [240, 250, 255] }],
-    zoglin: [],
-    hoglin: [
-      { name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    strider: [{ name: 'string', min: 2, max: 5, color: [230, 230, 230] }],
-    piglin_brute: [{ name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] }],
-    zombified_piglin: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
-    ],
+  skeleton: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  creeper: [{ name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] }],
+  spider: [
+    { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
+    { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
+  ],
+  pig: [{ name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] }],
+  cow: [
+    { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  sheep: [
+    { name: 'wool', min: 1, max: 1, color: [240, 240, 240] },
+    // Vanilla also drops 1-2 raw_mutton on kill — was missing.
+    { name: 'raw_mutton', min: 1, max: 2, color: [180, 90, 90] },
+  ],
+  chicken: [
+    { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
+    { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
+  ],
+  wolf: [],
+  enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
+  ghast: [
+    { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
+    { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
+  ],
+  blaze: [{ name: 'blaze_rod', min: 0, max: 1, color: [240, 180, 40] }],
+  piglin: [
+    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
+    { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
+  ],
+  wither_skeleton: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
+  ],
+  rabbit: [
+    // 'rabbit' was the cooked-meat item id — drops should use the
+    // raw form (raw_rabbit). Other passive drops (raw_beef etc) all
+    // use the raw_* convention, so this was the lone outlier.
+    { name: 'raw_rabbit', min: 0, max: 1, color: [200, 160, 130] },
+    { name: 'rabbit_hide', min: 0, max: 1, color: [180, 140, 110] },
+    // Vanilla 10% drop chance for rabbit_foot — needed for leaping
+    // potion brewing (M12) but already a registered item, just was
+    // missing from the drop table.
+    { name: 'rabbit_foot', min: 0, max: 1, color: [220, 180, 150] },
+  ],
+  fox: [],
+  horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  bee: [],
+  cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
+  parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
+  witch: [
+    { name: 'glass_bottle', min: 0, max: 2, color: [220, 240, 250] },
+    { name: 'redstone', min: 0, max: 2, color: [200, 30, 30] },
+    { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
+  ],
+  husk: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+  drowned: [
+    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
+    { name: 'copper_ingot', min: 0, max: 1, color: [180, 100, 70] },
+  ],
+  stray: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  bogged: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  breeze: [
+    { name: 'wind_charge', min: 0, max: 2, color: [200, 220, 255] },
+    { name: 'breeze_rod', min: 0, max: 1, color: [180, 220, 255] },
+  ],
+  armadillo: [{ name: 'armadillo_scute', min: 0, max: 1, color: [180, 140, 110] }],
+  sniffer: [],
+  dolphin: [{ name: 'cod', min: 0, max: 1, color: [196, 160, 106] }],
+  cod: [{ name: 'cod', min: 1, max: 1, color: [196, 160, 106] }],
+  salmon: [{ name: 'salmon', min: 1, max: 1, color: [208, 106, 74] }],
+  pufferfish: [{ name: 'pufferfish', min: 1, max: 1, color: [255, 215, 70] }],
+  tropical_fish: [{ name: 'tropical_fish', min: 1, max: 1, color: [255, 128, 64] }],
+  squid: [{ name: 'ink_sac', min: 1, max: 3, color: [25, 25, 25] }],
+  glow_squid: [{ name: 'glow_ink_sac', min: 1, max: 3, color: [80, 230, 220] }],
+  magma_cube: [{ name: 'magma_cream', min: 0, max: 1, color: [220, 90, 50] }],
+  slime: [{ name: 'slime_ball', min: 0, max: 2, color: [120, 220, 100] }],
+  silverfish: [],
+  cave_spider: [
+    { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
+    { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
+  ],
+  phantom: [{ name: 'phantom_membrane', min: 0, max: 1, color: [200, 180, 220] }],
+  mooshroom: [
+    { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  panda: [{ name: 'bamboo', min: 0, max: 2, color: [148, 192, 90] }],
+  villager: [],
+  zombie_villager: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+  pillager: [
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+    { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
+  ],
+  vindicator: [{ name: 'emerald', min: 0, max: 1, color: [80, 220, 120] }],
+  evoker: [
+    { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
+    { name: 'totem_of_undying', min: 1, max: 1, color: [220, 200, 80] },
+  ],
+  iron_golem: [
+    { name: 'poppy', min: 0, max: 2, color: [220, 30, 30] },
+    { name: 'iron_ingot', min: 3, max: 5, color: [220, 220, 220] },
+  ],
+  snow_golem: [{ name: 'snowball', min: 0, max: 15, color: [240, 250, 255] }],
+  zoglin: [],
+  hoglin: [
+    { name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  strider: [{ name: 'string', min: 2, max: 5, color: [230, 230, 230] }],
+  piglin_brute: [{ name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] }],
+  zombified_piglin: [
+    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
+    { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
+  ],
   warden: [{ name: 'echo_shard', min: 0, max: 0, color: [80, 200, 220] }],
   ender_dragon: [{ name: 'dragon_scale', min: 1, max: 1, color: [60, 50, 80] }],
   wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
@@ -8444,8 +8472,7 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
     //   age update): light unchanged, reuse cached
     // - break: removed block might've been blocking skylight, rebuild
     const newDef = block !== 0 ? registry.get(block) : null;
-    const placementChangesLight =
-      block !== 0 && (emitsNew || newDef?.opaque === true);
+    const placementChangesLight = block !== 0 && (emitsNew || newDef?.opaque === true);
     const lightUnchanged = !wasBreak && !placementChangesLight;
     for (let i = 0; i < affectedLen; i++) {
       const acx = touchAffectedCx[i]!;
@@ -8890,14 +8917,10 @@ function frame(): void {
   }
 
   // MC sprint rule: cannot sprint if hunger ≤ 6.
-  if (
-    fp.input.sprint &&
-    playerState.hunger <= 6 &&
-    (vitalsActive)
-  ) {
+  if (fp.input.sprint && playerState.hunger <= 6 && vitalsActive) {
     fp.input.sprint = false;
   }
-  if (fp.input.sprint && (vitalsActive)) {
+  if (fp.input.sprint && vitalsActive) {
     // Sprint exhaustion: 0.1 per meter sprinted. Approximate via dtSec * 5 m/s.
     playerState.addExhaustion(0.1 * dtSec * 5);
   }
@@ -8906,12 +8929,7 @@ function frame(): void {
   // applies when no menus are open and the player is not in chat.
   // anyGamepadEverConnected gates the entire poll — desktop users with
   // no gamepad skip the navigator.getGamepads() call + 4-slot scan.
-  if (
-    hasGamepadApi &&
-    anyGamepadEverConnected &&
-    !chatInput.isOpen() &&
-    !pauseMenu.isVisible()
-  ) {
+  if (hasGamepadApi && anyGamepadEverConnected && !chatInput.isOpen() && !pauseMenu.isVisible()) {
     const pads = navigator.getGamepads();
     let pad: Gamepad | null = null;
     if (pads) {
@@ -9010,10 +9028,7 @@ function frame(): void {
           const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
           const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
           // Creative insta-kill (touch parity with desktop).
-          const dmg =
-            isCreative
-              ? 9999
-              : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
+          const dmg = isCreative ? 9999 : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
           const result = mobWorld.damage(bestId, dmg);
           // Touch combat durability + exhaustion (parity with desktop).
           if (vitalsActive) {
@@ -9219,12 +9234,7 @@ function frame(): void {
   }
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
   // MC-style jump exhaustion: 0.05 normal, 0.2 sprint-jump.
-  if (
-    prevOnGround &&
-    !fp.onGround &&
-    fp.velocity.y > 0 &&
-    (vitalsActive)
-  ) {
+  if (prevOnGround && !fp.onGround && fp.velocity.y > 0 && vitalsActive) {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
   // Track airborne peak Y for mace smash damage calc.
@@ -9283,8 +9293,7 @@ function frame(): void {
   }
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
-  const weatherDimming =
-    (isThunder ? 0.5 : isRain ? 0.7 : 1.0) + flashBoost;
+  const weatherDimming = (isThunder ? 0.5 : isRain ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
@@ -9486,10 +9495,7 @@ function frame(): void {
     }
   }
   // Walking through fire ignites the player (8s burn).
-  if (
-    vitalsActive &&
-    !fireResistant
-  ) {
+  if (vitalsActive && !fireResistant) {
     for (let dy = 0; dy <= 1; dy++) {
       const s = world.get(playerBlockX, playerBlockY + dy, playerBlockZ);
       if (s !== AIR && stateId(s) === fireIdCached) {
@@ -9499,11 +9505,7 @@ function frame(): void {
     }
   }
 
-  if (
-    fp.lastLandFallBlocks > 3 &&
-    vitalsActive &&
-    gameRules.fallDamage
-  ) {
+  if (fp.lastLandFallBlocks > 3 && vitalsActive && gameRules.fallDamage) {
     const slowFalling = playerState.effects.has('slow_falling');
     let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
     // Vanilla MC: landing in water (or while underwater) cancels all
@@ -9529,7 +9531,7 @@ function frame(): void {
   }
   fp.lastLandFallBlocks = 0;
 
-  if (fp.position.y < -64 && (vitalsActive)) {
+  if (fp.position.y < -64 && vitalsActive) {
     // Vanilla: 4 dmg per game tick (20Hz) ≈ 80 dmg/s. takeDamage's
     // i-frame bypass for 'void' was firing every render frame instead,
     // so at 60FPS we were applying 240 dmg/s — enough to instantly
@@ -9554,14 +9556,8 @@ function frame(): void {
     }
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
-      const belowBlockId = stateId(
-        world.get(playerBlockX, playerFootBlockY, playerBlockZ),
-      );
-      if (
-        belowBlockId === magmaBlockIdCached &&
-        !fp.input.sneak &&
-        !fireResistant
-      ) {
+      const belowBlockId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
+      if (belowBlockId === magmaBlockIdCached && !fp.input.sneak && !fireResistant) {
         envTakeDamage(1 * dtSec, 'fire');
       }
       // Soul sand slows player to 60% horizontal velocity (matches MC).
@@ -9635,7 +9631,7 @@ function frame(): void {
     }
   }
 
-  if (playerState.hunger <= 0 && (vitalsActive)) {
+  if (playerState.hunger <= 0 && vitalsActive) {
     if (!starvingShown) {
       starvingShown = true;
       toast.show('Starving!', '#ff6060', 2000);
@@ -10240,7 +10236,8 @@ function frame(): void {
           // Hoisted at module scope (HOSTILE_SPAWN_CHOICES) — was a
           // fresh tuple-typed array per spawn attempt × 6 attempts per
           // 5s cycle. Now reused.
-          const kind = HOSTILE_SPAWN_CHOICES[Math.floor(Math.random() * HOSTILE_SPAWN_CHOICES.length)];
+          const kind =
+            HOSTILE_SPAWN_CHOICES[Math.floor(Math.random() * HOSTILE_SPAWN_CHOICES.length)];
           if (!kind) continue;
           try {
             mobSpawnPosScratch.x = sx + 0.5;
@@ -10259,10 +10256,7 @@ function frame(): void {
     // at chunkgen but webmc has no chunkgen-time spawner — without an
     // active loop, the world never had any livestock once the original
     // herds were killed. Slow cycle (~20s) at high light level only.
-    if (
-      vitalsActive &&
-      nowSpawnMs - lastPassiveSpawnAttemptMs > 20000
-    ) {
+    if (vitalsActive && nowSpawnMs - lastPassiveSpawnAttemptMs > 20000) {
       lastPassiveSpawnAttemptMs = nowSpawnMs;
       if (mobWorld.passiveCount < WORLD_MOB_CAPS.passive) {
         for (let attempt = 0; attempt < 4; attempt++) {
@@ -10292,7 +10286,8 @@ function frame(): void {
           const groundDef = registry.get(stateId(world.get(sx, sy - 1, sz)));
           if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:grass') continue;
           // Hoisted at module scope (PASSIVE_SPAWN_CHOICES).
-          const kind = PASSIVE_SPAWN_CHOICES[Math.floor(Math.random() * PASSIVE_SPAWN_CHOICES.length)];
+          const kind =
+            PASSIVE_SPAWN_CHOICES[Math.floor(Math.random() * PASSIVE_SPAWN_CHOICES.length)];
           if (!kind) continue;
           try {
             // Spawn a small herd (2-4) of the same kind, vanilla style.
@@ -10521,8 +10516,7 @@ function frame(): void {
             // tickGrassBlock returns either 'webmc:grass_block' or
             // 'webmc:dirt'; both ids are pre-cached at module scope so
             // we skip the registry.byName Map.get per placement.
-            const blockId =
-              p.block === 'webmc:grass_block' ? grassBlockIdCached : dirtIdCached;
+            const blockId = p.block === 'webmc:grass_block' ? grassBlockIdCached : dirtIdCached;
             if (blockId !== undefined) {
               world.set(p.pos.x, p.pos.y, p.pos.z, makeState(blockId, 0));
               touchWorldEdit(p.pos.x, p.pos.y, p.pos.z, blockId);
@@ -10888,8 +10882,7 @@ function frame(): void {
       for (const id of broken) leashedMobs.delete(id);
     }
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
-      const lovers: { mob: NonNullable<ReturnType<typeof mobWorld.byId>>; love: AnimalLove }[] =
-        [];
+      const lovers: { mob: NonNullable<ReturnType<typeof mobWorld.byId>>; love: AnimalLove }[] = [];
       for (const [id, love] of lovingMobs) {
         const m = mobWorld.byId(id);
         if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
@@ -11097,7 +11090,7 @@ function frame(): void {
       spawnSuffix = `(${Math.hypot(sdx, sdz).toFixed(0)}m from spawn)`;
     }
     hud.textContent =
-      `webmc — F3 debug · F5 cam · F1 help\n` +
+      `webmc M5 — F3 debug · F5 cam · F1 help · ${rendererInfo.gl}\n` +
       // nowPhase + the equivalent Math.floor(timeOfDay*24000) phaseOfDay
       // are already computed at the top of frame() — reuse instead of
       // duplicating the multiply + floor + 4-comparison phaseOfDay call
@@ -11105,7 +11098,7 @@ function frame(): void {
       `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${nowPhase}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
       `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${spawnSuffix}\n` +
       `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
-      `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
+      `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}  seed ${WORLD_SEED.toString(16)}  save${sessionSaveCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
   requestAnimationFrame(frame);
 }

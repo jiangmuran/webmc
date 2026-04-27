@@ -236,11 +236,7 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   // Golden apple — 8 gold ingots + 1 apple.
   S(['GGG', 'GAG', 'GGG'], { G: 'webmc:gold_ingot', A: 'webmc:apple' }, 'webmc:golden_apple');
   // Golden carrot — 8 gold nuggets + 1 carrot.
-  S(
-    ['NNN', 'NCN', 'NNN'],
-    { N: 'webmc:gold_nugget', C: 'webmc:carrot' },
-    'webmc:golden_carrot',
-  );
+  S(['NNN', 'NCN', 'NNN'], { N: 'webmc:gold_nugget', C: 'webmc:carrot' }, 'webmc:golden_carrot');
   // Glistering melon — 8 gold nuggets + 1 melon_slice.
   S(
     ['NNN', 'NMN', 'NNN'],
@@ -252,10 +248,7 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   // Pumpkin pie — pumpkin + sugar + egg.
   L(['webmc:pumpkin', 'webmc:sugar', 'webmc:egg'], 'webmc:pumpkin_pie');
   // Mushroom stew.
-  L(
-    ['webmc:bowl', 'webmc:red_mushroom', 'webmc:brown_mushroom'],
-    'webmc:mushroom_stew',
-  );
+  L(['webmc:bowl', 'webmc:red_mushroom', 'webmc:brown_mushroom'], 'webmc:mushroom_stew');
   // Beetroot soup.
   L(
     [
@@ -300,11 +293,7 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   // Blaze powder — 1 blaze rod → 2 blaze powder.
   L(['webmc:blaze_rod'], 'webmc:blaze_powder', 2);
   // Fire charge — gunpowder + blaze powder + coal/charcoal → 3 fire charges.
-  L(
-    ['webmc:gunpowder', 'webmc:blaze_powder', 'webmc:coal'],
-    'webmc:fire_charge',
-    3,
-  );
+  L(['webmc:gunpowder', 'webmc:blaze_powder', 'webmc:coal'], 'webmc:fire_charge', 3);
   // Bottle from glass (3 glass → 3 glass bottles).
   S(['G G', ' G '], { G: 'webmc:glass' }, 'webmc:glass_bottle', 3);
   // Iron nuggets from iron ingot.

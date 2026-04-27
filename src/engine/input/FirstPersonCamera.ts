@@ -364,8 +364,16 @@ export class FirstPersonCamera {
         const box = this.opts.box;
         const probeY = this.position.y - box.halfY - 0.05;
         const isSolid = opts.isSolid;
-        if (dvx !== 0 && !this.hasGroundAtSneak(this.position.x + dvx, this.position.z, probeY, isSolid, box)) dvx = 0;
-        if (dvz !== 0 && !this.hasGroundAtSneak(this.position.x, this.position.z + dvz, probeY, isSolid, box)) dvz = 0;
+        if (
+          dvx !== 0 &&
+          !this.hasGroundAtSneak(this.position.x + dvx, this.position.z, probeY, isSolid, box)
+        )
+          dvx = 0;
+        if (
+          dvz !== 0 &&
+          !this.hasGroundAtSneak(this.position.x, this.position.z + dvz, probeY, isSolid, box)
+        )
+          dvz = 0;
         this.velocity.x = dvx / Math.max(dtSec, 0.0001);
         this.velocity.z = dvz / Math.max(dtSec, 0.0001);
       }

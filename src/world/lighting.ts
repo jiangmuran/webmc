@@ -79,9 +79,7 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // Top of the world for the search start. Below this is where we
   // scan; everything above is fully lit.
   const searchTopY =
-    highestNonEmptySection < 0
-      ? -1
-      : (highestNonEmptySection + 1) * SUBCHUNK_DIM - 1;
+    highestNonEmptySection < 0 ? -1 : (highestNonEmptySection + 1) * SUBCHUNK_DIM - 1;
 
   // First pass: compute topOpaque per column + track the global max so
   // we can wholesale-fill sections that are entirely above max with
