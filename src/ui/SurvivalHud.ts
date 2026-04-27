@@ -571,11 +571,15 @@ export class SurvivalHud {
 
   render(frame: SurvivalFrame): void {
     if (!this.visible) return;
+    // Single performance.now syscall per render — was three (one for
+    // pulse, one for heart-shake `hbT`, one for hunger-shake `t`),
+    // all sampled in the same render call.
+    const nowMs = performance.now();
     const hpPerHeart = frame.maxHealth / HEARTS;
     const lowHp = frame.health < 6;
-    const pulse = lowHp ? 0.5 + 0.5 * Math.sin(performance.now() * 0.01) : 1;
+    const pulse = lowHp ? 0.5 + 0.5 * Math.sin(nowMs * 0.01) : 1;
     const heartShake = lowHp;
-    const hbT = performance.now();
+    const hbT = nowMs;
     for (let i = 0; i < HEARTS; i++) {
       const start = i * hpPerHeart;
       const v = Math.max(0, Math.min(hpPerHeart, frame.health - start));
@@ -601,7 +605,7 @@ export class SurvivalHud {
 
     const hungerPer = frame.maxHunger / DRUMSTICKS;
     const shake = shakeOnLowFood(frame.hunger);
-    const t = performance.now();
+    const t = nowMs;
     for (let i = 0; i < DRUMSTICKS; i++) {
       const start = i * hungerPer;
       const v = Math.max(0, Math.min(hungerPer, frame.hunger - start));
