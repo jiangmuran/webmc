@@ -10977,7 +10977,12 @@ function frame(): void {
     }
     if (babyMobs.size > 0) {
       const ticksThisFrame = Math.max(1, Math.round(dtSec * 20));
-      for (const [id, st] of babyMobs) {
+      // keys()+get() avoids tuple alloc per baby mob. Babies are rare
+      // (player has to actively breed two animals), but the loop runs
+      // per frame whenever any baby is growing.
+      for (const id of babyMobs.keys()) {
+        const st = babyMobs.get(id);
+        if (st === undefined) continue;
         let next = st;
         for (let i = 0; i < ticksThisFrame; i++) next = babyTick(next);
         if (!next.isBaby) {
@@ -11017,7 +11022,13 @@ function frame(): void {
     }
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
       const lovers: { mob: NonNullable<ReturnType<typeof mobWorld.byId>>; love: AnimalLove }[] = [];
-      for (const [id, love] of lovingMobs) {
+      // keys()+get() avoids destructuring `[id, love]` tuple alloc per
+      // loving mob. Gated to every 64 worldticks (~3.2s), so per-tick
+      // savings are minimal but matches the keys+get pattern used
+      // across other Map iterations in this file.
+      for (const id of lovingMobs.keys()) {
+        const love = lovingMobs.get(id);
+        if (love === undefined) continue;
         const m = mobWorld.byId(id);
         if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
       }
@@ -11054,7 +11065,9 @@ function frame(): void {
           break;
         }
       }
-      for (const [mobId, love] of lovingMobs) {
+      for (const mobId of lovingMobs.keys()) {
+        const love = lovingMobs.get(mobId);
+        if (love === undefined) continue;
         if (!isInLove(love, worldTick) && worldTick >= love.breedCooldownUntilTick) {
           lovingMobs.delete(mobId);
           const m = mobWorld.byId(mobId);
