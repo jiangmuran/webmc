@@ -55,7 +55,19 @@ export class ChunkStore {
   }
 
   markDirty(chunk: Chunk, light: ChunkLight | null): void {
-    this.dirty.set(this.key(chunk.cx, chunk.cz), { chunk, light });
+    // Re-marking an already-dirty chunk should mutate the existing
+    // entry, not allocate a fresh {chunk, light} literal. Fluid spread,
+    // tnt cascades, and structure pastes all re-mark the same chunk
+    // many times per second; pooling the entry shape avoids ~hundreds
+    // of throwaway literals during heavy edit bursts.
+    const k = this.key(chunk.cx, chunk.cz);
+    const existing = this.dirty.get(k);
+    if (existing) {
+      existing.chunk = chunk;
+      existing.light = light;
+      return;
+    }
+    this.dirty.set(k, { chunk, light });
   }
 
   async load(cx: number, cz: number): Promise<{ chunk: Chunk; light: ChunkLight | null } | null> {
