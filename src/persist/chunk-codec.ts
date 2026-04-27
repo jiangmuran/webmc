@@ -132,22 +132,21 @@ export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
     if (m.bits > 0) {
       const indices = m.sec.indices;
       const words = wordsNeeded(SUBCHUNK_VOLUME, m.bits);
-      // Hoist the null check — `indices` is constant for this section;
-      // was branching `indices ? (indices[i] ?? 0) : 0` per word for
-      // up to 50K words per chunk per save batch.
+      const byteLen = words * 4;
       if (indices) {
-        for (let i = 0; i < words; i++) {
-          view.setUint32(offset, indices[i]!, true);
-          offset += 4;
-        }
+        // Bulk byte-level memcpy of the Uint32Array's underlying bytes
+        // (little-endian on every browser-supported platform — same as
+        // `setUint32(..., true)`). Replaces the per-word setUint32 loop
+        // which paid a JS function-call + bounds-check per word, ~50K
+        // calls per chunk per save batch on full sections.
+        const indicesBytes = new Uint8Array(indices.buffer, indices.byteOffset, byteLen);
+        u8.set(indicesBytes, offset);
       } else {
         // bits>0 but no indices: section is uniform (single-palette).
-        // Just write zero words for the entire range.
-        for (let i = 0; i < words; i++) {
-          view.setUint32(offset, 0, true);
-          offset += 4;
-        }
+        // Buffer is already zero-initialized (ArrayBuffer init); just
+        // skip past the range.
       }
+      offset += byteLen;
     }
     if (m.hasLight && light) {
       const secLight = light.sections[m.cy];
@@ -228,11 +227,15 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
     let indices: Uint32Array | null = null;
     if (bits > 0) {
       const words = wordsNeeded(SUBCHUNK_VOLUME, bits);
+      const byteLen = words * 4;
       indices = new Uint32Array(words);
-      for (let i = 0; i < words; i++) {
-        indices[i] = view.getUint32(offset, true);
-        offset += 4;
-      }
+      // Bulk byte-level copy from the source bytes. Replaces the per-
+      // word getUint32 loop (~50K calls per chunk per load batch on
+      // full sections). Little-endian on every browser-supported
+      // platform — matches the encoder's byte layout.
+      const indicesBytes = new Uint8Array(indices.buffer);
+      indicesBytes.set(bytes.subarray(offset, offset + byteLen));
+      offset += byteLen;
     }
     // Bulk-construct the SubChunk from the wire data instead of per-
     // cell sec.set() — saved ~4096 palette+bitpack ops per non-empty
