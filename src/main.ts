@@ -3078,9 +3078,9 @@ const interaction = new InteractionController(
       else toolLevel = 0; // bare hand
       const dropsAllowed = isCreative || toolLevel >= requiredLevel;
       // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
-      // (CROP_DROP + LEAF_TO_SAPLING hoisted to module scope below.)
+      // (CROP_DROP + LEAF_TO_SAPLING_FOR_DECAY hoisted to module scope below.)
       let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
-      const sapName = LEAF_TO_SAPLING[def.name];
+      const sapName = LEAF_TO_SAPLING_FOR_DECAY[def.name];
       const heldNameAtBreak = heldNameLower();
       const usingShears = heldNameAtBreak === 'shears';
       // Shears on leaves drop the leaf block itself (silk-touch parity).
@@ -7834,10 +7834,6 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
   'webmc:cherry_leaves': 'webmc:cherry_sapling',
   'webmc:azalea_leaves': 'webmc:azalea',
 };
-// Same leaf→sapling map as LEAF_TO_SAPLING_FOR_DECAY, reused for the
-// player-break path. Was being rebuilt as a fresh literal on every
-// block-break right-click.
-const LEAF_TO_SAPLING = LEAF_TO_SAPLING_FOR_DECAY;
 // Pre-resolved id sets for the leaf-decay BFS. The hot inner loop did
 // `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')` per
 // visited cell — a full BlockDef fetch + 3 string comparisons. Resolve
