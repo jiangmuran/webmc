@@ -105,7 +105,11 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // with the all-lit byte (skyLight=15 << 4 | 0). The straddling section
   // (containing maxTopOpaque) needs per-column handling.
   const ALL_LIT = packLight(MAX_LIGHT, 0);
-  const firstFullyLitCy = Math.floor(maxTopOpaque / SUBCHUNK_DIM) + 1;
+  // maxTopOpaque is in [-1, CHUNK_HEIGHT-1]; for that range `>> 4`
+  // matches Math.floor(_ / 16) and skips the divide. For -1, both
+  // give -1 → firstFullyLitCy=0 → the entire chunk is fully lit
+  // (matches the all-air fast path).
+  const firstFullyLitCy = (maxTopOpaque >> 4) + 1;
   for (let cy = firstFullyLitCy; cy < CHUNK_SECTIONS; cy++) {
     const sec = ensureSection(light, cy, 0);
     sec.fill(ALL_LIT);
