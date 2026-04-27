@@ -118,14 +118,24 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // section). computeBlockLight runs after, so unpackBlock is always
   // 0 here — write the packed byte directly.
   const writeUntilY = Math.min(CHUNK_HEIGHT - 1, (firstFullyLitCy << 4) - 1);
+  // Pre-resolve each section once instead of calling ensureSection per
+  // (lx, lz, y) cell — was 256 columns × 80 y = ~20K calls vs ~5
+  // calls (one per straddling section).
+  const sectionsByCy: Uint8Array[] = [];
+  if (writeUntilY >= 0) {
+    const lastCy = writeUntilY >> 4;
+    for (let cy = 0; cy <= lastCy; cy++) sectionsByCy.push(ensureSection(light, cy, 0));
+  }
+  // packLight(MAX_LIGHT, 0) is constant when block-light is 0 — and
+  // computeBlockLight runs AFTER us, so block is always 0 here. Skip
+  // per-cell packLight and use the precomputed `ALL_LIT` (or literal
+  // 0 for under-surface cells).
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
       const topOpaque = topByCol[lx * CHUNK_DIM + lz] ?? -1;
       for (let y = 0; y <= writeUntilY; y++) {
-        const cy = y >> 4;
-        const sec = ensureSection(light, cy, 0);
-        const skyVal = y > topOpaque ? MAX_LIGHT : 0;
-        sec[localIndex(lx, y & 0xf, lz)] = packLight(skyVal, 0);
+        const sec = sectionsByCy[y >> 4]!;
+        sec[localIndex(lx, y & 0xf, lz)] = y > topOpaque ? ALL_LIT : 0;
       }
     }
   }
