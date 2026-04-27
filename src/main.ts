@@ -1727,6 +1727,18 @@ let isRain = false;
 let isThunder = false;
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
+// Pre-scaled biome tint cache. The per-frame frame() body was running
+// 6 divides + 6 multiplies on a stable per-biome RGB palette. Recomputed
+// only when biomeId changes (player crosses a column boundary).
+const BIOME_TINT = 0.18;
+const BIOME_TINT_INV = 1 - BIOME_TINT;
+let cachedBiomeTintId = -1;
+let biomeSkyTintR = 0;
+let biomeSkyTintG = 0;
+let biomeSkyTintB = 0;
+let biomeFogTintR = 0;
+let biomeFogTintG = 0;
+let biomeFogTintB = 0;
 let lastEmptyPlaceWarnAt = 0;
 // (removed weatherTimer + autoWeatherEnabled — the inline 2nd weather
 //  picker that raced with weatherCycle. F7 now toggles gameRules.doWeatherCycle.)
@@ -9348,16 +9360,26 @@ function frame(): void {
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
+  // Cache the pre-scaled tint contribution per biome — was running 6
+  // divides + 6 multiplies per frame on stable per-biome RGB palette
+  // values. biomeId rarely changes (player crosses a column boundary).
   const biomeId = biomeIdAtPlayerColumn();
-  const biomeName = biomeId === 1 ? 'forest' : 'plains';
-  const biomePalette = skyOf(biomeName);
-  const TINT = 0.18;
-  tmpSkyColor.r = tmpSkyColor.r * (1 - TINT) + (biomePalette.sky[0] / 255) * TINT;
-  tmpSkyColor.g = tmpSkyColor.g * (1 - TINT) + (biomePalette.sky[1] / 255) * TINT;
-  tmpSkyColor.b = tmpSkyColor.b * (1 - TINT) + (biomePalette.sky[2] / 255) * TINT;
-  tmpFogColor.r = tmpFogColor.r * (1 - TINT) + (biomePalette.fog[0] / 255) * TINT;
-  tmpFogColor.g = tmpFogColor.g * (1 - TINT) + (biomePalette.fog[1] / 255) * TINT;
-  tmpFogColor.b = tmpFogColor.b * (1 - TINT) + (biomePalette.fog[2] / 255) * TINT;
+  if (biomeId !== cachedBiomeTintId) {
+    const biomePalette = skyOf(biomeId === 1 ? 'forest' : 'plains');
+    cachedBiomeTintId = biomeId;
+    biomeSkyTintR = (biomePalette.sky[0] / 255) * BIOME_TINT;
+    biomeSkyTintG = (biomePalette.sky[1] / 255) * BIOME_TINT;
+    biomeSkyTintB = (biomePalette.sky[2] / 255) * BIOME_TINT;
+    biomeFogTintR = (biomePalette.fog[0] / 255) * BIOME_TINT;
+    biomeFogTintG = (biomePalette.fog[1] / 255) * BIOME_TINT;
+    biomeFogTintB = (biomePalette.fog[2] / 255) * BIOME_TINT;
+  }
+  tmpSkyColor.r = tmpSkyColor.r * BIOME_TINT_INV + biomeSkyTintR;
+  tmpSkyColor.g = tmpSkyColor.g * BIOME_TINT_INV + biomeSkyTintG;
+  tmpSkyColor.b = tmpSkyColor.b * BIOME_TINT_INV + biomeSkyTintB;
+  tmpFogColor.r = tmpFogColor.r * BIOME_TINT_INV + biomeFogTintR;
+  tmpFogColor.g = tmpFogColor.g * BIOME_TINT_INV + biomeFogTintG;
+  tmpFogColor.b = tmpFogColor.b * BIOME_TINT_INV + biomeFogTintB;
   const skyColor = tmpSkyColor;
   const fogColor = tmpFogColor;
   uSunDirRef.value.copy(dayNight.sunDir);
