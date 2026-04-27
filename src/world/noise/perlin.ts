@@ -58,10 +58,16 @@ export class Perlin {
   }
 
   noise2(x: number, z: number): number {
-    const xi = Math.floor(x) & 255;
-    const zi = Math.floor(z) & 255;
-    const xf = x - Math.floor(x);
-    const zf = z - Math.floor(z);
+    // Hoist Math.floor calls — were computed twice per axis (once for
+    // the integer cell, again for the fractional remainder). fbm2 +
+    // fbm3 stack noise calls (4-octave fbm2 = 4 noise2 invocations);
+    // chunk gen pays this for thousands of cells per chunk.
+    const fx = Math.floor(x);
+    const fz = Math.floor(z);
+    const xi = fx & 255;
+    const zi = fz & 255;
+    const xf = x - fx;
+    const zf = z - fz;
     const u = fade(xf);
     const v = fade(zf);
     const a = ((this.p[xi] ?? 0) + zi) & 255;
@@ -76,12 +82,16 @@ export class Perlin {
   }
 
   noise3(x: number, y: number, z: number): number {
-    const xi = Math.floor(x) & 255;
-    const yi = Math.floor(y) & 255;
-    const zi = Math.floor(z) & 255;
-    const xf = x - Math.floor(x);
-    const yf = y - Math.floor(y);
-    const zf = z - Math.floor(z);
+    // Hoist Math.floor calls (see noise2 comment).
+    const fx = Math.floor(x);
+    const fy = Math.floor(y);
+    const fz = Math.floor(z);
+    const xi = fx & 255;
+    const yi = fy & 255;
+    const zi = fz & 255;
+    const xf = x - fx;
+    const yf = y - fy;
+    const zf = z - fz;
     const u = fade(xf);
     const v = fade(yf);
     const w = fade(zf);
