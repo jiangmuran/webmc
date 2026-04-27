@@ -1679,7 +1679,7 @@ let cameraMode: CameraMode = 'fp';
 function refreshHandVisibility(): void {
   // FP hand visible only in first-person AND not spectator. Spectators
   // have no body in vanilla, including no held-item / hand model.
-  hand.group.visible = cameraMode === 'fp' && gameMode !== 'spectator';
+  hand.group.visible = cameraMode === 'fp' && !isSpectator;
 }
 function cycleCamera(): void {
   cameraMode = cameraMode === 'fp' ? 'tp_back' : cameraMode === 'tp_back' ? 'tp_front' : 'fp';
@@ -4732,7 +4732,7 @@ canvas.addEventListener('mousedown', (e) => {
         ? 9999
         : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
           maceBonus;
-    if (critMult > 1 && gameMode !== 'creative') subtitles.push('Critical hit!');
+    if (critMult > 1 && !isCreative) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
     if (heldNameLow.includes('sword') && charge >= 0.9 && critMult === 1 && !fp.input.sprint) {
@@ -7149,7 +7149,7 @@ document.addEventListener(
       // night while building. In survival/adventure it would be a cheat —
       // players should actually find/place a bed and sleep through it
       // (vanilla also permanently locks night-skip behind a real bed).
-      if (gameMode !== 'creative') {
+      if (!isCreative) {
         chatInput.addLine('Use a bed to sleep.', '#ffd080');
         return;
       }
@@ -9007,6 +9007,11 @@ function frame(): void {
   const inWaterBody = fp.inFluid === 'water';
   const inLavaBody = fp.inFluid === 'lava';
   const inWaterEyes = fp.inFluidEyes === 'water';
+  // Hoist a few effects.has lookups that fire 2× per frame across
+  // separate gate blocks — playerState.effects is a Map, so each .has
+  // hashes the string key.
+  const fireResistant = playerState.effects.has('fire_resistance');
+  const playerInvisible = playerState.effects.has('invisibility');
   // Surface-aware footsteps: pick material from block under feet.
   let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
@@ -9227,8 +9232,8 @@ function frame(): void {
   // Spectators are invisible in vanilla — without this, the third-person
   // body still rendered while in spectator mode, which broke the ghost
   // illusion (you could see your own body floating through walls).
-  const invisible = playerState.effects.has('invisibility');
-  const avatarVisible = cameraMode !== 'fp' && !invisible && gameMode !== 'spectator';
+  // playerInvisible is hoisted at the top of frame() — reuse here.
+  const avatarVisible = cameraMode !== 'fp' && !playerInvisible && !isSpectator;
   playerAvatar.setVisible(avatarVisible);
   // Skip pose + animate per-frame writes when the avatar isn't being
   // rendered. First-person + spectator are the dominant cases, and
@@ -9288,7 +9293,7 @@ function frame(): void {
       }
       // Drain durability ~1/sec. Skip in creative — vanilla creative
       // elytra never wears out so unlimited cosmetic gliding works.
-      if (gameMode !== 'creative' && Math.random() < dtSec) {
+      if (!isCreative && Math.random() < dtSec) {
         const newDamage = (chest?.damage ?? 0) + 1;
         const def = itemRegistry.get(inventory.armor[1]!.itemId);
         if (newDamage >= def.durability) {
@@ -9303,7 +9308,7 @@ function frame(): void {
   // Walking through fire ignites the player (8s burn).
   if (
     (vitalsActive) &&
-    !playerState.effects.has('fire_resistance')
+    !fireResistant
   ) {
     const fpx = Math.floor(fp.position.x);
     const fpz = Math.floor(fp.position.z);
@@ -9384,7 +9389,7 @@ function frame(): void {
       if (
         belowBlockId === magmaBlockIdCached &&
         !fp.input.sneak &&
-        !playerState.effects.has('fire_resistance')
+        !fireResistant
       ) {
         envTakeDamage(1 * dtSec, 'fire');
       }
@@ -9675,7 +9680,7 @@ function frame(): void {
   // Per-block break duration: hardness * tool factor (break_speed helper).
   // Reuse `aim` from the block-outline raycast above — fp.position
   // doesn't move between the two casts so the result is identical.
-  if (gameMode !== 'creative') {
+  if (!isCreative) {
     if (aim) {
       const def2 = registry.get(stateId(world.get(aim.bx, aim.by, aim.bz)));
       const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
@@ -10197,7 +10202,7 @@ function frame(): void {
   cropTickAccum += dtSec;
   if (cropTickAccum >= CROP_TICK_SEC) {
     cropTickAccum -= CROP_TICK_SEC;
-    if (gameMode !== 'spectator') {
+    if (!isSpectator) {
       const px = Math.floor(fp.position.x);
       const py = Math.floor(fp.position.y);
       const pz = Math.floor(fp.position.z);
@@ -10772,7 +10777,7 @@ function frame(): void {
       mobTickCtx.playerPos.z = fp.position.z;
     }
     mobTickCtx.playerSneaking = fp.input.sneak;
-    mobTickCtx.playerInvisible = playerState.effects.has('invisibility');
+    mobTickCtx.playerInvisible = playerInvisible;
     mobWorld.tick(dtSec * tickRateMultiplier, mobTickCtx);
   }
   mobRenderer.sync(mobWorld.all(), camera.position);
