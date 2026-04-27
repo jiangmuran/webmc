@@ -17,6 +17,13 @@ export class BlockOutline {
   private lastBx = NaN;
   private lastBy = NaN;
   private lastBz = NaN;
+  // Quantized breathing-scale cache. The raw scalar changes every
+  // frame (sin of performance.now), but visually anything finer than
+  // ~1e-3 is imperceptible. Quantize so setScalar fires only when the
+  // visible value actually changes (~6×/sec at 60Hz instead of 60).
+  // Each setScalar fires Vector3._onChangeCallback + flags
+  // matrixWorldNeedsUpdate.
+  private lastScaleQuantum = NaN;
 
   constructor() {
     this.group = new THREE.Group();
@@ -63,9 +70,15 @@ export class BlockOutline {
       this.crackMat.opacity = targetOpacity;
       this.lastCrackOpacity = targetOpacity;
     }
-    // Subtle breathing scale so the outline feels alive.
-    const s = 1 + Math.sin(performance.now() * 0.005) * 0.003;
-    this.group.scale.setScalar(s);
+    // Subtle breathing scale so the outline feels alive. Quantize to
+    // 1e-3 so setScalar only fires when the visible value changes —
+    // raw sin output produces a unique float every frame, dirtying
+    // matrixWorldNeedsUpdate 60×/sec for nothing.
+    const sQuantum = Math.round(Math.sin(performance.now() * 0.005) * 3) / 1000;
+    if (sQuantum !== this.lastScaleQuantum) {
+      this.group.scale.setScalar(1 + sQuantum);
+      this.lastScaleQuantum = sQuantum;
+    }
   }
 
   hide(): void {
