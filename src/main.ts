@@ -9862,7 +9862,13 @@ function frame(): void {
     // Recycle previous-frame entries.
     for (let i = 0; i < entries.length; i++) activeEffectsPool.push(entries[i]!);
     entries.length = 0;
-    for (const [id, e] of playerState.effects) {
+    // Iterate keys + lookup vs entries — destructuring `[id, e]`
+    // allocates a 2-tuple per effect per frame. Player effects can be
+    // 0-3 typically, but this code runs on every frame whenever any
+    // effect is active.
+    for (const id of playerState.effects.keys()) {
+      const e = playerState.effects.get(id);
+      if (e === undefined) continue;
       const slot = activeEffectsPool.pop() ?? { id: '', amplifier: 0, remainingSec: 0 };
       slot.id = id;
       slot.amplifier = e.amplifier;
