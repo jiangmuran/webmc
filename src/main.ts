@@ -1871,6 +1871,7 @@ const slimeBlockIdCached = registry.byName('webmc:slime_block');
 const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
 const grassBlockIdCached = registry.byName('webmc:grass_block');
 const dirtIdCached = registry.byName('webmc:dirt');
+const bambooIdCached = registry.byName('webmc:bamboo');
 // Hoisted spawn-pick tables. Were re-allocated as fresh tuple arrays
 // per spawn attempt inside the per-frame natural-mob-spawn block; the
 // arrays are read-only weights so a single shared instance is safe.
@@ -10306,8 +10307,12 @@ function frame(): void {
           const sky = (lb >>> 4) & 0xf;
           const block = lb & 0xf;
           if (Math.max(sky, block) < 9) continue;
-          const groundDef = registry.get(stateId(world.get(sx, sy - 1, sz)));
-          if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:grass') continue;
+          // Numeric id compare against cached grass-block id — was
+          // registry.get + name-string equality per spawn attempt.
+          const groundState = world.get(sx, sy - 1, sz);
+          if (groundState === AIR) continue;
+          const groundId = stateId(groundState);
+          if (groundId !== grassBlockIdCached) continue;
           // Hoisted at module scope (PASSIVE_SPAWN_CHOICES).
           const kind =
             PASSIVE_SPAWN_CHOICES[Math.floor(Math.random() * PASSIVE_SPAWN_CHOICES.length)];
@@ -10493,7 +10498,9 @@ function frame(): void {
           let totalHeight = 1;
           for (let dyDown = 1; dyDown <= 16; dyDown++) {
             const below = world.get(x, y - dyDown, z);
-            if (below === AIR || registry.get(stateId(below)).name !== 'webmc:bamboo') break;
+            // Numeric id compare against cached bamboo id — was registry.get
+            // + name-string per cell of the downward bamboo-stack count.
+            if (below === AIR || stateId(below) !== bambooIdCached) break;
             totalHeight++;
           }
           if (totalHeight >= BAMBOO_MAX_H) continue;
