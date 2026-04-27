@@ -8784,6 +8784,10 @@ function frame(): void {
   const playerBlockX = Math.floor(fp.position.x);
   const playerBlockY = Math.floor(fp.position.y);
   const playerBlockZ = Math.floor(fp.position.z);
+  // Foot-block Y (1.05 below the body center). Used by footstep
+  // material lookup, fall-damage surface classifier, and magma/soul-
+  // sand contact check — three identical Math.floor calls per tick.
+  const playerFootBlockY = Math.floor(fp.position.y - 1.05);
   if (touch) {
     if (touch.state.primary && isSpectator) {
       // Spectator can't attack/break — same gate as the desktop attack
@@ -9024,7 +9028,7 @@ function frame(): void {
   let stepMat: FootStepMat | 'water';
   if (fp.onGround) {
     stepMat = footStepMatForStateId(
-      stateId(world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ)),
+      stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ)),
     );
   } else if (inWaterBody) {
     stepMat = 'water';
@@ -9334,7 +9338,7 @@ function frame(): void {
     // 30-block tower still killed the player.
     if (inWaterBody) dmg = 0;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
-    const landId = stateId(world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ));
+    const landId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
     if (landId === hayBlockIdCached || landId === honeyBlockIdCached) {
       dmg = Math.floor(dmg * 0.2);
     } else if (landId === slimeBlockIdCached) {
@@ -9377,7 +9381,7 @@ function frame(): void {
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
       const belowBlockId = stateId(
-        world.get(playerBlockX, Math.floor(fp.position.y - 1.05), playerBlockZ),
+        world.get(playerBlockX, playerFootBlockY, playerBlockZ),
       );
       if (
         belowBlockId === magmaBlockIdCached &&
@@ -9630,19 +9634,16 @@ function frame(): void {
   // O(1) sky-light lookup (skyLight=15 means clear path to sky) instead of
   // scanning every Y up to CHUNK_HEIGHT every frame.
   let skyBlocked = false;
-  const px = Math.floor(fp.position.x);
-  const py = Math.floor(fp.position.y);
-  const pz = Math.floor(fp.position.z);
   {
-    const cx = px >> 4;
-    const cz = pz >> 4;
+    const cx = playerBlockX >> 4;
+    const cz = playerBlockZ >> 4;
     const lt = lightCache.get(lightKey(cx, cz));
     if (lt) {
-      const lb = getLightByte(lt, px & 0xf, py + 2, pz & 0xf);
+      const lb = getLightByte(lt, playerBlockX & 0xf, playerBlockY + 2, playerBlockZ & 0xf);
       skyBlocked = ((lb >>> 4) & 0xf) !== 15;
     } else {
-      for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
-        if (isSolid(px, yy, pz)) {
+      for (let yy = playerBlockY + 2; yy < CHUNK_HEIGHT; yy++) {
+        if (isSolid(playerBlockX, yy, playerBlockZ)) {
           skyBlocked = true;
           break;
         }
