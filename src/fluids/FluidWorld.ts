@@ -99,7 +99,13 @@ export class FluidWorld {
       this.changedPool.push(changed[i]!);
     }
     changed.length = 0;
-    for (const [k, cell] of updates) {
+    // Iterate keys + lookup vs entries — destructuring `[k, cell]`
+    // allocates a fresh 2-tuple per update, and a busy fluid tick can
+    // process hundreds of cells. keys()+get() trades the tuple alloc
+    // for one hash lookup per cell, which is cheap.
+    for (const k of updates.keys()) {
+      const cell = updates.get(k);
+      if (cell === undefined) continue;
       const p = parseKeyInto(k, this.posScratch);
       // Skip writebacks to unloaded chunks. world.set on a non-AIR
       // state would call ensureChunk and materialise an empty chunk
