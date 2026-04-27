@@ -16,6 +16,7 @@ export class CompassBar {
   private readonly fullLoop = this.segmentWidth * 8;
   private readonly halfFullLoop = this.fullLoop / 2;
   private readonly center = this.WIDTH / 2 - this.segmentWidth / 2;
+  private readonly halfW = this.WIDTH / 2;
   // Diff caches to skip transform / left writes when the rounded
   // value hasn't changed. setYaw fires every frame and most frames
   // the player isn't turning fast enough to move a tenth of a pixel.
@@ -154,8 +155,7 @@ export class CompassBar {
       this.deathMarker.style.display = 'block';
       this.lastDeathVisible = true;
     }
-    const halfW = this.WIDTH / 2;
-    const px = halfW + (rel / (Math.PI / 2)) * halfW;
+    const px = this.halfW + (rel / (Math.PI / 2)) * this.halfW;
     const rounded = Math.round(px * 10) / 10;
     if (rounded === this.lastDeathPx) return;
     this.lastDeathPx = rounded;
@@ -186,8 +186,7 @@ export class CompassBar {
       this.spawnMarker.style.display = 'block';
       this.lastSpawnVisible = true;
     }
-    const halfW = this.WIDTH / 2;
-    const px = halfW + (rel / (Math.PI / 2)) * halfW;
+    const px = this.halfW + (rel / (Math.PI / 2)) * this.halfW;
     const rounded = Math.round(px * 10) / 10;
     if (rounded === this.lastSpawnPx) return;
     this.lastSpawnPx = rounded;
