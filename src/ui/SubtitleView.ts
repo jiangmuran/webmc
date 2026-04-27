@@ -28,8 +28,9 @@ export class SubtitleView {
 
   push(text: string, direction: 'left' | 'right' | 'center' = 'center'): void {
     if (!this.enabled) return;
-    enqueue(this.queue, text, direction, performance.now());
-    this.render();
+    const now = performance.now();
+    enqueue(this.queue, text, direction, now);
+    this.render(now);
   }
 
   tick(): void {
@@ -41,12 +42,14 @@ export class SubtitleView {
     // displayed — the per-frame rebuild was allocating empty rows
     // arrays and calling replaceChildren even when both were empty.
     if (this.queue.entries.length === 0 && this.root.children.length === 0) return;
-    prune(this.queue, performance.now());
-    this.render();
+    // Single performance.now syscall for prune + render — was sampling
+    // twice per per-frame tick.
+    const now = performance.now();
+    prune(this.queue, now);
+    this.render(now);
   }
 
-  private render(): void {
-    const now = performance.now();
+  private render(now: number): void {
     const rows: HTMLDivElement[] = [];
     for (const e of this.queue.entries) {
       const opacity = opacityFor(e, now);
