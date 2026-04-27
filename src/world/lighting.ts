@@ -1,5 +1,5 @@
-import type { BlockState } from '@/blocks/state';
-import { SUBCHUNK_DIM, SUBCHUNK_VOLUME, localIndex } from './SubChunk';
+import { type BlockState, AIR } from '@/blocks/state';
+import { SUBCHUNK_DIM, SUBCHUNK_VOLUME, type SubChunk, localIndex } from './SubChunk';
 import { CHUNK_DIM, CHUNK_HEIGHT, CHUNK_SECTIONS, type Chunk } from './Chunk';
 
 export const MAX_LIGHT = 15;
@@ -198,17 +198,19 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
     // emissive voxel found. Section is constant across the 4096-cell
     // scan of one emissive section.
     const lightSec = ensureSection(light, cy, 0);
+    // Use the SubChunk ref directly instead of going through
+    // chunk.get(...) per cell — saves the assertLocal + sectionOf
+    // shift + array deref + null check on each of the 4096 reads.
     for (let dy = 0; dy < SUBCHUNK_DIM; dy++) {
       const y = yBase + dy;
-      const localY = y & 0xf;
       for (let lx = 0; lx < CHUNK_DIM; lx++) {
         for (let lz = 0; lz < CHUNK_DIM; lz++) {
-          const state = chunk.get(lx, y, lz);
+          const state = sec.get(lx, dy, lz);
           const e = oracle.lightEmission(state);
           if (e > 0) {
             // Cache the localIndex result — was computed twice (read +
             // write) per emissive voxel.
-            const idx = localIndex(lx, localY, lz);
+            const idx = localIndex(lx, dy, lz);
             const prev = lightSec[idx] ?? 0;
             lightSec[idx] = packLight(unpackSky(prev), e);
             qx.push(lx);
@@ -220,7 +222,7 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       }
     }
   }
-  // Pre-resolve all 24 sections once. The BFS-step path called
+  // Pre-resolve all 24 light sections once. The BFS-step path called
   // ensureSection per neighbor visit (~60K calls per chunk-light
   // rebuild on torch-rich worlds). Each call is a function dispatch +
   // array deref; precaching turns every visit into a direct array
@@ -228,6 +230,14 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
   const sectionsByCy: Uint8Array[] = [];
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     sectionsByCy.push(ensureSection(light, cy, 0));
+  }
+  // Same idea for the chunk's own section refs — chunk.get(nx, ny, nz)
+  // does sectionOf shift + array deref + null check + sec.get on each
+  // visit. With sections precached, the BFS visit becomes one array
+  // lookup + (optional null guard) + sc.get.
+  const chunkSecsByCy: (SubChunk | null)[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    chunkSecsByCy.push(chunk.section(cy));
   }
   // Head-pointer dequeue (FIFO without shift). The original
   // queue.shift() is O(N) per pop, so a chunk with N emissive sources
@@ -253,11 +263,18 @@ export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: Chun
       if (nx < 0 || nx >= CHUNK_DIM || ny < 0 || ny >= CHUNK_HEIGHT || nz < 0 || nz >= CHUNK_DIM) {
         continue;
       }
-      const state = chunk.get(nx, ny, nz);
-      if (oracle.isOpaque(state)) continue;
       const ncy = ny >> 4;
+      const localNy = ny & 0xf;
+      // Cached SubChunk ref — was chunk.get(nx, ny, nz) which paid
+      // assertLocal + sectionOf + array deref + null check on every
+      // visit. Air-section short-circuit: if the chunk section is
+      // missing the cell is air, never opaque, never a propagation
+      // blocker, so skip the read.
+      const cs = chunkSecsByCy[ncy];
+      const state = cs ? cs.get(nx, localNy, nz) : AIR;
+      if (oracle.isOpaque(state)) continue;
       const sec = sectionsByCy[ncy]!;
-      const idx = localIndex(nx, ny & 0xf, nz);
+      const idx = localIndex(nx, localNy, nz);
       const prev = sec[idx] ?? 0;
       const prevBlock = unpackBlock(prev);
       if (next <= prevBlock) continue;
