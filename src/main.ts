@@ -7805,6 +7805,17 @@ const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
   'webmc:beetroots': 'beetroot',
   'webmc:nether_wart': 'nether_wart',
 };
+// Numeric-id lookup for the per-tick crop scan (80 samples/sec each
+// hits this). The string path was: world.get → registry.get(id).name
+// (full block name string) → CROP_BLOCKS[name] (string-keyed Record).
+// Pre-resolve once at module init so the runtime path is a single
+// Map.get with a numeric key.
+const CROP_KIND_BY_BLOCK_ID = new Map<number, CropQuery['crop']>();
+for (const [name, kind] of Object.entries(CROP_BLOCKS)) {
+  if (!kind) continue;
+  const id = registry.byName(name);
+  if (id !== undefined) CROP_KIND_BY_BLOCK_ID.set(id, kind);
+}
 // Parallel neighbor-offset arrays (6 axis-aligned). Was a tuple-of-
 // tuples that the leaf-decay BFS deref'd as `off[0]/off[1]/off[2]`
 // per neighbor visit. Three flat number[] reads are simpler.
@@ -10514,8 +10525,10 @@ function frame(): void {
         const s = world.get(x, y, z);
         if (s === AIR) continue;
         const id = stateId(s);
-        const name = registry.get(id).name;
-        const cropKind = CROP_BLOCKS[name];
+        // Numeric-id lookup avoids the per-sample registry.get(id).name
+        // string fetch + string-keyed Record dispatch. 80 samples/sec
+        // × full registry hit replaced by a single Map.get.
+        const cropKind = CROP_KIND_BY_BLOCK_ID.get(id);
         if (!cropKind) continue;
         const age = stateProps(s);
         const cx = x >> 4;
