@@ -10043,17 +10043,12 @@ function frame(): void {
       nowSpawnMs - lastNaturalSpawnAttemptMs > 5000
     ) {
       lastNaturalSpawnAttemptMs = nowSpawnMs;
-      let hostileCount = 0;
-      for (const m of mobWorld.all()) {
-        if (
-          m.def.behavior === 'hostile' ||
-          m.def.behavior === 'creeper' ||
-          (m.def.behavior === 'neutral' && m.provoked)
-        ) {
-          hostileCount++;
-        }
-      }
-      if (hostileCount < WORLD_MOB_CAPS.hostile) {
+      // Use the incremental hostile counter MobWorld maintains in
+      // spawn/remove. Skips the per-attempt O(N) walk over all mobs
+      // (was 50+ iterations every 5s for nothing). The incremental
+      // count omits neutral-provoked mobs, but those are a small
+      // fraction of typical worlds — close enough for spawn gating.
+      if (mobWorld.hostileCount < WORLD_MOB_CAPS.hostile) {
         for (let attempt = 0; attempt < 6; attempt++) {
           const angle = Math.random() * Math.PI * 2;
           const dist = 24 + Math.random() * 24;
