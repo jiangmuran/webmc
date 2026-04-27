@@ -9122,34 +9122,46 @@ function frame(): void {
   uSkyColorRef.value.copy(skyColor);
   const nightVision = hasNightVision ? 0.5 : 0;
   uAmbientRef.value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
-  // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
-  const speedEff = playerState.effects.get('speed');
-  const slowEff = playerState.effects.get('slowness');
-  let mul = 1;
-  if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
-  if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
-  fp.speedMultiplier = mul;
-  // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
-  const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
-  const speedLevel =
-    (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
-  fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
-  const jumpEff = playerState.effects.get('jump_boost');
-  fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
-  // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).
-  const levitation = playerState.effects.get('levitation');
-  if (levitation) {
-    fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
-  }
-  // Nausea: FOV wobble for visual disorientation. Reuse `now` so the
-  // wobble phase is consistent with other per-frame time-based effects
-  // (and skips one performance.now() syscall).
-  const nausea = playerState.effects.get('nausea');
-  if (nausea) {
-    const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
-    const wobble = Math.sin(now / 200) * 0.1 * intensity;
-    fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
-    fp.camera.updateProjectionMatrix();
+  // Effect-driven multipliers. The common case is `effects.size === 0`
+  // (player not under any potion), and the cluster of 5 Map.get hashes
+  // + dependent ifs all collapse to the defaults. Short-circuit so a
+  // toxin-free player skips the entire block.
+  if (playerState.effects.size > 0) {
+    const speedEff = playerState.effects.get('speed');
+    const slowEff = playerState.effects.get('slowness');
+    let mul = 1;
+    if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
+    if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
+    fp.speedMultiplier = mul;
+    // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
+    const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
+    const speedLevel =
+      (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
+    fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
+    const jumpEff = playerState.effects.get('jump_boost');
+    fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
+    // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).
+    const levitation = playerState.effects.get('levitation');
+    if (levitation) {
+      fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
+    }
+    // Nausea: FOV wobble for visual disorientation. Reuse `now` so the
+    // wobble phase is consistent with other per-frame time-based effects
+    // (and skips one performance.now() syscall).
+    const nausea = playerState.effects.get('nausea');
+    if (nausea) {
+      const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
+      const wobble = Math.sin(now / 200) * 0.1 * intensity;
+      fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
+      fp.camera.updateProjectionMatrix();
+    }
+  } else {
+    // No active effects → defaults. These setters are cheap and the
+    // values rarely change once cleared, so the cumulative cost is
+    // tiny vs the 5 Map.get hashes we'd otherwise pay every frame.
+    fp.speedMultiplier = 1;
+    fp.setEffectFovBoost(0);
+    fp.jumpVelocityMultiplier = 1;
   }
   uFogColorRef.value.copy(fogColor);
   uCameraPosWRef.value.copy(fp.position);
