@@ -10060,7 +10060,9 @@ function frame(): void {
       sceneFog.near = targetFar * 0.6;
       sceneFog.far = targetFar;
     }
-    lastUnderwaterFog = false;
+    // Edge-trigger the flag-flip — was writing `false = false` every
+    // frame the player wasn't underwater (the dominant case).
+    if (lastUnderwaterFog) lastUnderwaterFog = false;
   }
   // Drowning feedback: breath < 2s → slight hurt vignette pulse.
   // Eye-level water: vignette only fires when head is actually submerged.
