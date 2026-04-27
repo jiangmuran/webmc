@@ -359,8 +359,14 @@ export class MobRenderer {
       } else {
         targetScale = this.customScales.get(mob.id) ?? 1;
         targetRotZ = 0;
-        const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
-        if (vh > 0.3) {
+        // sqrt(x²+z²) replaces Math.hypot — per-mob per-frame walk-bob
+        // calc, mob velocity components are always in normal range so
+        // hypot's overflow safety margin is wasted CPU.
+        const vx = mob.velocity.x;
+        const vz = mob.velocity.z;
+        const vhSq = vx * vx + vz * vz;
+        if (vhSq > 0.09) {
+          const vh = Math.sqrt(vhSq);
           const phase = nowMs * 0.012 + mob.id * 0.37;
           targetRotX = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
         } else {

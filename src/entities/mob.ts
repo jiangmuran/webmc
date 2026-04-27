@@ -1142,7 +1142,10 @@ export class MobWorld {
     if (mob.fleeingSec > 0 && ctx.playerPos && mob.def.behavior === 'passive') {
       const dx = mob.position.x - ctx.playerPos.x;
       const dz = mob.position.z - ctx.playerPos.z;
-      const len = Math.hypot(dx, dz) || 1;
+      // sqrt(x²+z²) avoids hypot's overflow-safe range-checks; mob/
+      // player coords are always in normal range. Per mob per tick on
+      // every fleeing passive.
+      const len = Math.sqrt(dx * dx + dz * dz) || 1;
       mob.velocity.x = (dx / len) * mob.def.walkSpeed * 1.4;
       mob.velocity.z = (dz / len) * mob.def.walkSpeed * 1.4;
       mob.yaw = Math.atan2(dx / len, dz / len);
@@ -1169,8 +1172,10 @@ export class MobWorld {
         // Movement velocity uses horizontal-only direction so mobs don't
         // crawl when the player is high above (e.g. on a 3-block tower).
         // Aggro distSq above is 3D for vanilla parity, but the chase
-        // direction stays in the xz plane.
-        const horizLen = Math.hypot(dx, dz) || 1;
+        // direction stays in the xz plane. sqrt(x²+z²) over hypot:
+        // hypot's overflow-safe range-check is wasted CPU on per-mob
+        // chase paths.
+        const horizLen = Math.sqrt(dx * dx + dz * dz) || 1;
         const nx = dx / horizLen;
         const nz = dz / horizLen;
         mob.velocity.x = nx * mob.def.walkSpeed;
