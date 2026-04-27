@@ -1812,6 +1812,13 @@ void persistDB.getMeta('loadouts').then((saved) => {
 });
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
+// Cached item IDs for the per-frame elytra/turtle/leather-boots
+// equipment checks. Was `itemRegistry.get(stack.itemId).name ===
+// 'webmc:X'` every frame (Map.get + property read + string compare).
+// itemId compare is a single integer compare.
+const elytraItemIdCached = itemRegistry.byName('webmc:elytra');
+const turtleShellItemIdCached = itemRegistry.byName('webmc:turtle_shell');
+const leatherBootsItemIdCached = itemRegistry.byName('webmc:leather_boots');
 // Cached IDs for ember scans + ice formation + crop tick — was
 // registry.byName(...) every tick. (waterId, lavaId already cached
 // above near fluid setup.)
@@ -9056,7 +9063,7 @@ function frame(): void {
   // Turtle Shell helmet: 10s of Water Breathing on emerging from water.
   if (prevInWater && !inWaterBody) {
     const helmetItem = inventory.armor[0];
-    if (helmetItem && itemRegistry.get(helmetItem.itemId).name === 'webmc:turtle_shell') {
+    if (helmetItem && helmetItem.itemId === turtleShellItemIdCached) {
       playerState.applyEffect('water_breathing', 0, 10);
     }
   }
@@ -9295,8 +9302,7 @@ function frame(): void {
   // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
   {
     const chest = inventory.armor[1];
-    const chestName = chest ? itemRegistry.get(chest.itemId).name : '';
-    const wearingElytra = chestName === 'webmc:elytra';
+    const wearingElytra = chest != null && chest.itemId === elytraItemIdCached;
     isGliding =
       wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
     if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
@@ -9466,7 +9472,7 @@ function frame(): void {
     // freezing damage isn't tracked yet — just the movement effect.
     if (touchedPowderSnow) {
       const boots = inventory.armor[3];
-      const wearingLeather = boots && itemRegistry.get(boots.itemId).name === 'webmc:leather_boots';
+      const wearingLeather = boots != null && boots.itemId === leatherBootsItemIdCached;
       if (!wearingLeather) {
         fp.velocity.x *= 0.5;
         fp.velocity.z *= 0.5;
