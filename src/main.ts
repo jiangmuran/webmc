@@ -2427,9 +2427,9 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
   return 'center';
 }
 
-// Reused look-vector scratch object — was allocated fresh per castRay
-// call (4+ per frame including the per-frame block-outline cast).
-const interactionLookScratch = { x: 0, y: 0, z: 0 };
+// Reused look-vector scratch — passed to fp.lookVector(out) and then
+// straight through to raycastVoxels. THREE.Vector3 satisfies Vec3Lite
+// structurally so no copy step is needed.
 const interactionLookTmp = new THREE.Vector3();
 // Reused for the food-consumption particle emit position.
 const consumeFoodLookTmp = new THREE.Vector3();
@@ -2782,11 +2782,12 @@ const gamepadIntentScratch = {
 const interaction = new InteractionController(
   camera,
   () => {
-    fp.lookVector(interactionLookTmp);
-    interactionLookScratch.x = interactionLookTmp.x;
-    interactionLookScratch.y = interactionLookTmp.y;
-    interactionLookScratch.z = interactionLookTmp.z;
-    return interactionLookScratch;
+    // Skip the per-frame Vector3 → {x,y,z} copy. raycastVoxels reads
+    // the result via the structural Vec3Lite interface, and THREE.Vector3
+    // already exposes x/y/z fields, so passing the Vector3 directly saves
+    // 3 reads + 3 writes per cast (which fires every frame for the
+    // crosshair outline + on every place/break).
+    return fp.lookVector(interactionLookTmp);
   },
   world,
   isSolid,
