@@ -10586,9 +10586,11 @@ function frame(): void {
       }
       sectionsToRemesh.clear();
       for (const p of changed) {
-        const cx = Math.floor(p.x / 16);
-        const cz = Math.floor(p.z / 16);
-        const cy = Math.floor(p.y / 16);
+        // p.{x,y,z} are integer world coords; `>> 4` matches
+        // Math.floor(_/16) for ints (sign-correct) and skips the divide.
+        const cx = p.x >> 4;
+        const cz = p.z >> 4;
+        const cy = p.y >> 4;
         const ck = lightKey(cx, cz);
         chunksToRelight.add(ck);
         let s = sectionsToRemesh.get(ck);
@@ -10599,8 +10601,10 @@ function frame(): void {
         s.add(cy);
       }
       for (const k of chunksToRelight) {
-        // Unpack the numeric key back into (cx, cz).
-        const cxN = Math.floor(k / 65536) - 32768;
+        // Unpack the numeric key back into (cx, cz). `>>> 16` matches
+        // Math.floor(k/65536) for valid lightKey values (bounded to
+        // 32 bits) and skips the divide.
+        const cxN = (k >>> 16) - 32768;
         const czN = (k & 0xffff) - 32768;
         const chunk = world.getChunk(cxN, czN);
         if (!chunk) continue;
