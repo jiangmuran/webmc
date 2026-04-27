@@ -849,6 +849,22 @@ export interface Mob {
 const GRAVITY = 32;
 const TERMINAL_VELOCITY = 50;
 const ATTACK_COOLDOWN_SEC = 0.8;
+// Lava-immune mob kinds (vanilla parity). Hoisted to a Set so the
+// per-tick lava-burn check is one hash lookup instead of a 10-way
+// `||` chain that always had to walk all 10 string compares for the
+// dominant non-immune case.
+const FIRE_IMMUNE_MOB_KINDS: ReadonlySet<string> = new Set([
+  'blaze',
+  'ghast',
+  'magma_cube',
+  'strider',
+  'zombified_piglin',
+  'piglin',
+  'piglin_brute',
+  'wither',
+  'wither_skeleton',
+  'ender_dragon',
+]);
 
 // 16-step stepwise solidity check between two world positions. Used as a
 // cheap "can this mob see the player" gate so attacks don't pass through
@@ -1263,17 +1279,10 @@ export class MobWorld {
       // Fire-immune mobs (nether natives + the wither / ender dragon)
       // are unaffected. Without this, mobs walked through lava fields
       // without harm — easy farming abuse if you funneled them in.
-      const fireImmune =
-        mob.def.kind === 'blaze' ||
-        mob.def.kind === 'ghast' ||
-        mob.def.kind === 'magma_cube' ||
-        mob.def.kind === 'strider' ||
-        mob.def.kind === 'zombified_piglin' ||
-        mob.def.kind === 'piglin' ||
-        mob.def.kind === 'piglin_brute' ||
-        mob.def.kind === 'wither' ||
-        mob.def.kind === 'wither_skeleton' ||
-        mob.def.kind === 'ender_dragon';
+      // Set.has is faster than the 10-way `||` chain for the dominant
+      // case (non-immune mob, all 10 string compares had to evaluate
+      // before returning false).
+      const fireImmune = FIRE_IMMUNE_MOB_KINDS.has(mob.def.kind);
       if (!fireImmune) {
         mob.health -= 4 * dtSec;
         mob.hurtFlashSec = Math.max(mob.hurtFlashSec, 0.18);
