@@ -286,7 +286,9 @@ function crc32(bytes: Uint8Array): number {
   let crc = 0xffffffff;
   const len = bytes.length;
   for (let i = 0; i < len; i++) {
-    crc = ((crc >>> 8) ^ (CRC_TABLE[(crc ^ bytes[i]!) & 0xff] ?? 0)) >>> 0;
+    // CRC_TABLE is Uint32Array(256), indexed by `& 0xff` — always in
+    // range. `!` skips the per-byte coalesce (TS narrowing artifact).
+    crc = ((crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]!) & 0xff]!) >>> 0;
   }
   return (crc ^ 0xffffffff) >>> 0;
 }
