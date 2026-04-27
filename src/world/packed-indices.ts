@@ -22,7 +22,10 @@ export function readIndex(arr: Uint32Array | null, at: number, bits: BitsPerInde
   const bitPos = at * bits;
   const wordIdx = bitPos >>> 5;
   const bitOff = bitPos & 31;
-  const word = arr[wordIdx] ?? 0;
+  // Uint32Array read with valid index always returns a number; `!`
+  // skips the per-call nullish-coalesce (TS narrowing artifact).
+  // readIndex/writeIndex run per cell × 4096 cells × per chunk-set.
+  const word = arr[wordIdx]!;
   const mask = (1 << bits) - 1;
   return (word >>> bitOff) & mask;
 }
@@ -34,7 +37,7 @@ export function writeIndex(arr: Uint32Array, at: number, bits: BitsPerIndex, val
   const bitOff = bitPos & 31;
   const mask = (1 << bits) - 1;
   const v = value & mask;
-  arr[wordIdx] = ((arr[wordIdx] ?? 0) & ~(mask << bitOff)) | (v << bitOff);
+  arr[wordIdx] = (arr[wordIdx]! & ~(mask << bitOff)) | (v << bitOff);
 }
 
 export function repack(
