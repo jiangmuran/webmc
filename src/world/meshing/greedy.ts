@@ -93,15 +93,15 @@ function lightAtCtx(x: number, y: number, z: number): number {
 }
 
 function opaqueAtCtx(x: number, y: number, z: number): boolean {
-  if (x < 0) return CTX_NEIGHBOR_NX !== null && (CTX_NEIGHBOR_NX[y * D_CONST + z] ?? 0) !== 0;
-  if (x >= D_CONST)
-    return CTX_NEIGHBOR_PX !== null && (CTX_NEIGHBOR_PX[y * D_CONST + z] ?? 0) !== 0;
-  if (y < 0) return CTX_NEIGHBOR_NY !== null && (CTX_NEIGHBOR_NY[x * D_CONST + z] ?? 0) !== 0;
-  if (y >= D_CONST)
-    return CTX_NEIGHBOR_PY !== null && (CTX_NEIGHBOR_PY[x * D_CONST + z] ?? 0) !== 0;
-  if (z < 0) return CTX_NEIGHBOR_NZ !== null && (CTX_NEIGHBOR_NZ[x * D_CONST + y] ?? 0) !== 0;
-  if (z >= D_CONST)
-    return CTX_NEIGHBOR_PZ !== null && (CTX_NEIGHBOR_PZ[x * D_CONST + y] ?? 0) !== 0;
+  // D_CONST=SUBCHUNK_DIM=16 → `* D_CONST` is `<< 4`. Border lookups
+  // here fire 4096 times per axis-pass × 6 passes per mesh; the
+  // multiply was the only non-bitwise op in this hot probe.
+  if (x < 0) return CTX_NEIGHBOR_NX !== null && (CTX_NEIGHBOR_NX[(y << 4) + z] ?? 0) !== 0;
+  if (x >= D_CONST) return CTX_NEIGHBOR_PX !== null && (CTX_NEIGHBOR_PX[(y << 4) + z] ?? 0) !== 0;
+  if (y < 0) return CTX_NEIGHBOR_NY !== null && (CTX_NEIGHBOR_NY[(x << 4) + z] ?? 0) !== 0;
+  if (y >= D_CONST) return CTX_NEIGHBOR_PY !== null && (CTX_NEIGHBOR_PY[(x << 4) + z] ?? 0) !== 0;
+  if (z < 0) return CTX_NEIGHBOR_NZ !== null && (CTX_NEIGHBOR_NZ[(x << 4) + y] ?? 0) !== 0;
+  if (z >= D_CONST) return CTX_NEIGHBOR_PZ !== null && (CTX_NEIGHBOR_PZ[(x << 4) + y] ?? 0) !== 0;
   const pIdx = CTX_FLAT_IDX[localIndex(x, y, z)] ?? 0;
   return (CTX_PALETTE_OPAQUE[pIdx] ?? 0) !== 0;
 }
