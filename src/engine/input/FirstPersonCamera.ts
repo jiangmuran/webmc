@@ -362,12 +362,11 @@ export class FirstPersonCamera {
 
         if (this.jumpBufferTimer > 0 && this.coyoteTimer > 0) {
           this.velocity.y = this.opts.jumpVelocity * this.jumpVelocityMultiplier;
-          // Sprint-jump forward boost — small fwd kick in look direction
+          // Sprint-jump forward boost — small fwd kick in look direction.
+          // Reuse refreshTrigCache() values from the top of update().
           if (this.input.sprint) {
-            const sinY2 = Math.sin(this.yaw);
-            const cosY2 = Math.cos(this.yaw);
-            this.velocity.x += -sinY2 * 2.2;
-            this.velocity.z += -cosY2 * 2.2;
+            this.velocity.x += -this.cachedSinYaw * 2.2;
+            this.velocity.z += -this.cachedCosYaw * 2.2;
           }
           this.onGround = false;
           this.coyoteTimer = 0;
