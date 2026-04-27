@@ -10160,8 +10160,9 @@ function frame(): void {
         if (m.def.kind !== 'zombie') continue;
         const headY = Math.floor(m.position.y + m.def.aabb.halfY);
         const headBlock = world.get(Math.floor(m.position.x), headY, Math.floor(m.position.z));
-        const headDef = registry.get(stateId(headBlock));
-        const inWater = headDef.name === 'webmc:water';
+        // Numeric id compare against the cached waterId — was running
+        // registry.get + .name string equality per zombie per drown check.
+        const inWater = headBlock !== AIR && stateId(headBlock) === waterId;
         if (inWater) {
           const cur = (zombieDrownTimers.get(m.id) ?? 0) + dt;
           zombieDrownTimers.set(m.id, cur);
