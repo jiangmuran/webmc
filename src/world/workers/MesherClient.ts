@@ -37,44 +37,32 @@ export function extractBorderFromSubChunk(
     if (v !== 0) out.fill(v);
     return out;
   }
-  for (let a = 0; a < D; a++) {
-    for (let b = 0; b < D; b++) {
-      let x = 0;
-      let y = 0;
-      let z = 0;
-      switch (face) {
-        case 'nx':
-          x = D - 1;
-          y = a;
-          z = b;
-          break;
-        case 'px':
-          x = 0;
-          y = a;
-          z = b;
-          break;
-        case 'ny':
-          x = a;
-          y = D - 1;
-          z = b;
-          break;
-        case 'py':
-          x = a;
-          y = 0;
-          z = b;
-          break;
-        case 'nz':
-          x = a;
-          y = b;
-          z = D - 1;
-          break;
-        case 'pz':
-          x = a;
-          y = b;
-          z = 0;
-          break;
+  // Hoist the face-axis decode out of the inner loop. The previous code
+  // ran a 6-case switch per cell × 256 cells × 6 faces × N remeshes —
+  // every iteration recomputed the same axis mapping for a constant
+  // face. Branching once on `face` then running a tight loop is cheaper.
+  const Dm1 = D - 1;
+  if (face === 'nx' || face === 'px') {
+    const x = face === 'nx' ? Dm1 : 0;
+    for (let a = 0; a < D; a++) {
+      for (let b = 0; b < D; b++) {
+        out[a * D + b] = isOpaque(self.get(x, a, b)) ? 1 : 0;
       }
-      out[a * D + b] = isOpaque(self.get(x, y, z)) ? 1 : 0;
+    }
+  } else if (face === 'ny' || face === 'py') {
+    const y = face === 'ny' ? Dm1 : 0;
+    for (let a = 0; a < D; a++) {
+      for (let b = 0; b < D; b++) {
+        out[a * D + b] = isOpaque(self.get(a, y, b)) ? 1 : 0;
+      }
+    }
+  } else {
+    // nz / pz
+    const z = face === 'nz' ? Dm1 : 0;
+    for (let a = 0; a < D; a++) {
+      for (let b = 0; b < D; b++) {
+        out[a * D + b] = isOpaque(self.get(a, b, z)) ? 1 : 0;
+      }
     }
   }
   return out;
