@@ -11147,9 +11147,9 @@ function frame(): void {
     const hour = Math.floor(((dayNight.timeOfDay + 0.25) * 24) % 24);
     const minute = Math.floor((((dayNight.timeOfDay + 0.25) * 24) % 1) * 60);
     const clock = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-    const aimedBlock = aim
-      ? registry.get(stateId(world.get(aim.bx, aim.by, aim.bz))).name.replace(/^webmc:/, '')
-      : '';
+    // Use the memoized short-name lookup (BLOCK_SHORT_NAME_BY_ID) — was
+    // re-running the /^webmc:/ regex per HUD tick.
+    const aimedBlock = aim ? blockShortNameFn(stateId(world.get(aim.bx, aim.by, aim.bz))) : '';
     let effectStr = '';
     for (const [id, eff] of playerState.effects) {
       effectStr += ` ${id}${eff.amplifier > 0 ? `+${String(eff.amplifier)}` : ''}(${eff.remainingSec.toFixed(0)}s)`;

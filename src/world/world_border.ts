@@ -64,7 +64,6 @@ export function checkPosition(border: WorldBorder, x: number, z: number): Border
     return SHARED_BORDER_CHECK;
   }
   SHARED_BORDER_CHECK.insideBorder = false;
-  SHARED_BORDER_CHECK.damagePerSec =
-    (outside - border.damageBuffer) * border.damagePerBlockOutside;
+  SHARED_BORDER_CHECK.damagePerSec = (outside - border.damageBuffer) * border.damagePerBlockOutside;
   return SHARED_BORDER_CHECK;
 }
