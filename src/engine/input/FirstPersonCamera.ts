@@ -427,7 +427,8 @@ export class FirstPersonCamera {
     // Diff-cache the camera position write — Vector3.set fires the
     // onChange callback (matrixWorldNeedsUpdate); standing still
     // (no bob, no sneak transition) writes the same eye-y every frame.
-    const camY = this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset;
+    const camY =
+      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset;
     if (
       this.position.x !== this.lastCamPosX ||
       camY !== this.lastCamPosY ||
