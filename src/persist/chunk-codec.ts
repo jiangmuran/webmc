@@ -210,7 +210,8 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
 
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     if (!(sectionMask & (1 << cy))) continue;
-    const bits = validBits(bytes[offset] ?? 0);
+    // bytes is Uint8Array; offset stays in range — `!` over `?? 0`.
+    const bits = validBits(bytes[offset]!);
     offset += 1;
     const paletteSize = view.getUint16(offset, true);
     offset += 2;
