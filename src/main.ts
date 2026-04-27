@@ -2516,6 +2516,73 @@ function envTakeDamage(amount: number, source: string): void {
 // regex + new string were both pure overhead since the name never
 // changes for a given id.
 const BLOCK_SHORT_NAME_BY_ID: string[] = [];
+
+// Memoized block category flags for tool-speed gates. Was running 30+
+// string includes/equals per frame in getBreakDurationSec — the result
+// is stable per blockId so cache it. -1 placeholder means "not yet
+// computed"; the bitfield encodes stone/wood/dirt/cobweb/wool/leaves.
+const BLOCK_CATEGORY_STONE_LIKE = 1 << 0;
+const BLOCK_CATEGORY_WOOD_LIKE = 1 << 1;
+const BLOCK_CATEGORY_DIRT_LIKE = 1 << 2;
+const BLOCK_CATEGORY_COBWEB = 1 << 3;
+const BLOCK_CATEGORY_WOOL = 1 << 4;
+const BLOCK_CATEGORY_LEAVES = 1 << 5;
+const BLOCK_CATEGORY_BY_ID: number[] = [];
+function blockCategoryFor(id: number, blockShortName: string): number {
+  let cat = BLOCK_CATEGORY_BY_ID[id];
+  if (cat !== undefined) return cat;
+  cat = 0;
+  if (
+    blockShortName.includes('stone') ||
+    blockShortName.includes('ore') ||
+    blockShortName.includes('cobble') ||
+    blockShortName.includes('brick') ||
+    blockShortName.includes('basalt') ||
+    blockShortName === 'obsidian' ||
+    blockShortName === 'crying_obsidian' ||
+    blockShortName === 'glowstone' ||
+    blockShortName === 'iron_block' ||
+    blockShortName === 'gold_block' ||
+    blockShortName === 'diamond_block' ||
+    blockShortName === 'netherite_block' ||
+    blockShortName === 'lapis_block' ||
+    blockShortName === 'redstone_block' ||
+    blockShortName === 'emerald_block' ||
+    blockShortName === 'coal_block' ||
+    blockShortName === 'ancient_debris'
+  )
+    cat |= BLOCK_CATEGORY_STONE_LIKE;
+  if (
+    blockShortName.endsWith('_log') ||
+    blockShortName.endsWith('_planks') ||
+    blockShortName.endsWith('_wood') ||
+    blockShortName === 'oak_log' ||
+    blockShortName === 'crafting_table' ||
+    blockShortName.endsWith('_door') ||
+    blockShortName.endsWith('_fence') ||
+    blockShortName.endsWith('_trapdoor')
+  )
+    cat |= BLOCK_CATEGORY_WOOD_LIKE;
+  if (
+    blockShortName === 'dirt' ||
+    blockShortName === 'grass_block' ||
+    blockShortName === 'sand' ||
+    blockShortName === 'gravel' ||
+    blockShortName === 'snow' ||
+    blockShortName === 'soul_sand' ||
+    blockShortName === 'soul_soil' ||
+    blockShortName === 'farmland' ||
+    blockShortName === 'mycelium' ||
+    blockShortName === 'podzol' ||
+    blockShortName === 'clay'
+  )
+    cat |= BLOCK_CATEGORY_DIRT_LIKE;
+  if (blockShortName === 'cobweb') cat |= BLOCK_CATEGORY_COBWEB;
+  if (blockShortName === 'wool' || blockShortName.endsWith('_wool')) cat |= BLOCK_CATEGORY_WOOL;
+  if (blockShortName.endsWith('_leaves')) cat |= BLOCK_CATEGORY_LEAVES;
+  BLOCK_CATEGORY_BY_ID[id] = cat;
+  return cat;
+}
 function blockShortNameFn(id: number): string {
   let s = BLOCK_SHORT_NAME_BY_ID[id];
   if (s !== undefined) return s;
@@ -3112,50 +3179,17 @@ const interaction = new InteractionController(
       // Tool kind matching: pickaxe for stone/ore, axe for wood/log, shovel
       // for dirt/sand/gravel/snow, sword for cobwebs. Anything else is hand.
       const blockShortName = blockShortNameFn(blockId);
-      const isStoneLike =
-        blockShortName.includes('stone') ||
-        blockShortName.includes('ore') ||
-        blockShortName.includes('cobble') ||
-        blockShortName.includes('brick') ||
-        blockShortName.includes('basalt') ||
-        blockShortName === 'obsidian' ||
-        blockShortName === 'crying_obsidian' ||
-        blockShortName === 'glowstone' ||
-        blockShortName === 'iron_block' ||
-        blockShortName === 'gold_block' ||
-        blockShortName === 'diamond_block' ||
-        blockShortName === 'netherite_block' ||
-        blockShortName === 'lapis_block' ||
-        blockShortName === 'redstone_block' ||
-        blockShortName === 'emerald_block' ||
-        blockShortName === 'coal_block' ||
-        blockShortName === 'ancient_debris';
-      const isWoodLike =
-        blockShortName.endsWith('_log') ||
-        blockShortName.endsWith('_planks') ||
-        blockShortName.endsWith('_wood') ||
-        blockShortName === 'oak_log' ||
-        blockShortName === 'crafting_table' ||
-        blockShortName.endsWith('_door') ||
-        blockShortName.endsWith('_fence') ||
-        blockShortName.endsWith('_trapdoor');
-      const isDirtLike =
-        blockShortName === 'dirt' ||
-        blockShortName === 'grass_block' ||
-        blockShortName === 'sand' ||
-        blockShortName === 'gravel' ||
-        blockShortName === 'snow' ||
-        blockShortName === 'soul_sand' ||
-        blockShortName === 'soul_soil' ||
-        blockShortName === 'farmland' ||
-        blockShortName === 'mycelium' ||
-        blockShortName === 'podzol' ||
-        blockShortName === 'clay';
+      // Memoized category bitfield — was 30+ string includes/equals
+      // every frame while breaking. Cached per blockId now.
+      const blockCat = blockCategoryFor(blockId, blockShortName);
+      const isStoneLike = (blockCat & BLOCK_CATEGORY_STONE_LIKE) !== 0;
+      const isWoodLike = (blockCat & BLOCK_CATEGORY_WOOD_LIKE) !== 0;
+      const isDirtLike = (blockCat & BLOCK_CATEGORY_DIRT_LIKE) !== 0;
       // Sword + cobweb: vanilla breaks cobweb 15x faster with sword.
       // Shears + wool / leaves / cobweb: instant-ish (15x).
-      const isCobweb = blockShortName === 'cobweb';
-      const isWool = blockShortName === 'wool' || blockShortName.endsWith('_wool');
-      const isLeaves = blockShortName.endsWith('_leaves');
+      const isCobweb = (blockCat & BLOCK_CATEGORY_COBWEB) !== 0;
+      const isWool = (blockCat & BLOCK_CATEGORY_WOOL) !== 0;
+      const isLeaves = (blockCat & BLOCK_CATEGORY_LEAVES) !== 0;
       const isShears = heldName === 'shears';
       const isSword = heldName.includes('sword');
       const correctTool =
