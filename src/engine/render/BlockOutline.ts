@@ -6,6 +6,11 @@ export class BlockOutline {
   private readonly lines: THREE.LineSegments;
   private readonly crack: THREE.Mesh;
   private readonly crackMat: THREE.MeshBasicMaterial;
+  // Diff-caches. setHit/hide fire every frame; group.visible and
+  // crackMat.opacity often hold the same value across frames. Skipping
+  // the writes avoids three.js Object3D + Material setter overhead.
+  private lastVisible = false;
+  private lastCrackOpacity = -1;
 
   constructor() {
     this.group = new THREE.Group();
@@ -36,16 +41,26 @@ export class BlockOutline {
 
   setHit(bx: number, by: number, bz: number, breakProgress01 = 0): void {
     this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
-    this.group.visible = true;
+    if (!this.lastVisible) {
+      this.group.visible = true;
+      this.lastVisible = true;
+    }
     // Snap to 10 MC-style crack stages so the visual ticks visibly forward.
     const stage = crackStage(breakProgress01);
-    this.crackMat.opacity = stage > 0 ? Math.min(0.65, (stage / 9) * 0.7) : 0;
+    const targetOpacity = stage > 0 ? Math.min(0.65, (stage / 9) * 0.7) : 0;
+    if (targetOpacity !== this.lastCrackOpacity) {
+      this.crackMat.opacity = targetOpacity;
+      this.lastCrackOpacity = targetOpacity;
+    }
     // Subtle breathing scale so the outline feels alive.
     const s = 1 + Math.sin(performance.now() * 0.005) * 0.003;
     this.group.scale.setScalar(s);
   }
 
   hide(): void {
-    this.group.visible = false;
+    if (this.lastVisible) {
+      this.group.visible = false;
+      this.lastVisible = false;
+    }
   }
 }
