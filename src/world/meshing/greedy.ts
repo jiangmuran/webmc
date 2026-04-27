@@ -164,12 +164,19 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             pos[d] = w;
             pos[u] = iu;
             pos[v] = iv;
-            const selfIdx = flatIdx[localIndex(pos[0] ?? 0, pos[1] ?? 0, pos[2] ?? 0)] ?? 0;
+            // pos/npos are fixed-size [num,num,num] tuples and we just
+            // wrote to all three indices via [d]/[u]/[v] (a permutation
+            // of [0,1,2]). The `?? 0` was a TS narrowing artifact (
+            // noUncheckedIndexedAccess types reads as `number|undef`),
+            // not a runtime concern — `!` skips the per-cell coalesce
+            // for what's actually a guaranteed number. Inner loop runs
+            // 4096× per axis-pass × 6 passes per mesh.
+            const selfIdx = flatIdx[localIndex(pos[0]!, pos[1]!, pos[2]!)] ?? 0;
             if (paletteOpaque[selfIdx] !== 1) continue;
             npos[d] = w + sign;
             npos[u] = iu;
             npos[v] = iv;
-            if (opaqueAtCtx(npos[0] ?? 0, npos[1] ?? 0, npos[2] ?? 0)) continue;
+            if (opaqueAtCtx(npos[0]!, npos[1]!, npos[2]!)) continue;
             mask[(iv << 4) + iu] = selfIdx;
           }
         }
