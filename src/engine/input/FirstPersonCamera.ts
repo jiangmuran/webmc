@@ -442,7 +442,12 @@ export class FirstPersonCamera {
 
     const sneakDrop = this.input.sneak && this.onGround ? 0.3 : 0;
 
-    const horizSpeed = Math.hypot(this.velocity.x, this.velocity.z);
+    // sqrt(x²+z²) over Math.hypot for the bob speed gate — game-coord
+    // velocities are always in normal range, hypot's overflow safety is
+    // wasted CPU per frame.
+    const vx = this.velocity.x;
+    const vz = this.velocity.z;
+    const horizSpeed = Math.sqrt(vx * vx + vz * vz);
     const bobActive = this.bobEnabled && this.onGround && !this.input.fly && horizSpeed > 0.5;
     if (bobActive) {
       this.bobPhase += dtSec * (8 + horizSpeed * 0.8);
