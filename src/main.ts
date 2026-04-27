@@ -4468,7 +4468,9 @@ function growTreeAt(bx: number, by: number, bz: number, saplingName: string): bo
   const trunkH = 4 + Math.floor(Math.random() * 3);
   for (let h = 0; h < trunkH; h++) {
     const above = world.get(bx, by + h, bz);
-    if (above === AIR || registry.get(stateId(above)).name.endsWith('_sapling')) {
+    // SAPLING_IDS Set is pre-resolved at module init — skip the
+    // registry.get(...).name string fetch + endsWith check per cell.
+    if (above === AIR || SAPLING_IDS.has(stateId(above))) {
       world.set(bx, by + h, bz, makeState(logId, 0));
       touchWorldEdit(bx, by + h, bz, logId);
     }
