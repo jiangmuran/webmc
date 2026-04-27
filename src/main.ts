@@ -7850,10 +7850,23 @@ for (const [leafName, sapName] of Object.entries(LEAF_TO_SAPLING_FOR_DECAY)) {
 // becomes a Set.has on a numeric id.
 const LEAF_BFS_LOG_OR_WOOD_IDS = new Set<number>();
 const LEAF_BFS_LEAVES_IDS = new Set<number>();
+// Same pattern for the sapling random-tick branch — was running
+// `name.endsWith('_sapling')` per sample.
+const SAPLING_IDS = new Set<number>();
+// Per-leaf-id sapling drop lookup — was indexed by leaf-block name
+// (a string lookup per drop event). Numeric-id parallel map.
+const LEAF_TO_SAPLING_BY_ID: (number | undefined)[] = [];
+const OAK_LEAVES_ID = registry.byName('webmc:oak_leaves') ?? -1;
 for (let i = 0; i < registry.defs.length; i++) {
   const n = registry.defs[i]!.name;
   if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD_IDS.add(i);
-  else if (n.endsWith('_leaves')) LEAF_BFS_LEAVES_IDS.add(i);
+  else if (n.endsWith('_leaves')) {
+    LEAF_BFS_LEAVES_IDS.add(i);
+    const sapItemId = LEAF_TO_SAPLING_ID[n];
+    if (sapItemId !== undefined) LEAF_TO_SAPLING_BY_ID[i] = sapItemId;
+  } else if (n.endsWith('_sapling')) {
+    SAPLING_IDS.add(i);
+  }
 }
 // Composter input → fill chance. Was being rebuilt on every
 // composter right-click.
@@ -10596,8 +10609,14 @@ function frame(): void {
         const s = world.get(x, y, z);
         if (s === AIR) continue;
         const id = stateId(s);
-        const name = registry.get(id).name;
-        if (name.endsWith('_sapling')) {
+        // ID-based dispatch — was fetching `registry.get(id).name` per
+        // sample then comparing against 7+ string literals. With 80
+        // samples per crop tick (1Hz) every survival session, that's
+        // ~560 string ops/sec for branches that mostly aren't taken.
+        // Pre-resolved Set/numeric checks first; fetch name only inside
+        // branches that actually need it (sapling growTreeAt).
+        if (SAPLING_IDS.has(id)) {
+          const name = registry.get(id).name;
           const stage = stateProps(s) & 1;
           const cx = x >> 4;
           const cz = z >> 4;
@@ -10622,7 +10641,7 @@ function frame(): void {
           } else if (result.stage !== stage) {
             world.set(x, y, z, makeState(id, result.stage));
           }
-        } else if (name === 'webmc:bamboo') {
+        } else if (id === bambooIdCached) {
           // Bamboo column growth — same upward-stack pattern as sugar
           // cane but max 16 tall (vs 3) and slower per-tick chance.
           // Was unwired despite the bamboo_plant_growth module shipping.
@@ -10665,7 +10684,7 @@ function frame(): void {
           } else if (result === 'age_inc') {
             world.set(x, y, z, makeState(id, caneTickStateScratch.age));
           }
-        } else if (name === 'webmc:grass_block' || name === 'webmc:dirt') {
+        } else if (id === grassBlockIdCached || id === dirtIdCached) {
           // Grass spreads to adjacent dirt (light >= 9, no opaque
           // above), grass with opaque above reverts to dirt. Was
           // unwired — broken trees stayed dirt forever, mowed grass
@@ -10684,7 +10703,7 @@ function frame(): void {
               touchWorldEdit(p.pos.x, p.pos.y, p.pos.z, blockId);
             }
           }
-        } else if (name === 'webmc:fire' && gameRules.doFireTick) {
+        } else if (id === fireIdCached && gameRules.doFireTick) {
           // Fire spread + age. The fire_spread module + tests have
           // shipped since M2 but were never invoked — fire just sat
           // there forever, never spreading, never burning out. Now
@@ -10726,7 +10745,7 @@ function frame(): void {
             world.set(nx, ny, nz, makeState(fireId, 0));
             touchWorldEdit(nx, ny, nz, fireId);
           }
-        } else if (name.endsWith('_leaves')) {
+        } else if (LEAF_BFS_LEAVES_IDS.has(id)) {
           // Leaf decay: BFS up to LEAF_MAX_DIST-1 looking for any log.
           // If none found within that radius, the leaf is "disconnected"
           // — it falls (drops + becomes air). Was unwired since M3, so
@@ -10785,7 +10804,9 @@ function frame(): void {
               // skipping the intermediate array + {itemId, count}
               // wrappers cuts ~3 throwaway objects per decay event.
               if (Math.random() < 0.05) {
-                const sId = LEAF_TO_SAPLING_ID[name];
+                // Numeric-id parallel map — was indexed by leaf-block
+                // name (string lookup per drop event).
+                const sId = LEAF_TO_SAPLING_BY_ID[id];
                 if (sId !== undefined) {
                   droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
                     itemId: sId,
@@ -10804,7 +10825,7 @@ function frame(): void {
                   });
                 }
               }
-              if (name === 'webmc:oak_leaves' && Math.random() < 0.005) {
+              if (id === OAK_LEAVES_ID && Math.random() < 0.005) {
                 const aId = appleItemIdCached;
                 if (aId !== undefined) {
                   droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
@@ -10818,7 +10839,7 @@ function frame(): void {
               touchWorldEdit(x, y, z, 0);
             }
           }
-        } else if (name === 'webmc:ice') {
+        } else if (id === iceIdCached) {
           // Ice melt: light > 11 and no solid above. Was unwired —
           // ice in well-lit caves never melted to water.
           const above = world.get(x, y + 1, z);
@@ -10841,7 +10862,7 @@ function frame(): void {
               touchWorldEdit(x, y, z, waterId);
             }
           }
-        } else if (name === 'webmc:water') {
+        } else if (id === waterId) {
           // Ice form: cold biome + night + sky exposed + low light.
           // No-op in plains/forest (temperatures too warm); wired so
           // it just works when cold biome generator ships in M10.
