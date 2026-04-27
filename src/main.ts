@@ -8411,9 +8411,11 @@ const onLoad = (cx: number, cz: number): void => {
   if (!chunk) return;
   // Skip rebuild if populate already cached saved light. Was always
   // rebuilding even when a freshly-restored chunk had its serialized
-  // light right there.
-  if (!lightCache.has(lightKey(cx, cz))) {
-    lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
+  // light right there. Compute lightKey once — was being called twice
+  // (has + set), pure waste even though the call is just a bit-twiddle.
+  const lk = lightKey(cx, cz);
+  if (!lightCache.has(lk)) {
+    lightCache.set(lk, buildLight(chunk, lightOracle));
   }
   markChunkAllDirty(chunk);
   // Manual unroll — inner array literal allocated 4 fresh tuples per
