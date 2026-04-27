@@ -1148,7 +1148,9 @@ export class MobWorld {
       const len = Math.sqrt(dx * dx + dz * dz) || 1;
       mob.velocity.x = (dx / len) * mob.def.walkSpeed * 1.4;
       mob.velocity.z = (dz / len) * mob.def.walkSpeed * 1.4;
-      mob.yaw = Math.atan2(dx / len, dz / len);
+      // atan2(dx/len, dz/len) === atan2(dx, dz) — atan2 is angle-only,
+      // normalization doesn't affect the result.
+      mob.yaw = Math.atan2(dx, dz);
     }
 
     const aggro = this.isAggroTarget(mob);
@@ -1180,7 +1182,9 @@ export class MobWorld {
         const nz = dz / horizLen;
         mob.velocity.x = nx * mob.def.walkSpeed;
         mob.velocity.z = nz * mob.def.walkSpeed;
-        const targetYaw = Math.atan2(nx, nz);
+        // atan2(nx, nz) === atan2(dx, dz) — angle-only, normalization
+        // factor cancels.
+        const targetYaw = Math.atan2(dx, dz);
         const twoPi = Math.PI * 2;
         let dYaw = targetYaw - mob.yaw;
         while (dYaw > Math.PI) dYaw -= twoPi;
