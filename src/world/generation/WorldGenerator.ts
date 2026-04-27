@@ -148,8 +148,12 @@ export class WorldGenerator {
         const wx = cx * CHUNK_DIM + lx;
         const wz = cz * CHUNK_DIM + lz;
         const surface = this.surfaceAt(wx, wz);
-        const biome = this.biomeAt(wx, wz);
         const topBlock = surface <= SEA_LEVEL ? sand : grass;
+        // biomeAt is only consulted below for tree placement, which
+        // never happens underwater (gated by topBlock === grass). Skip
+        // the fbm noise call entirely for underwater columns — large
+        // ocean chunks gen substantially faster.
+        const biome = surface <= SEA_LEVEL ? PLAINS : this.biomeAt(wx, wz);
         for (let y = 0; y <= surface; y++) {
           let state = stone;
           if (y === 0) state = bedrock;
