@@ -2212,6 +2212,56 @@ function itemShortNameLower(id: number): string {
 // + index so a slot-switch invalidates the cache.
 let heldNameLowerCacheEntry: { name: string } | null = null;
 let heldNameLowerCacheValue = '';
+
+// Memoized tool flags (kind/speed/level) by held-name string. Was
+// running 12+ heldName.includes() per break tick to derive these —
+// for stable tool names (which don't change while the player is
+// breaking the same block) this is pure waste. Map gets cleared on
+// hotbar-switch is unnecessary because the same name resolves to the
+// same tier; lookups grow only with distinct held-name strings.
+interface ToolFlags {
+  isSword: boolean;
+  isShears: boolean;
+  isPickaxe: boolean;
+  isAxe: boolean;
+  isShovel: boolean;
+  toolSpeed: number;
+  toolLevel: number;
+}
+const TOOL_FLAGS_CACHE = new Map<string, ToolFlags>();
+function toolFlagsFor(heldName: string): ToolFlags {
+  const cached = TOOL_FLAGS_CACHE.get(heldName);
+  if (cached) return cached;
+  const isShears = heldName === 'shears';
+  const isSword = heldName.includes('sword');
+  const isPickaxe = heldName.includes('pickaxe');
+  const isAxe = heldName.includes('axe') && !isPickaxe;
+  const isShovel = heldName.includes('shovel');
+  let toolSpeed = 1;
+  if (heldName.includes('netherite')) toolSpeed = 9;
+  else if (heldName.includes('diamond')) toolSpeed = 8;
+  else if (heldName.includes('gold')) toolSpeed = 12;
+  else if (heldName.includes('iron')) toolSpeed = 6;
+  else if (heldName.includes('stone')) toolSpeed = 4;
+  else if (heldName.includes('wood')) toolSpeed = 2;
+  let toolLevel = 0;
+  if (heldName.includes('netherite')) toolLevel = 5;
+  else if (heldName.includes('diamond')) toolLevel = 4;
+  else if (heldName.includes('iron')) toolLevel = 3;
+  else if (heldName.includes('stone')) toolLevel = 2;
+  else if (heldName.includes('wood') || heldName.includes('gold')) toolLevel = 1;
+  const flags: ToolFlags = {
+    isSword,
+    isShears,
+    isPickaxe,
+    isAxe,
+    isShovel,
+    toolSpeed,
+    toolLevel,
+  };
+  TOOL_FLAGS_CACHE.set(heldName, flags);
+  return flags;
+}
 function heldNameLower(): string {
   const stack = inventory.hotbar[inventory.selectedHotbar];
   if (stack) return itemShortNameLower(stack.itemId);
@@ -3190,37 +3240,25 @@ const interaction = new InteractionController(
       const isCobweb = (blockCat & BLOCK_CATEGORY_COBWEB) !== 0;
       const isWool = (blockCat & BLOCK_CATEGORY_WOOL) !== 0;
       const isLeaves = (blockCat & BLOCK_CATEGORY_LEAVES) !== 0;
-      const isShears = heldName === 'shears';
-      const isSword = heldName.includes('sword');
+      // Memoized tool flags by held-name (cached across calls).
+      const tf = toolFlagsFor(heldName);
       const correctTool =
-        (isStoneLike && heldName.includes('pickaxe')) ||
-        (isWoodLike && heldName.includes('axe') && !heldName.includes('pickaxe')) ||
-        (isDirtLike && heldName.includes('shovel')) ||
-        (isCobweb && (isSword || isShears)) ||
-        (isWool && isShears) ||
-        (isLeaves && isShears);
-      let toolSpeed = 1;
-      if (heldName.includes('netherite')) toolSpeed = 9;
-      else if (heldName.includes('diamond')) toolSpeed = 8;
-      else if (heldName.includes('gold')) toolSpeed = 12;
-      else if (heldName.includes('iron')) toolSpeed = 6;
-      else if (heldName.includes('stone')) toolSpeed = 4;
-      else if (heldName.includes('wood')) toolSpeed = 2;
+        (isStoneLike && tf.isPickaxe) ||
+        (isWoodLike && tf.isAxe) ||
+        (isDirtLike && tf.isShovel) ||
+        (isCobweb && (tf.isSword || tf.isShears)) ||
+        (isWool && tf.isShears) ||
+        (isLeaves && tf.isShears);
+      let toolSpeed = tf.toolSpeed;
       // Sword cuts cobweb at 15x speed; shears cut wool/leaves/cobweb at 15x.
-      if (isCobweb && (isSword || isShears)) toolSpeed = Math.max(toolSpeed, 15);
-      else if ((isWool || isLeaves) && isShears) toolSpeed = Math.max(toolSpeed, 15);
+      if (isCobweb && (tf.isSword || tf.isShears)) toolSpeed = Math.max(toolSpeed, 15);
+      else if ((isWool || isLeaves) && tf.isShears) toolSpeed = Math.max(toolSpeed, 15);
       // Tool only contributes its speed when it's the correct kind.
       const speed = correctTool ? toolSpeed : 1;
       // Tool tier requirement: if the player can't harvest this block at
       // all (e.g. wood pickaxe on diamond), use the slow no-harvest formula.
       const requiredLevel = requiredMiningLevel(blockShortName);
-      let toolLevel = 0;
-      if (heldName.includes('netherite')) toolLevel = 5;
-      else if (heldName.includes('diamond')) toolLevel = 4;
-      else if (heldName.includes('iron')) toolLevel = 3;
-      else if (heldName.includes('stone')) toolLevel = 2;
-      else if (heldName.includes('wood') || heldName.includes('gold')) toolLevel = 1;
-      const canHarvest = correctTool && toolLevel >= requiredLevel;
+      const canHarvest = correctTool && tf.toolLevel >= requiredLevel;
       const factor = canHarvest ? 1.5 : 5;
       let durationSec = (hardness * factor) / speed;
       // Vanilla mining-speed penalties:
