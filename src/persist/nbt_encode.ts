@@ -81,8 +81,13 @@ class Writer {
   }
 }
 
+// Shared module-scope TextEncoder. Was a fresh instance per NBT
+// string write — every key + every string tag (potentially hundreds
+// per save blob) allocated a new encoder. The class itself has no
+// per-call state once constructed; it's safe to share.
+const SHARED_UTF8_ENCODER = new TextEncoder();
 function writeUtf8(w: Writer, s: string): void {
-  const enc = new TextEncoder().encode(s);
+  const enc = SHARED_UTF8_ENCODER.encode(s);
   w.u16(enc.length);
   w.bytes(enc);
 }

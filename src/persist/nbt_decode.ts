@@ -83,13 +83,17 @@ class Cursor {
   }
 }
 
+// Shared module-scope decoder. NBT decode walks every key + every
+// string tag in a structure; an inbound chunk-NBT can hit hundreds of
+// strings, each previously allocating a fresh TextDecoder for nothing.
+const SHARED_UTF8_DECODER = new TextDecoder('utf-8', { fatal: false });
 function readModifiedUtf8(c: Cursor): string {
   const len = c.readU16();
   const bytes = c.readBytes(len);
   // Java's "modified UTF-8" differs from real UTF-8 in NUL handling and
   // surrogate pairs. For ASCII (which dominates Minecraft NBT), they
   // match — accept that approximation here.
-  return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+  return SHARED_UTF8_DECODER.decode(bytes);
 }
 
 function readPayload(c: Cursor, tag: number): NbtValue {

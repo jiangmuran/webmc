@@ -28,6 +28,13 @@ export type MsgTag =
 
 const INITIAL_CAPACITY = 64;
 
+// Shared module-scope TextEncoder/TextDecoder. Was a fresh instance per
+// string write/read — chat/inventory/block-edit message volume can run
+// 60+ strings/sec at busy multiplayer sessions; both classes are
+// stateless after construction so per-module reuse is safe.
+const SHARED_UTF8_ENCODER = new TextEncoder();
+const SHARED_UTF8_DECODER = new TextDecoder();
+
 export class Writer {
   private buf: Uint8Array;
   private view: DataView;
@@ -94,7 +101,7 @@ export class Writer {
   }
 
   string(s: string): this {
-    const bytes = new TextEncoder().encode(s);
+    const bytes = SHARED_UTF8_ENCODER.encode(s);
     if (bytes.length > 0xffff) throw new Error('string too long for codec');
     this.u16(bytes.length);
     this.bytes(bytes);
@@ -192,7 +199,7 @@ export class Reader {
     this.require(len);
     const slice = this.source.subarray(this.offset, this.offset + len);
     this.offset += len;
-    return new TextDecoder().decode(slice);
+    return SHARED_UTF8_DECODER.decode(slice);
   }
 
   readBytes(n: number): Uint8Array {
