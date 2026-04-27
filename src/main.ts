@@ -408,6 +408,35 @@ for (const name of REPLACEABLE_BLOCKS) {
   const id = registry.byName(name);
   if (id !== undefined) REPLACEABLE_BY_ID[id] = 1;
 }
+// Workstation flag (right-click opens an inventory UI). Was a fresh
+// 20-string Set per right-click on any block.
+const WORKSTATION_BLOCKS = [
+  'webmc:crafting_table',
+  'webmc:furnace',
+  'webmc:smoker',
+  'webmc:blast_furnace',
+  'webmc:enchanting_table',
+  'webmc:anvil',
+  'webmc:chipped_anvil',
+  'webmc:damaged_anvil',
+  'webmc:smithing_table',
+  'webmc:fletching_table',
+  'webmc:cartography_table',
+  'webmc:loom',
+  'webmc:grindstone',
+  'webmc:stonecutter',
+  'webmc:lectern',
+  'webmc:brewing_stand',
+  'webmc:beacon',
+  'webmc:respawn_anchor',
+  'webmc:lodestone',
+  'webmc:conduit',
+];
+const WORKSTATION_BY_ID = new Uint8Array(registry.defs.length);
+for (const name of WORKSTATION_BLOCKS) {
+  const id = registry.byName(name);
+  if (id !== undefined) WORKSTATION_BY_ID[id] = 1;
+}
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
@@ -4391,29 +4420,9 @@ const interaction = new InteractionController(
         sfx.play('click');
         return true;
       }
-      const WORKSTATIONS = new Set([
-        'webmc:crafting_table',
-        'webmc:furnace',
-        'webmc:smoker',
-        'webmc:blast_furnace',
-        'webmc:enchanting_table',
-        'webmc:anvil',
-        'webmc:chipped_anvil',
-        'webmc:damaged_anvil',
-        'webmc:smithing_table',
-        'webmc:fletching_table',
-        'webmc:cartography_table',
-        'webmc:loom',
-        'webmc:grindstone',
-        'webmc:stonecutter',
-        'webmc:lectern',
-        'webmc:brewing_stand',
-        'webmc:beacon',
-        'webmc:respawn_anchor',
-        'webmc:lodestone',
-        'webmc:conduit',
-      ]);
-      if (WORKSTATIONS.has(def.name)) {
+      // Pre-resolved at module scope (WORKSTATION_BY_ID) — was a fresh
+      // 20-string Set per right-click.
+      if (WORKSTATION_BY_ID[id] === 1) {
         // Sneak+placeable bypasses workstation open too (vanilla parity).
         const heldStack = inventory.hotbar[inventory.selectedHotbar] ?? null;
         const heldIsPlaceable =
