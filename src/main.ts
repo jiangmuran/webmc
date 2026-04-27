@@ -1694,6 +1694,11 @@ sky.addTo(scene);
 const stars = new Stars();
 scene.add(stars.points);
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
+// Cached booleans derived from currentWeather. Updated in setWeather()
+// — the only mutation site. Replaces ~6 inline string-equality checks
+// (5+ per frame for fog scaling, lightning, mob spawning).
+let isRain = false;
+let isThunder = false;
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
 let lastEmptyPlaceWarnAt = 0;
@@ -2041,6 +2046,8 @@ window.addEventListener(
 );
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
+  isRain = w === 'rain';
+  isThunder = w === 'thunder';
   if (w === 'clear') {
     rain.setActive(false);
   } else {
@@ -3440,7 +3447,7 @@ const interaction = new InteractionController(
       // Trident with Riptide (active when player is in water OR rain): propel forward.
       if (
         heldName === 'trident' &&
-        (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')
+        (fp.inFluid === 'water' || isRain || isThunder)
       ) {
         const look = fp.lookVector();
         const power = 18;
@@ -8453,7 +8460,7 @@ const mobTickCtx: MobTickContext = {
   },
   isSunlit: (x, y, z) => {
     if (!dayNight.isDay) return false;
-    if (currentWeather === 'thunder') return false;
+    if (isThunder) return false;
     const bx = Math.floor(x);
     const by = Math.floor(y + 0.5);
     const bz = Math.floor(z);
@@ -8953,7 +8960,7 @@ function frame(): void {
     }
   }
 
-  if (currentWeather === 'thunder') {
+  if (isThunder) {
     lightningTimer -= dtSec;
     if (lightningTimer <= 0) {
       lightningFlash();
@@ -9076,7 +9083,7 @@ function frame(): void {
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
   const weatherDimming =
-    (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
+    (isThunder ? 0.5 : isRain ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
@@ -9803,8 +9810,8 @@ function frame(): void {
     // Restore based on view distance, with weather-aware tightening.
     const baseFar = (loader.viewRadius ?? 6) * 16;
     let mul = 1;
-    if (currentWeather === 'thunder') mul = 0.55;
-    else if (currentWeather === 'rain') mul = 0.75;
+    if (isThunder) mul = 0.55;
+    else if (isRain) mul = 0.75;
     const targetFar = baseFar * mul;
     if (Math.abs(sceneFog.far - targetFar) > 1) {
       sceneFog.near = targetFar * 0.6;
