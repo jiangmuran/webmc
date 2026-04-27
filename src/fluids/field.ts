@@ -120,8 +120,12 @@ export function tickFluid(
     return TICK_RESULT_SCRATCH;
   }
 
-  for (const [key, cell] of cells) {
-    if (cell.level <= 0) continue;
+  // Iterate keys + lookup vs entries — destructuring `[key, cell]`
+  // allocates a fresh 2-tuple per iteration, paid for every fluid cell
+  // every tick (5000+ at active lava lakes / waterlogged structures).
+  for (const key of cells.keys()) {
+    const cell = cells.get(key);
+    if (cell === undefined || cell.level <= 0) continue;
     const pos = parseKeyInto(key, TICK_POS_SCRATCH);
 
     // Downward flow: if below is empty and not solid, fill at this cell's
@@ -176,17 +180,24 @@ export function tickFluid(
   // level (downhill flow).
   const merged = TICK_MERGED_SCRATCH;
   merged.clear();
-  for (const [k, c] of cells) merged.set(k, c);
-  for (const [k, u] of updates) {
+  // keys()+get() saves a tuple alloc per cell across the merge build
+  // and the BFS source seed loop. Active fluid spread iterates these
+  // ~3 times per cell per tick.
+  for (const k of cells.keys()) {
+    const c = cells.get(k);
+    if (c !== undefined) merged.set(k, c);
+  }
+  for (const k of updates.keys()) {
+    const u = updates.get(k);
     if (u === null) merged.delete(k);
-    else merged.set(k, u);
+    else if (u !== undefined) merged.set(k, u);
   }
   const reachable = TICK_REACHABLE_SCRATCH;
   reachable.clear();
   const queue = TICK_QUEUE_SCRATCH;
   queue.length = 0;
-  for (const [k, c] of merged) {
-    if (c.source) {
+  for (const k of merged.keys()) {
+    if (merged.get(k)?.source) {
       reachable.add(k);
       queue.push(k);
     }
@@ -219,8 +230,9 @@ export function tickFluid(
       }
     }
   }
-  for (const [k, c] of merged) {
-    if (c.source || reachable.has(k)) continue;
+  for (const k of merged.keys()) {
+    const c = merged.get(k);
+    if (c === undefined || c.source || reachable.has(k)) continue;
     updates.set(k, null);
   }
 
@@ -232,8 +244,12 @@ export function applyFluidUpdates(
   cells: Map<string, FluidCell>,
   updates: ReadonlyMap<string, FluidCell | null>,
 ): void {
-  for (const [key, cell] of updates) {
+  // Iterate keys + lookup vs entries — destructuring `[key, cell]`
+  // allocates a fresh 2-tuple per update. Active fluid spread can
+  // produce thousands of updates per tick.
+  for (const key of updates.keys()) {
+    const cell = updates.get(key);
     if (cell === null) cells.delete(key);
-    else cells.set(key, cell);
+    else if (cell !== undefined) cells.set(key, cell);
   }
 }
