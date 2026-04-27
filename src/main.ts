@@ -2374,19 +2374,34 @@ function weaponBaseDamageFor(heldName: string): number {
 // must have a blockId — swords/foods are non-placeable). In creative it
 // comes from the canned UI Hotbar entry (the creative quick-pick selector).
 // Returns null if the slot holds nothing placeable.
-function placeableFromSlot(
-  i: number,
-): { state: BlockState; blockId: number; itemId: number | null } | null {
+// Pooled scratch reused across all placeableFromSlot calls. The three
+// call sites — frame()'s held-block sync, onPlace, canPlace — all read
+// the result fields synchronously and never store the reference, so
+// returning a shared mutated object avoids allocating a fresh literal
+// per frame (frame()'s call alone ran 60×/sec).
+const placeableScratch: { state: BlockState; blockId: number; itemId: number | null } = {
+  state: 0,
+  blockId: 0,
+  itemId: null,
+};
+
+function placeableFromSlot(i: number): typeof placeableScratch | null {
   if (isCreative) {
     const entry = hotbar.getEntry(i);
     if (!entry) return null;
-    return { state: entry.state, blockId: stateId(entry.state), itemId: null };
+    placeableScratch.state = entry.state;
+    placeableScratch.blockId = stateId(entry.state);
+    placeableScratch.itemId = null;
+    return placeableScratch;
   }
   const stack = inventory.hotbar[i];
   if (!stack) return null;
   const itemDef = itemRegistry.get(stack.itemId);
   if (itemDef.blockId === undefined) return null;
-  return { state: makeState(itemDef.blockId, 0), blockId: itemDef.blockId, itemId: stack.itemId };
+  placeableScratch.state = makeState(itemDef.blockId, 0);
+  placeableScratch.blockId = itemDef.blockId;
+  placeableScratch.itemId = stack.itemId;
+  return placeableScratch;
 }
 
 // Mirror inventory.hotbar into the visible Hotbar UI in survival/adventure.

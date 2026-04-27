@@ -120,7 +120,6 @@ export class DroppedItemWorld {
     if (this.items.size === 0) return;
     const toRemove = this.toRemoveScratch;
     toRemove.length = 0;
-    const twoPi = Math.PI * 2;
     // O(n^2) merge ran every tick — at chest break / mob farm sites this
     // burned big CPU. Run only on dirty (new spawn) or every 0.5s for
     // moving-into-each-other items, and only when there are enough items.
@@ -156,7 +155,11 @@ export class DroppedItemWorld {
       const mesh = this.meshes.get(it.id);
       if (mesh) {
         mesh.position.set(it.x, it.y + Math.sin(it.ageSec * 2) * 0.08, it.z);
-        mesh.rotation.y = (it.ageSec * 1.2) % twoPi;
+        // ageSec maxes at MAX_LIFETIME_SEC (300s) → max angle 360 rad,
+        // well within float64 precision for cos/sin via three.js Euler →
+        // quaternion conversion. The modulo was a divide per item per
+        // tick; rendering is identical without it.
+        mesh.rotation.y = it.ageSec * 1.2;
       }
 
       if (it.pickupDelaySec === 0) {
