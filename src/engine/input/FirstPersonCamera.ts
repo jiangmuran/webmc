@@ -92,6 +92,15 @@ export class FirstPersonCamera {
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
   private locked = false;
+  // Diff caches for the per-frame camera position + rotation writes.
+  // Standing still wrote the same x/eyeY/z + pitch/yaw every frame,
+  // firing Vector3 + Euler onChange callbacks for nothing.
+  private lastCamPosX = NaN;
+  private lastCamPosY = NaN;
+  private lastCamPosZ = NaN;
+  private lastCamRotX = NaN;
+  private lastCamRotY = NaN;
+  private lastCamRotZ = NaN;
   private readonly keyDown: (e: KeyboardEvent) => void;
   private readonly keyUp: (e: KeyboardEvent) => void;
   private readonly mouseMove: (e: MouseEvent) => void;
@@ -415,18 +424,37 @@ export class FirstPersonCamera {
     const normalizedSpeed = Math.min(1, horizSpeed / this.opts.walkSpeed);
     const bobOffset = bobActive ? bobY(this.bobPhase, normalizedSpeed, true) : 0;
 
-    this.camera.position.set(
-      this.position.x,
-      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset,
-      this.position.z,
-    );
+    // Diff-cache the camera position write — Vector3.set fires the
+    // onChange callback (matrixWorldNeedsUpdate); standing still
+    // (no bob, no sneak transition) writes the same eye-y every frame.
+    const camY = this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset;
+    if (
+      this.position.x !== this.lastCamPosX ||
+      camY !== this.lastCamPosY ||
+      this.position.z !== this.lastCamPosZ
+    ) {
+      this.camera.position.set(this.position.x, camY, this.position.z);
+      this.lastCamPosX = this.position.x;
+      this.lastCamPosY = camY;
+      this.lastCamPosZ = this.position.z;
+    }
     if (this.damageTiltSec > 0) {
       this.damageTiltSec = Math.max(0, this.damageTiltSec - dtSec);
       const k = this.damageTiltSec / 0.4;
       const roll = Math.sin(k * Math.PI) * 0.35 * this.damageTiltSign;
       this.camera.rotation.set(this.pitch, this.yaw, roll, 'YXZ');
-    } else {
+      this.lastCamRotX = this.pitch;
+      this.lastCamRotY = this.yaw;
+      this.lastCamRotZ = roll;
+    } else if (
+      this.pitch !== this.lastCamRotX ||
+      this.yaw !== this.lastCamRotY ||
+      this.lastCamRotZ !== 0
+    ) {
       this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
+      this.lastCamRotX = this.pitch;
+      this.lastCamRotY = this.yaw;
+      this.lastCamRotZ = 0;
     }
 
     // Sprint FOV kick — eased
