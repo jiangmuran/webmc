@@ -7367,6 +7367,11 @@ const xpOrbPickupCallback = (xp: number): void => {
   sfx.play('click');
 };
 function flushDirty(): void {
+  // Skip the entire pass when no chunks are dirty. The for-of below
+  // iterates an empty set in that case, but we also avoid the
+  // budget calculation + Math.max + multiplication on every empty
+  // frame.
+  if (world.dirtyChunkCount === 0) return;
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
   const budget = Math.max(1, loader.perFrameBudget * 3);

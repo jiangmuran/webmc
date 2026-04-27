@@ -103,6 +103,12 @@ export class World {
     return this._dirtyChunks.values();
   }
 
+  // O(1) count of chunks with dirty meshes — lets the per-frame
+  // flushDirty caller skip the iteration setup when nothing's dirty.
+  get dirtyChunkCount(): number {
+    return this._dirtyChunks.size;
+  }
+
   clearDirty(chunk: Chunk): void {
     this._dirtyChunks.delete(chunk);
   }
