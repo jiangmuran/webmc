@@ -97,16 +97,6 @@ export class SkyCelestials {
   }
 
   update(camPos: THREE.Vector3, sunDir: THREE.Vector3): void {
-    this.sun.position.set(
-      camPos.x + sunDir.x * this.radius,
-      camPos.y + sunDir.y * this.radius,
-      camPos.z + sunDir.z * this.radius,
-    );
-    this.moon.position.set(
-      camPos.x - sunDir.x * this.radius,
-      camPos.y - sunDir.y * this.radius,
-      camPos.z - sunDir.z * this.radius,
-    );
     const sunVisible = sunDir.y > -0.05;
     if (sunVisible !== this.lastSunVisible) {
       this.sun.visible = sunVisible;
@@ -116,6 +106,23 @@ export class SkyCelestials {
     if (moonVisible !== this.lastMoonVisible) {
       this.moon.visible = moonVisible;
       this.lastMoonVisible = moonVisible;
+    }
+    // Skip position writes for hidden celestials. Sun is hidden during
+    // half the day, moon during the other half — we used to write 6
+    // setter-callback-firing position fields per frame regardless.
+    if (sunVisible) {
+      this.sun.position.set(
+        camPos.x + sunDir.x * this.radius,
+        camPos.y + sunDir.y * this.radius,
+        camPos.z + sunDir.z * this.radius,
+      );
+    }
+    if (moonVisible) {
+      this.moon.position.set(
+        camPos.x - sunDir.x * this.radius,
+        camPos.y - sunDir.y * this.radius,
+        camPos.z - sunDir.z * this.radius,
+      );
     }
     // Tint sun warmer near horizon: sunDir.y close to 0 → orange/red.
     const horizonness = 1 - Math.min(1, Math.max(0, sunDir.y) * 1.5);
