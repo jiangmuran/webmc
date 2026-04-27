@@ -73,6 +73,12 @@ const MASK_SCRATCH = new Int32Array(SUBCHUNK_DIM * SUBCHUNK_DIM);
 // dispatches/sec = 300 throwaway closures/sec on each worker.
 // Free-functions read these slots directly, no captured-scope.
 const D_CONST = SUBCHUNK_DIM;
+// Pre-computed faceLight (0..15) → alpha (0..255) table. Was running
+// `Math.round((faceLight / 15) * 255)` per quad — divide + multiply +
+// round per quad × thousands of quads per chunk = real cost on the
+// worker hot loop.
+const FACE_LIGHT_ALPHA = new Uint8Array(16);
+for (let i = 0; i < 16; i++) FACE_LIGHT_ALPHA[i] = Math.round((i / 15) * 255);
 let CTX_FLAT_IDX: Uint16Array = new Uint16Array(0);
 let CTX_PALETTE_OPAQUE: Uint8Array = new Uint8Array(0);
 let CTX_FLAT_SKY: Uint8Array = new Uint8Array(0);
@@ -243,7 +249,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             lightPos[u] = iu;
             lightPos[v] = iv;
             const faceLight = lightAtCtx(lightPos[0]!, lightPos[1]!, lightPos[2]!);
-            const lightAlpha = Math.round((faceLight / 15) * 255);
+            const lightAlpha = FACE_LIGHT_ALPHA[faceLight] ?? 255;
 
             if (s === 1) {
               positions.push(c0x, c0y, c0z, c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
