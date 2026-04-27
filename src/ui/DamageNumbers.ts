@@ -44,6 +44,10 @@ export class DamageNumbers {
       z: number,
     ) => { sx: number; sy: number; visible: boolean } | null,
   ): void {
+    // Skip the loop entirely when nothing's active. Most frames have
+    // no damage numbers floating; this avoids the function-call setup
+    // and the project-callback parameter pass.
+    if (this.active.length === 0) return;
     for (let i = this.active.length - 1; i >= 0; i--) {
       const n = this.active[i]!;
       n.ageSec += dtSec;
