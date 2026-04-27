@@ -17,6 +17,11 @@ export class FirstPersonHand {
   // 0.2 every frame, firing Euler._onChangeCallback for nothing. NaN
   // sentinel guarantees a write on the first call.
   private lastRotZ = NaN;
+  // Diff caches for position.x/y. Sway settles to 0 → position values
+  // become constants every frame; the per-axis assignment still fires
+  // Vector3.onChange (matrixWorldNeedsUpdate flag) for each set.
+  private lastPosX = NaN;
+  private lastPosY = NaN;
   private swingSec = 0;
   private sway: SwayState = reset();
 
@@ -75,7 +80,12 @@ export class FirstPersonHand {
     this.sway = settle(this.sway);
     const swayOffsetX = this.sway.x * 0.15;
     const swayOffsetY = this.sway.y * 0.1;
-    this.group.position.x = 0.45 + swayOffsetX;
+    const targetPosX = 0.45 + swayOffsetX;
+    if (targetPosX !== this.lastPosX) {
+      this.group.position.x = targetPosX;
+      this.lastPosX = targetPosX;
+    }
+    let targetPosY: number;
     if (this.swingSec > 0) {
       this.swingSec = Math.max(0, this.swingSec - dtSec);
       const phase = 1 - this.swingSec / 0.25;
@@ -85,13 +95,17 @@ export class FirstPersonHand {
         this.group.rotation.z = targetRotZ;
         this.lastRotZ = targetRotZ;
       }
-      this.group.position.y = -0.45 - Math.sin(phase * Math.PI) * 0.12 + swayOffsetY;
+      targetPosY = -0.45 - Math.sin(phase * Math.PI) * 0.12 + swayOffsetY;
     } else {
       if (this.lastRotZ !== 0.2) {
         this.group.rotation.z = 0.2;
         this.lastRotZ = 0.2;
       }
-      this.group.position.y = -0.45 + swayOffsetY;
+      targetPosY = -0.45 + swayOffsetY;
+    }
+    if (targetPosY !== this.lastPosY) {
+      this.group.position.y = targetPosY;
+      this.lastPosY = targetPosY;
     }
   }
 }
