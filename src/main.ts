@@ -1866,6 +1866,8 @@ const hayBlockIdCached = registry.byName('webmc:hay_block');
 const honeyBlockIdCached = registry.byName('webmc:honey_block');
 const slimeBlockIdCached = registry.byName('webmc:slime_block');
 const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
+const grassBlockIdCached = registry.byName('webmc:grass_block');
+const dirtIdCached = registry.byName('webmc:dirt');
 // Hoisted spawn-pick tables. Were re-allocated as fresh tuple arrays
 // per spawn attempt inside the per-frame natural-mob-spawn block; the
 // arrays are read-only weights so a single shared instance is safe.
@@ -10516,7 +10518,11 @@ function frame(): void {
           grassCtxCenter.z = z;
           const placements = tickGrassBlock(grassCtxScratch);
           for (const p of placements) {
-            const blockId = registry.byName(p.block);
+            // tickGrassBlock returns either 'webmc:grass_block' or
+            // 'webmc:dirt'; both ids are pre-cached at module scope so
+            // we skip the registry.byName Map.get per placement.
+            const blockId =
+              p.block === 'webmc:grass_block' ? grassBlockIdCached : dirtIdCached;
             if (blockId !== undefined) {
               world.set(p.pos.x, p.pos.y, p.pos.z, makeState(blockId, 0));
               touchWorldEdit(p.pos.x, p.pos.y, p.pos.z, blockId);
