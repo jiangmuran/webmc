@@ -237,31 +237,22 @@ export class FirstPersonCamera {
     const hx = len > 0 ? (mx / len) * speed : 0;
     const hz = len > 0 ? (mz / len) * speed : 0;
 
-    this.inFluid =
-      opts.isFluid?.(
-        Math.floor(this.position.x),
-        Math.floor(this.position.y),
-        Math.floor(this.position.z),
-      ) ?? null;
+    // Hoist Math.floor of position once — was being recomputed 8+ times
+    // across inFluid + inFluidEyes + climbing(2) sampling. Each call to
+    // a probe function passed three Math.floor() expressions, which the
+    // JIT can't fold across function calls.
+    const blockX = Math.floor(this.position.x);
+    const blockY = Math.floor(this.position.y);
+    const blockZ = Math.floor(this.position.z);
+    const eyeBlockY = Math.floor(this.position.y + 0.72);
+    const climbHeadBlockY = Math.floor(this.position.y + 0.5);
+    this.inFluid = opts.isFluid?.(blockX, blockY, blockZ) ?? null;
     // Eye sampling: position.y is body center (halfY=0.9), eyes sit
     // ~0.72 above (eyeHeight 1.62 from feet, feet = position.y - 0.9).
-    this.inFluidEyes =
-      opts.isFluid?.(
-        Math.floor(this.position.x),
-        Math.floor(this.position.y + 0.72),
-        Math.floor(this.position.z),
-      ) ?? null;
+    this.inFluidEyes = opts.isFluid?.(blockX, eyeBlockY, blockZ) ?? null;
     const climbing = opts.isClimbable
-      ? opts.isClimbable(
-          Math.floor(this.position.x),
-          Math.floor(this.position.y),
-          Math.floor(this.position.z),
-        ) ||
-        opts.isClimbable(
-          Math.floor(this.position.x),
-          Math.floor(this.position.y + 0.5),
-          Math.floor(this.position.z),
-        )
+      ? opts.isClimbable(blockX, blockY, blockZ) ||
+        opts.isClimbable(blockX, climbHeadBlockY, blockZ)
       : false;
 
     if (this.passThroughBlocks || !opts.isSolid) {
