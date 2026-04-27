@@ -9019,9 +9019,12 @@ function frame(): void {
   // fire/contact AABB sweeps, debug overlay) and ~5 effects.has Map
   // hashes (fire-ignite + lava-walk + avatar visibility + mob ctx +
   // night-vision ambient).
-  const fireResistant = playerState.effects.has('fire_resistance');
-  const playerInvisible = playerState.effects.has('invisibility');
-  const hasNightVision = playerState.effects.has('night_vision');
+  // Skip the 3 Map.has hashes when no effects are active (the dominant
+  // case — most frames the player is potion-free).
+  const hasAnyEffect = playerState.effects.size > 0;
+  const fireResistant = hasAnyEffect && playerState.effects.has('fire_resistance');
+  const playerInvisible = hasAnyEffect && playerState.effects.has('invisibility');
+  const hasNightVision = hasAnyEffect && playerState.effects.has('night_vision');
   const playerBlockX = Math.floor(fp.position.x);
   const playerBlockY = Math.floor(fp.position.y);
   const playerBlockZ = Math.floor(fp.position.z);
