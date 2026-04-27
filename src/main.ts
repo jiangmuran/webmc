@@ -1866,6 +1866,23 @@ const hayBlockIdCached = registry.byName('webmc:hay_block');
 const honeyBlockIdCached = registry.byName('webmc:honey_block');
 const slimeBlockIdCached = registry.byName('webmc:slime_block');
 const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
+// Hoisted spawn-pick tables. Were re-allocated as fresh tuple arrays
+// per spawn attempt inside the per-frame natural-mob-spawn block; the
+// arrays are read-only weights so a single shared instance is safe.
+const HOSTILE_SPAWN_CHOICES: readonly ('zombie' | 'skeleton' | 'creeper' | 'spider')[] = [
+  'zombie',
+  'zombie',
+  'skeleton',
+  'creeper',
+  'spider',
+];
+const PASSIVE_SPAWN_CHOICES: readonly (
+  | 'pig'
+  | 'cow'
+  | 'sheep'
+  | 'chicken'
+  | 'rabbit'
+)[] = ['pig', 'cow', 'sheep', 'sheep', 'chicken', 'rabbit'];
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -10218,14 +10235,10 @@ function frame(): void {
           // Skip when it's broad daylight AND we're spawning at the surface
           // (sky light max). Caves stay dark so still spawn there.
           if (dayNight.isDay && sky > 7) continue;
-          const choices: ('zombie' | 'skeleton' | 'creeper' | 'spider')[] = [
-            'zombie',
-            'zombie',
-            'skeleton',
-            'creeper',
-            'spider',
-          ];
-          const kind = choices[Math.floor(Math.random() * choices.length)];
+          // Hoisted at module scope (HOSTILE_SPAWN_CHOICES) — was a
+          // fresh tuple-typed array per spawn attempt × 6 attempts per
+          // 5s cycle. Now reused.
+          const kind = HOSTILE_SPAWN_CHOICES[Math.floor(Math.random() * HOSTILE_SPAWN_CHOICES.length)];
           if (!kind) continue;
           try {
             mobSpawnPosScratch.x = sx + 0.5;
@@ -10276,15 +10289,8 @@ function frame(): void {
           if (Math.max(sky, block) < 9) continue;
           const groundDef = registry.get(stateId(world.get(sx, sy - 1, sz)));
           if (groundDef.name !== 'webmc:grass_block' && groundDef.name !== 'webmc:grass') continue;
-          const passiveChoices: ('pig' | 'cow' | 'sheep' | 'chicken' | 'rabbit')[] = [
-            'pig',
-            'cow',
-            'sheep',
-            'sheep',
-            'chicken',
-            'rabbit',
-          ];
-          const kind = passiveChoices[Math.floor(Math.random() * passiveChoices.length)];
+          // Hoisted at module scope (PASSIVE_SPAWN_CHOICES).
+          const kind = PASSIVE_SPAWN_CHOICES[Math.floor(Math.random() * PASSIVE_SPAWN_CHOICES.length)];
           if (!kind) continue;
           try {
             // Spawn a small herd (2-4) of the same kind, vanilla style.
