@@ -849,6 +849,20 @@ export interface Mob {
 const GRAVITY = 32;
 const TERMINAL_VELOCITY = 50;
 const ATTACK_COOLDOWN_SEC = 0.8;
+// Mob kinds that don't take fall damage (vanilla parity: flyers +
+// some passives). Per mob per landing event; Set lookup beats the
+// 9-way `||` chain.
+const NO_FALL_DAMAGE_MOB_KINDS: ReadonlySet<string> = new Set([
+  'chicken',
+  'parrot',
+  'bat',
+  'allay',
+  'bee',
+  'vex',
+  'phantom',
+  'ghast',
+  'blaze',
+]);
 // Sunlight-burn mob kinds (vanilla parity for undead). Per mob per
 // tick during daylight; Set.has beats the 6-way `||` chain for the
 // dominant non-undead case (zombies + skeletons are <30% of any mob
@@ -1333,19 +1347,10 @@ export class MobWorld {
     if (!wasOnGround && mob.onGround && mob.airborneStartY !== null) {
       const fall = mob.airborneStartY - mob.position.y;
       // Vanilla MC: chickens, parrots, bats, allay, bees, vexes don't
-      // take fall damage; cats take half. Without this, dropping a
-      // chicken from any height killed it instantly. Use kind to gate
-      // — cleaner than per-mob def flags for this small list.
-      const noFall =
-        mob.def.kind === 'chicken' ||
-        mob.def.kind === 'parrot' ||
-        mob.def.kind === 'bat' ||
-        mob.def.kind === 'allay' ||
-        mob.def.kind === 'bee' ||
-        mob.def.kind === 'vex' ||
-        mob.def.kind === 'phantom' ||
-        mob.def.kind === 'ghast' ||
-        mob.def.kind === 'blaze';
+      // take fall damage; cats take half. Hoisted NO_FALL_DAMAGE_MOB_KINDS
+      // — Set.has beats the 9-way `||` chain for the dominant
+      // non-immune case.
+      const noFall = NO_FALL_DAMAGE_MOB_KINDS.has(mob.def.kind);
       if (fall > 3 && !noFall) {
         mob.health -= fall - 3;
         mob.hurtFlashSec = 0.18;
