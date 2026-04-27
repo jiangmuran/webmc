@@ -1417,9 +1417,17 @@ const lightCache = new Map<number, ChunkLight>();
 // the world border).
 const lightKey = (cx: number, cz: number): number =>
   ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
+// Pre-resolved emission lookup — values 0..15 fit in u8. computeBlockLight
+// hits this per palette entry of every emissive section and per cell in
+// the seed scan; pre-resolving lets the oracle skip the registry.get +
+// property access chain.
+const LIGHT_EMISSION_BY_ID = new Uint8Array(registry.defs.length);
+for (let i = 0; i < registry.defs.length; i++) {
+  LIGHT_EMISSION_BY_ID[i] = registry.defs[i]!.lightEmission & 0xff;
+}
 const lightOracle = {
   isOpaque,
-  lightEmission: (s: BlockState) => (s === AIR ? 0 : registry.get(stateId(s)).lightEmission),
+  lightEmission: (s: BlockState) => (s === AIR ? 0 : (LIGHT_EMISSION_BY_ID[stateId(s)] ?? 0)),
 };
 
 const fp = new FirstPersonCamera(camera);
