@@ -67,6 +67,45 @@ const INDICES_SCRATCH: number[] = [];
 // previous-call contents don't leak.
 const MASK_SCRATCH = new Int32Array(SUBCHUNK_DIM * SUBCHUNK_DIM);
 
+// Module-scope per-call context, filled by meshSnapshot before the
+// inner loops fire. Was 3 fresh closures (lightAt + neighborSampler +
+// opaqueAt) allocated per meshSnapshot call — ~3 closures × 100
+// dispatches/sec = 300 throwaway closures/sec on each worker.
+// Free-functions read these slots directly, no captured-scope.
+const D_CONST = SUBCHUNK_DIM;
+let CTX_FLAT_IDX: Uint16Array = new Uint16Array(0);
+let CTX_PALETTE_OPAQUE: Uint8Array = new Uint8Array(0);
+let CTX_FLAT_SKY: Uint8Array = new Uint8Array(0);
+let CTX_FLAT_BLOCK: Uint8Array = new Uint8Array(0);
+let CTX_NEIGHBOR_NX: OpaqueSampler = null;
+let CTX_NEIGHBOR_PX: OpaqueSampler = null;
+let CTX_NEIGHBOR_NY: OpaqueSampler = null;
+let CTX_NEIGHBOR_PY: OpaqueSampler = null;
+let CTX_NEIGHBOR_NZ: OpaqueSampler = null;
+let CTX_NEIGHBOR_PZ: OpaqueSampler = null;
+
+function lightAtCtx(x: number, y: number, z: number): number {
+  if (x < 0 || x >= D_CONST || y < 0 || y >= D_CONST || z < 0 || z >= D_CONST) return 15;
+  const idx = localIndex(x, y, z);
+  const sky = CTX_FLAT_SKY[idx] ?? 15;
+  const block = CTX_FLAT_BLOCK[idx] ?? 0;
+  return sky > block ? sky : block;
+}
+
+function opaqueAtCtx(x: number, y: number, z: number): boolean {
+  if (x < 0) return CTX_NEIGHBOR_NX !== null && (CTX_NEIGHBOR_NX[y * D_CONST + z] ?? 0) !== 0;
+  if (x >= D_CONST)
+    return CTX_NEIGHBOR_PX !== null && (CTX_NEIGHBOR_PX[y * D_CONST + z] ?? 0) !== 0;
+  if (y < 0) return CTX_NEIGHBOR_NY !== null && (CTX_NEIGHBOR_NY[x * D_CONST + z] ?? 0) !== 0;
+  if (y >= D_CONST)
+    return CTX_NEIGHBOR_PY !== null && (CTX_NEIGHBOR_PY[x * D_CONST + z] ?? 0) !== 0;
+  if (z < 0) return CTX_NEIGHBOR_NZ !== null && (CTX_NEIGHBOR_NZ[x * D_CONST + y] ?? 0) !== 0;
+  if (z >= D_CONST)
+    return CTX_NEIGHBOR_PZ !== null && (CTX_NEIGHBOR_PZ[x * D_CONST + y] ?? 0) !== 0;
+  const pIdx = CTX_FLAT_IDX[localIndex(x, y, z)] ?? 0;
+  return (CTX_PALETTE_OPAQUE[pIdx] ?? 0) !== 0;
+}
+
 // Classical greedy meshing (Mikola-Lysenko style): 2D greedy merge per slice
 // per axis. Neighbor-aware at chunk borders so seams disappear.
 // A future micro-milestone can replace this with binary-bitmask greedy
@@ -75,13 +114,18 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
   const { flatIdx, paletteOpaque, paletteColor, flatSkyLight, flatBlockLight } = snap;
   const D = SUBCHUNK_DIM;
 
-  const lightAt = (x: number, y: number, z: number): number => {
-    if (x < 0 || x >= D || y < 0 || y >= D || z < 0 || z >= D) return 15;
-    const idx = localIndex(x, y, z);
-    const sky = flatSkyLight[idx] ?? 15;
-    const block = flatBlockLight[idx] ?? 0;
-    return sky > block ? sky : block;
-  };
+  // Fill module-scope context for the free-function probes (avoids the
+  // 3 per-call closure allocations).
+  CTX_FLAT_IDX = flatIdx;
+  CTX_PALETTE_OPAQUE = paletteOpaque;
+  CTX_FLAT_SKY = flatSkyLight;
+  CTX_FLAT_BLOCK = flatBlockLight;
+  CTX_NEIGHBOR_NX = neighbors.nx;
+  CTX_NEIGHBOR_PX = neighbors.px;
+  CTX_NEIGHBOR_NY = neighbors.ny;
+  CTX_NEIGHBOR_PY = neighbors.py;
+  CTX_NEIGHBOR_NZ = neighbors.nz;
+  CTX_NEIGHBOR_PZ = neighbors.pz;
 
   const positions = POSITIONS_SCRATCH;
   const normals = NORMALS_SCRATCH;
@@ -91,22 +135,6 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
   normals.length = 0;
   colors.length = 0;
   indices.length = 0;
-
-  const neighborSampler = (dir: keyof MesherNeighbors, a: number, b: number): boolean => {
-    const arr = neighbors[dir];
-    return arr ? (arr[a * D + b] ?? 0) !== 0 : false;
-  };
-
-  const opaqueAt = (x: number, y: number, z: number): boolean => {
-    if (x < 0) return neighborSampler('nx', y, z);
-    if (x >= D) return neighborSampler('px', y, z);
-    if (y < 0) return neighborSampler('ny', x, z);
-    if (y >= D) return neighborSampler('py', x, z);
-    if (z < 0) return neighborSampler('nz', x, y);
-    if (z >= D) return neighborSampler('pz', x, y);
-    const pIdx = flatIdx[localIndex(x, y, z)] ?? 0;
-    return (paletteOpaque[pIdx] ?? 0) !== 0;
-  };
 
   const mask = MASK_SCRATCH;
   let quadCount = 0;
@@ -141,7 +169,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             npos[d] = w + sign;
             npos[u] = iu;
             npos[v] = iv;
-            if (opaqueAt(npos[0] ?? 0, npos[1] ?? 0, npos[2] ?? 0)) continue;
+            if (opaqueAtCtx(npos[0] ?? 0, npos[1] ?? 0, npos[2] ?? 0)) continue;
             mask[iv * D + iu] = selfIdx;
           }
         }
@@ -202,7 +230,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             lightPos[d] = w + sign;
             lightPos[u] = iu;
             lightPos[v] = iv;
-            const faceLight = lightAt(lightPos[0]!, lightPos[1]!, lightPos[2]!);
+            const faceLight = lightAtCtx(lightPos[0]!, lightPos[1]!, lightPos[2]!);
             const lightAlpha = Math.round((faceLight / 15) * 255);
 
             if (s === 1) {
