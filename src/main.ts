@@ -385,6 +385,29 @@ const CLIMBABLE_BY_ID = new Uint8Array(registry.defs.length);
 for (const id of [ladderId, vineId, scaffoldingId, twistingVinesId, weepingVinesId]) {
   if (id !== undefined) CLIMBABLE_BY_ID[id] = 1;
 }
+// Replaceable-by-placement flag (vanilla parity: fluids, tall_grass,
+// fern, fire, snow, vine). interaction.isReplaceable was allocating a
+// fresh 11-string Set per call AND looking up by name string —
+// happens during right-click placement validation; not per frame but
+// every place attempt.
+const REPLACEABLE_BLOCKS = [
+  'webmc:water',
+  'webmc:lava',
+  'webmc:short_grass',
+  'webmc:tall_grass',
+  'webmc:fern',
+  'webmc:large_fern',
+  'webmc:dead_bush',
+  'webmc:fire',
+  'webmc:soul_fire',
+  'webmc:snow',
+  'webmc:vine',
+];
+const REPLACEABLE_BY_ID = new Uint8Array(registry.defs.length);
+for (const name of REPLACEABLE_BLOCKS) {
+  const id = registry.byName(name);
+  if (id !== undefined) REPLACEABLE_BY_ID[id] = 1;
+}
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
@@ -3284,25 +3307,9 @@ const interaction = new InteractionController(
     isReplaceable: (bx, by, bz) => {
       const s = world.get(bx, by, bz);
       if (s === AIR) return true;
-      const def = registry.get(stateId(s));
-      // Vanilla MC replaceable blocks: fluids (water, lava), tall_grass,
-      // short_grass, fern, dead_bush, fire, snow_layer (depth 0). Without
-      // these, underwater building is impossible and you can't place a
-      // block over tall grass / fire.
-      const REPLACEABLE_NAMES = new Set([
-        'webmc:water',
-        'webmc:lava',
-        'webmc:short_grass',
-        'webmc:tall_grass',
-        'webmc:fern',
-        'webmc:large_fern',
-        'webmc:dead_bush',
-        'webmc:fire',
-        'webmc:soul_fire',
-        'webmc:snow',
-        'webmc:vine',
-      ]);
-      return REPLACEABLE_NAMES.has(def.name);
+      // Pre-resolved at module scope (REPLACEABLE_BY_ID) — was a fresh
+      // 11-string Set + name-string lookup per call.
+      return REPLACEABLE_BY_ID[stateId(s)] === 1;
     },
     collidesWithMob: (bx, by, bz) => {
       // Vanilla blocks placement inside a mob AABB. Without this you
