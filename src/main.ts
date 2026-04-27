@@ -379,9 +379,11 @@ const vineId = registry.byName('webmc:vine');
 const scaffoldingId = registry.byName('webmc:scaffolding');
 const twistingVinesId = registry.byName('webmc:twisting_vines');
 const weepingVinesId = registry.byName('webmc:weeping_vines');
-const climbableIds = new Set<number>();
+// Indexed-by-id climbable flag. fp.update calls this every frame to
+// determine ladder/vine physics; Uint8Array index beats Set.has hash.
+const CLIMBABLE_BY_ID = new Uint8Array(registry.defs.length);
 for (const id of [ladderId, vineId, scaffoldingId, twistingVinesId, weepingVinesId]) {
-  if (id !== undefined) climbableIds.add(id);
+  if (id !== undefined) CLIMBABLE_BY_ID[id] = 1;
 }
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
@@ -390,7 +392,7 @@ const isClimbable = (x: number, y: number, z: number): boolean => {
   // Was ladder-only — vines, scaffolding, twisting/weeping vines are
   // also climbable in vanilla. Without this you couldn't climb out of
   // jungles or use scaffolding for builds.
-  return climbableIds.has(stateId(s));
+  return CLIMBABLE_BY_ID[stateId(s)] === 1;
 };
 
 const world = new World();
@@ -7950,7 +7952,7 @@ const CROP_DROP: Record<string, readonly { id: string; min: number; max: number 
   'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
   'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
 };
-const fallableIds = new Set<number>();
+const FALLABLE_BY_ID = new Uint8Array(registry.defs.length);
 const FALLABLE_BLOCKS = [
   'webmc:sand',
   'webmc:gravel',
@@ -7981,7 +7983,7 @@ const FALLABLE_BLOCKS = [
 ];
 for (const name of FALLABLE_BLOCKS) {
   const id = registry.byName(name);
-  if (id !== undefined) fallableIds.add(id);
+  if (id !== undefined) FALLABLE_BY_ID[id] = 1;
 }
 
 // Cascading falling-block check: called from touchWorldEdit when a block
@@ -8004,7 +8006,7 @@ function cascadeFalling(bx: number, by: number, bz: number): void {
       y++;
       continue;
     }
-    if (!fallableIds.has(stateId(s))) break;
+    if (FALLABLE_BY_ID[stateId(s)] !== 1) break;
     if (dropTarget >= y) break; // no air below — pile is already settled
     world.set(bx, dropTarget, bz, s);
     world.set(bx, y, bz, AIR);
@@ -8557,7 +8559,7 @@ const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void
   cascadeFalling(bx, by, bz);
   // If the edited cell itself is fallable, cascade starting one below it.
   const selfState = world.get(bx, by, bz);
-  if (selfState !== AIR && fallableIds.has(stateId(selfState)) && by > 0) {
+  if (selfState !== AIR && FALLABLE_BY_ID[stateId(selfState)] === 1 && by > 0) {
     cascadeFalling(bx, by - 1, bz);
   }
   const cx = bx >> 4;
