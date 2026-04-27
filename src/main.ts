@@ -9298,7 +9298,12 @@ function frame(): void {
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
-  const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+  // Math.sqrt(x²+z²) replaces Math.hypot which does range-checks for
+  // overflow at MAX_VALUE. Game velocity components are always in
+  // normal range, so the safety margin is wasted CPU per frame.
+  const fpVx = fp.velocity.x;
+  const fpVz = fp.velocity.z;
+  const horizSpeed = Math.sqrt(fpVx * fpVx + fpVz * fpVz);
   // Cache fluid-state booleans for the rest of the frame. fp.inFluid +
   // fp.inFluidEyes are sampled once in fp.update and stay stable for
   // the remainder of frame() — was being string-equality-compared 14+
@@ -9345,7 +9350,9 @@ function frame(): void {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
     if (fp.onGround && !fp.input.fly) {
-      const moved = Math.hypot(dpx, dpz);
+      // Per-frame distance-walked sample. Math.sqrt avoids the
+      // overflow-safe Math.hypot path; deltas here are < 1 m/frame.
+      const moved = Math.sqrt(dpx * dpx + dpz * dpz);
       if (moved > 0 && moved < 2) playerStats.distanceWalked += moved;
     }
     lastStatsPos.x = fp.position.x;
