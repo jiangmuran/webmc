@@ -93,8 +93,10 @@ let CTX_NEIGHBOR_PZ: OpaqueSampler = null;
 function lightAtCtx(x: number, y: number, z: number): number {
   if (x < 0 || x >= D_CONST || y < 0 || y >= D_CONST || z < 0 || z >= D_CONST) return 15;
   const idx = localIndex(x, y, z);
-  const sky = CTX_FLAT_SKY[idx] ?? 15;
-  const block = CTX_FLAT_BLOCK[idx] ?? 0;
+  // CTX_FLAT_SKY/BLOCK are Uint8Array — valid indices always return a
+  // number. `!` skips the per-quad nullish-coalesce (TS narrowing).
+  const sky = CTX_FLAT_SKY[idx]!;
+  const block = CTX_FLAT_BLOCK[idx]!;
   return sky > block ? sky : block;
 }
 
@@ -102,14 +104,16 @@ function opaqueAtCtx(x: number, y: number, z: number): boolean {
   // D_CONST=SUBCHUNK_DIM=16 → `* D_CONST` is `<< 4`. Border lookups
   // here fire 4096 times per axis-pass × 6 passes per mesh; the
   // multiply was the only non-bitwise op in this hot probe.
-  if (x < 0) return CTX_NEIGHBOR_NX !== null && (CTX_NEIGHBOR_NX[(y << 4) + z] ?? 0) !== 0;
-  if (x >= D_CONST) return CTX_NEIGHBOR_PX !== null && (CTX_NEIGHBOR_PX[(y << 4) + z] ?? 0) !== 0;
-  if (y < 0) return CTX_NEIGHBOR_NY !== null && (CTX_NEIGHBOR_NY[(x << 4) + z] ?? 0) !== 0;
-  if (y >= D_CONST) return CTX_NEIGHBOR_PY !== null && (CTX_NEIGHBOR_PY[(x << 4) + z] ?? 0) !== 0;
-  if (z < 0) return CTX_NEIGHBOR_NZ !== null && (CTX_NEIGHBOR_NZ[(x << 4) + y] ?? 0) !== 0;
-  if (z >= D_CONST) return CTX_NEIGHBOR_PZ !== null && (CTX_NEIGHBOR_PZ[(x << 4) + y] ?? 0) !== 0;
-  const pIdx = CTX_FLAT_IDX[localIndex(x, y, z)] ?? 0;
-  return (CTX_PALETTE_OPAQUE[pIdx] ?? 0) !== 0;
+  // `!`-narrow the typed-array reads (Uint8Array indices in range
+  // never return undefined; was paying a per-cell coalesce check).
+  if (x < 0) return CTX_NEIGHBOR_NX !== null && CTX_NEIGHBOR_NX[(y << 4) + z]! !== 0;
+  if (x >= D_CONST) return CTX_NEIGHBOR_PX !== null && CTX_NEIGHBOR_PX[(y << 4) + z]! !== 0;
+  if (y < 0) return CTX_NEIGHBOR_NY !== null && CTX_NEIGHBOR_NY[(x << 4) + z]! !== 0;
+  if (y >= D_CONST) return CTX_NEIGHBOR_PY !== null && CTX_NEIGHBOR_PY[(x << 4) + z]! !== 0;
+  if (z < 0) return CTX_NEIGHBOR_NZ !== null && CTX_NEIGHBOR_NZ[(x << 4) + y]! !== 0;
+  if (z >= D_CONST) return CTX_NEIGHBOR_PZ !== null && CTX_NEIGHBOR_PZ[(x << 4) + y]! !== 0;
+  const pIdx = CTX_FLAT_IDX[localIndex(x, y, z)]!;
+  return CTX_PALETTE_OPAQUE[pIdx]! !== 0;
 }
 
 // Classical greedy meshing (Mikola-Lysenko style): 2D greedy merge per slice
@@ -177,7 +181,7 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             // not a runtime concern — `!` skips the per-cell coalesce
             // for what's actually a guaranteed number. Inner loop runs
             // 4096× per axis-pass × 6 passes per mesh.
-            const selfIdx = flatIdx[localIndex(pos[0]!, pos[1]!, pos[2]!)] ?? 0;
+            const selfIdx = flatIdx[localIndex(pos[0]!, pos[1]!, pos[2]!)]!;
             if (paletteOpaque[selfIdx] !== 1) continue;
             npos[d] = w + sign;
             npos[u] = iu;
