@@ -122,6 +122,13 @@ interface MobVisual {
   // material dirty even when the value is identical. -1 is the
   // "force first set" sentinel.
   lastNameOpacity: number;
+  // Position diff-cache. Vector3.set fires _onChangeCallback (sets
+  // matrixWorldNeedsUpdate); stationary mobs (idle, sleeping, fenced
+  // pen) write the same x/y/z every frame for nothing. NaN sentinel
+  // forces the first set.
+  lastPosX: number;
+  lastPosY: number;
+  lastPosZ: number;
 }
 
 // Cache by label string. Mob nameplates with the same name (e.g.
@@ -320,12 +327,27 @@ export class MobRenderer {
           lastScale: 1,
           kindBaseHex: color,
           lastNameOpacity: 0.9,
+          lastPosX: NaN,
+          lastPosY: NaN,
+          lastPosZ: NaN,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
         vis = visual;
       }
-      vis.group.position.set(mob.position.x, mob.position.y, mob.position.z);
+      // Diff-cache position writes — stationary mobs (idle, sleeping,
+      // fenced pens) ran position.set every frame, firing the Vector3
+      // _onChangeCallback (matrixWorldNeedsUpdate flag) for the same
+      // values.
+      const mpx = mob.position.x;
+      const mpy = mob.position.y;
+      const mpz = mob.position.z;
+      if (vis.lastPosX !== mpx || vis.lastPosY !== mpy || vis.lastPosZ !== mpz) {
+        vis.group.position.set(mpx, mpy, mpz);
+        vis.lastPosX = mpx;
+        vis.lastPosY = mpy;
+        vis.lastPosZ = mpz;
+      }
       let targetRotX: number;
       let targetRotZ: number;
       let targetScale: number;
