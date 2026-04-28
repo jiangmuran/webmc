@@ -4879,6 +4879,18 @@ canvas.addEventListener('mousedown', (e) => {
           return;
         }
       }
+      // Snow golem shearing: shears + snow_golem → drops the pumpkin
+      // hat. Vanilla mechanic — was unwired despite shears + snow_golem
+      // both being valid in webmc.
+      if (heldName === 'webmc:shears' && kind === 'snow_golem') {
+        const pumpkinId = itemRegistry.byName('webmc:carved_pumpkin');
+        if (pumpkinId !== undefined) addOneToInventory(pumpkinId);
+        chatInput.addLine('Sheared snow golem (head dropped)', '#e0e0e0');
+        consumeHeldToolDurability(1);
+        sfx.play('click');
+        hand.swing();
+        return;
+      }
       // Mooshroom shearing: shears + mooshroom → 5 red mushrooms +
       // mooshroom turns into a regular cow. Vanilla mechanic.
       if (heldName === 'webmc:shears' && kind === 'mooshroom') {
