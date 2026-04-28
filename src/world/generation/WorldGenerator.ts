@@ -116,11 +116,16 @@ export class WorldGenerator {
 
   oreAt(wx: number, wy: number, wz: number): BlockState | null {
     if (wy > 70) return null;
+    // y-dependent component of the hash seed: invariant within one
+    // oreAt call but the original recomputed it per band (up to 6×
+    // per call). Math.imul preserves the int32-multiply semantics of
+    // the prior `* X` (which `^` coerces to int32 anyway).
+    const ySeed = (this.seed ^ Math.imul(wy, 0x9e3779b1)) >>> 0;
     for (const band of ORE_BANDS) {
       const dist = Math.abs(wy - band.peak);
       if (dist > band.halfWidth) continue;
       const density = 1 - dist / band.halfWidth;
-      const h = hash32(wx, wz ^ band.salt, (this.seed ^ (wy * 0x9e3779b1)) >>> 0);
+      const h = hash32(wx, wz ^ band.salt, ySeed);
       if ((h % band.rarity) / band.rarity < density * 0.04) {
         return this.blocks[band.block];
       }
