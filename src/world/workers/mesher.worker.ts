@@ -56,17 +56,55 @@ function unpackSnapshot(req: MesherRequest): Snapshot {
   // of the loop + dropping the function-call overhead is a real win
   // on the worker-side hot path. 32 is divisible by 4/8/16 so each
   // value fits within a single Uint32 word — no cross-word handling.
+  // Specialized loops process N cells per word with one read + N
+  // shifts (no `i * bits`, no `>>> 5`, no `& 31`); ~75% iteration
+  // count reduction on bits=8, ~88% on bits=4.
   const bits = req.bitsPerIndex;
   const arr = req.indices;
   if (bits === 0 || arr === null) {
     FLAT_IDX_SCRATCH.fill(0);
+  } else if (bits === 4) {
+    // 8 indices per Uint32 word; 4096 / 8 = 512 words.
+    let w = 0;
+    for (let i = 0; i < SUBCHUNK_VOLUME; i += 8) {
+      const word = arr[w++]!;
+      FLAT_IDX_SCRATCH[i] = word & 0xf;
+      FLAT_IDX_SCRATCH[i + 1] = (word >>> 4) & 0xf;
+      FLAT_IDX_SCRATCH[i + 2] = (word >>> 8) & 0xf;
+      FLAT_IDX_SCRATCH[i + 3] = (word >>> 12) & 0xf;
+      FLAT_IDX_SCRATCH[i + 4] = (word >>> 16) & 0xf;
+      FLAT_IDX_SCRATCH[i + 5] = (word >>> 20) & 0xf;
+      FLAT_IDX_SCRATCH[i + 6] = (word >>> 24) & 0xf;
+      // Top nibble — `>>> 28` already gives the low 4 bits unsigned;
+      // no mask needed.
+      FLAT_IDX_SCRATCH[i + 7] = word >>> 28;
+    }
+  } else if (bits === 8) {
+    // 4 indices per Uint32 word; 4096 / 4 = 1024 words.
+    let w = 0;
+    for (let i = 0; i < SUBCHUNK_VOLUME; i += 4) {
+      const word = arr[w++]!;
+      FLAT_IDX_SCRATCH[i] = word & 0xff;
+      FLAT_IDX_SCRATCH[i + 1] = (word >>> 8) & 0xff;
+      FLAT_IDX_SCRATCH[i + 2] = (word >>> 16) & 0xff;
+      // Top byte — `>>> 24` zeros the upper bits.
+      FLAT_IDX_SCRATCH[i + 3] = word >>> 24;
+    }
+  } else if (bits === 16) {
+    // 2 indices per Uint32 word; 4096 / 2 = 2048 words.
+    let w = 0;
+    for (let i = 0; i < SUBCHUNK_VOLUME; i += 2) {
+      const word = arr[w++]!;
+      FLAT_IDX_SCRATCH[i] = word & 0xffff;
+      FLAT_IDX_SCRATCH[i + 1] = word >>> 16;
+    }
   } else {
+    // Defensive fallback — current BitsPerIndex is 0|4|8|16, but if
+    // a future packing scheme introduces another width this preserves
+    // correctness over speed.
     const mask = (1 << bits) - 1;
     for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
       const bitPos = i * bits;
-      // arr is Uint32Array (already null-checked at top of else); `!`
-      // skips the per-cell coalesce — runs 4096 times per chunk-section
-      // dispatch.
       const word = arr[bitPos >>> 5]!;
       FLAT_IDX_SCRATCH[i] = (word >>> (bitPos & 31)) & mask;
     }
