@@ -272,7 +272,9 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             lightPos[u] = iu;
             lightPos[v] = iv;
             const faceLight = lightAtCtx(lightPos[0]!, lightPos[1]!, lightPos[2]!);
-            const lightAlpha = FACE_LIGHT_ALPHA[faceLight] ?? 255;
+            // FACE_LIGHT_ALPHA is Uint8Array(16), faceLight ∈ [0,15]
+            // → always defined. `!` over `?? 255`.
+            const lightAlpha = FACE_LIGHT_ALPHA[faceLight]!;
 
             if (s === 1) {
               positions.push(c0x, c0y, c0z, c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
