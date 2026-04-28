@@ -125,8 +125,12 @@ export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
     u8[offset++] = m.bits;
     view.setUint16(offset, m.paletteSize, true);
     offset += 2;
+    // Direct array read on palette.entries skips the per-call
+    // Palette.get function dispatch + its `if undefined throw` safety
+    // check. palette.size is the bound, so `entries[i]!` is in range.
+    const entries = m.sec.palette.entries;
     for (let i = 0; i < m.paletteSize; i++) {
-      view.setUint32(offset, m.sec.palette.get(i) >>> 0, true);
+      view.setUint32(offset, entries[i]! >>> 0, true);
       offset += 4;
     }
     if (m.bits > 0) {
