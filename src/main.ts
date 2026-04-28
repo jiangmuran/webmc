@@ -9693,12 +9693,20 @@ function frame(): void {
       // Slow descent: clamp downward velocity.
       const minFallY = -3 + look.y * 8;
       if (fp.velocity.y < minFallY) fp.velocity.y = fp.velocity.y * 0.7 + minFallY * 0.3;
-      // Forward thrust along look horizontal.
-      const horiz = Math.hypot(look.x, look.z);
+      // Forward thrust along look horizontal. sqrt over hypot — look is
+      // a normalized direction, hypot's overflow safety is wasted CPU
+      // per frame while gliding.
+      const lookX = look.x;
+      const lookZ = look.z;
+      const horiz = Math.sqrt(lookX * lookX + lookZ * lookZ);
       if (horiz > 0.001) {
         const speedFactor = 8 + Math.max(0, -look.y) * 12;
-        fp.velocity.x = fp.velocity.x * 0.85 + (look.x / horiz) * speedFactor * 0.15;
-        fp.velocity.z = fp.velocity.z * 0.85 + (look.z / horiz) * speedFactor * 0.15;
+        // Hoist (speedFactor * 0.15) / horiz so the two velocity writes
+        // do one division then two multiplies (vs. two divisions in the
+        // prior `(look.x / horiz) * speedFactor * 0.15` form).
+        const thrust = (speedFactor * 0.15) / horiz;
+        fp.velocity.x = fp.velocity.x * 0.85 + lookX * thrust;
+        fp.velocity.z = fp.velocity.z * 0.85 + lookZ * thrust;
       }
       // Drain durability ~1/sec. Skip in creative — vanilla creative
       // elytra never wears out so unlimited cosmetic gliding works.
