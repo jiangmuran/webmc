@@ -73,6 +73,7 @@ import {
   FREEZE_DAMAGE_PER_INTERVAL,
   FREEZE_DAMAGE_INTERVAL_TICKS,
 } from './blocks/powder_snow_freeze';
+import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_drops';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -3689,28 +3690,53 @@ const interaction = new InteractionController(
         const waitMs = 5000 + Math.random() * 25000;
         setTimeout(() => {
           if (gameMode !== 'survival' && gameMode !== 'adventure') return;
-          // Vanilla 1.13+ fishing pool: cod, salmon, pufferfish, tropical_fish.
-          // 'webmc:raw_fish' was a 1.12 legacy name that was never registered
-          // here, so 25% of fishing rolls dropped nothing silently.
+          // Wiki-spec category roll: 85% fish, 5% treasure, 10% junk.
+          // Was 95% fish + 5% treasure with no junk path — vanilla
+          // junk drops (string, bones, rotten flesh, etc) were silently
+          // unreachable. rollFishingCategory uses the canonical
+          // rod-reel-drops weights so future luckOfSea wiring just
+          // passes the level through.
           const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:pufferfish', 'webmc:tropical_fish'];
-          const treasure = [
+          const TREASURE = [
             'webmc:bow',
             'webmc:enchanted_book',
             'webmc:fishing_rod',
             'webmc:nautilus_shell',
           ];
-          const useTreasure = Math.random() < 0.05;
-          const pool = (useTreasure ? treasure : FISH).filter(
-            (n) => itemRegistry.byName(n) !== undefined,
-          );
+          // Wiki junk pool: bone, bowl, fishing_rod, leather, leather_boots,
+          // rotten_flesh, stick, string, water_bottle, lily_pad, ink_sac,
+          // tripwire_hook. Filter by what's registered locally.
+          const JUNK = [
+            'webmc:bone',
+            'webmc:bowl',
+            'webmc:fishing_rod',
+            'webmc:leather',
+            'webmc:leather_boots',
+            'webmc:rotten_flesh',
+            'webmc:stick',
+            'webmc:string',
+            'webmc:lily_pad',
+            'webmc:ink_sac',
+            'webmc:tripwire_hook',
+          ];
+          const category = rollFishingCategory({
+            luckOfSeaLevel: 0,
+            rainInBiome: false,
+            openWaterBonus: true,
+            rng: Math.random,
+          });
+          const sourceList = category === 'fish' ? FISH : category === 'treasure' ? TREASURE : JUNK;
+          const pool = sourceList.filter((n) => itemRegistry.byName(n) !== undefined);
           if (pool.length === 0) return;
           const pickName = pool[Math.floor(Math.random() * pool.length)] ?? 'webmc:cod';
           const itemId = itemRegistry.byName(pickName);
           if (itemId !== undefined) {
             addOneToInventory(itemId);
             const def2 = itemRegistry.get(itemId);
-            chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, '#a0e0ff');
+            const labelColor = category === 'treasure' ? '#ffd080' : '#a0e0ff';
+            chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, labelColor);
             sfx.play('click');
+            // Vanilla XP: 1-6 for any catch (treasure same as fish).
             playerState.addXP(1 + Math.floor(Math.random() * 6));
           }
         }, waitMs);
