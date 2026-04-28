@@ -250,6 +250,13 @@ export class MobRenderer {
     // Hoist per-frame time + creeper-fuse phase basis. Was calling
     // performance.now() per mob inside the per-mob loop.
     const nowMs = performance.now();
+    // Hoist the customScales presence check — most servers have zero
+    // entries (no /scale, no growth-stunted babies), so the per-mob
+    // Map.get + ?? 1 was firing for every alive mob every frame
+    // returning the same default. With the gate, the Map.get only
+    // runs when at least one custom scale is set anywhere.
+    const customScales = this.customScales;
+    const anyCustomScales = customScales.size > 0;
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
@@ -357,7 +364,7 @@ export class MobRenderer {
         targetRotZ = (1 - s) * Math.PI * 0.6;
         targetRotX = 0;
       } else {
-        targetScale = this.customScales.get(mob.id) ?? 1;
+        targetScale = anyCustomScales ? (customScales.get(mob.id) ?? 1) : 1;
         targetRotZ = 0;
         // sqrt(x²+z²) replaces Math.hypot — per-mob per-frame walk-bob
         // calc, mob velocity components are always in normal range so
