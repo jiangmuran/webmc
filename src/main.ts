@@ -76,6 +76,7 @@ import {
 import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_drops';
 import { CAMPFIRE_DAMAGE, SOUL_CAMPFIRE_DAMAGE } from './blocks/soul_campfire_repel';
 import { flowerPoolFor } from './items/bone_meal_spread';
+import { fireworkBoost } from './items/elytra_firework_boost';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -3922,13 +3923,28 @@ const interaction = new InteractionController(
         hand.swing();
         return true;
       }
-      // Firework rocket while gliding → forward thrust boost.
+      // Firework rocket while gliding → forward thrust boost. Wiki
+      // formula via fireworkBoost: per-second impulse = 1.5×look +
+      // 0.5×current_velocity for `flightDuration*0.5+0.5` seconds.
+      // Was a constant 18×look kick with hardcoded y-dampening that
+      // ignored current velocity (so a fast glide and a slow glide
+      // got the same boost — wrong in vanilla).
       if (heldName === 'firework_rocket' && isGliding) {
         const look = fp.lookVector(eventLookTmp);
-        const power = 18;
-        fp.velocity.x += look.x * power;
-        fp.velocity.y += look.y * power * 0.6;
-        fp.velocity.z += look.z * power;
+        const boost = fireworkBoost({
+          lookForward: { x: look.x, y: look.y, z: look.z },
+          // Default flightDuration=1 (gunpowder count). NBT-encoded
+          // multi-stage rockets are a separate wiring task.
+          flightDuration: 1,
+          currentVelocity: {
+            x: fp.velocity.x,
+            y: fp.velocity.y,
+            z: fp.velocity.z,
+          },
+        });
+        fp.velocity.x += boost.velocityDelta.x;
+        fp.velocity.y += boost.velocityDelta.y;
+        fp.velocity.z += boost.velocityDelta.z;
         if (vitalsActive) {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
