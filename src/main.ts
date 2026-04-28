@@ -74,6 +74,7 @@ import {
   FREEZE_DAMAGE_INTERVAL_TICKS,
 } from './blocks/powder_snow_freeze';
 import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_drops';
+import { CAMPFIRE_DAMAGE, SOUL_CAMPFIRE_DAMAGE } from './blocks/soul_campfire_repel';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -2018,6 +2019,8 @@ const melonStemIdCached = registry.byName('webmc:melon_stem');
 const pumpkinIdCached = registry.byName('webmc:pumpkin');
 const melonIdCached = registry.byName('webmc:melon');
 const cocoaIdCached = registry.byName('webmc:cocoa');
+const campfireIdCached = registry.byName('webmc:campfire');
+const soulCampfireIdCached = registry.byName('webmc:soul_campfire');
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -9865,6 +9868,17 @@ function frame(): void {
       const belowBlockId = footBlockId;
       if (belowBlockId === magmaBlockIdCached && !fp.input.sneak && !fireResistant) {
         envTakeDamage(1 * dtSec, 'fire');
+      }
+      // Campfire / soul campfire stand-on damage (1 / 2 dmg per tick
+      // respectively, per wiki). Both modules shipped (campfire ignite
+      // + soul-campfire-repel + damagePerTick spec) but main.ts only
+      // damaged from magma_block. Sneak doesn't bypass campfire damage
+      // in vanilla — only fire-resistance does.
+      if (belowBlockId === campfireIdCached && !fireResistant) {
+        envTakeDamage(CAMPFIRE_DAMAGE * dtSec, 'fire');
+      }
+      if (belowBlockId === soulCampfireIdCached && !fireResistant) {
+        envTakeDamage(SOUL_CAMPFIRE_DAMAGE * dtSec, 'fire');
       }
       // Soul sand slows player to 60% horizontal velocity (matches MC).
       if (belowBlockId === soulSandIdCached) {
