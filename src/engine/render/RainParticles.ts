@@ -75,13 +75,22 @@ export class RainParticles {
     const count = this.opts.maxParticles;
     const step = this.opts.fallSpeed * dtSec;
     const y0 = centerY + this.opts.height;
+    // Hoist loop-invariants out of the per-particle inner loop.
+    // spawnRadius * 2 was computed twice per respawn × ~10 respawns
+    // per frame; floorY (centerY - 2) was the per-particle threshold
+    // compare. Single y read per particle (cache the decremented
+    // value) instead of two typed-array reads of the same cell.
+    const floorY = centerY - 2;
+    const radiusX2 = this.opts.spawnRadius * 2;
     for (let i = 0; i < count; i++) {
       const base = i * 3;
-      this.positions[base + 1]! -= step;
-      if (this.positions[base + 1]! < centerY - 2) {
-        this.positions[base] = centerX + (Math.random() - 0.5) * this.opts.spawnRadius * 2;
-        this.positions[base + 1] = y0;
-        this.positions[base + 2] = centerZ + (Math.random() - 0.5) * this.opts.spawnRadius * 2;
+      const yIdx = base + 1;
+      const y = this.positions[yIdx]! - step;
+      this.positions[yIdx] = y;
+      if (y < floorY) {
+        this.positions[base] = centerX + (Math.random() - 0.5) * radiusX2;
+        this.positions[yIdx] = y0;
+        this.positions[base + 2] = centerZ + (Math.random() - 0.5) * radiusX2;
       }
     }
     this.positionAttr.needsUpdate = true;
