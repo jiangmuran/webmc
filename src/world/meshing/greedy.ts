@@ -79,6 +79,14 @@ const D_CONST = SUBCHUNK_DIM;
 // worker hot loop.
 const FACE_LIGHT_ALPHA = new Uint8Array(16);
 for (let i = 0; i < 16; i++) FACE_LIGHT_ALPHA[i] = Math.round((i / 15) * 255);
+
+// Module-scope per-call coord scratches. Were function-scoped tuples
+// allocated per meshSnapshot call (3 fresh [0,0,0] arrays). Worker is
+// single-threaded; meshSnapshot is called serially. Per-worker module
+// reuse is safe.
+const POS_SCRATCH: [number, number, number] = [0, 0, 0];
+const NPOS_SCRATCH: [number, number, number] = [0, 0, 0];
+const LIGHT_POS_SCRATCH: [number, number, number] = [0, 0, 0];
 let CTX_FLAT_IDX: Uint16Array = new Uint16Array(0);
 let CTX_PALETTE_OPAQUE: Uint8Array = new Uint8Array(0);
 let CTX_FLAT_SKY: Uint8Array = new Uint8Array(0);
@@ -148,13 +156,12 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
 
   const mask = MASK_SCRATCH;
   let quadCount = 0;
-  // Function-scoped pos/npos/lightPos scratches — were per-iteration
-  // [0,0,0] arrays before. greedy meshing iterates ~96 times per
-  // axis-pass (3 axes × 2 dirs × 16 slices) and the lightPos was
-  // allocated per quad (hundreds per chunk).
-  const pos: [number, number, number] = [0, 0, 0];
-  const npos: [number, number, number] = [0, 0, 0];
-  const lightPos: [number, number, number] = [0, 0, 0];
+  // Reuse module-scope scratches — were function-scoped per-call tuples
+  // (3 fresh [0,0,0] arrays per meshSnapshot, ~300/sec at 100
+  // dispatches/sec on each worker thread).
+  const pos = POS_SCRATCH;
+  const npos = NPOS_SCRATCH;
+  const lightPos = LIGHT_POS_SCRATCH;
 
   for (let d = 0; d < 3; d++) {
     const u = (d + 1) % 3;
