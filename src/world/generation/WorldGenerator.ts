@@ -148,18 +148,25 @@ export class WorldGenerator {
         const wx = cx * CHUNK_DIM + lx;
         const wz = cz * CHUNK_DIM + lz;
         const surface = this.surfaceAt(wx, wz);
-        const topBlock = surface <= SEA_LEVEL ? sand : grass;
+        const isUnderwater = surface <= SEA_LEVEL;
+        const topBlock = isUnderwater ? sand : grass;
+        // Subsurface band (the 3 cells below topBlock): sand under
+        // beaches/oceans, dirt under regular terrain. Hoist out of the
+        // y-loop instead of recomputing `topBlock === sand ? sand :
+        // dirt` per cell — saves ~4 ternaries per column × 256 cols
+        // per chunk = ~1K ternary evals per chunk gen.
+        const subSurfaceBlock = isUnderwater ? sand : dirt;
         // biomeAt is only consulted below for tree placement, which
         // never happens underwater (gated by topBlock === grass). Skip
         // the fbm noise call entirely for underwater columns — large
         // ocean chunks gen substantially faster.
-        const biome = surface <= SEA_LEVEL ? PLAINS : this.biomeAt(wx, wz);
+        const biome = isUnderwater ? PLAINS : this.biomeAt(wx, wz);
         for (let y = 0; y <= surface; y++) {
           let state = stone;
           if (y === 0) state = bedrock;
           else if (y <= DEEPSLATE_Y) state = deepslate;
           if (y === surface) state = topBlock;
-          else if (y >= surface - 3) state = topBlock === sand ? sand : dirt;
+          else if (y >= surface - 3) state = subSurfaceBlock;
           if (y < surface && this.isCave(wx, y, wz)) {
             chunk.set(lx, y, lz, AIR);
             continue;
