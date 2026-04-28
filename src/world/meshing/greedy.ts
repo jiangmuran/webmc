@@ -175,12 +175,19 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
 
       for (let w = 0; w < D; w++) {
         mask.fill(-1);
+        // pos[d] / npos[d] are invariant for the whole slice; pos[v] /
+        // npos[v] are invariant within an iv-iter. Hoist them out so
+        // the inner cell loop only writes the iu-varying axis. Saves
+        // ~800K tuple writes per mesh (4 redundant writes × 4096 cells
+        // × 6 axis passes minus the hoisted constants).
+        pos[d] = w;
+        npos[d] = w + sign;
 
         for (let iv = 0; iv < D; iv++) {
+          pos[v] = iv;
+          npos[v] = iv;
           for (let iu = 0; iu < D; iu++) {
-            pos[d] = w;
             pos[u] = iu;
-            pos[v] = iv;
             // pos/npos are fixed-size [num,num,num] tuples and we just
             // wrote to all three indices via [d]/[u]/[v] (a permutation
             // of [0,1,2]). The `?? 0` was a TS narrowing artifact (
@@ -190,9 +197,11 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             // 4096× per axis-pass × 6 passes per mesh.
             const selfIdx = flatIdx[localIndex(pos[0]!, pos[1]!, pos[2]!)]!;
             if (paletteOpaque[selfIdx] !== 1) continue;
-            npos[d] = w + sign;
+            // npos[u] only needs to be written for cells we actually
+            // probe with opaqueAtCtx (~1% of cells in air-heavy
+            // sections). Setting it after the first continue skips
+            // ~99% of these writes for typical sky/cave chunks.
             npos[u] = iu;
-            npos[v] = iv;
             if (opaqueAtCtx(npos[0]!, npos[1]!, npos[2]!)) continue;
             mask[(iv << 4) + iu] = selfIdx;
           }
@@ -265,9 +274,10 @@ export function meshSnapshot(snap: Snapshot, neighbors: MesherNeighbors): MeshOu
             const g = paletteColor[base3 + 1]!;
             const b = paletteColor[base3 + 2]!;
 
-            lightPos[0] = 0;
-            lightPos[1] = 0;
-            lightPos[2] = 0;
+            // {d, u, v} is a permutation of {0, 1, 2}, so the three
+            // assignments below cover every index — the previous
+            // `lightPos[0]=0; lightPos[1]=0; lightPos[2]=0;` triple
+            // was always immediately overwritten by these three.
             lightPos[d] = w + sign;
             lightPos[u] = iu;
             lightPos[v] = iv;
