@@ -6455,18 +6455,29 @@ const chatInput = new ChatInput(appEl, {
         listGameRules: () => ({ ...gameRules }),
         biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
         findMob: (kind) => {
-          let best: { x: number; y: number; z: number; dist: number } | null = null;
+          // Compare by dist² inside the loop (ordering-preserving),
+          // sqrt once at the end for the report.
+          let bestX = 0,
+            bestY = 0,
+            bestZ = 0,
+            bestDistSq = Infinity;
+          let found = false;
           for (const m of mobWorld.all()) {
             if (m.def.kind !== kind) continue;
             const dx = m.position.x - fp.position.x;
             const dy = m.position.y - fp.position.y;
             const dz = m.position.z - fp.position.z;
-            const dist = Math.hypot(dx, dy, dz);
-            if (!best || dist < best.dist) {
-              best = { x: m.position.x, y: m.position.y, z: m.position.z, dist };
+            const distSq = dx * dx + dy * dy + dz * dz;
+            if (distSq < bestDistSq) {
+              bestDistSq = distSq;
+              bestX = m.position.x;
+              bestY = m.position.y;
+              bestZ = m.position.z;
+              found = true;
             }
           }
-          return best;
+          if (!found) return null;
+          return { x: bestX, y: bestY, z: bestZ, dist: Math.sqrt(bestDistSq) };
         },
         findBlock: (name, r) => {
           const fullName = name.startsWith('webmc:') ? name : `webmc:${name}`;
@@ -6475,7 +6486,15 @@ const chatInput = new ChatInput(appEl, {
           const px = Math.floor(fp.position.x);
           const py = Math.floor(fp.position.y);
           const pz = Math.floor(fp.position.z);
-          let best: { x: number; y: number; z: number; dist: number } | null = null;
+          // Track best by squared distance — sqrt preserves ordering,
+          // so dist² ranks identically. Skips one sqrt per matching
+          // cell (potentially millions for r=64) and pays one sqrt at
+          // the end for the report.
+          let bestX = 0,
+            bestY = 0,
+            bestZ = 0,
+            bestDistSq = Infinity;
+          let found = false;
           for (let dy = -r; dy <= r; dy++) {
             for (let dz = -r; dz <= r; dz++) {
               for (let dx = -r; dx <= r; dx++) {
@@ -6486,12 +6505,19 @@ const chatInput = new ChatInput(appEl, {
                 const s = world.get(x, y, z);
                 if (s === AIR) continue;
                 if (stateId(s) !== id) continue;
-                const dist = Math.hypot(dx, dy, dz);
-                if (!best || dist < best.dist) best = { x, y, z, dist };
+                const distSq = dx * dx + dy * dy + dz * dz;
+                if (distSq < bestDistSq) {
+                  bestDistSq = distSq;
+                  bestX = x;
+                  bestY = y;
+                  bestZ = z;
+                  found = true;
+                }
               }
             }
           }
-          return best;
+          if (!found) return null;
+          return { x: bestX, y: bestY, z: bestZ, dist: Math.sqrt(bestDistSq) };
         },
         killAllMobs: () => {
           const ids: number[] = [];
