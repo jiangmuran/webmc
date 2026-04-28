@@ -131,7 +131,12 @@ export class FluidWorld {
         // tick would re-spawn water on top of the stone. Drop the cell
         // from the map instead.
         const here = this.world.get(p.x, p.y, p.z);
-        const sameFluid = here === this.blockStateFor(cell.kind);
+        // Cache blockStateFor(cell.kind) once — was called twice per
+        // cell (sameFluid compare + the world.set arg). Each call is
+        // a property read + ternary, but at active flow with thousands
+        // of fluid updates per tick the redundant call adds up.
+        const cellKindState = cell.kind === 'water' ? this.waterState : this.lavaState;
+        const sameFluid = here === cellKindState;
         const placeable = here === AIR || sameFluid;
         if (!placeable) {
           this.cells.delete(k);
@@ -139,7 +144,7 @@ export class FluidWorld {
           continue;
         }
         if (!sameFluid) {
-          this.world.set(p.x, p.y, p.z, this.blockStateFor(cell.kind));
+          this.world.set(p.x, p.y, p.z, cellKindState);
           changed.push(slot);
         } else {
           this.changedPool.push(slot);
