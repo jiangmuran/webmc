@@ -63,6 +63,11 @@ import {
 } from './blocks/cactus_grow_damage';
 import { tryGrow as pumpkinStemTryGrow, type StemCtx } from './blocks/pumpkin_stem_grow';
 import { tryGrow as cocoaTryGrow, MAX_AGE as COCOA_MAX_AGE } from './blocks/cocoa_grow';
+import {
+  tryGrow as berryTryGrow,
+  BERRY_MAX_AGE,
+  type BerryBushCtx,
+} from './blocks/sweet_berry_growth';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -3015,6 +3020,10 @@ const cocoaGrowCtxScratch: { age: number; facing: 'north' | 'south' | 'east' | '
   age: 0,
   facing: 'north',
 };
+// Sweet berry bush grow scratch — tryGrow returns a fresh ctx each
+// call but the only field we read back is `age`, so the scratch
+// just feeds the input.
+const berryGrowCtxScratch: BerryBushCtx = { age: 0 };
 // Shared ice melt/freeze ctx — same shape for both helpers.
 const iceCtxScratch = {
   biomeTemperature: 0,
@@ -10887,6 +10896,19 @@ function frame(): void {
           if (result.fruitPlaced && validFound) {
             world.set(validNx, validNy, validNz, makeState(fruitId, 0));
             touchWorldEdit(validNx, validNy, validNz, fruitId);
+          }
+        } else if (id === sweetBerryBushIdCached) {
+          // Sweet berry bush growth — wiki spec: ages 0..3, ~20%
+          // chance per random tick. Was unwired despite the
+          // sweet_berry_growth module + walk-damage hookup; bushes
+          // planted from picked berries sat at the immature stage
+          // forever and never produced harvestable berries.
+          const berryAge = stateProps(s);
+          if (berryAge >= BERRY_MAX_AGE) continue;
+          berryGrowCtxScratch.age = berryAge as 0 | 1 | 2 | 3;
+          const next = berryTryGrow(berryGrowCtxScratch, Math.random);
+          if (next.age !== berryAge) {
+            world.set(x, y, z, makeState(id, next.age));
           }
         } else if (id === cocoaIdCached) {
           // Cocoa pod growth — wiki spec: ages 0..2, ~20% chance per
