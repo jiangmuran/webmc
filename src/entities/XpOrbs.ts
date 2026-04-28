@@ -120,11 +120,14 @@ export class XpOrbWorld {
       const dz = playerPos.z - orb.z;
       const distSq = dx * dx + dy * dy + dz * dz;
       if (distSq < 3 * 3) {
+        // Hoist (pullSpeed * dtSec) / len so the three position writes
+        // do one division then three multiplies (vs. three divisions
+        // in the prior `(d / len) * pullSpeed * dtSec` form).
         const len = Math.sqrt(distSq) || 1;
-        const pullSpeed = 8;
-        orb.x += (dx / len) * pullSpeed * dtSec;
-        orb.y += (dy / len) * pullSpeed * dtSec;
-        orb.z += (dz / len) * pullSpeed * dtSec;
+        const pullStep = (8 * dtSec) / len;
+        orb.x += dx * pullStep;
+        orb.y += dy * pullStep;
+        orb.z += dz * pullStep;
         if (distSq < 0.5 * 0.5) {
           onPickup(orb.xp);
           toRemove.push(orb.id);
