@@ -158,15 +158,21 @@ export function tickFluid(
     const outLevel = cell.source ? LEVEL_SOURCE - step : cell.level - step;
     if (outLevel <= 0) continue;
 
+    // Hoist pos.x/y/z outside the 4-neighbor loop — was three property
+    // reads per iteration × 4 iters × per cell × per fluid tick. At
+    // active flow with thousands of cells the property-read overhead
+    // adds up.
+    const px = pos.x;
+    const py = pos.y;
+    const pz = pos.z;
     for (let ni = 0; ni < 4; ni++) {
-      const nx = pos.x + HORIZ_DX[ni]!;
-      const ny = pos.y;
-      const nz = pos.z + HORIZ_DZ[ni]!;
-      if (isSolid(nx, ny, nz)) continue;
-      const neighbour = snapshotCell(cells, updates, nx, ny, nz);
+      const nx = px + HORIZ_DX[ni]!;
+      const nz = pz + HORIZ_DZ[ni]!;
+      if (isSolid(nx, py, nz)) continue;
+      const neighbour = snapshotCell(cells, updates, nx, py, nz);
       if (neighbour && neighbour.kind !== cell.kind) continue;
       if (neighbour && neighbour.level >= outLevel) continue;
-      updates.set(keyOfXYZ(nx, ny, nz), {
+      updates.set(keyOfXYZ(nx, py, nz), {
         kind: cell.kind,
         level: outLevel,
         source: false,
@@ -212,7 +218,11 @@ export function tickFluid(
     const c = merged.get(k);
     if (c === undefined) continue;
     const pos = parseKeyInto(k, TICK_POS_SCRATCH);
-    const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
+    // Hoist pos.x/y/z outside the 4-neighbor loop and the below probe.
+    const px = pos.x;
+    const py = pos.y;
+    const pz = pos.z;
+    const belowKey = keyOfXYZ(px, py - 1, pz);
     if (!reachable.has(belowKey)) {
       if (merged.get(belowKey)?.kind === c.kind) {
         reachable.add(belowKey);
@@ -220,7 +230,7 @@ export function tickFluid(
       }
     }
     for (let ni = 0; ni < 4; ni++) {
-      const nk = keyOfXYZ(pos.x + HORIZ_DX[ni]!, pos.y, pos.z + HORIZ_DZ[ni]!);
+      const nk = keyOfXYZ(px + HORIZ_DX[ni]!, py, pz + HORIZ_DZ[ni]!);
       if (reachable.has(nk)) continue;
       const nc = merged.get(nk);
       if (nc?.kind !== c.kind) continue;
