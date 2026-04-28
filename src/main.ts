@@ -62,6 +62,7 @@ import {
   MAX_HEIGHT as CACTUS_MAX_H,
 } from './blocks/cactus_grow_damage';
 import { tryGrow as pumpkinStemTryGrow, type StemCtx } from './blocks/pumpkin_stem_grow';
+import { tryGrow as cocoaTryGrow, MAX_AGE as COCOA_MAX_AGE } from './blocks/cocoa_grow';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -1999,6 +2000,7 @@ const pumpkinStemIdCached = registry.byName('webmc:pumpkin_stem');
 const melonStemIdCached = registry.byName('webmc:melon_stem');
 const pumpkinIdCached = registry.byName('webmc:pumpkin');
 const melonIdCached = registry.byName('webmc:melon');
+const cocoaIdCached = registry.byName('webmc:cocoa');
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -3006,6 +3008,12 @@ const stemGrowCtxScratch: StemCtx = {
   maxAge: 7,
   fruitSpawned: false,
   hasEmptyDirtNeighbor: false,
+};
+// Cocoa grow scratch — tryGrow mutates `age` in place, so reuse one
+// instance and re-seed `age` from block-state props each call.
+const cocoaGrowCtxScratch: { age: number; facing: 'north' | 'south' | 'east' | 'west' } = {
+  age: 0,
+  facing: 'north',
 };
 // Shared ice melt/freeze ctx — same shape for both helpers.
 const iceCtxScratch = {
@@ -10879,6 +10887,22 @@ function frame(): void {
           if (result.fruitPlaced && validFound) {
             world.set(validNx, validNy, validNz, makeState(fruitId, 0));
             touchWorldEdit(validNx, validNy, validNz, fruitId);
+          }
+        } else if (id === cocoaIdCached) {
+          // Cocoa pod growth — wiki spec: ages 0..2, ~20% chance per
+          // random tick to advance. Was unwired despite cocoa_grow
+          // shipping; placed pods sat at age 0 forever and dropped
+          // only the immature 1-bean amount.
+          // Reuse the lower 2 bits of state props for age (the upper
+          // 2 bits encode facing; this branch only mutates age so
+          // facing is preserved by reading and rewriting in place).
+          const stateAll = stateProps(s);
+          const cocoaAge = stateAll & 0x3;
+          if (cocoaAge >= COCOA_MAX_AGE) continue;
+          cocoaGrowCtxScratch.age = cocoaAge;
+          if (cocoaTryGrow(cocoaGrowCtxScratch, Math.random)) {
+            const newProps = (stateAll & ~0x3) | (cocoaGrowCtxScratch.age & 0x3);
+            world.set(x, y, z, makeState(id, newProps));
           }
         } else if (id === grassBlockIdCached || id === dirtIdCached) {
           // Grass spreads to adjacent dirt (light >= 9, no opaque
