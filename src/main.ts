@@ -61,6 +61,7 @@ import {
   MAX_AGE as CACTUS_MAX_AGE,
   MAX_HEIGHT as CACTUS_MAX_H,
 } from './blocks/cactus_grow_damage';
+import { tryGrow as pumpkinStemTryGrow, type StemCtx } from './blocks/pumpkin_stem_grow';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -1991,6 +1992,13 @@ const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
 const grassBlockIdCached = registry.byName('webmc:grass_block');
 const dirtIdCached = registry.byName('webmc:dirt');
 const bambooIdCached = registry.byName('webmc:bamboo');
+// Stem + fruit ids for the random-tick stem-grow dispatcher (wires
+// blocks/pumpkin_stem_grow into actual gameplay; the module shipped
+// in M3 but stems sat at age 0 forever and never spawned fruit).
+const pumpkinStemIdCached = registry.byName('webmc:pumpkin_stem');
+const melonStemIdCached = registry.byName('webmc:melon_stem');
+const pumpkinIdCached = registry.byName('webmc:pumpkin');
+const melonIdCached = registry.byName('webmc:melon');
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -2992,6 +3000,13 @@ const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
 // Cactus growth state scratch — passed to canGrow() per cactus block
 // per random tick. Reused across calls.
 const cactusGrowStateScratch = { age: 0, adjacentToBlock: false };
+// Pumpkin/melon stem grow scratch.
+const stemGrowCtxScratch: StemCtx = {
+  age: 0,
+  maxAge: 7,
+  fruitSpawned: false,
+  hasEmptyDirtNeighbor: false,
+};
 // Shared ice melt/freeze ctx — same shape for both helpers.
 const iceCtxScratch = {
   biomeTemperature: 0,
@@ -10805,6 +10820,65 @@ function frame(): void {
             touchWorldEdit(x, y + 1, z, cactusIdCached);
           } else if (age < CACTUS_MAX_AGE && !cactusGrowStateScratch.adjacentToBlock) {
             world.set(x, y, z, makeState(id, age + 1));
+          }
+        } else if (
+          (id === pumpkinStemIdCached || id === melonStemIdCached) &&
+          pumpkinStemIdCached !== undefined &&
+          melonStemIdCached !== undefined
+        ) {
+          // Pumpkin/melon stem growth — wiki spec: ages 0..7, advances
+          // ~12.5% per random tick. At age 7 with adjacent dirt/grass/
+          // farmland (air above) AND no fruit already adjacent, drops
+          // a pumpkin/melon at the empty neighbor with the same chance.
+          // Was unwired despite the pumpkin_stem_grow module shipping.
+          const fruitId = id === pumpkinStemIdCached ? pumpkinIdCached : melonIdCached;
+          if (fruitId === undefined) continue;
+          const stemAge = stateProps(s);
+          let validNx = 0;
+          let validNy = 0;
+          let validNz = 0;
+          let validFound = false;
+          let fruitAdjacent = false;
+          // 4 horizontal neighbors. We stop at the first valid empty
+          // ground but still scan the others to detect existing fruit.
+          for (let ni = 0; ni < 4; ni++) {
+            const dx = ni === 0 ? 1 : ni === 1 ? -1 : 0;
+            const dz = ni === 2 ? 1 : ni === 3 ? -1 : 0;
+            const nx = x + dx;
+            const nz = z + dz;
+            const at = world.get(nx, y, nz);
+            if (at !== AIR) {
+              const atId = stateId(at);
+              if (atId === pumpkinIdCached || atId === melonIdCached) fruitAdjacent = true;
+              continue;
+            }
+            // Air at neighbor — check ground below.
+            const groundBelow = world.get(nx, y - 1, nz);
+            if (groundBelow === AIR) continue;
+            const groundId = stateId(groundBelow);
+            if (
+              groundId === dirtIdCached ||
+              groundId === grassBlockIdCached ||
+              groundId === farmlandIdCached
+            ) {
+              if (!validFound) {
+                validNx = nx;
+                validNy = y;
+                validNz = nz;
+                validFound = true;
+              }
+            }
+          }
+          stemGrowCtxScratch.age = stemAge;
+          stemGrowCtxScratch.fruitSpawned = fruitAdjacent;
+          stemGrowCtxScratch.hasEmptyDirtNeighbor = validFound;
+          const result = pumpkinStemTryGrow(stemGrowCtxScratch, Math.random);
+          if (result.state.age !== stemAge) {
+            world.set(x, y, z, makeState(id, result.state.age));
+          }
+          if (result.fruitPlaced && validFound) {
+            world.set(validNx, validNy, validNz, makeState(fruitId, 0));
+            touchWorldEdit(validNx, validNy, validNz, fruitId);
           }
         } else if (id === grassBlockIdCached || id === dirtIdCached) {
           // Grass spreads to adjacent dirt (light >= 9, no opaque
