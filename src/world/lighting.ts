@@ -174,7 +174,9 @@ export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkL
   // 0 for under-surface cells).
   for (let lx = 0; lx < CHUNK_DIM; lx++) {
     for (let lz = 0; lz < CHUNK_DIM; lz++) {
-      const topOpaque = topByCol[lx * CHUNK_DIM + lz] ?? -1;
+      // topByCol is Int16Array(CHUNK_DIM*CHUNK_DIM), index always in
+      // range — `!` skips per-column nullish-coalesce.
+      const topOpaque = topByCol[lx * CHUNK_DIM + lz]!;
       for (let y = 0; y <= writeUntilY; y++) {
         const sec = sectionsByCy[y >> 4]!;
         sec[localIndex(lx, y & 0xf, lz)] = y > topOpaque ? ALL_LIT : 0;
