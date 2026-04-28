@@ -1,10 +1,16 @@
+// Wiki-spec result of lava meeting water (the lava is the one that
+// transforms; the water stays):
+//   lava SOURCE + any water → obsidian
+//   lava FLOW + water SOURCE → stone
+//   lava FLOW + water FLOW → cobblestone
+// Source: minecraft.wiki/w/Obsidian + minecraft.wiki/w/Cobblestone +
+// minecraft.wiki/w/Stone (Bedrock/Java parity post-1.18).
 export function lavaMeetsWater(
   lavaIsSource: boolean,
   waterIsSource: boolean,
-): 'obsidian' | 'cobblestone' | 'stone' | undefined {
-  if (lavaIsSource && waterIsSource) return 'obsidian';
-  if (lavaIsSource && !waterIsSource) return 'cobblestone';
-  if (!lavaIsSource && waterIsSource) return 'stone';
+): 'obsidian' | 'cobblestone' | 'stone' {
+  if (lavaIsSource) return 'obsidian';
+  if (waterIsSource) return 'stone';
   return 'cobblestone';
 }
 

@@ -6,12 +6,16 @@ describe('lava/water interaction', () => {
     expect(lavaMeetsWater(true, true)).toBe('obsidian');
   });
 
-  it('source lava + flowing water → cobble', () => {
-    expect(lavaMeetsWater(true, false)).toBe('cobblestone');
+  it('source lava + flowing water → obsidian (wiki: any water on lava source)', () => {
+    expect(lavaMeetsWater(true, false)).toBe('obsidian');
   });
 
   it('flowing lava + source water → stone', () => {
     expect(lavaMeetsWater(false, true)).toBe('stone');
+  });
+
+  it('flowing lava + flowing water → cobblestone', () => {
+    expect(lavaMeetsWater(false, false)).toBe('cobblestone');
   });
 
   it('no lava no burn', () => {
