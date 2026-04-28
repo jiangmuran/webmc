@@ -1183,10 +1183,13 @@ export class MobWorld {
       const dz = mob.position.z - ctx.playerPos.z;
       // sqrt(x²+z²) avoids hypot's overflow-safe range-checks; mob/
       // player coords are always in normal range. Per mob per tick on
-      // every fleeing passive.
+      // every fleeing passive. Hoist (walkSpeed*1.4)/len so the two
+      // velocity writes do one division then two multiplies (vs. two
+      // divisions in the prior form).
       const len = Math.sqrt(dx * dx + dz * dz) || 1;
-      mob.velocity.x = (dx / len) * mob.def.walkSpeed * 1.4;
-      mob.velocity.z = (dz / len) * mob.def.walkSpeed * 1.4;
+      const invLenSpeed = (mob.def.walkSpeed * 1.4) / len;
+      mob.velocity.x = dx * invLenSpeed;
+      mob.velocity.z = dz * invLenSpeed;
       // atan2(dx/len, dz/len) === atan2(dx, dz) — atan2 is angle-only,
       // normalization doesn't affect the result.
       mob.yaw = Math.atan2(dx, dz);
@@ -1215,12 +1218,12 @@ export class MobWorld {
         // Aggro distSq above is 3D for vanilla parity, but the chase
         // direction stays in the xz plane. sqrt(x²+z²) over hypot:
         // hypot's overflow-safe range-check is wasted CPU on per-mob
-        // chase paths.
+        // chase paths. Hoist walkSpeed/horizLen so the two velocity
+        // writes do one division then two multiplies (vs. two divs).
         const horizLen = Math.sqrt(dx * dx + dz * dz) || 1;
-        const nx = dx / horizLen;
-        const nz = dz / horizLen;
-        mob.velocity.x = nx * mob.def.walkSpeed;
-        mob.velocity.z = nz * mob.def.walkSpeed;
+        const invLenSpeed = mob.def.walkSpeed / horizLen;
+        mob.velocity.x = dx * invLenSpeed;
+        mob.velocity.z = dz * invLenSpeed;
         // atan2(nx, nz) === atan2(dx, dz) — angle-only, normalization
         // factor cancels.
         const targetYaw = Math.atan2(dx, dz);
