@@ -68,6 +68,11 @@ import {
   BERRY_MAX_AGE,
   type BerryBushCtx,
 } from './blocks/sweet_berry_growth';
+import {
+  FREEZE_TICKS_MAX,
+  FREEZE_DAMAGE_PER_INTERVAL,
+  FREEZE_DAMAGE_INTERVAL_TICKS,
+} from './blocks/powder_snow_freeze';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -1911,6 +1916,12 @@ void persistDB.getMeta('difficulty').then((saved) => {
 let sprintDustAccum = 0;
 let prevOnGround = true;
 let prevInWater = false;
+// Powder-snow freeze accumulator (per wiki: 0..140 ticks, +1 per tick
+// in snow without leather boots, -2 per tick out of snow). When at
+// max, takes 1 damage every 40 ticks. Both counters live in real
+// game-ticks (20Hz) and are advanced by dtSec * 20.
+let playerFreezeTicks = 0;
+let playerFreezeSinceDamageTicks = 0;
 let maceFallStartY = 0;
 let isGliding = false;
 let tickRateMultiplier = 1;
@@ -9887,8 +9898,13 @@ function frame(): void {
       // Slow gravity (vanilla makes you float-fall in cobweb).
       if (fp.velocity.y < 0) fp.velocity.y *= 0.5;
     }
-    // Powder snow: slow + sink unless wearing leather boots. Vanilla
-    // freezing damage isn't tracked yet — just the movement effect.
+    // Powder snow: slow + sink unless wearing leather boots, plus
+    // wiki-spec freeze ticks/damage. Was movement-only; now properly
+    // accumulates freeze and applies 1 damage every 40 ticks once
+    // fully frozen (≥ 140 ticks). Leather boots stop accumulation
+    // (and let the player walk on top, which is handled separately
+    // by the AABB sink logic).
+    const dtTicks = dtSec * 20;
     if (touchedPowderSnow) {
       const boots = inventory.armor[3];
       const wearingLeather = boots != null && boots.itemId === leatherBootsItemIdCached;
@@ -9896,7 +9912,30 @@ function frame(): void {
         fp.velocity.x *= 0.5;
         fp.velocity.z *= 0.5;
         if (fp.velocity.y < 0) fp.velocity.y *= 0.4;
+        playerFreezeTicks = Math.min(FREEZE_TICKS_MAX, playerFreezeTicks + dtTicks);
+        if (playerFreezeTicks >= FREEZE_TICKS_MAX) {
+          playerFreezeSinceDamageTicks += dtTicks;
+          if (playerFreezeSinceDamageTicks >= FREEZE_DAMAGE_INTERVAL_TICKS && vitalsActive) {
+            playerFreezeSinceDamageTicks -= FREEZE_DAMAGE_INTERVAL_TICKS;
+            envTakeDamage(FREEZE_DAMAGE_PER_INTERVAL, 'freeze');
+          }
+        } else {
+          // Resetting the inter-damage clock when not yet fully frozen
+          // mirrors vanilla — damage cadence starts fresh on full
+          // freeze, not from accumulated time.
+          playerFreezeSinceDamageTicks = 0;
+        }
+      } else {
+        // Leather boots: thaw at the same rate as standing in normal
+        // air. (Wiki has boots prevent accumulation; thawing rate is
+        // unchanged from no-boots-out-of-snow.)
+        playerFreezeTicks = Math.max(0, playerFreezeTicks - 2 * dtTicks);
+        if (playerFreezeTicks < FREEZE_TICKS_MAX) playerFreezeSinceDamageTicks = 0;
       }
+    } else {
+      // Out of powder snow: thaw at -2 ticks/tick.
+      playerFreezeTicks = Math.max(0, playerFreezeTicks - 2 * dtTicks);
+      if (playerFreezeTicks < FREEZE_TICKS_MAX) playerFreezeSinceDamageTicks = 0;
     }
   }
 
