@@ -75,6 +75,7 @@ import {
 } from './blocks/powder_snow_freeze';
 import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_drops';
 import { CAMPFIRE_DAMAGE, SOUL_CAMPFIRE_DAMAGE } from './blocks/soul_campfire_repel';
+import { flowerPoolFor } from './items/bone_meal_spread';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -4357,16 +4358,16 @@ const interaction = new InteractionController(
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
-          const FLOWERS = [
-            'webmc:dandelion',
-            'webmc:poppy',
-            'webmc:blue_orchid',
-            'webmc:allium',
-            'webmc:azure_bluet',
-            'webmc:oxeye_daisy',
-            'webmc:cornflower',
-            'webmc:lily_of_the_valley',
-          ];
+          // Biome-aware flower pool per wiki: plains/forest/swamp/etc.
+          // each has a distinct flower set (swamp = blue_orchid only,
+          // flower_forest = full variety, etc.). Was a hardcoded
+          // 8-flower list ignoring biome — bone-mealing in a swamp
+          // produced cornflowers (which don't naturally exist there).
+          const biomeId = generator.biomeAt(bx, bz);
+          const biomeName = biomeId === 1 ? 'forest' : 'plains';
+          // Filter the pool to flowers actually registered locally.
+          const FLOWERS = flowerPoolFor(biomeName).filter((n) => registry.byName(n) !== undefined);
+          if (FLOWERS.length === 0) FLOWERS.push('webmc:dandelion');
           let spawned = 0;
           for (const f of result.spawnFlora) {
             const tx = bx + f.x;
