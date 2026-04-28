@@ -56,6 +56,11 @@ import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
 import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
 import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
 import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
+import {
+  canGrow as cactusCanGrow,
+  MAX_AGE as CACTUS_MAX_AGE,
+  MAX_HEIGHT as CACTUS_MAX_H,
+} from './blocks/cactus_grow_damage';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -2984,6 +2989,9 @@ const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: numbe
 // Bamboo growth ctx scratch — same pattern, fresh literal per
 // bamboo block per random tick.
 const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
+// Cactus growth state scratch — passed to canGrow() per cactus block
+// per random tick. Reused across calls.
+const cactusGrowStateScratch = { age: 0, adjacentToBlock: false };
 // Shared ice melt/freeze ctx — same shape for both helpers.
 const iceCtxScratch = {
   biomeTemperature: 0,
@@ -10770,6 +10778,33 @@ function frame(): void {
             touchWorldEdit(x, y + 1, z, sugarCaneId);
           } else if (result === 'age_inc') {
             world.set(x, y, z, makeState(id, caneTickStateScratch.age));
+          }
+        } else if (id === cactusIdCached) {
+          // Cactus growth — wiki-spec age-based: each random tick
+          // advances age 0..15. At MAX_AGE, attempts to grow another
+          // stalk above (within MAX_HEIGHT and only if no horizontal
+          // solid neighbor). Was unwired despite cactus_grow_damage
+          // shipping in M3.
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          let currentHeight = 1;
+          for (let dyDown = 1; dyDown <= CACTUS_MAX_H; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            if (below === AIR || stateId(below) !== cactusIdCached) break;
+            currentHeight++;
+          }
+          const age = stateProps(s);
+          cactusGrowStateScratch.age = age;
+          cactusGrowStateScratch.adjacentToBlock =
+            SOLID_BY_ID[stateId(world.get(x - 1, y, z))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x + 1, y, z))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x, y, z - 1))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x, y, z + 1))] === 1;
+          if (cactusCanGrow(cactusGrowStateScratch, currentHeight)) {
+            world.set(x, y + 1, z, makeState(cactusIdCached, 0));
+            world.set(x, y, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, cactusIdCached);
+          } else if (age < CACTUS_MAX_AGE && !cactusGrowStateScratch.adjacentToBlock) {
+            world.set(x, y, z, makeState(id, age + 1));
           }
         } else if (id === grassBlockIdCached || id === dirtIdCached) {
           // Grass spreads to adjacent dirt (light >= 9, no opaque
