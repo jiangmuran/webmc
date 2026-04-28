@@ -4955,7 +4955,18 @@ canvas.addEventListener('mousedown', (e) => {
         hand.swing();
         return;
       }
-      if (heldName === 'webmc:saddle' && (kind === 'pig' || kind === 'horse')) {
+      // Saddle: vanilla allows pigs, horses, donkeys, mules, and
+      // striders (matches saddle_and_mount.canSaddle's allowed set).
+      // Was pig+horse only — donkey/mule/strider players couldn't
+      // ride their mount despite being valid mount kinds in webmc.
+      if (
+        heldName === 'webmc:saddle' &&
+        (kind === 'pig' ||
+          kind === 'horse' ||
+          kind === 'donkey' ||
+          kind === 'mule' ||
+          kind === 'strider')
+      ) {
         if (!saddledMobs.has(aimedMob.id)) {
           saddledMobs.add(aimedMob.id);
           mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
