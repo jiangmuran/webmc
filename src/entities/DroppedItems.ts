@@ -168,14 +168,14 @@ export class DroppedItemWorld {
         const dz = playerPos.z - it.z;
         const distSq = dx * dx + dy * dy + dz * dz;
         if (distSq < 1.6 * 1.6) {
-          const pullSpeed = 7;
+          // Hoist (pullSpeed * dtSec) / len so the three position writes
+          // do one division then three multiplies (vs. three divisions
+          // in the prior `(d / len) * pullSpeed * dtSec` form).
           const len = Math.sqrt(distSq) || 1;
-          const pullX = (dx / len) * pullSpeed * dtSec;
-          const pullY = (dy / len) * pullSpeed * dtSec;
-          const pullZ = (dz / len) * pullSpeed * dtSec;
-          it.x += pullX;
-          it.y += pullY;
-          it.z += pullZ;
+          const pullStep = (7 * dtSec) / len;
+          it.x += dx * pullStep;
+          it.y += dy * pullStep;
+          it.z += dz * pullStep;
           if (distSq < 0.5 * 0.5) {
             const out = this.pickupOutScratch;
             out.itemId = it.data.itemId;
