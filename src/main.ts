@@ -7615,6 +7615,11 @@ function markChunkAllDirty(chunk: Chunk): void {
 // Scratch dirty-section list reused across flushDirty calls; sized
 // for max sections per chunk (24).
 const dirtyScratch: number[] = new Array<number>(24);
+// Parallel scratch — squared y-distance from camera, computed once per
+// dirty section before the insertion sort. Replaces the per-inner-
+// iter `(cmp * 16 - py)²` which was recomputed up to N² times per
+// chunk (was 24² = 576 redundant ops worst case).
+const dirtyKeyScratch = new Float64Array(24);
 // Reused across flushDirty mesh dispatches:
 //  - emptyLightSlice: returned when this chunk has no lighting yet
 //    (mesher.worker falls back to its DEFAULT_FLAT_SKY/BLOCK constants);
@@ -7717,19 +7722,26 @@ function flushDirty(): void {
     // — wasted work. Now compares only the per-section dy. Insertion
     // sort over the first dirtyEnd elements (max 24, so cost is tiny
     // and avoids Array.sort's allocation for the comparator state).
+    // Precompute (cy<<4 - py)² once per element instead of recomputing
+    // in the comparator's inner while loop (was up to 24² = 576 squared-
+    // diff evaluations per chunk; now 24).
     const py = fp.position.y;
+    const keys = dirtyKeyScratch;
+    for (let i = 0; i < dirtyEnd; i++) {
+      const diff = (dirty[i]! << 4) - py;
+      keys[i] = diff * diff;
+    }
     for (let i = 1; i < dirtyEnd; i++) {
       const v = dirty[i]!;
-      const vKey = (v * 16 - py) * (v * 16 - py);
+      const vKey = keys[i]!;
       let j = i - 1;
-      while (j >= 0) {
-        const cmp = dirty[j]!;
-        const cmpKey = (cmp * 16 - py) * (cmp * 16 - py);
-        if (cmpKey <= vKey) break;
-        dirty[j + 1] = cmp;
+      while (j >= 0 && keys[j]! > vKey) {
+        dirty[j + 1] = dirty[j]!;
+        keys[j + 1] = keys[j]!;
         j--;
       }
       dirty[j + 1] = v;
+      keys[j + 1] = vKey;
     }
     // Hoist lightCache lookup out of the cy loop — chunk light is per-
     // chunk, not per-section, so all 24 dirty sections of a chunk would
