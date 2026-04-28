@@ -143,6 +143,10 @@ export class WorldGenerator {
     const { stone, dirt, grass, sand, log, leaves, deepslate, water, bedrock } = this.blocks;
     const cx = chunk.cx;
     const cz = chunk.cz;
+    // Hoist this.caveNoise once. Method-dispatch through `this.isCave`
+    // was inlined into the y-loop below — one method-call per cave-
+    // eligible cell × 16x16x~50 = ~13K calls per chunk gen.
+    const caveNoise = this.caveNoise;
     for (let lx = 0; lx < CHUNK_DIM; lx++) {
       for (let lz = 0; lz < CHUNK_DIM; lz++) {
         const wx = cx * CHUNK_DIM + lx;
@@ -161,15 +165,26 @@ export class WorldGenerator {
         // the fbm noise call entirely for underwater columns — large
         // ocean chunks gen substantially faster.
         const biome = isUnderwater ? PLAINS : this.biomeAt(wx, wz);
+        // Pre-multiply the per-column components of the cave-noise
+        // sample. wy varies per cell but wx/wz are loop-invariant —
+        // hoist their *CAVE_FREQ multiplies once per column instead
+        // of per cave-check call (~50 cave checks per column).
+        const cavewx = wx * CAVE_FREQ;
+        const cavewz = wz * CAVE_FREQ;
         for (let y = 0; y <= surface; y++) {
           let state = stone;
           if (y === 0) state = bedrock;
           else if (y <= DEEPSLATE_Y) state = deepslate;
           if (y === surface) state = topBlock;
           else if (y >= surface - 3) state = subSurfaceBlock;
-          if (y < surface && this.isCave(wx, y, wz)) {
-            chunk.set(lx, y, lz, AIR);
-            continue;
+          // Cave carve — inlined isCave with hoisted CAVE_FREQ multiplies.
+          // Same y range gate (2..60) as the public method.
+          if (y < surface && y >= 2 && y <= 60) {
+            const n = caveNoise.fbm3(cavewx, y * CAVE_FREQ, cavewz, 3);
+            if (n < CAVE_THRESHOLD && n > -CAVE_THRESHOLD) {
+              chunk.set(lx, y, lz, AIR);
+              continue;
+            }
           }
           if (y < surface - 4 && y > DEEPSLATE_Y) {
             const ore = this.oreAt(wx, y, wz);
