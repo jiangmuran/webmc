@@ -278,8 +278,16 @@ export class FirstPersonCamera {
     // in normal range; hypot's overflow safety is wasted CPU per
     // frame.
     const len = Math.sqrt(mx * mx + mz * mz);
-    const hx = len > 0 ? (mx / len) * speed : 0;
-    const hz = len > 0 ? (mz / len) * speed : 0;
+    // One division + two multiplies (vs. two divisions in the prior
+    // ternaries) and a single len>0 check (vs. two). The fast-path
+    // for moving players is the common case at 60Hz.
+    let hx = 0;
+    let hz = 0;
+    if (len > 0) {
+      const invLenSpeed = speed / len;
+      hx = mx * invLenSpeed;
+      hz = mz * invLenSpeed;
+    }
 
     // Hoist Math.floor of position once — was being recomputed 8+ times
     // across inFluid + inFluidEyes + climbing(2) sampling. Each call to
