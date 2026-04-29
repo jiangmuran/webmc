@@ -21,11 +21,14 @@ export interface TotemEffects {
   regen: number;
 }
 
+// Wiki (minecraft.wiki/w/Totem_of_Undying): Regen II 40 s (800 ticks),
+// Fire Resistance 40 s (800 ticks), Absorption II 5 s (100 ticks).
+// Old `regen: 900` was 45 s, off by 5 s.
 export function grantsEffects(): TotemEffects {
   return {
     reviveHealth: 1,
     fireResistance: 800,
     absorption: 100,
-    regen: 900,
+    regen: 800,
   };
 }
