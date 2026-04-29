@@ -4082,7 +4082,14 @@ const interaction = new InteractionController(
           // taking fall damage at the destination.
           fp.velocity.set(0, 0, 0);
           if (vitalsActive) {
-            playerState.takeDamage({ amount: 5, source: 'pearl' });
+            // Wiki: ender pearl teleport deals 5 damage on landing.
+            // slow_falling effect or feather_falling boots reduce / skip
+            // the damage. webmc tracks slow_falling as a status effect;
+            // feather_falling enchantment isn't tracked separately yet.
+            const slowFalling = playerState.effects.has('slow_falling');
+            if (!slowFalling) {
+              playerState.takeDamage({ amount: 5, source: 'pearl' });
+            }
             const pearlId = itemRegistry.byName('webmc:ender_pearl');
             if (pearlId !== undefined) consumeInventoryItem(pearlId, 1);
           }
