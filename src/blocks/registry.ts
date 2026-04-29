@@ -934,6 +934,40 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:stripped_warped_stem', color: [85, 145, 140] as RGB, hardness: 2 },
     { name: 'webmc:crimson_planks', color: [110, 55, 80] as RGB, hardness: 2 },
     { name: 'webmc:warped_planks', color: [50, 110, 110] as RGB, hardness: 2 },
+    // Crimson + warped fungus — small mushroom plant variants. Hoglins
+    // breed on crimson_fungus, striders on warped_fungus (both are in
+    // BREED_FOOD), so without these blocks registered the breed-feed
+    // path silently failed. Wiki: hardness 0, instabreak plant blocks,
+    // also used for crafting stripped-stem warped/crimson fungus on stick.
+    {
+      name: 'webmc:crimson_fungus',
+      solid: false,
+      opaque: false,
+      color: [180, 30, 30] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:warped_fungus',
+      solid: false,
+      opaque: false,
+      color: [50, 130, 110] as RGB,
+      hardness: 0,
+    },
+    // Crimson + warped roots — ground vegetation that drops itself.
+    {
+      name: 'webmc:crimson_roots',
+      solid: false,
+      opaque: false,
+      color: [140, 30, 70] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:warped_roots',
+      solid: false,
+      opaque: false,
+      color: [40, 130, 110] as RGB,
+      hardness: 0,
+    },
     // End expansion.
     { name: 'webmc:purpur_stairs', color: [170, 130, 170] as RGB, hardness: 1.5 },
     { name: 'webmc:end_stone_bricks', color: [225, 225, 175] as RGB, hardness: 3 },
