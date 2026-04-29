@@ -1902,6 +1902,11 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:composter', color: [165, 130, 70] as RGB, hardness: 0.6 },
     { name: 'webmc:barrel', color: [165, 130, 75] as RGB, hardness: 2.5 },
     { name: 'webmc:lectern', color: [180, 140, 80] as RGB, hardness: 2.5 },
+    // Bell — village mob-summon center block. Wiki: hardness 5, drops
+    // itself when mined with wood pickaxe or higher. Has multiple bell
+    // modules (bell_ring, bell_resonate, bell_ring_damage_raiders) but
+    // the block itself was unregistered.
+    { name: 'webmc:bell', color: [220, 180, 70] as RGB, hardness: 5 },
     { name: 'webmc:respawn_anchor', color: [60, 25, 65] as RGB, hardness: 50, lightEmission: 15 },
     { name: 'webmc:lodestone', color: [120, 130, 135] as RGB, hardness: 3.5 },
     { name: 'webmc:conduit', color: [195, 175, 100] as RGB, hardness: 3, lightEmission: 15 },
