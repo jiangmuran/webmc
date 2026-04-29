@@ -15,9 +15,9 @@ describe('book', () => {
     expect(b.pages[0]?.length).toBe(256);
   });
 
-  it('refuses > 50 pages', () => {
+  it('refuses > 100 pages (wiki)', () => {
     const b = makeWritableBook();
-    for (let i = 0; i < 50; i++) addPage(b, `page ${i.toString()}`);
+    for (let i = 0; i < 100; i++) addPage(b, `page ${i.toString()}`);
     expect(addPage(b, 'overflow')).toBe(false);
   });
 

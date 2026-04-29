@@ -1,8 +1,10 @@
-// Writable book + written book. Writable is player-editable up to 50
+// Writable book + written book. Writable is player-editable up to 100
 // pages × 256 chars. Signing turns it into a written book with title +
 // author, no further edits.
+// Wiki (minecraft.wiki/w/Book_and_Quill): max 100 pages (raised from
+// 50 in 1.14). Old constant was 50, half the modern wiki limit.
 
-const MAX_PAGES = 50;
+const MAX_PAGES = 100;
 const MAX_CHARS_PER_PAGE = 256;
 const MAX_TITLE_CHARS = 32;
 
