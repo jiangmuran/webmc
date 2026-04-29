@@ -1720,7 +1720,7 @@ const BREED_FOOD: Record<string, readonly string[]> = {
     'webmc:pumpkin_seeds',
     'webmc:beetroot_seeds',
   ],
-  rabbit: ['webmc:carrot', 'webmc:dandelion'],
+  rabbit: ['webmc:carrot', 'webmc:golden_carrot', 'webmc:dandelion'],
   wolf: [
     // Raw + cooked meats. The mob-drop tables emit raw_* (e.g. cow drops
     // raw_beef), so without the raw_* entries here, players couldn't
@@ -1747,7 +1747,28 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   cat: ['webmc:cod', 'webmc:salmon'],
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   goat: ['webmc:wheat'],
-  bee: ['webmc:dandelion', 'webmc:poppy'],
+  // Bees breed on any flower per wiki — was just dandelion+poppy.
+  // Includes the small-flower set + the 2-tall flowers (sunflower,
+  // lilac, peony, rose_bush) commonly placed in the world.
+  bee: [
+    'webmc:dandelion',
+    'webmc:poppy',
+    'webmc:blue_orchid',
+    'webmc:allium',
+    'webmc:azure_bluet',
+    'webmc:oxeye_daisy',
+    'webmc:cornflower',
+    'webmc:lily_of_the_valley',
+    'webmc:red_tulip',
+    'webmc:orange_tulip',
+    'webmc:white_tulip',
+    'webmc:pink_tulip',
+    'webmc:wither_rose',
+    'webmc:sunflower',
+    'webmc:lilac',
+    'webmc:peony',
+    'webmc:rose_bush',
+  ],
   panda: ['webmc:bamboo'],
   axolotl: ['webmc:tropical_fish_bucket'],
   frog: ['webmc:slime_ball'],
