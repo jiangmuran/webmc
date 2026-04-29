@@ -446,6 +446,16 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:magma_block', color: [150, 60, 20] as RGB, lightEmission: 3, hardness: 0.5 },
     { name: 'webmc:obsidian', color: [20, 10, 30] as RGB, hardness: 50 },
     { name: 'webmc:bedrock', color: [50, 50, 50] as RGB, hardness: -1 },
+    // Barrier — admin/creative-only block, invisible to players, blocks
+    // movement. Wiki: hardness -1 unbreakable. Was referenced by
+    // block_resistance + block_hardness + vex_summon but missing.
+    {
+      name: 'webmc:barrier',
+      solid: true,
+      opaque: false,
+      color: [255, 0, 0] as RGB,
+      hardness: -1,
+    },
     {
       name: 'webmc:portal',
       solid: false,
