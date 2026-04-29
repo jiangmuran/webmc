@@ -2792,7 +2792,12 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     return;
   }
   if (itemName === 'webmc:honey_bottle') {
+    // Wiki: honey bottle removes poison and returns an empty glass
+    // bottle on consume. The bottle-return path was unwired — players
+    // ate honey bottles and silently lost the glass bottle.
     playerState.effects.delete('poison');
+    const glassBottleId = itemRegistry.byName('webmc:glass_bottle');
+    if (glassBottleId !== undefined) addOneToInventory(glassBottleId);
   } else if (itemName === 'webmc:milk_bucket') {
     // Vanilla MC: drinking milk clears all status effects (positive AND
     // negative). Replace the bucket with an empty bucket. Without this
