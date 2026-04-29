@@ -8334,6 +8334,13 @@ const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
   'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
   'webmc:cherry_leaves': 'webmc:cherry_sapling',
   'webmc:azalea_leaves': 'webmc:azalea',
+  // Wiki: mangrove leaves drop mangrove_propagule, flowering azalea
+  // leaves drop flowering_azalea, pale oak leaves drop pale_oak_sapling.
+  // Were missing → those leaves silently dropped no sapling, breaking
+  // the replant loop in mangrove swamp / lush cave / pale garden biomes.
+  'webmc:mangrove_leaves': 'webmc:mangrove_propagule',
+  'webmc:flowering_azalea_leaves': 'webmc:flowering_azalea',
+  'webmc:pale_oak_leaves': 'webmc:pale_oak_sapling',
 };
 // Pre-resolved id tables for the leaf-decay BFS. The hot inner loop
 // did `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')`

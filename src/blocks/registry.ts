@@ -1083,6 +1083,16 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [240, 195, 215] as RGB,
       hardness: 0,
     },
+    // Pale oak (1.21 Pale Garden biome). Log + leaves + planks were
+    // already registered; sapling was the missing piece for the full
+    // tree-replant cycle.
+    {
+      name: 'webmc:pale_oak_sapling',
+      solid: false,
+      opaque: false,
+      color: [200, 200, 195] as RGB,
+      hardness: 0,
+    },
     {
       name: 'webmc:mangrove_propagule',
       solid: false,
