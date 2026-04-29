@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { canFeed, grantsRegenOnAttack, playDeadDuration } from './axolotl_tropical_food';
+import {
+  canFeed,
+  grantsRegenOnAttack,
+  clearsOnAttack,
+  playDeadDuration,
+} from './axolotl_tropical_food';
 
 describe('axolotl tropical food', () => {
   it('tropical fish feed ok', () => {
@@ -14,8 +19,13 @@ describe('axolotl tropical food', () => {
     expect(grantsRegenOnAttack().some((e) => e.id === 'regeneration')).toBe(true);
   });
 
-  it('mining fatigue also granted', () => {
-    expect(grantsRegenOnAttack().some((e) => e.id === 'mining_fatigue')).toBe(true);
+  it('regen-on-attack grants resistance (wiki)', () => {
+    expect(grantsRegenOnAttack().some((e) => e.id === 'resistance')).toBe(true);
+  });
+
+  it('mining fatigue is CLEARED, not granted (wiki)', () => {
+    expect(grantsRegenOnAttack().some((e) => e.id === 'mining_fatigue')).toBe(false);
+    expect(clearsOnAttack()).toContain('mining_fatigue');
   });
 
   it('play dead 200-300 ticks', () => {
