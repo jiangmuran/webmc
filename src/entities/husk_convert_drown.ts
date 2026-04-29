@@ -1,8 +1,11 @@
 // Husk: desert zombie variant. Drowning in water converts to zombie
 // after 30s immersion. Bites inflict Hunger.
 
+// Wiki (minecraft.wiki/w/Husk): bite Hunger duration is 7 s on Normal
+// (140 ticks) and 14 s on Hard (280 ticks). Old hard value was 300
+// ticks (15 s), one second too long.
 export const HUSK_HUNGER_DURATION_TICKS = 140;
-export const HUSK_HUNGER_DURATION_HARD = 300;
+export const HUSK_HUNGER_DURATION_HARD = 280;
 export const HUSK_DROWN_TICKS = 600;
 
 export interface HuskState {
