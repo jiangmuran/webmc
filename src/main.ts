@@ -9059,7 +9059,8 @@ const MOB_DROP_TABLES: Record<
   ],
   breeze: [
     { name: 'wind_charge', min: 0, max: 2, color: [200, 220, 255] },
-    { name: 'breeze_rod', min: 0, max: 1, color: [180, 220, 255] },
+    // Wiki: breeze drops 0-2 breeze_rod (was 0-1, half of vanilla rate).
+    { name: 'breeze_rod', min: 0, max: 2, color: [180, 220, 255] },
   ],
   armadillo: [{ name: 'armadillo_scute', min: 0, max: 1, color: [180, 140, 110] }],
   sniffer: [],
