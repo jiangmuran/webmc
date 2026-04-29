@@ -1565,11 +1565,91 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 3,
     },
     // Decorative: signs, item frame, painting (placeholders, no entity yet).
+    // Signs — wiki: all 12 wood types have a sign + hanging_sign variant.
+    // Was oak only — recipes for spruce_sign etc. silently produced no
+    // output. All hardness 1.
     {
       name: 'webmc:oak_sign',
       solid: false,
       opaque: false,
       color: [156, 124, 76] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:spruce_sign',
+      solid: false,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:birch_sign',
+      solid: false,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:jungle_sign',
+      solid: false,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:acacia_sign',
+      solid: false,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:dark_oak_sign',
+      solid: false,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:cherry_sign',
+      solid: false,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:mangrove_sign',
+      solid: false,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:pale_oak_sign',
+      solid: false,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:bamboo_sign',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:crimson_sign',
+      solid: false,
+      opaque: false,
+      color: [110, 55, 80] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:warped_sign',
+      solid: false,
+      opaque: false,
+      color: [50, 110, 110] as RGB,
       hardness: 1,
     },
     {
