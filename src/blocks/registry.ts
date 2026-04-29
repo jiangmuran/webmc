@@ -735,6 +735,25 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:chiseled_tuff_bricks', color: [110, 110, 105] as RGB, hardness: 1.5 },
     // Misc lights.
     { name: 'webmc:redstone_lamp', color: [180, 105, 50] as RGB, hardness: 0.3, lightEmission: 15 },
+    // Daylight detector — outputs redstone signal proportional to skylight.
+    // Recipe (3 glass + 3 wood slabs + 3 nether quartz) targets this name.
+    // Wiki: hardness 0.2.
+    {
+      name: 'webmc:daylight_detector',
+      solid: false,
+      opaque: false,
+      color: [200, 175, 130] as RGB,
+      hardness: 0.2,
+    },
+    // Tripwire hook — wall-mounted redstone trigger. Recipe target.
+    // Wiki: hardness 0.0 (instabreak), iron tier.
+    {
+      name: 'webmc:tripwire_hook',
+      solid: false,
+      opaque: false,
+      color: [200, 200, 200] as RGB,
+      hardness: 0,
+    },
     {
       name: 'webmc:lantern',
       solid: false,
