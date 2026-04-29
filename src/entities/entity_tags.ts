@@ -48,7 +48,11 @@ export function seedDefaults(r: EntityTagRegistry): void {
     'tropical_fish',
     'tadpole',
   ]);
-  tagEntity(r, 'illager', ['pillager', 'vindicator', 'evoker', 'illusioner', 'ravager']);
+  // Wiki: minecraft:illager tag is humanoid illagers only — pillager,
+  // vindicator, evoker, illusioner. Ravager is NOT an illager (it's a
+  // beast that fights for illagers); it lives in the broader 'raider'
+  // tag instead. Was including ravager.
+  tagEntity(r, 'illager', ['pillager', 'vindicator', 'evoker', 'illusioner']);
   tagEntity(r, 'villager_job_site_users', ['villager']);
   tagEntity(r, 'raiders', ['pillager', 'vindicator', 'evoker', 'witch', 'ravager']);
 }
