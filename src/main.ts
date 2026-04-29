@@ -77,6 +77,7 @@ import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_dr
 import { CAMPFIRE_DAMAGE, SOUL_CAMPFIRE_DAMAGE } from './blocks/soul_campfire_repel';
 import { flowerPoolFor } from './items/bone_meal_spread';
 import { fireworkBoost } from './items/elytra_firework_boost';
+import { makeWindChargeBurst, knockbackVector } from './items/wind_charge';
 import { tickFire, isFlammable } from './blocks/fire_spread';
 import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
 import { tickGrassBlock } from './blocks/grass_spread';
@@ -3801,38 +3802,35 @@ const interaction = new InteractionController(
         subtitles.push(`Now playing: ${heldName.replace('music_disc_', '')}`);
         return true;
       }
-      // Wind charge: right-click block → AOE knockback in 3-block radius (MC 1.21+ Breeze drop).
+      // Wind charge: right-click block → AOE wind burst (MC 1.21+
+      // Breeze drop). Wiki spec via wind_charge.makeWindChargeBurst:
+      // radius 2, knockback 1.2 with falloff, +0.3 upward lift.
+      // Was a custom 3-block radius with magnitudes 8/5/6 — much
+      // more aggressive than vanilla.
       if (heldName === 'wind_charge') {
         const cx = bx + 0.5,
           cy = by + 1,
           cz = bz + 0.5;
         for (let i = 0; i < 24; i++)
           blockParticles.emitPlace(
-            cx + (Math.random() - 0.5) * 3,
-            cy + Math.random() * 2,
-            cz + (Math.random() - 0.5) * 3,
+            cx + (Math.random() - 0.5) * 2,
+            cy + Math.random() * 1.5,
+            cz + (Math.random() - 0.5) * 2,
             [200, 220, 255],
           );
+        const burst = makeWindChargeBurst({ x: cx, y: cy, z: cz });
         for (const m of mobWorld.all()) {
-          const dx = m.position.x - cx;
-          const dy = m.position.y - cy;
-          const dz = m.position.z - cz;
-          const d2 = dx * dx + dy * dy + dz * dz;
-          if (d2 > 9) continue;
-          const len = Math.max(0.001, Math.sqrt(d2));
-          m.velocity.x += (dx / len) * 8;
-          m.velocity.y += 5;
-          m.velocity.z += (dz / len) * 8;
+          const kb = knockbackVector(burst, m.position);
+          if (kb === null) continue;
+          m.velocity.x += kb.x;
+          m.velocity.y += kb.y;
+          m.velocity.z += kb.z;
         }
-        // Player gets pushed away too.
-        const pdx = fp.position.x - cx;
-        const pdz = fp.position.z - cz;
-        const pd2 = pdx * pdx + pdz * pdz;
-        if (pd2 < 9) {
-          const len = Math.max(0.001, Math.sqrt(pd2));
-          fp.velocity.x += (pdx / len) * 6;
-          fp.velocity.y += 4;
-          fp.velocity.z += (pdz / len) * 6;
+        const pkb = knockbackVector(burst, fp.position);
+        if (pkb !== null) {
+          fp.velocity.x += pkb.x;
+          fp.velocity.y += pkb.y;
+          fp.velocity.z += pkb.z;
         }
         if (vitalsActive) {
           const wcId = itemRegistry.byName('webmc:wind_charge');
