@@ -22,8 +22,8 @@ describe('arrow tipped effect', () => {
     ).toBeUndefined();
   });
 
-  it('critical bumps level', () => {
+  it('critical does not bump level (wiki)', () => {
     const e = arrowEffectOnHit({ potion: 'strength', level: 1, durationTicks: 800 }, true);
-    expect(e?.level).toBe(2);
+    expect(e?.level).toBe(1);
   });
 });
