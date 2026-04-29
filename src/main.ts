@@ -3318,6 +3318,24 @@ const interaction = new InteractionController(
             : gameRules.doTileDrops && dropsAllowed
               ? dropRegistry.drops(prevBlockId, undefined, 99)
               : [];
+      // Wiki: gravel has a 10% chance to drop flint instead of itself
+      // (Fortune scales the chance up; Silk Touch always drops gravel).
+      // Was a flat 100% gravel drop; replace one stack with flint on
+      // the proc. Fortune/silk-touch enchant tracking isn't wired yet,
+      // so the base 10% chance applies unconditionally.
+      if (def.name === 'webmc:gravel' && drops.length > 0 && Math.random() < 0.1) {
+        const flintId = itemRegistry.byName('webmc:flint');
+        const gravelId = itemRegistry.byName('webmc:gravel');
+        if (flintId !== undefined && gravelId !== undefined) {
+          for (let i = 0; i < drops.length; i++) {
+            const s = drops[i];
+            if (s?.itemId === gravelId) {
+              drops[i] = { itemId: flintId, count: s.count, damage: s.damage };
+              break;
+            }
+          }
+        }
+      }
       if (vitalsActive) {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
