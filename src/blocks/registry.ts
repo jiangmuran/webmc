@@ -172,6 +172,11 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:coal_ore', color: [60, 60, 60] as RGB, hardness: 3 },
     { name: 'webmc:redstone_ore', color: [158, 55, 55] as RGB, lightEmission: 9, hardness: 3 },
     { name: 'webmc:lapis_ore', color: [52, 74, 155] as RGB, hardness: 3 },
+    // Overworld emerald_ore was missing — only deepslate_emerald_ore was
+    // registered. Per wiki, regular emerald ore exists in stone above
+    // deepslate level in mountains biomes. Hardness 3 matches other
+    // overworld ores; deepslate is 4.5 (already registered separately).
+    { name: 'webmc:emerald_ore', color: [80, 145, 95] as RGB, hardness: 3 },
     { name: 'webmc:glowstone', color: [255, 214, 138] as RGB, lightEmission: 15, hardness: 0.3 },
     // Glass: visible but lets light through — was defaulting to opaque:true
     // which prevented skylight from reaching anything below a glass roof.
