@@ -968,7 +968,11 @@ itemRegistry.register({ name: 'webmc:ghast_tear', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:magma_cream', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rabbit_foot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:turtle_helmet_scute', maxStack: 64, durability: 0 });
-// Splash + lingering potion variants (drinkable as area-effect on use).
+// Splash potion variants. Wiki: every regular potion has a splash form;
+// duration is 3/4 of the regular potion's duration (instant types deal
+// the same damage/heal). The pool was missing 7 of the 14 splash types,
+// so brewing dragon_breath onto e.g. a fire_resistance potion produced
+// no splash item (silent recipe failure).
 const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec: number }[] = [
   { name: 'webmc:splash_potion_healing', effect: 'instant_health', amplifier: 0, durSec: 0 },
   { name: 'webmc:splash_potion_harming', effect: 'instant_damage', amplifier: 0, durSec: 0 },
@@ -977,6 +981,23 @@ const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec:
   { name: 'webmc:splash_potion_swiftness', effect: 'speed', amplifier: 0, durSec: 135 },
   { name: 'webmc:splash_potion_strength', effect: 'strength', amplifier: 0, durSec: 135 },
   { name: 'webmc:splash_potion_weakness', effect: 'weakness', amplifier: 0, durSec: 70 },
+  { name: 'webmc:splash_potion_regeneration', effect: 'regeneration', amplifier: 0, durSec: 33 },
+  {
+    name: 'webmc:splash_potion_fire_resistance',
+    effect: 'fire_resistance',
+    amplifier: 0,
+    durSec: 135,
+  },
+  {
+    name: 'webmc:splash_potion_water_breathing',
+    effect: 'water_breathing',
+    amplifier: 0,
+    durSec: 135,
+  },
+  { name: 'webmc:splash_potion_night_vision', effect: 'night_vision', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_invisibility', effect: 'invisibility', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_leaping', effect: 'jump_boost', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_slow_falling', effect: 'slow_falling', amplifier: 0, durSec: 67 },
 ];
 for (const p of SPLASH_POTIONS) {
   itemRegistry.register({ name: p.name, maxStack: 1, durability: 0 });
