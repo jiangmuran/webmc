@@ -2642,6 +2642,11 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     playerState.applyEffect('poison', 0, 5);
   } else if (itemName === 'webmc:spider_eye') {
     playerState.applyEffect('poison', 0, 4);
+  } else if (itemName === 'webmc:raw_chicken' && Math.random() < 0.3) {
+    // Wiki: raw chicken has a 30% chance of inflicting Hunger for 30s
+    // when eaten. Was unwired — eating raw chicken was identical to
+    // eating cooked chicken in terms of side effects.
+    playerState.applyEffect('hunger', 0, 30);
   } else if (itemName === 'webmc:pufferfish') {
     // Wiki: pufferfish always inflicts Hunger III (15s), Nausea II
     // (15s), Poison II (60s) on eat. Was unwired — players ate raw
