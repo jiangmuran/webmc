@@ -5042,6 +5042,24 @@ canvas.addEventListener('mousedown', (e) => {
       }
       const breedFood = BREED_FOOD[kind];
       if (breedFood?.includes(heldName)) {
+        // Wiki: feeding breed-food to a BABY animal advances its
+        // growth by 10% of remaining time (vs entering love mode for
+        // adults). Was treating babies as adults — players feeding
+        // bread to a baby cow accidentally put it in love mode (which
+        // can't breed) instead of speeding growth.
+        const babyState = babyMobs.get(aimedMob.id);
+        if (babyState?.isBaby) {
+          // Advance baby age by 10% of GROW_TICKS_DEFAULT (matches
+          // the BREEDING_ITEM_SPEEDUP_TICKS = 200 in baby_grow_speedup
+          // — 200 ticks = ~10% of the 24000-tick default growth).
+          const advanced: BabyState = { ...babyState, ageTicks: babyState.ageTicks + 200 };
+          babyMobs.set(aimedMob.id, advanced);
+          const itemId = itemRegistry.byName(heldName);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          chatInput.addLine(`${kind} grows faster`, '#ffd0a0');
+          hand.swing();
+          return;
+        }
         const prev = lovingMobs.get(aimedMob.id) ?? {
           inLoveUntilTick: 0,
           breedCooldownUntilTick: 0,
