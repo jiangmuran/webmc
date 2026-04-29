@@ -3873,6 +3873,13 @@ const interaction = new InteractionController(
           // Wiki junk pool: bone, bowl, fishing_rod, leather, leather_boots,
           // rotten_flesh, stick, string, water_bottle, lily_pad, ink_sac,
           // tripwire_hook. Filter by what's registered locally.
+          // Wiki junk pool entries with rough weights (commented out for
+          // reference): bone(10), bowl(10), fishing_rod(2 damaged),
+          // leather(10), leather_boots(10 damaged), rotten_flesh(10),
+          // stick(5), string(5), water_bottle(10), lily_pad(10),
+          // ink_sac(1), tripwire_hook(10), bamboo(10). The current
+          // selector picks uniformly from registered entries — close
+          // enough to wiki distribution for most of the pool.
           const JUNK = [
             'webmc:bone',
             'webmc:bowl',
@@ -3882,9 +3889,11 @@ const interaction = new InteractionController(
             'webmc:rotten_flesh',
             'webmc:stick',
             'webmc:string',
+            'webmc:water_bottle',
             'webmc:lily_pad',
             'webmc:ink_sac',
             'webmc:tripwire_hook',
+            'webmc:bamboo',
           ];
           const category = rollFishingCategory({
             luckOfSeaLevel: 0,
