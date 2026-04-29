@@ -21,19 +21,20 @@ export function tickTadpole(t: Tadpole): boolean {
   return t.ageTicks >= TADPOLE_MATURE_TICKS;
 }
 
-// Frog eats small slimes / magma cubes; magma cube → pearlescent
-// froglight, small slime → ochre, striders → verdant.
+// Wiki (minecraft.wiki/w/Froglight): only small magma cubes produce
+// froglight; the COLOR is determined by the frog's variant (slimes
+// are eaten without dropping a froglight; striders aren't a frog
+// food source). Old logic ignored variant entirely and used `eaten`
+// as the color selector — both wrong.
+//   temperate (white)  → pearlescent
+//   warm     (orange)  → ochre
+//   cold     (green)   → verdant
 export function froglightFor(
   variant: FrogVariant,
   eaten: 'magma_cube' | 'slime' | 'strider',
-): 'webmc:pearlescent_froglight' | 'webmc:ochre_froglight' | 'webmc:verdant_froglight' {
-  void variant;
-  switch (eaten) {
-    case 'magma_cube':
-      return 'webmc:pearlescent_froglight';
-    case 'slime':
-      return 'webmc:ochre_froglight';
-    case 'strider':
-      return 'webmc:verdant_froglight';
-  }
+): 'webmc:pearlescent_froglight' | 'webmc:ochre_froglight' | 'webmc:verdant_froglight' | null {
+  if (eaten !== 'magma_cube') return null;
+  if (variant === 'temperate') return 'webmc:pearlescent_froglight';
+  if (variant === 'warm') return 'webmc:ochre_froglight';
+  return 'webmc:verdant_froglight';
 }

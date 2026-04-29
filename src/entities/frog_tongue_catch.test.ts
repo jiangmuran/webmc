@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { froglightFor, canCatch, inTongueRange } from './frog_tongue_catch';
 
 describe('frog tongue catch', () => {
-  it('froglight variants', () => {
-    expect(froglightFor('temperate')).toBe('ochre');
-    expect(froglightFor('warm')).toBe('pearlescent');
+  it('froglight variants (wiki)', () => {
+    expect(froglightFor('temperate')).toBe('pearlescent');
+    expect(froglightFor('warm')).toBe('ochre');
     expect(froglightFor('cold')).toBe('verdant');
   });
 

@@ -4,9 +4,15 @@
 export type FrogVariant = 'temperate' | 'warm' | 'cold';
 export type Froglight = 'pearlescent' | 'ochre' | 'verdant';
 
+// Wiki (minecraft.wiki/w/Froglight): each frog variant produces a
+// thematically-matching froglight:
+//   temperate (white)  → pearlescent
+//   warm     (orange)  → ochre
+//   cold     (green)   → verdant
+// Old mapping had temperate↔warm swapped.
 export function froglightFor(variant: FrogVariant): Froglight {
-  if (variant === 'temperate') return 'ochre';
-  if (variant === 'warm') return 'pearlescent';
+  if (variant === 'temperate') return 'pearlescent';
+  if (variant === 'warm') return 'ochre';
   return 'verdant';
 }
 
