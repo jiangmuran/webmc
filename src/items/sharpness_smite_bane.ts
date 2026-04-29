@@ -24,6 +24,7 @@ export function baneBonus(level: number, targetType: string): number {
 function isUndead(t: string): boolean {
   return (
     t === 'zombie' ||
+    t === 'zombie_villager' ||
     t === 'skeleton' ||
     t === 'husk' ||
     t === 'drowned' ||
@@ -32,7 +33,9 @@ function isUndead(t: string): boolean {
     t === 'phantom' ||
     t === 'zoglin' ||
     t === 'stray' ||
-    t === 'bogged'
+    t === 'bogged' ||
+    // Wither itself is undead per wiki — Smite damages it.
+    t === 'wither'
   );
 }
 
