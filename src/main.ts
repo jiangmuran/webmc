@@ -9984,7 +9984,14 @@ function frame(): void {
 
   if (fp.lastLandFallBlocks > 3 && vitalsActive && gameRules.fallDamage) {
     const slowFalling = playerState.effects.has('slow_falling');
-    let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    // Jump Boost reduces fall damage by amplifier+1 blocks per wiki.
+    // The standard 3-block damage-free buffer extends to 3 + (amp+1)
+    // so Jump Boost I makes you immune up to 4 blocks, II up to 5,
+    // etc. Was unwired — players with leaping potions still took
+    // full fall damage.
+    const jumpBoost = playerState.effects.get('jump_boost');
+    const jumpBuffer = jumpBoost ? jumpBoost.amplifier + 1 : 0;
+    let dmg = slowFalling ? 0 : Math.max(0, fp.lastLandFallBlocks - 3 - jumpBuffer);
     // Vanilla MC: landing in water (or while underwater) cancels all
     // fall damage. fp.inFluid is sampled at body center, so even shallow
     // water counts. Without this, jumping into a 1-block pool from a
