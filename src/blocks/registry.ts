@@ -184,6 +184,12 @@ export function createDefaultRegistry(): BlockRegistry {
     // Glass: visible but lets light through — was defaulting to opaque:true
     // which prevented skylight from reaching anything below a glass roof.
     { name: 'webmc:glass', opaque: false, color: [220, 240, 250] as RGB, hardness: 0.3 },
+    // Tinted glass — 1.17 block. Wiki: hardness 0.3, partially transparent
+    // visually but blocks light propagation (the only block in vanilla
+    // with this property). Drops itself when broken (unlike regular glass).
+    // Without registration the DROP_NOTHING list silently failed to mark
+    // tinted_glass — it would have dropped its block-item with bare hands.
+    { name: 'webmc:tinted_glass', opaque: true, color: [55, 30, 70] as RGB, hardness: 0.3 },
     // Glass pane and iron bars — referenced by default recipes as targets,
     // but missing from registry. Both are partial-tile blocks visually but
     // for collision/raycast we treat them as solid:false to allow light.
@@ -300,6 +306,18 @@ export function createDefaultRegistry(): BlockRegistry {
       opaque: false,
       color: [12, 6, 20] as RGB,
       hardness: 3,
+    },
+    // Turtle egg — 1.13 block. 1-4 eggs per block, hatch into baby
+    // turtles after several night ticks. Wiki: hardness 0.5; mob
+    // collision damages eggs (zombies seek them out at night). Was in
+    // DROP_NOTHING list but missing from block registry → silk-touch-only
+    // flag never applied (and the block was unplaceable in survival).
+    {
+      name: 'webmc:turtle_egg',
+      solid: false,
+      opaque: false,
+      color: [220, 230, 200] as RGB,
+      hardness: 0.5,
     },
     { name: 'webmc:purpur_block', color: [170, 130, 170] as RGB, hardness: 1.5 },
     {
