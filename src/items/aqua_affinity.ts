@@ -12,7 +12,10 @@ export interface MiningCtx {
 export function speedMultiplier(c: MiningCtx): number {
   if (!c.underwater) return 1;
   if (c.aquaAffinity) return 1;
-  if (c.onGround) return 1; // technically still slower w/o, but MC behavior
+  // Wiki: underwater mining is 5x slower regardless of whether the
+  // player is standing on solid ground, swimming, or floating. The
+  // previous onGround → 1 branch let players bypass the penalty by
+  // standing on the seafloor — non-vanilla.
   return UNDERWATER_MINE_PENALTY;
 }
 
