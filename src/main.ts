@@ -1790,6 +1790,13 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
   donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
   mule: ['webmc:golden_apple', 'webmc:golden_carrot'],
+  // Wiki: camels breed on cactus, sniffers on torchflower seeds
+  // (1.20 Trails & Tales), armadillos on spider eye (1.20.5/1.21).
+  // All three mob kinds existed in the entity registry but had no
+  // breed entry — feeding them did nothing.
+  camel: ['webmc:cactus'],
+  sniffer: ['webmc:torchflower_seeds'],
+  armadillo: ['webmc:spider_eye'],
 };
 const droppedItems = new DroppedItemWorld();
 const xpOrbs = new XpOrbWorld();
