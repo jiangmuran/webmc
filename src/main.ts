@@ -4147,6 +4147,23 @@ const interaction = new InteractionController(
           return true;
         }
       }
+      // Glass bottle on water: fill into water_bottle. The glass_bottle
+      // item shipped + water_bottle is registered, but the player had
+      // no way to obtain water_bottles outside potion-drinking. Wiki:
+      // right-click a water source to fill (does NOT consume the
+      // source block). Lava can't be bottled.
+      if (heldName === 'glass_bottle' && def.name === 'webmc:water') {
+        const wbId = itemRegistry.byName('webmc:water_bottle');
+        const gbId = itemRegistry.byName('webmc:glass_bottle');
+        if (wbId !== undefined && gbId !== undefined && vitalsActive) {
+          consumeInventoryItem(gbId, 1);
+          addOneToInventory(wbId);
+        }
+        sfx.play('click');
+        hand.swing();
+        subtitles.push('Filled water bottle');
+        return true;
+      }
       // Bucket fill: right-click water/lava with empty bucket.
       if (heldName === 'bucket' && (def.name === 'webmc:water' || def.name === 'webmc:lava')) {
         const filled = def.name === 'webmc:water' ? 'webmc:water_bucket' : 'webmc:lava_bucket';
