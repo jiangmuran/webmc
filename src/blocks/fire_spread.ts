@@ -8,6 +8,8 @@ export interface FlammableDef {
   flammability: number; // how quickly fire burns it out
 }
 
+// Per minecraft.wiki/w/Fire (encouragement = how readily fire spreads
+// TO this block, flammability = how quickly fire burns it out).
 const FLAMMABLE: Record<string, FlammableDef> = {
   'webmc:wool': { encouragement: 30, flammability: 60 },
   'webmc:tnt': { encouragement: 15, flammability: 100 },
@@ -15,6 +17,18 @@ const FLAMMABLE: Record<string, FlammableDef> = {
   'webmc:bookshelf': { encouragement: 30, flammability: 20 },
   'webmc:hay_block': { encouragement: 60, flammability: 20 },
   'webmc:dried_kelp_block': { encouragement: 30, flammability: 60 },
+  // Plant matter that's commonly torched in builds — was missing,
+  // letting players safely build with bamboo / vines next to lava.
+  'webmc:bamboo': { encouragement: 60, flammability: 60 },
+  'webmc:bamboo_block': { encouragement: 5, flammability: 5 },
+  'webmc:vine': { encouragement: 15, flammability: 100 },
+  'webmc:short_grass': { encouragement: 60, flammability: 100 },
+  'webmc:tall_grass': { encouragement: 60, flammability: 100 },
+  'webmc:fern': { encouragement: 60, flammability: 100 },
+  'webmc:large_fern': { encouragement: 60, flammability: 100 },
+  // Beds catch fire (vanilla bug-feature: bed-in-nether explodes, in
+  // overworld they just burn).
+  'webmc:bed': { encouragement: 5, flammability: 20 },
 };
 // Was oak-only — fire would happily ignite an oak forest but the same
 // fire next to a spruce log did nothing. Add all log + planks + leaves
