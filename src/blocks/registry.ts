@@ -651,6 +651,19 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:ominous_vault', color: [50, 70, 90] as RGB, hardness: 50, lightEmission: 6 },
     { name: 'webmc:chiseled_copper', color: [200, 110, 80] as RGB, hardness: 3 },
     { name: 'webmc:waxed_chiseled_copper', color: [205, 115, 85] as RGB, hardness: 3 },
+    // Chiseled copper oxidation states + waxed variants (1.21). The
+    // chiseled_copper_progression module references all 4 oxidation
+    // stages; adding all 6 missing variants. Wiki: hardness 3.
+    { name: 'webmc:exposed_chiseled_copper', color: [170, 100, 80] as RGB, hardness: 3 },
+    { name: 'webmc:weathered_chiseled_copper', color: [115, 145, 110] as RGB, hardness: 3 },
+    { name: 'webmc:oxidized_chiseled_copper', color: [85, 165, 130] as RGB, hardness: 3 },
+    { name: 'webmc:waxed_exposed_chiseled_copper', color: [170, 100, 80] as RGB, hardness: 3 },
+    {
+      name: 'webmc:waxed_weathered_chiseled_copper',
+      color: [115, 145, 110] as RGB,
+      hardness: 3,
+    },
+    { name: 'webmc:waxed_oxidized_chiseled_copper', color: [85, 165, 130] as RGB, hardness: 3 },
     {
       name: 'webmc:exposed_copper_door',
       color: [180, 130, 110] as RGB,
