@@ -629,14 +629,16 @@ itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:snowball', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:milk_bucket', maxStack: 1, durability: 0 });
-// Tool tier table. Vanilla durability values per tier.
+// Tool tier table. Vanilla durability values per tier (wiki).
+// Was off-by-one on every tier (e.g. wood=60 vs vanilla=59) — small
+// drift but cumulative across thousands of swings.
 const TOOL_DURABILITY: Record<string, number> = {
-  wood: 60,
-  stone: 132,
-  iron: 251,
-  gold: 33,
-  diamond: 1562,
-  netherite: 2032,
+  wood: 59,
+  stone: 131,
+  iron: 250,
+  gold: 32,
+  diamond: 1561,
+  netherite: 2031,
 };
 // Generated tool registrations. Was hand-rolled and patchy: only iron
 // had axe + shovel registered, no hoes existed at all, several tiers
