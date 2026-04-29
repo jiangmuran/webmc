@@ -37,6 +37,17 @@ describe('powder snow freeze', () => {
     expect(frostDamageThisTick({ ticks: FREEZE_TICKS_MAX }, 10)).toBe(0);
   });
 
+  it('skeleton takes 5x damage when frozen', () => {
+    const general = frostDamageThisTick({ ticks: FREEZE_TICKS_MAX }, FREEZE_DAMAGE_INTERVAL_TICKS);
+    const skel = frostDamageThisTick(
+      { ticks: FREEZE_TICKS_MAX },
+      FREEZE_DAMAGE_INTERVAL_TICKS,
+      true,
+    );
+    expect(skel).toBe(5);
+    expect(skel).toBe(general * 5);
+  });
+
   it('leather boots walk on top', () => {
     expect(walkOnTopWithLeatherBoots('leather_boots')).toBe(true);
     expect(walkOnTopWithLeatherBoots('iron_boots')).toBe(false);
