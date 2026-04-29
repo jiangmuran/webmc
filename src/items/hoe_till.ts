@@ -3,9 +3,15 @@
 
 export type TilledBlock = 'farmland' | 'dirt';
 
+// Wiki: hoe converts dirt/grass_block/podzol/mycelium → farmland;
+// dirt_path/coarse_dirt/rooted_dirt → dirt. podzol + mycelium were
+// missing — players couldn't till mycelium-floored mushroom islands
+// or podzol patches into farmland.
 const TILL_MAP: Record<string, TilledBlock> = {
   'webmc:dirt': 'farmland',
   'webmc:grass_block': 'farmland',
+  'webmc:podzol': 'farmland',
+  'webmc:mycelium': 'farmland',
   'webmc:dirt_path': 'dirt',
   'webmc:coarse_dirt': 'dirt',
   'webmc:rooted_dirt': 'dirt',
