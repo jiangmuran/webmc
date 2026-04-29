@@ -12,17 +12,28 @@ export interface FishingDrop {
   pool: FishingPool;
 }
 
+// Wiki (minecraft.wiki/w/Fishing): canonical fishing-loot weights.
+// Fixes:
+//  - 'raw_fish' / 'raw_salmon' (legacy 1.12 names) → cod / salmon (the
+//    raw form in modern MC, registered in webmc as cod/salmon).
+//  - pufferfish weight 13 → 2 (matches wiki; old 13 made pufferfish
+//    catches ~10× too common).
+//  - treasure pool entries weight 5 → 1 each (wiki: equal weights of
+//    1; the 5 inflates total but the proportional split was already
+//    even, so behaviour was OK — set to 1 for clarity and to match
+//    fishing_treasure_table.ts).
+//  - junk pool gains bamboo, bone, ink_sac, tripwire_hook from wiki.
 export const FISHING_DROPS: readonly FishingDrop[] = [
-  { item: 'webmc:raw_fish', count: 1, weight: 60, pool: 'fish' },
-  { item: 'webmc:raw_salmon', count: 1, weight: 25, pool: 'fish' },
-  { item: 'webmc:pufferfish', count: 1, weight: 13, pool: 'fish' },
+  { item: 'webmc:cod', count: 1, weight: 60, pool: 'fish' },
+  { item: 'webmc:salmon', count: 1, weight: 25, pool: 'fish' },
+  { item: 'webmc:pufferfish', count: 1, weight: 2, pool: 'fish' },
   { item: 'webmc:tropical_fish', count: 1, weight: 2, pool: 'fish' },
-  { item: 'webmc:bow', count: 1, weight: 5, pool: 'treasure' },
-  { item: 'webmc:enchanted_book', count: 1, weight: 5, pool: 'treasure' },
-  { item: 'webmc:fishing_rod', count: 1, weight: 5, pool: 'treasure' },
-  { item: 'webmc:name_tag', count: 1, weight: 5, pool: 'treasure' },
-  { item: 'webmc:nautilus_shell', count: 1, weight: 5, pool: 'treasure' },
-  { item: 'webmc:saddle', count: 1, weight: 5, pool: 'treasure' },
+  { item: 'webmc:bow', count: 1, weight: 1, pool: 'treasure' },
+  { item: 'webmc:enchanted_book', count: 1, weight: 1, pool: 'treasure' },
+  { item: 'webmc:fishing_rod', count: 1, weight: 1, pool: 'treasure' },
+  { item: 'webmc:name_tag', count: 1, weight: 1, pool: 'treasure' },
+  { item: 'webmc:nautilus_shell', count: 1, weight: 1, pool: 'treasure' },
+  { item: 'webmc:saddle', count: 1, weight: 1, pool: 'treasure' },
   { item: 'webmc:lily_pad', count: 1, weight: 17, pool: 'junk' },
   { item: 'webmc:bowl', count: 1, weight: 10, pool: 'junk' },
   { item: 'webmc:leather', count: 1, weight: 10, pool: 'junk' },
@@ -31,6 +42,10 @@ export const FISHING_DROPS: readonly FishingDrop[] = [
   { item: 'webmc:stick', count: 1, weight: 5, pool: 'junk' },
   { item: 'webmc:string', count: 1, weight: 5, pool: 'junk' },
   { item: 'webmc:water_bottle', count: 1, weight: 10, pool: 'junk' },
+  { item: 'webmc:bamboo', count: 1, weight: 10, pool: 'junk' },
+  { item: 'webmc:bone', count: 1, weight: 10, pool: 'junk' },
+  { item: 'webmc:ink_sac', count: 10, weight: 1, pool: 'junk' },
+  { item: 'webmc:tripwire_hook', count: 1, weight: 10, pool: 'junk' },
 ];
 
 // Weighted pool selection — treasure chance rises with Luck of the Sea
