@@ -9212,7 +9212,9 @@ const MOB_DROP_TABLES: Record<
     { name: 'iron_ingot', min: 3, max: 5, color: [220, 220, 220] },
   ],
   snow_golem: [{ name: 'snowball', min: 0, max: 15, color: [240, 250, 255] }],
-  zoglin: [],
+  // Wiki (minecraft.wiki/w/Zoglin): zoglins drop 1-3 rotten flesh on
+  // kill. Old empty list let zoglin kills give nothing.
+  zoglin: [{ name: 'rotten_flesh', min: 1, max: 3, color: [110, 80, 60] }],
   hoglin: [
     { name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] },
     { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
