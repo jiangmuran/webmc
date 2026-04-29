@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { instrumentForBlockAbove, notePitch } from './note_block_instrument';
+import { instrumentForBlockBelow, notePitch } from './note_block_instrument';
 
 describe('note block instrument', () => {
   it('wood = bass', () => {
-    expect(instrumentForBlockAbove('wood')).toBe('bass');
+    expect(instrumentForBlockBelow('wood')).toBe('bass');
   });
 
   it('default harp', () => {
-    expect(instrumentForBlockAbove('grass_block')).toBe('harp');
+    expect(instrumentForBlockBelow('grass_block')).toBe('harp');
   });
 
   it('pitch doubles per octave', () => {
