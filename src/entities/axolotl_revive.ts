@@ -73,10 +73,14 @@ export interface AxolotlBuff {
   clearMiningFatigue: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): when an axolotl helps the
+// player kill a hostile, the player gets Regeneration I for 100
+// SECONDS (2000 ticks) and Mining Fatigue is cleared. Old code used
+// 100/20 = 5 seconds (treating the 100 as ticks instead of seconds).
 export function killAssistBuff(): AxolotlBuff {
   return {
     applyRegeneration: true,
-    regenDurationSec: 100 / 20,
+    regenDurationSec: 100,
     clearMiningFatigue: true,
   };
 }
