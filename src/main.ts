@@ -1145,6 +1145,39 @@ const TEMPLATES = [
 ];
 for (const t of TEMPLATES)
   itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
+// Pottery sherds (1.20 archaeology) — found in suspicious_sand /
+// suspicious_gravel via brush. Combine 4 sherds in crafting grid to
+// make a decorated_pot. items/brush.ts had a loot table referencing
+// these, but none were registered. Wiki: all stack to 64.
+const POTTERY_SHERDS = [
+  'angler',
+  'archer',
+  'arms_up',
+  'blade',
+  'brewer',
+  'brick',
+  'burn',
+  'danger',
+  'explorer',
+  'flow',
+  'friend',
+  'guster',
+  'heart',
+  'heartbreak',
+  'howl',
+  'miner',
+  'mourner',
+  'plenty',
+  'prize',
+  'scrape',
+  'sheaf',
+  'shelter',
+  'skull',
+  'snort',
+];
+for (const s of POTTERY_SHERDS) {
+  itemRegistry.register({ name: `webmc:${s}_pottery_sherd`, maxStack: 64, durability: 0 });
+}
 // Crafted misc.
 itemRegistry.register({ name: 'webmc:bowl', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
