@@ -3908,17 +3908,22 @@ const interaction = new InteractionController(
             cz + (Math.random() - 0.5) * 1.5,
             burstColor,
           );
-        // Knockback nearest mob within 2 blocks of impact (~1 dmg if egg, snowballs do 0 to most mobs but knock blaze/dragon).
+        // Knockback nearest mob within 2 blocks of impact. Wiki:
+        // snowballs deal 3 damage to blazes, 1 damage to the ender
+        // dragon, and 0 to everything else. Was 3 dmg to both blaze
+        // and dragon; corrected to dragon=1.
         for (const m of mobWorld.all()) {
           const dx = m.position.x - cx;
           const dy = m.position.y - cy;
           const dz = m.position.z - cz;
           if (dx * dx + dy * dy + dz * dz > 4) continue;
-          if (
-            heldName === 'snowball' &&
-            (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')
-          ) {
-            const r = mobWorld.damage(m.id, 3);
+          let snowballDmg = 0;
+          if (heldName === 'snowball') {
+            if (m.def.kind === 'blaze') snowballDmg = 3;
+            else if (m.def.kind === 'ender_dragon') snowballDmg = 1;
+          }
+          if (snowballDmg > 0) {
+            const r = mobWorld.damage(m.id, snowballDmg);
             if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           } else {
             // Just knockback.
