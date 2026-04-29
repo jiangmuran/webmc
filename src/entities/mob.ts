@@ -251,7 +251,10 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     walkSpeed: 0,
     maxHealth: 30,
     behavior: 'hostile',
-    attackDamage: 2,
+    // Wiki: shulker bullets deal 4 damage on direct hit + apply 10 seconds
+    // of Levitation. Was 2 (Easy-mode equivalent for other mobs), but
+    // shulker bullets are difficulty-independent at 4.
+    attackDamage: 4,
     attackRangeSq: 16 * 16,
     aggroRangeSq: 16 * 16,
   },
