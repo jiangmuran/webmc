@@ -82,7 +82,12 @@ export function plateSignal(q: PressureQuery): number {
     return Math.min(15, Math.max(0, relevantCount));
   }
   if (q.kind === 'heavy_weighted') {
-    return Math.min(15, Math.floor(relevantCount / 10));
+    // Wiki (minecraft.wiki/w/Heavy_Weighted_Pressure_Plate): signal is
+    // ceil(entityCount / 10), capped at 15. With floor, a single
+    // entity gives 0 instead of the wiki's 1 — and pressure_plate_weight
+    // already used ceil.
+    if (relevantCount <= 0) return 0;
+    return Math.min(15, Math.ceil(relevantCount / 10));
   }
   return relevantCount >= def.minEntities ? 15 : 0;
 }
