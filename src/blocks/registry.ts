@@ -696,6 +696,10 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:andesite', color: [128, 128, 128] as RGB, hardness: 1.5 },
     { name: 'webmc:diorite', color: [200, 200, 200] as RGB, hardness: 1.5 },
     { name: 'webmc:granite', color: [148, 100, 80] as RGB, hardness: 1.5 },
+    // Base stone_bricks was missing — only the chiseled/cracked/mossy
+    // variants existed, and recipes targeting the base block silently
+    // failed. Wiki: hardness 1.5, recipe is 4 stone in 2x2.
+    { name: 'webmc:stone_bricks', color: [125, 125, 125] as RGB, hardness: 1.5 },
     { name: 'webmc:chiseled_stone_bricks', color: [122, 122, 122] as RGB, hardness: 1.5 },
     { name: 'webmc:cracked_stone_bricks', color: [120, 117, 117] as RGB, hardness: 1.5 },
     { name: 'webmc:mossy_stone_bricks', color: [115, 130, 100] as RGB, hardness: 1.5 },
