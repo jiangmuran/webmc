@@ -39,8 +39,10 @@ export const PLATE_DEFS: Record<PressurePlateKind, PressurePlateDef> = {
     kind: 'polished_blackstone',
     minEntities: 1,
     triggersOnItems: false,
-    triggersOnMobs: false,
-    playerOnly: true,
+    // Wiki: polished_blackstone matches stone — triggers on any living
+    // entity (mobs + players), not just players. Was playerOnly.
+    triggersOnMobs: true,
+    playerOnly: false,
   },
   light_weighted: {
     kind: 'light_weighted',
