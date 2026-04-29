@@ -1550,6 +1550,10 @@ const DROP_OVERRIDES: Record<string, { drop: string; min?: number; max?: number 
   'webmc:snow_block': [{ drop: 'webmc:snowball', min: 4, max: 4 }],
   'webmc:melon': [{ drop: 'webmc:melon_slice', min: 3, max: 7 }],
   'webmc:bookshelf': [{ drop: 'webmc:book', min: 3, max: 3 }],
+  // Wiki (minecraft.wiki/w/Sea_Lantern): drops 2-3 prismarine_crystals
+  // without silk touch. Was incorrectly listed in DROP_NOTHING, so
+  // mining a sea lantern bare-handed gave the player nothing.
+  'webmc:sea_lantern': [{ drop: 'webmc:prismarine_crystals', min: 2, max: 3 }],
 };
 // Blocks that drop nothing without silk touch (which we don't track yet,
 // so they always drop nothing). Vanilla list — without these, breaking
@@ -1580,7 +1584,6 @@ const DROP_NOTHING: readonly string[] = [
   'webmc:blue_ice',
   'webmc:frosted_ice',
   'webmc:turtle_egg',
-  'webmc:sea_lantern',
   'webmc:cake',
   'webmc:cobweb',
 ];
