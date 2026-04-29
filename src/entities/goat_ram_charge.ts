@@ -8,9 +8,14 @@ export interface Goat {
   ramStartMs: number;
 }
 
+// Wiki: normal goat rams every 30s-300s. Screaming goat rams every
+// 1.5s-7.5s — about 33x faster (well-documented "annoying screaming
+// goat" feature). Code had regular 30-60s + scream halved (~2x faster)
+// — neither matches wiki. Fixed both bounds + screaming multiplier.
 export const RAM_COOLDOWN_MIN_MS = 30_000;
-export const RAM_COOLDOWN_MAX_MS = 60_000;
-export const SCREAM_MULT = 0.5;
+export const RAM_COOLDOWN_MAX_MS = 300_000;
+// 1/33 ≈ 0.03 to match wiki's 33x faster screaming ram.
+export const SCREAM_MULT = 0.03;
 export const CHARGE_DURATION_MS = 1000;
 
 export function makeGoat(isScreaming = false): Goat {
