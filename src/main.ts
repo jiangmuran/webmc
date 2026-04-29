@@ -8804,6 +8804,23 @@ const MOB_DROP_TABLES: Record<
   salmon: [{ name: 'salmon', min: 1, max: 1, color: [208, 106, 74] }],
   pufferfish: [{ name: 'pufferfish', min: 1, max: 1, color: [255, 215, 70] }],
   tropical_fish: [{ name: 'tropical_fish', min: 1, max: 1, color: [255, 128, 64] }],
+  // Wiki: guardian drops 0-2 prismarine_shard + 0-1 prismarine_crystals
+  // OR 0-1 fish (random). Approximated as both shards + crystals since
+  // the drop schema doesn't support mutually-exclusive choice.
+  guardian: [
+    { name: 'prismarine_shard', min: 0, max: 2, color: [120, 200, 180] },
+    { name: 'prismarine_crystals', min: 0, max: 1, color: [200, 230, 220] },
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+  ],
+  // Wiki: elder_guardian drops 0-2 prismarine_shard + 1 wet_sponge
+  // (always) + 0-1 random fish. wet_sponge isn't an item-registered
+  // entry so omit; the block-form drops via mining the wet_sponge if
+  // the player kills the elder above land.
+  elder_guardian: [
+    { name: 'prismarine_shard', min: 0, max: 2, color: [120, 200, 180] },
+    { name: 'prismarine_crystals', min: 0, max: 1, color: [200, 230, 220] },
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+  ],
   squid: [{ name: 'ink_sac', min: 1, max: 3, color: [25, 25, 25] }],
   glow_squid: [{ name: 'glow_ink_sac', min: 1, max: 3, color: [80, 230, 220] }],
   magma_cube: [{ name: 'magma_cream', min: 0, max: 1, color: [220, 90, 50] }],
