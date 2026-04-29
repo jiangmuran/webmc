@@ -1,6 +1,6 @@
 // Charged creeper. Lightning strike on a normal creeper converts it to
-// charged → explosion power doubles (4→8) + mob-skull drops when it kills
-// another mob.
+// charged → explosion power doubles (3→6 per wiki) + mob-skull drops
+// when it kills another mob.
 
 export interface ChargedCreeperState {
   charged: boolean;
@@ -16,8 +16,10 @@ export function electrify(state: ChargedCreeperState): boolean {
   return true;
 }
 
+// Wiki: normal creeper explosion power 3, charged 6 (not 4/8). The
+// other creeper module (creeper_explosion.ts) had the right values.
 export function explosionPower(state: ChargedCreeperState): number {
-  return state.charged ? 8 : 4;
+  return state.charged ? 6 : 3;
 }
 
 // Mob skulls dropped when charged creeper kills another mob.
@@ -27,6 +29,8 @@ const MOB_TO_SKULL: Record<string, string> = {
   wither_skeleton: 'webmc:wither_skeleton_skull',
   creeper: 'webmc:creeper_head',
   piglin: 'webmc:piglin_head',
+  // 1.21: charged creeper kill on bogged drops bogged_skull.
+  bogged: 'webmc:bogged_skull',
 };
 
 export function killDrop(state: ChargedCreeperState, victimKind: string): string | null {
