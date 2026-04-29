@@ -1756,6 +1756,80 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:dead_bubble_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
     { name: 'webmc:dead_fire_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
     { name: 'webmc:dead_horn_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
+    // Coral plants (5 alive) + coral fans (5 alive). Wiki: hardness 0
+    // instabreak plants. Dead variants exist too but are far less
+    // commonly used; adding the live ones unblocks decorative reefs.
+    {
+      name: 'webmc:tube_coral',
+      solid: false,
+      opaque: false,
+      color: [40, 70, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brain_coral',
+      solid: false,
+      opaque: false,
+      color: [200, 90, 130] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:bubble_coral',
+      solid: false,
+      opaque: false,
+      color: [180, 60, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:fire_coral',
+      solid: false,
+      opaque: false,
+      color: [205, 50, 60] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:horn_coral',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 60] as RGB,
+      hardness: 0,
+    },
+    // Coral fans — wall-mounted decorative variants of the plant.
+    {
+      name: 'webmc:tube_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [40, 70, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brain_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [200, 90, 130] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:bubble_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [180, 60, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:fire_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [205, 50, 60] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:horn_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 60] as RGB,
+      hardness: 0,
+    },
     // Mushroom blocks.
     { name: 'webmc:red_mushroom_block', color: [195, 50, 50] as RGB, hardness: 0.2 },
     { name: 'webmc:brown_mushroom_block', color: [150, 110, 80] as RGB, hardness: 0.2 },
