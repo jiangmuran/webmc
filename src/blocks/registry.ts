@@ -181,6 +181,23 @@ export function createDefaultRegistry(): BlockRegistry {
     // Glass: visible but lets light through — was defaulting to opaque:true
     // which prevented skylight from reaching anything below a glass roof.
     { name: 'webmc:glass', opaque: false, color: [220, 240, 250] as RGB, hardness: 0.3 },
+    // Glass pane and iron bars — referenced by default recipes as targets,
+    // but missing from registry. Both are partial-tile blocks visually but
+    // for collision/raycast we treat them as solid:false to allow light.
+    {
+      name: 'webmc:glass_pane',
+      solid: false,
+      opaque: false,
+      color: [220, 240, 250] as RGB,
+      hardness: 0.3,
+    },
+    {
+      name: 'webmc:iron_bars',
+      solid: false,
+      opaque: false,
+      color: [180, 180, 180] as RGB,
+      hardness: 5,
+    },
     { name: 'webmc:brick', color: [152, 94, 70] as RGB, hardness: 2 },
     { name: 'webmc:bookshelf', color: [124, 102, 63] as RGB, hardness: 1.5 },
     {
