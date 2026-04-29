@@ -8685,6 +8685,13 @@ const MOB_DROP_TABLES: Record<
   // Wiki: llama drops 0-2 leather + 1-3 XP. Was missing entirely so
   // killing llamas (e.g. raid pillager-trader llamas) gave nothing.
   llama: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  // Wiki: polar bear drops 0-2 raw_cod OR 0-2 raw_salmon (50/50 per
+  // kill). Approximated as 0-1 of each independently — avg is similar
+  // and the drop schema doesn't support mutually-exclusive choice.
+  polar_bear: [
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+    { name: 'salmon', min: 0, max: 1, color: [208, 106, 74] },
+  ],
   enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
   ghast: [
     { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
