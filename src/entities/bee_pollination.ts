@@ -6,7 +6,9 @@ export interface BeeState {
   ticksSincePollen: number;
 }
 
-export const POLLINATION_COOLDOWN_TICKS = 2400;
+// Wiki: bee cooldown after pollinating is 30 seconds (600 ticks).
+// Old value was 2400 (120s), 4× too long.
+export const POLLINATION_COOLDOWN_TICKS = 600;
 export const HIVE_DEPOSIT_HONEY_DELTA = 1;
 
 export function pollinate(_b: BeeState): BeeState {
