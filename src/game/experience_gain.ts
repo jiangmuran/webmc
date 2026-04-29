@@ -18,7 +18,9 @@ const MOB_XP: Record<string, [number, number]> = {
   enderman: [5, 5],
   witch: [5, 5],
   piglin: [5, 5],
-  hoglin: [5, 5],
+  // Wiki: adult hoglins drop 1-3 XP (baby hoglins drop nothing). Was
+  // flat 5 — over-rewarding the kill.
+  hoglin: [1, 3],
   ghast: [5, 5],
   blaze: [10, 10],
   wither_skeleton: [10, 10],
