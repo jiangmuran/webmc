@@ -168,7 +168,12 @@ import {
   type AnimalLove,
 } from './entities/animal_breed_love';
 import { canLeash, tensionStep } from './entities/leash_tether';
-import { tick as babyTick, growFraction, type BabyState } from './game/baby_grow_speedup';
+import {
+  tick as babyTick,
+  growFraction,
+  feed as babyFeed,
+  type BabyState,
+} from './game/baby_grow_speedup';
 import { damageTiltAngle } from './game/player_damage_tilt_direction';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
@@ -5184,10 +5189,9 @@ canvas.addEventListener('mousedown', (e) => {
         // can't breed) instead of speeding growth.
         const babyState = babyMobs.get(aimedMob.id);
         if (babyState?.isBaby) {
-          // Advance baby age by 10% of GROW_TICKS_DEFAULT (matches
-          // the BREEDING_ITEM_SPEEDUP_TICKS = 200 in baby_grow_speedup
-          // — 200 ticks = ~10% of the 24000-tick default growth).
-          const advanced: BabyState = { ...babyState, ageTicks: babyState.ageTicks + 200 };
+          // Use the canonical baby_grow_speedup.feed() — 10% of remaining
+          // time per wiki spec (not a flat tick count).
+          const advanced = babyFeed(babyState);
           babyMobs.set(aimedMob.id, advanced);
           const itemId = itemRegistry.byName(heldName);
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
