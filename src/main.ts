@@ -2747,9 +2747,13 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
   } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
     playerState.applyEffect('hunger', 0, 30);
   } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
-    playerState.applyEffect('poison', 0, 5);
-  } else if (itemName === 'webmc:spider_eye') {
+    // Wiki: poisonous_potato has 60% chance of Poison I for 4 seconds.
+    // Was 5 seconds — off by one.
     playerState.applyEffect('poison', 0, 4);
+  } else if (itemName === 'webmc:spider_eye') {
+    // Wiki: spider_eye always inflicts Poison I for 5 seconds. Was 4 —
+    // swapped with poisonous_potato by mistake.
+    playerState.applyEffect('poison', 0, 5);
   } else if (itemName === 'webmc:raw_chicken' && Math.random() < 0.3) {
     // Wiki: raw chicken has a 30% chance of inflicting Hunger for 30s
     // when eaten. Was unwired — eating raw chicken was identical to
