@@ -14,7 +14,9 @@ export function hoglinAvoidsWarpedFungus(): boolean {
   return true;
 }
 
-export const HOGLIN_ZOMBIFY_TICKS = 300; // 15s
+// Wiki: hoglins in the Overworld zombify into zoglins after 300
+// SECONDS (6000 ticks), not 300 ticks. Old value was 20× too short.
+export const HOGLIN_ZOMBIFY_TICKS = 6000;
 
 export interface OverworldTickResult {
   zombified: boolean;
