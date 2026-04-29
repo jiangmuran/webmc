@@ -52,7 +52,11 @@ export function speed(a: Arrow): number {
 
 export function damageFor(a: Arrow, powerEnchantLevel: number): number {
   const base = Math.ceil(speed(a) * 2);
+  // Wiki (minecraft.wiki/w/Power): bonus = base * 0.25 * (level + 1).
+  // Old formula used 0.25 * level (off by one level), under-shooting
+  // bonus damage at every Power level (e.g. Power V gave +1.25 base
+  // instead of the wiki's +1.5).
   const powered =
-    base + (powerEnchantLevel > 0 ? Math.floor(base * 0.25 * powerEnchantLevel + 0.5) : 0);
+    base + (powerEnchantLevel > 0 ? Math.floor(base * 0.25 * (powerEnchantLevel + 1) + 0.5) : 0);
   return a.critical ? powered + 1 + Math.floor(Math.random() * Math.ceil(powered / 2)) : powered;
 }
