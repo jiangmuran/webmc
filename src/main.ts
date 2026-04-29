@@ -2038,6 +2038,18 @@ const melonIdCached = registry.byName('webmc:melon');
 const cocoaIdCached = registry.byName('webmc:cocoa');
 const campfireIdCached = registry.byName('webmc:campfire');
 const soulCampfireIdCached = registry.byName('webmc:soul_campfire');
+// Live coral block ids → dead variant. Used by the random-tick scan:
+// a live coral with no adjacent water dies on the next random tick
+// per wiki. Was unwired despite coral_dry_convert + 5 live + 5 dead
+// variants all shipping.
+const CORAL_DRY_DEAD_BY_LIVE = new Map<number, number>();
+for (const color of ['tube', 'brain', 'bubble', 'fire', 'horn'] as const) {
+  const liveId = registry.byName(`webmc:${color}_coral_block`);
+  const deadId = registry.byName(`webmc:dead_${color}_coral_block`);
+  if (liveId !== undefined && deadId !== undefined) {
+    CORAL_DRY_DEAD_BY_LIVE.set(liveId, deadId);
+  }
+}
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -11129,6 +11141,32 @@ function frame(): void {
           const next = berryTryGrow(berryGrowCtxScratch, Math.random);
           if (next.age !== berryAge) {
             world.set(x, y, z, makeState(id, next.age));
+          }
+        } else if (CORAL_DRY_DEAD_BY_LIVE.has(id)) {
+          // Coral drying — wiki spec: a live coral block out of water
+          // dies on the next random tick. Live coral retains lush color
+          // only when at least one of the 6 neighbors is water. Was
+          // unwired despite coral_dry_convert + 5 live + 5 dead variants
+          // shipping in M3.
+          const wId = waterId;
+          if (wId === undefined) continue;
+          let hasWaterNeighbor = false;
+          for (let ni = 0; ni < 6; ni++) {
+            const dx = ni === 0 ? 1 : ni === 1 ? -1 : 0;
+            const dy = ni === 2 ? 1 : ni === 3 ? -1 : 0;
+            const dz = ni === 4 ? 1 : ni === 5 ? -1 : 0;
+            const ns = world.get(x + dx, y + dy, z + dz);
+            if (ns !== AIR && stateId(ns) === wId) {
+              hasWaterNeighbor = true;
+              break;
+            }
+          }
+          if (!hasWaterNeighbor) {
+            const deadId = CORAL_DRY_DEAD_BY_LIVE.get(id);
+            if (deadId !== undefined) {
+              world.set(x, y, z, makeState(deadId, 0));
+              touchWorldEdit(x, y, z, deadId);
+            }
           }
         } else if (id === cocoaIdCached) {
           // Cocoa pod growth — wiki spec: ages 0..2, ~20% chance per
