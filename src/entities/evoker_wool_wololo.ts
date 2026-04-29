@@ -1,11 +1,14 @@
-// Evoker wololo. Casts a spell that turns nearby sheep blue. Targets
-// white sheep only, range 16. Cooldown 10s.
+// Evoker wololo. Casts a spell that turns nearby white sheep RED in
+// Java Edition within a 16-block radius. Per wiki, evoker spells
+// share a 100-tick (5-second) cooldown after each cast.
 
 export interface WololoState {
   lastCastMs: number;
 }
 
-export const WOLOLO_COOLDOWN_MS = 10_000;
+// Wiki (minecraft.wiki/w/Evoker): spell cooldown is 100 ticks (5 s),
+// not 10 s. Old constant was 2× too long.
+export const WOLOLO_COOLDOWN_MS = 5_000;
 export const WOLOLO_RANGE = 16;
 
 export function makeWololo(): WololoState {
