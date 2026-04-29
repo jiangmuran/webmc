@@ -2642,6 +2642,13 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     playerState.applyEffect('poison', 0, 5);
   } else if (itemName === 'webmc:spider_eye') {
     playerState.applyEffect('poison', 0, 4);
+  } else if (itemName === 'webmc:pufferfish') {
+    // Wiki: pufferfish always inflicts Hunger III (15s), Nausea II
+    // (15s), Poison II (60s) on eat. Was unwired — players ate raw
+    // pufferfish for free hunger restore with zero downside.
+    playerState.applyEffect('hunger', 2, 15);
+    playerState.applyEffect('nausea', 1, 15);
+    playerState.applyEffect('poison', 1, 60);
   } else if (itemName === 'webmc:golden_apple') {
     playerState.applyEffect('regeneration', 1, 5);
     playerState.applyEffect('absorption', 0, 120);
