@@ -16,6 +16,10 @@ interface XpOrb {
 const GRAVITY = 16;
 const MAX_LIFETIME_SEC = 300;
 const ORB_SIZE = 0.18;
+// Wiki: XP orbs gravitate to player within 7 blocks (Java Edition).
+// Was 3 blocks — players had to walk almost on top of orbs to collect.
+const GRAVITATE_RADIUS = 7;
+const GRAVITATE_RADIUS_SQ = GRAVITATE_RADIUS * GRAVITATE_RADIUS;
 
 export class XpOrbWorld {
   readonly group: THREE.Group;
@@ -119,7 +123,7 @@ export class XpOrbWorld {
       const dy = playerPos.y - orb.y;
       const dz = playerPos.z - orb.z;
       const distSq = dx * dx + dy * dy + dz * dz;
-      if (distSq < 3 * 3) {
+      if (distSq < GRAVITATE_RADIUS_SQ) {
         // Hoist (pullSpeed * dtSec) / len so the three position writes
         // do one division then three multiplies (vs. three divisions
         // in the prior `(d / len) * pullSpeed * dtSec` form).
