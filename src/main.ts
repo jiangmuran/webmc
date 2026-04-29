@@ -8697,6 +8697,10 @@ const FALLABLE_BLOCKS = [
   'webmc:green_concrete_powder',
   'webmc:red_concrete_powder',
   'webmc:black_concrete_powder',
+  // Wiki (minecraft.wiki/w/Dragon_Egg): the dragon egg is gravity-
+  // affected and falls when unsupported, behaving like sand. Was
+  // missing — eggs left without a block beneath floated.
+  'webmc:dragon_egg',
 ];
 for (const name of FALLABLE_BLOCKS) {
   const id = registry.byName(name);
