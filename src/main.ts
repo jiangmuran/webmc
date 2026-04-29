@@ -8682,6 +8682,9 @@ const MOB_DROP_TABLES: Record<
     { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
   ],
   wolf: [],
+  // Wiki: llama drops 0-2 leather + 1-3 XP. Was missing entirely so
+  // killing llamas (e.g. raid pillager-trader llamas) gave nothing.
+  llama: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
   enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
   ghast: [
     { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
