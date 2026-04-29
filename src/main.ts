@@ -8709,6 +8709,11 @@ const MOB_DROP_TABLES: Record<
   ],
   fox: [],
   horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  // Wiki: donkey + mule drop 0-2 leather like horses on death. Was
+  // missing from the drop table — players killing donkeys/mules
+  // got nothing.
+  donkey: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  mule: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
   bee: [],
   cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
   parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
