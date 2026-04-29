@@ -16,11 +16,15 @@ export function levelFromXp(xp: number): VillagerLevel {
   return 'novice';
 }
 
+// Wiki: villager trade badges progress stone → iron → gold → emerald
+// → diamond. Code had apprentice/journeyman swapped (gold/iron) and
+// expert/master as diamond/netherite — neither emerald nor netherite
+// is correct (vanilla expert is emerald, master is diamond).
 export function badgeMaterial(level: VillagerLevel): string {
-  if (level === 'master') return 'netherite';
-  if (level === 'expert') return 'diamond';
-  if (level === 'journeyman') return 'iron';
-  if (level === 'apprentice') return 'gold';
+  if (level === 'master') return 'diamond';
+  if (level === 'expert') return 'emerald';
+  if (level === 'journeyman') return 'gold';
+  if (level === 'apprentice') return 'iron';
   return 'stone';
 }
 

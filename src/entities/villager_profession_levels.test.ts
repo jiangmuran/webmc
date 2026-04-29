@@ -10,17 +10,16 @@ describe('villager profession levels', () => {
     expect(levelFromXp(250)).toBe('master');
   });
 
-  it('badges increase', () => {
-    expect(badgeMaterial('master')).toBe('netherite');
+  it('badges progress stone → iron → gold → emerald → diamond per wiki', () => {
     expect(badgeMaterial('novice')).toBe('stone');
+    expect(badgeMaterial('apprentice')).toBe('iron');
+    expect(badgeMaterial('journeyman')).toBe('gold');
+    expect(badgeMaterial('expert')).toBe('emerald');
+    expect(badgeMaterial('master')).toBe('diamond');
   });
 
   it('master unlocks more trades', () => {
     expect(tradesUnlockedForLevel('master')).toBeGreaterThan(tradesUnlockedForLevel('novice'));
-  });
-
-  it('apprentice badge gold', () => {
-    expect(badgeMaterial('apprentice')).toBe('gold');
   });
 
   it('intermediate xp lands in tier', () => {
