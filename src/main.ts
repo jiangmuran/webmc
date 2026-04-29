@@ -1145,6 +1145,15 @@ const TEMPLATES = [
 ];
 for (const t of TEMPLATES)
   itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
+// Short-name armor trim aliases. Several modules (blocks/vault.ts loot,
+// world/generation/trail_ruins.ts, items/brush.ts loot) reference the
+// short form `webmc:${trim}_armor_trim` instead of the full
+// `_smithing_template` suffix. Register them as separate items so those
+// loot drops resolve. Skip 'netherite_upgrade' since it's not a trim.
+for (const t of TEMPLATES) {
+  if (t === 'netherite_upgrade') continue;
+  itemRegistry.register({ name: `webmc:${t}`, maxStack: 64, durability: 0 });
+}
 // Pottery sherds (1.20 archaeology) — found in suspicious_sand /
 // suspicious_gravel via brush. Combine 4 sherds in crafting grid to
 // make a decorated_pot. items/brush.ts had a loot table referencing
