@@ -42,10 +42,30 @@ export function brewResult(base: string, ingredient: string): string | undefined
   return match?.to;
 }
 
+// Wiki: redstone extends duration of timed potions only. Healing and
+// harming are instant (no duration); water/awkward/mundane/thick have
+// no effect or are intermediates. Old code missed mundane + thick.
+const NON_EXTENDABLE = new Set(['water', 'awkward', 'mundane', 'thick', 'healing', 'harming']);
 export function canExtendWithRedstone(potion: string): boolean {
-  return potion !== 'healing' && potion !== 'harming' && potion !== 'water' && potion !== 'awkward';
+  return !NON_EXTENDABLE.has(potion);
 }
 
+// Wiki: glowstone amplifies level-bearing potions only. Duration-only
+// potions (night_vision, invisibility, fire_resistance, water_breathing,
+// slow_falling, weakness) can't be amplified, plus the no-effect bases.
+// Old code only excluded water/awkward/mundane.
+const NON_AMPLIFIABLE = new Set([
+  'water',
+  'awkward',
+  'mundane',
+  'thick',
+  'night_vision',
+  'invisibility',
+  'fire_resistance',
+  'water_breathing',
+  'slow_falling',
+  'weakness',
+]);
 export function canAmplifyWithGlowstone(potion: string): boolean {
-  return potion !== 'water' && potion !== 'awkward' && potion !== 'mundane';
+  return !NON_AMPLIFIABLE.has(potion);
 }
