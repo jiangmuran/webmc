@@ -798,6 +798,16 @@ itemRegistry.register({
   hungerRestore: 6,
   saturation: 7.2,
 });
+// Suspicious stew — main.ts checks for it at the eat handler (line 11721)
+// but it was never registered. Wiki: stack 1, 6 hunger / 7.2 saturation,
+// applies a random hidden effect based on the flower used to craft it.
+itemRegistry.register({
+  name: 'webmc:suspicious_stew',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
 itemRegistry.register({
   name: 'webmc:sweet_berries',
   maxStack: 64,
