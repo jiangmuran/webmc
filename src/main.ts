@@ -2646,7 +2646,11 @@ function consumeFoodItem(id: number, hungerRestore: number, saturation: number):
     playerState.applyEffect('regeneration', 1, 5);
     playerState.applyEffect('absorption', 0, 120);
   } else if (itemName === 'webmc:enchanted_golden_apple') {
-    playerState.applyEffect('regeneration', 1, 20);
+    // Wiki spec: Regen V (amp=4) for 30s, Absorption IV (amp=3) for
+    // 120s, Fire Resistance I (amp=0) for 300s, Resistance I (amp=0)
+    // for 300s. Was amp=1 (II) for 20s on regen — much weaker than
+    // vanilla Notch apple's intent.
+    playerState.applyEffect('regeneration', 4, 30);
     playerState.applyEffect('absorption', 3, 120);
     playerState.applyEffect('fire_resistance', 0, 300);
     playerState.applyEffect('resistance', 0, 300);
