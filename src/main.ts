@@ -10057,7 +10057,10 @@ function frame(): void {
       }
       playerState.health = 1;
       playerState.justDied = false;
-      playerState.applyEffect('regeneration', 1, 45);
+      // Wiki-spec totem effect durations (regen 40s, absorption 5s,
+      // fire-resist 40s — totem_self_save.tryTotem returns 800/100/800
+      // ticks). Was 45s regen — 5 seconds longer than vanilla.
+      playerState.applyEffect('regeneration', 1, 40);
       playerState.applyEffect('absorption', 1, 5);
       playerState.applyEffect('fire_resistance', 0, 40);
       toast.show('✦ Totem of Undying ✦', '#ffd040', 3500);
