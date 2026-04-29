@@ -9,13 +9,13 @@ export function piercingHitLimit(piercingLevel: number): number {
   return piercingLevel + 1;
 }
 
-// Wiki (minecraft.wiki/w/Quick_Charge): each level subtracts 0.25s
-// (5 ticks) from the 1.25s (25-tick) base charge. Max level is 5,
-// at which point charge time → 0. Old code expressed reduction as
-// 0.25 * level (fraction of total time), which made Quick Charge IV
-// clip to 1-tick already and capped Quick Charge V at the same — no
-// difference between IV and V.
-export const QUICK_CHARGE_MAX = 5;
+// Wiki (minecraft.wiki/w/Quick_Charge): vanilla max level is III in
+// survival; each level subtracts 0.25 s (5 ticks) from the 1.25 s
+// (25-tick) base charge. Quick Charge III gives 10-tick charge.
+// Levels above III only reachable via commands; clamping at III
+// matches enchant_max_level_table.ts. Old reduction was a fraction of
+// total time (0.25 * level), which clipped IV to 1 tick early.
+export const QUICK_CHARGE_MAX = 3;
 export const BASE_CHARGE_TICKS = 25;
 export const QUICK_CHARGE_TICKS_PER_LEVEL = 5;
 

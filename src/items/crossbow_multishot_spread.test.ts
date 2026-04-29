@@ -21,12 +21,12 @@ describe('crossbow multishot spread', () => {
     expect(piercingHitLimit(3)).toBe(4);
   });
 
-  it('quick charge V (max) reaches full reduction', () => {
-    expect(quickChargeReduction(5)).toBe(1);
+  it('quick charge III (max) reaches full reduction', () => {
+    expect(quickChargeReduction(3)).toBe(1);
   });
 
-  it('quick charge IV partial reduction (wiki)', () => {
-    expect(quickChargeReduction(4)).toBeCloseTo(0.8);
+  it('quick charge II partial reduction', () => {
+    expect(quickChargeReduction(2)).toBeCloseTo(2 / 3);
   });
 
   it('quick charge halves charge', () => {
@@ -35,7 +35,11 @@ describe('crossbow multishot spread', () => {
     expect(fast).toBeLessThan(base);
   });
 
-  it('min 1 tick charge', () => {
+  it('quick charge III gives 10-tick charge (wiki)', () => {
+    expect(baseChargeTicks(3)).toBe(10);
+  });
+
+  it('min 1 tick charge for over-max input', () => {
     expect(baseChargeTicks(999)).toBeGreaterThanOrEqual(1);
   });
 });
