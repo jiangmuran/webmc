@@ -10,14 +10,28 @@ export const REPUTATION_ANGER_THRESHOLD = -100;
 export const ANGER_DURATION_TICKS = 600;
 export const PLAYER_AGGRESSION_DELAY_TICKS = 100;
 
+// Wiki (minecraft.wiki/w/Iron_Golem#Behavior): iron golems attack
+// zombies/skeletons/spiders/illagers/witches/ravagers but explicitly
+// AVOID creepers (a creeper kill near villagers would explode and
+// hurt them). Old list incorrectly marked creeper as a target;
+// missed drowned, stray, vindicator family, evoker/illusioner,
+// witch, spider/cave_spider.
 export function onHostileNearby(mobType: string): boolean {
   const hostiles = new Set([
     'zombie',
+    'zombie_villager',
     'husk',
+    'drowned',
     'skeleton',
-    'creeper',
+    'stray',
+    'wither_skeleton',
+    'spider',
+    'cave_spider',
     'pillager',
     'vindicator',
+    'evoker',
+    'illusioner',
+    'witch',
     'ravager',
   ]);
   return hostiles.has(mobType);
