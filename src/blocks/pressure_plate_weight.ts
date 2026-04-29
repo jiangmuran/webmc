@@ -24,7 +24,10 @@ export function plateOutput(q: PlateQuery): number {
   return Math.max(0, Math.min(15, q.entityCountOnPlate));
 }
 
-// Wooden plate also triggers on projectiles; stone doesn't.
+// Wooden plate triggers on projectiles + items + entities. Stone and
+// polished_blackstone trigger on living entities only (mobs + players,
+// not items/projectiles). Was incorrectly grouping polished_blackstone
+// with wood — per wiki it behaves like stone.
 export function canProjectileTrigger(kind: PlateKind): boolean {
-  return kind === 'wood' || kind === 'polished_blackstone';
+  return kind === 'wood';
 }
