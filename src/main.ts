@@ -1748,8 +1748,9 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   goat: ['webmc:wheat'],
   // Bees breed on any flower per wiki — was just dandelion+poppy.
-  // Includes the small-flower set + the 2-tall flowers (sunflower,
-  // lilac, peony, rose_bush) commonly placed in the world.
+  // Restricted to items actually registered in webmc; tulips and the
+  // 2-tall flowers (sunflower/lilac/peony/rose_bush) aren't items
+  // here yet, so they're omitted (would be dead lookups otherwise).
   bee: [
     'webmc:dandelion',
     'webmc:poppy',
@@ -1759,15 +1760,7 @@ const BREED_FOOD: Record<string, readonly string[]> = {
     'webmc:oxeye_daisy',
     'webmc:cornflower',
     'webmc:lily_of_the_valley',
-    'webmc:red_tulip',
-    'webmc:orange_tulip',
-    'webmc:white_tulip',
-    'webmc:pink_tulip',
     'webmc:wither_rose',
-    'webmc:sunflower',
-    'webmc:lilac',
-    'webmc:peony',
-    'webmc:rose_bush',
   ],
   panda: ['webmc:bamboo'],
   axolotl: ['webmc:tropical_fish_bucket'],
