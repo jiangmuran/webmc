@@ -8719,7 +8719,8 @@ const MOB_DROP_TABLES: Record<
   ],
   chicken: [
     { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
-    { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
+    // Wiki: chicken drops 0-2 feathers (was 0-1).
+    { name: 'feather', min: 0, max: 2, color: [250, 250, 250] },
   ],
   wolf: [],
   // Wiki: llama drops 0-2 leather + 1-3 XP. Was missing entirely so
