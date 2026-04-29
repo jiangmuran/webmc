@@ -8874,7 +8874,11 @@ const MOB_DROP_TABLES: Record<
     { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
   ],
   strider: [{ name: 'string', min: 2, max: 5, color: [230, 230, 230] }],
-  piglin_brute: [{ name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] }],
+  // Wiki: piglin brutes have NO natural drops. They always drop their
+  // equipped golden axe (with random damage), but that requires
+  // equipment-drop infrastructure not yet in place. Was incorrectly
+  // dropping 0-1 gold_nugget.
+  piglin_brute: [],
   zombified_piglin: [
     { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
     { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
