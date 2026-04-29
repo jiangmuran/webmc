@@ -17,8 +17,9 @@ export function pickMob(rng: () => number): DungeonMob {
   return 'zombie';
 }
 
+// Wiki (minecraft.wiki/w/Dungeon): every dungeon contains 1 or 2
+// chests (≈50/50). Old code allowed a 0-chest outcome, which doesn't
+// exist in vanilla.
 export function chestsCount(rng: () => number): number {
-  if (rng() < 0.5) return 1;
-  if (rng() < 0.5) return 2;
-  return 0;
+  return rng() < 0.5 ? 1 : 2;
 }

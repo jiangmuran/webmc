@@ -11,8 +11,8 @@ describe('dungeon spawner', () => {
     expect(total).toBe(100);
   });
 
-  it('chest count up to 2', () => {
+  it('chest count is 1 or 2 (wiki: never 0)', () => {
     expect(chestsCount(() => 0)).toBe(1);
-    expect(chestsCount(() => 0.99)).toBe(0);
+    expect(chestsCount(() => 0.99)).toBe(2);
   });
 });
