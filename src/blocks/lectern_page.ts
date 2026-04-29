@@ -38,7 +38,13 @@ export function nav(l: Lectern, action: NavAction): { changed: boolean; pulsed: 
   return { changed, pulsed: changed };
 }
 
+// Wiki (minecraft.wiki/w/Lectern): comparator output is 0 with no
+// book, 15 with a 1-page book (the only page IS the last page), and
+// linearly 1..15 across pages of a multi-page book. Old single-page
+// branch returned 1, conflicting with the sibling
+// lectern_book_signal module which correctly returns 15.
 export function comparatorOutput(l: Lectern): number {
-  if (!l.book || l.book.pageCount <= 1) return l.book ? 1 : 0;
+  if (!l.book) return 0;
+  if (l.book.pageCount <= 1) return 15;
   return Math.min(15, 1 + Math.floor((l.page / (l.book.pageCount - 1)) * 14));
 }

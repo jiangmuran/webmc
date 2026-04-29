@@ -37,7 +37,11 @@ export function turnPage(l: Lectern, delta: number, nowTick: number): boolean {
 }
 
 // Redstone output signal from comparator: 1..15 based on page number.
+// Wiki (minecraft.wiki/w/Lectern): a 1-page book outputs 15 (the
+// only page IS the last page). Old code returned 1, conflicting with
+// sibling lectern_book_signal.
 export function comparatorOutput(l: Lectern): number {
-  if (!l.book || l.book.pageCount === 1) return l.book ? 1 : 0;
+  if (!l.book) return 0;
+  if (l.book.pageCount === 1) return 15;
   return Math.min(15, 1 + Math.floor((l.currentPage / (l.book.pageCount - 1)) * 14));
 }
