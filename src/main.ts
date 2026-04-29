@@ -1346,7 +1346,31 @@ itemRegistry.register({ name: 'webmc:cornflower', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:lily_of_the_valley', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wither_rose', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
-itemRegistry.register({ name: 'webmc:music_disc_13', maxStack: 1, durability: 0 });
+// Music discs — wiki lists 15 vanilla discs (13, cat, blocks, chirp,
+// far, mall, mellohi, stal, strad, ward, 11, wait, pigstep, otherside,
+// 5). The jukebox_play module knows about all 15 but only music_disc_13
+// was registered, so the other 14 couldn't be obtained from creative
+// menu, dungeon loot, or the rare-creeper-killed-by-skeleton drop.
+const MUSIC_DISCS = [
+  '13',
+  'cat',
+  'blocks',
+  'chirp',
+  'far',
+  'mall',
+  'mellohi',
+  'stal',
+  'strad',
+  'ward',
+  '11',
+  'wait',
+  'pigstep',
+  'otherside',
+  '5',
+];
+for (const d of MUSIC_DISCS) {
+  itemRegistry.register({ name: `webmc:music_disc_${d}`, maxStack: 1, durability: 0 });
+}
 itemRegistry.register({ name: 'webmc:firework_rocket', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:firework_star', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:end_crystal', maxStack: 64, durability: 0 });
