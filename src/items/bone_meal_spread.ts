@@ -41,8 +41,18 @@ export interface SpreadQuery {
 }
 
 const BIOME_FLOWER_POOLS: Record<string, readonly SpreadBlock[]> = {
-  plains: ['webmc:dandelion', 'webmc:poppy', 'webmc:oxeye_daisy', 'webmc:cornflower'],
+  // Wiki: plains spawns dandelion, poppy, oxeye_daisy, cornflower, AND
+  // azure_bluet. azure_bluet was missing.
+  plains: [
+    'webmc:dandelion',
+    'webmc:poppy',
+    'webmc:oxeye_daisy',
+    'webmc:cornflower',
+    'webmc:azure_bluet',
+  ],
   forest: ['webmc:dandelion', 'webmc:poppy'],
+  // Sunflower plains adds sunflower to plains pool (sunflower not in
+  // SpreadBlock union — fallback: same as plains).
   flower_forest: [
     'webmc:dandelion',
     'webmc:poppy',
@@ -65,6 +75,7 @@ const FALLBACK_POOL: readonly SpreadBlock[] = [
   'webmc:poppy',
   'webmc:oxeye_daisy',
   'webmc:cornflower',
+  'webmc:azure_bluet',
 ];
 
 export function boneMealGrass(q: SpreadQuery): PlacementEvent[] {
