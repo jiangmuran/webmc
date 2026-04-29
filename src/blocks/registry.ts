@@ -2627,6 +2627,34 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:ice', opaque: false, color: [180, 200, 240] as RGB, hardness: 0.5 },
     { name: 'webmc:snow_block', color: [240, 250, 255] as RGB, hardness: 0.2 },
     { name: 'webmc:packed_ice', color: [145, 180, 230] as RGB, hardness: 0.5 },
+    // Blue ice — densest ice variant. Wiki: hardness 2.8, faster boats.
+    { name: 'webmc:blue_ice', opaque: false, color: [120, 180, 245] as RGB, hardness: 2.8 },
+    // Snow layer (1-8 layers, separate from snow_block which is the full
+    // packed cube). Wiki: hardness 0.1.
+    {
+      name: 'webmc:snow',
+      solid: false,
+      opaque: false,
+      color: [245, 250, 255] as RGB,
+      hardness: 0.1,
+    },
+    // Powder snow — 1.17, traps entities, climbable with leather boots,
+    // lit on contact gives a slow_falling effect. Wiki: hardness 0.25.
+    {
+      name: 'webmc:powder_snow',
+      solid: false,
+      opaque: false,
+      color: [250, 252, 255] as RGB,
+      hardness: 0.25,
+    },
+    // Frosted ice — block created by Frost Walker enchant on water.
+    // Decays back to water in light. Wiki: hardness 0.5, decay tick.
+    {
+      name: 'webmc:frosted_ice',
+      opaque: false,
+      color: [200, 220, 250] as RGB,
+      hardness: 0.5,
+    },
     // End cities.
     { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
     // Utility blocks (interactable).
