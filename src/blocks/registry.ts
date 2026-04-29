@@ -456,6 +456,22 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [255, 0, 0] as RGB,
       hardness: -1,
     },
+    // Admin/creative-only blocks (command_block, structure_block, jigsaw).
+    // Wiki: all hardness -1 unbreakable. Modules exist (command_block.ts,
+    // structure_block.ts, world/jigsaw_block.ts) but the blocks were
+    // never registered.
+    { name: 'webmc:command_block', color: [180, 130, 80] as RGB, hardness: -1 },
+    { name: 'webmc:chain_command_block', color: [80, 130, 180] as RGB, hardness: -1 },
+    { name: 'webmc:repeating_command_block', color: [120, 80, 180] as RGB, hardness: -1 },
+    { name: 'webmc:structure_block', color: [110, 90, 110] as RGB, hardness: -1 },
+    { name: 'webmc:jigsaw', color: [90, 110, 110] as RGB, hardness: -1 },
+    {
+      name: 'webmc:structure_void',
+      solid: false,
+      opaque: false,
+      color: [0, 0, 0] as RGB,
+      hardness: -1,
+    },
     {
       name: 'webmc:portal',
       solid: false,
