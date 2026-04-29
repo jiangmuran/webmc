@@ -11,8 +11,9 @@ export function triggerChance(level: number): number {
 
 export function reflectedDamage(level: number, rand: () => number): number {
   if (rand() >= triggerChance(level)) return 0;
-  // 1 + floor(rand*3), capped at THORNS_MAX_DAMAGE.
-  const dmg = 1 + Math.floor(rand() * 3);
+  // Wiki: thorns reflects 1-4 damage (inclusive). Old roll was
+  // 1 + floor(rand*3) which only produced 1-3.
+  const dmg = 1 + Math.floor(rand() * 4);
   return Math.min(dmg, THORNS_MAX_DAMAGE);
 }
 
