@@ -10376,10 +10376,13 @@ function frame(): void {
       if (belowBlockId === soulCampfireIdCached && !fireResistant) {
         envTakeDamage(SOUL_CAMPFIRE_DAMAGE * dtSec, 'fire');
       }
-      // Soul sand slows player to 60% horizontal velocity (matches MC).
+      // Soul sand slows player to 40% horizontal velocity (wiki: walking
+      // on soul sand reduces movement to 40% of normal). Was 60% — too
+      // fast vs vanilla. Soul Speed enchant would negate this but isn't
+      // wired yet.
       if (belowBlockId === soulSandIdCached) {
-        fp.velocity.x *= 0.6;
-        fp.velocity.z *= 0.6;
+        fp.velocity.x *= 0.4;
+        fp.velocity.z *= 0.4;
       }
       // Surface friction (ice slippery, honey sticky) via ground response
       // multiplier. Use the memoized short name — was a fresh
