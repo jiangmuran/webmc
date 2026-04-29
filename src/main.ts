@@ -1409,6 +1409,13 @@ itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
+// Horse armor — leather/iron/gold/diamond variants. Per wiki, all
+// stack to 1 and have no durability (they don't break, just provide
+// damage reduction). Found in dungeon/temple loot. Was unregistered.
+itemRegistry.register({ name: 'webmc:leather_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:iron_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:golden_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:diamond_horse_armor', maxStack: 1, durability: 0 });
 // Items that had logic modules (or were referenced by drop / recipe code)
 // but were never wired into itemRegistry — without registration,
 // byName() returns undefined and addOneToInventory silently no-ops, so
