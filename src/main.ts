@@ -1416,6 +1416,27 @@ itemRegistry.register({ name: 'webmc:leather_horse_armor', maxStack: 1, durabili
 itemRegistry.register({ name: 'webmc:iron_horse_armor', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:golden_horse_armor', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:diamond_horse_armor', maxStack: 1, durability: 0 });
+// Boats — one per wood type. Recipe in default-recipes.ts targets
+// `${wood}_boat` for all 12 wood types. Plus chest_boat variant (post-
+// 1.19) carrying inventory. All stack to 1.
+const BOAT_WOODS = [
+  'oak',
+  'spruce',
+  'birch',
+  'jungle',
+  'acacia',
+  'dark_oak',
+  'cherry',
+  'mangrove',
+  'pale_oak',
+  'bamboo',
+];
+for (const w of BOAT_WOODS) {
+  itemRegistry.register({ name: `webmc:${w}_boat`, maxStack: 1, durability: 0 });
+  itemRegistry.register({ name: `webmc:${w}_chest_boat`, maxStack: 1, durability: 0 });
+}
+// Bamboo's "boat" is technically a raft; keep alias above as
+// bamboo_boat for recipe parity.
 // Items that had logic modules (or were referenced by drop / recipe code)
 // but were never wired into itemRegistry — without registration,
 // byName() returns undefined and addOneToInventory silently no-ops, so
