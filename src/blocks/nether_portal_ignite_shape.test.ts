@@ -33,7 +33,8 @@ describe('nether portal ignite shape', () => {
     expect(interiorBlocks({ axis: 'x', width: 2, height: 3 })).toBe(6);
   });
 
-  it('frame count standard', () => {
-    expect(frameBlocksNeeded({ axis: 'x', width: MIN_WIDTH, height: 3 })).toBe(14);
+  it('frame count standard (wiki: 10 obsidian for 2×3, corners optional)', () => {
+    // 2W + 2H = 4 + 6 = 10 (corners not required to be obsidian per wiki)
+    expect(frameBlocksNeeded({ axis: 'x', width: MIN_WIDTH, height: 3 })).toBe(10);
   });
 });
