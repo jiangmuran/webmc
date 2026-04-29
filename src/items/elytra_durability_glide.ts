@@ -14,7 +14,11 @@ export function isBroken(s: ElytraState): boolean {
 
 export function tickSecond(s: ElytraState, rng: () => number): ElytraState {
   if (!s.isGliding) return s;
-  const spared = s.unbreakingLevel > 0 && rng() < 1 / (s.unbreakingLevel + 1);
+  // Wiki (minecraft.wiki/w/Unbreaking): tools have a level/(level+1)
+  // chance to PREVENT durability loss (L1=50%, L3=75%). Old formula
+  // `rng < 1/(level+1)` inverted the relationship — higher Unbreaking
+  // levels skipped LESS often (L3 was 25% spared).
+  const spared = s.unbreakingLevel > 0 && rng() < s.unbreakingLevel / (s.unbreakingLevel + 1);
   const loss = spared ? 0 : DURABILITY_LOSS_PER_SECOND;
   return {
     ...s,
