@@ -20,10 +20,14 @@ describe('cocoa', () => {
     expect([2, 3]).toContain(n);
   });
 
-  it('fortune increases', () => {
+  it('fortune III adds uniform 0..3 bonus (wiki)', () => {
     const c = makeCocoa('north');
     c.stage = 2;
-    expect(beansOnBreak(c, 3, () => 0)).toBeGreaterThan(beansOnBreak(c, 0, () => 0));
+    // High roll exercises the bonus side. base = 2 + floor(0.99*2) = 3,
+    // fortune = floor(0.99 * 4) = 3 → 6 total (cap).
+    const high = beansOnBreak(c, 3, () => 0.99);
+    expect(high).toBeGreaterThanOrEqual(2);
+    expect(high).toBeLessThanOrEqual(6);
   });
 
   it('bone meal advances', () => {
