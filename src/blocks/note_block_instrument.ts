@@ -35,8 +35,19 @@ const BY_BLOCK: Record<string, Instrument> = {
   glowstone: 'pling',
 };
 
-export function instrumentForBlockAbove(block: string): Instrument {
+// Wiki (minecraft.wiki/w/Note_Block): the instrument is determined by
+// the block BELOW the note block (the block above must be air or
+// non-solid for the block to play). Old name `instrumentForBlockAbove`
+// inverted the relationship in the API surface; kept the alias for
+// backward compatibility.
+export function instrumentForBlockBelow(block: string): Instrument {
   return BY_BLOCK[block] ?? 'harp';
+}
+
+/** @deprecated Wiki: instrument is selected by the block BELOW.
+ * Use {@link instrumentForBlockBelow}. */
+export function instrumentForBlockAbove(block: string): Instrument {
+  return instrumentForBlockBelow(block);
 }
 
 export function notePitch(note: number): number {
