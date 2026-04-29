@@ -505,6 +505,24 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [110, 195, 90] as RGB,
       hardness: 0,
     },
+    // Fern + large_fern — taiga/jungle grass variants. Both referenced
+    // by REPLACEABLE_BLOCKS list in main.ts but missing from registry,
+    // so byName returned undefined and players couldn't place blocks
+    // through fern (it acted solid).
+    {
+      name: 'webmc:fern',
+      solid: false,
+      opaque: false,
+      color: [95, 160, 80] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:large_fern',
+      solid: false,
+      opaque: false,
+      color: [95, 160, 80] as RGB,
+      hardness: 0,
+    },
     {
       name: 'webmc:dandelion',
       solid: false,
@@ -578,6 +596,17 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [255, 140, 30] as RGB,
       hardness: 0,
       lightEmission: 15,
+    },
+    // Soul fire — blue variant on soul_sand or soul_soil. Wiki: light
+    // level 10 (vs regular fire's 15), repels piglins, also repels via
+    // soul_torch + soul_lantern. Was in REPLACEABLE_BLOCKS but unregistered.
+    {
+      name: 'webmc:soul_fire',
+      solid: false,
+      opaque: false,
+      color: [80, 200, 230] as RGB,
+      hardness: 0,
+      lightEmission: 10,
     },
     // Terracotta — full 17 colors (plain + 16 dyed).
     { name: 'webmc:terracotta', color: [152, 94, 67] as RGB, hardness: 1.25 },
