@@ -1,6 +1,6 @@
-// Sea pickle. 1..4 pickles per block; light emission scales 3/6/9/12.
-// Only emits light if submerged. Duplicates on bone meal when coral
-// block underneath.
+// Sea pickle. 1..4 pickles per block; light emission per wiki is
+// 6/9/12/15 (formula: 3 + count*3). Only emits light if submerged.
+// Duplicates on bone meal when coral block underneath.
 
 export interface SeaPickleState {
   count: 1 | 2 | 3 | 4;
@@ -13,7 +13,9 @@ export function makeSeaPickle(count: 1 | 2 | 3 | 4 = 1, inWater = true): SeaPick
 
 export function lightEmission(state: SeaPickleState): number {
   if (!state.inWater) return 0;
-  return state.count * 3;
+  // Wiki: 1 pickle = light 6, 2 = 9, 3 = 12, 4 = 15. Was count * 3
+  // (= 3/6/9/12), off by 3 across the board.
+  return 3 + state.count * 3;
 }
 
 export function addPickle(state: SeaPickleState): boolean {

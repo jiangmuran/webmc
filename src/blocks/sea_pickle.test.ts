@@ -2,9 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { addPickle, boneMealPickle, lightEmission, makeSeaPickle } from './sea_pickle';
 
 describe('sea pickle', () => {
-  it('light emission scales 3/6/9/12 in water', () => {
-    expect(lightEmission(makeSeaPickle(1))).toBe(3);
-    expect(lightEmission(makeSeaPickle(4))).toBe(12);
+  it('light emission scales 6/9/12/15 in water (wiki spec)', () => {
+    expect(lightEmission(makeSeaPickle(1))).toBe(6);
+    expect(lightEmission(makeSeaPickle(2))).toBe(9);
+    expect(lightEmission(makeSeaPickle(3))).toBe(12);
+    expect(lightEmission(makeSeaPickle(4))).toBe(15);
   });
 
   it('no emission out of water', () => {
