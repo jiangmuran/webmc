@@ -981,6 +981,15 @@ const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec:
 for (const p of SPLASH_POTIONS) {
   itemRegistry.register({ name: p.name, maxStack: 1, durability: 0 });
 }
+// Generic lingering_potion + tipped_arrow + spectral_arrow — referenced
+// by tipped_arrow_craft.ts and dispenser_behavior.ts but never registered
+// at the item level. Without these, brewing splash + dragon_breath
+// produced an undefined item id and the tipped-arrow recipe silently
+// dropped 8 plain arrows. Wiki: lingering_potion stacks to 1, both
+// arrow variants stack to 64.
+itemRegistry.register({ name: 'webmc:lingering_potion', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:tipped_arrow', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:spectral_arrow', maxStack: 64, durability: 0 });
 // MC 1.21+ items.
 itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
