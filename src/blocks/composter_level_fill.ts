@@ -1,4 +1,8 @@
-export const MAX_LEVEL = 8;
+// Wiki: composter levels 0-7. Level 7 is the "ready" state with bone
+// meal visible; further compost items have no effect. Old code had
+// MAX_LEVEL=8 and let addItem advance past the ready threshold, which
+// doesn't match the in-game behaviour (no compost while ready).
+export const MAX_LEVEL = 7;
 
 export interface Composter {
   level: number;
@@ -34,10 +38,10 @@ export function addItem(c: Composter, id: string, rng: () => number): Composter 
 }
 
 export function isReady(c: Composter): boolean {
-  return c.level === MAX_LEVEL - 1;
+  return c.level === MAX_LEVEL;
 }
 
 export function collectBonemeal(c: Composter): { result: Composter; yielded: boolean } {
-  if (c.level !== MAX_LEVEL - 1) return { result: c, yielded: false };
+  if (c.level !== MAX_LEVEL) return { result: c, yielded: false };
   return { result: { level: 0 }, yielded: true };
 }

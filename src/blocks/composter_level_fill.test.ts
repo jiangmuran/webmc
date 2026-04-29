@@ -28,12 +28,12 @@ describe('composter level fill', () => {
     expect(addItem({ level: MAX_LEVEL }, 'cake', () => 0).level).toBe(MAX_LEVEL);
   });
 
-  it('ready at level 7', () => {
-    expect(isReady({ level: MAX_LEVEL - 1 })).toBe(true);
+  it('ready at level 7 (MAX_LEVEL)', () => {
+    expect(isReady({ level: MAX_LEVEL })).toBe(true);
   });
 
   it('collect bonemeal resets', () => {
-    const r = collectBonemeal({ level: MAX_LEVEL - 1 });
+    const r = collectBonemeal({ level: MAX_LEVEL });
     expect(r.yielded).toBe(true);
     expect(r.result.level).toBe(0);
   });
