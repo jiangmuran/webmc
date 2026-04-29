@@ -18,12 +18,14 @@ describe('cocoa', () => {
     expect(tryGrow(c, () => 0)).toBe(false);
   });
 
-  it('drops scale with fortune', () => {
+  it('drops scale with fortune (uniform 0..level)', () => {
     const c = { age: MAX_AGE, facing: 'north' as const };
     const base = drops(c, 0, () => 0);
-    const f3 = drops(c, 3, () => 0);
-    expect(f3).toBeGreaterThan(base);
-    expect(f3).toBeLessThanOrEqual(6);
+    expect(base).toBe(2);
+    // High roll exercises both base bonus + fortune bonus.
+    const f3High = drops(c, 3, () => 0.99);
+    expect(f3High).toBeGreaterThanOrEqual(base);
+    expect(f3High).toBeLessThanOrEqual(6);
   });
 
   it('immature drops 1', () => {

@@ -35,7 +35,12 @@ export function tryGrow(c: Cocoa, rand: () => number): boolean {
 export function drops(c: Cocoa, fortuneLevel: number, rand: () => number): number {
   if (c.age < MAX_AGE) return 1;
   const base = 2 + Math.floor(rand() * 2); // 2..3
-  return Math.min(6, base + fortuneLevel);
+  // Wiki (minecraft.wiki/w/Cocoa_Beans#Drops): fortune adds a uniform
+  // 0..level bonus, not a deterministic +level. Old formula always
+  // added the full fortune level (Fortune III always +3) instead of
+  // the wiki's 0..3 roll. Cap remains 6 to match wiki's maximum.
+  const fortuneBonus = fortuneLevel > 0 ? Math.floor(rand() * (fortuneLevel + 1)) : 0;
+  return Math.min(6, base + fortuneBonus);
 }
 
 export function boneMealGrow(c: Cocoa): boolean {
