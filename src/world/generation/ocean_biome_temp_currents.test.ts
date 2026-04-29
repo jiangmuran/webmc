@@ -31,8 +31,15 @@ describe('ocean biome temp currents', () => {
     expect(fishSpecies('cold')).toContain('cod');
   });
 
-  it('frozen no fish', () => {
-    expect(fishSpecies('frozen')).toEqual([]);
+  it('frozen has rare salmon (wiki)', () => {
+    expect(fishSpecies('frozen')).toEqual(['salmon']);
+  });
+
+  it('lukewarm is mixed zone (wiki)', () => {
+    const lukewarm = fishSpecies('lukewarm');
+    expect(lukewarm).toContain('tropical_fish');
+    expect(lukewarm).toContain('cod');
+    expect(lukewarm).toContain('salmon');
   });
 
   it('deep current stronger', () => {
