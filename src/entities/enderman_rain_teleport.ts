@@ -16,4 +16,7 @@ export function shouldTryEscape(e: EndermanEnv): boolean {
   return e.lastTeleportTicks >= MIN_TELEPORT_INTERVAL;
 }
 
-export const RAIN_DAMAGE_PER_TICK = 1 / 20;
+// Wiki: enderman takes 1 damage every 10 ticks (0.5s) in water/rain,
+// matching fire damage rate. Old constant was 1/20 (1 HP/s) — half
+// the wiki rate.
+export const RAIN_DAMAGE_PER_TICK = 1 / 10;
