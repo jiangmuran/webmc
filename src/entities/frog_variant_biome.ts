@@ -6,8 +6,15 @@ export function frogVariantForTemperature(biomeTemp: number): FrogVariant {
   return 'temperate';
 }
 
+// Wiki (minecraft.wiki/w/Froglight): each frog variant produces a
+// thematically-matching froglight:
+//   temperate (white)  → pearlescent
+//   warm     (orange)  → ochre
+//   cold     (green)   → verdant
+// Old map had temperate↔warm swapped (returned ochre for temperate
+// and pearlescent for warm).
 export function froglightColorFor(variant: FrogVariant, _prey: 'small_magma_cube'): string {
-  if (variant === 'warm') return 'pearlescent_froglight';
+  if (variant === 'warm') return 'ochre_froglight';
   if (variant === 'cold') return 'verdant_froglight';
-  return 'ochre_froglight';
+  return 'pearlescent_froglight';
 }
