@@ -22,6 +22,12 @@ export function stainedGlassFor(id: string): string | undefined {
   return m?.[1];
 }
 
+// Wiki (minecraft.wiki/w/Beacon#Beam_color): each stained glass block
+// the beam passes through is blended with the accumulated color via
+// `mixed = (mixed + glass) / 2`. The newest glass gets ½ weight; the
+// next gets ¼, then ⅛, etc. Old code averaged all glasses equally,
+// which under-weights the topmost glass and over-weights the lowest.
+// stackIds[0] = lowest (closest to beacon), [N-1] = highest.
 export function beamColor(stackIds: readonly string[]): [number, number, number] {
   const colors: [number, number, number][] = [];
   for (const id of stackIds) {
@@ -29,13 +35,17 @@ export function beamColor(stackIds: readonly string[]): [number, number, number]
     if (name !== undefined && GLASS_RGB[name]) colors.push(GLASS_RGB[name]);
   }
   if (colors.length === 0) return [255, 255, 255];
-  let r = 0,
-    g = 0,
-    b = 0;
-  for (const c of colors) {
-    r += c[0];
-    g += c[1];
-    b += c[2];
+  const first = colors[0];
+  if (!first) return [255, 255, 255];
+  let r = first[0];
+  let g = first[1];
+  let b = first[2];
+  for (let i = 1; i < colors.length; i++) {
+    const c = colors[i];
+    if (!c) continue;
+    r = (r + c[0]) / 2;
+    g = (g + c[1]) / 2;
+    b = (b + c[2]) / 2;
   }
-  return [r / colors.length, g / colors.length, b / colors.length];
+  return [r, g, b];
 }
