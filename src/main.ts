@@ -1262,6 +1262,17 @@ itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
+// Items that had logic modules (or were referenced by drop / recipe code)
+// but were never wired into itemRegistry — without registration,
+// byName() returns undefined and addOneToInventory silently no-ops, so
+// e.g. shearing a beehive produced no honeycomb in survival. Wiki:
+// honeycomb 64-stack, recovery_compass 64-stack, bundle/spyglass single,
+// brush 64 durability, music discs single.
+itemRegistry.register({ name: 'webmc:honeycomb', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:recovery_compass', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:bundle', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:spyglass', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:brush', maxStack: 1, durability: 64 });
 // Armor pieces. ARMOR_DEFS is the source of truth (defense / toughness /
 // durability), but every entry needs to be in itemRegistry too so /give,
 // crafting recipes, the survival inventory equip-on-click, and droppers
