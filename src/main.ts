@@ -8225,14 +8225,20 @@ for (let i = 0; i < registry.defs.length; i++) {
     IS_SAPLING[i] = 1;
   }
 }
-// Composter input → fill chance. Was being rebuilt on every
-// composter right-click.
+// Composter input → fill chance per wiki. Was being rebuilt on every
+// composter right-click. Tier table: 30% (raw seeds/berries/kelp),
+// 50% (cactus/cane/melon_slice/vines), 65% (raw food crops),
+// 85% (cooked/processed food + dried_kelp_block + hay_block + pumpkin),
+// 100% (cake + pumpkin_pie). dried_kelp the ITEM is 30% (the BLOCK
+// is 85%; we don't have dried_kelp_block as a compostable input
+// here). Was 85% — overshooting wiki by ~3x.
 const COMPOSTABLES: Record<string, number> = {
   wheat: 0.65,
   wheat_seeds: 0.3,
   beetroot_seeds: 0.3,
   melon_seeds: 0.3,
   pumpkin_seeds: 0.3,
+  torchflower_seeds: 0.3,
   carrot: 0.65,
   potato: 0.65,
   beetroot: 0.65,
@@ -8242,12 +8248,17 @@ const COMPOSTABLES: Record<string, number> = {
   cactus: 0.5,
   sugar_cane: 0.5,
   kelp: 0.3,
-  dried_kelp: 0.85,
+  dried_kelp: 0.3,
   sweet_berries: 0.3,
   glow_berries: 0.3,
   melon_slice: 0.5,
   pumpkin_pie: 1.0,
+  cake: 1.0,
   baked_potato: 0.85,
+  bamboo: 0.3,
+  hay_block: 0.85,
+  pumpkin: 0.65,
+  melon: 0.65,
 };
 // Seed → crop block. Right-click on farmland — was rebuilt per click.
 const PLANT_MAP: Record<string, string> = {
