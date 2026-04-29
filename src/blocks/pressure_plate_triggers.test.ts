@@ -15,13 +15,18 @@ describe('pressure plate triggers', () => {
     expect(signalStrength({ plate: 'stone', entities: [{ kind: 'mob', count: 1 }] })).toBe(15);
   });
 
-  it('blackstone players only', () => {
+  it('blackstone living entities (mobs + players, like stone)', () => {
+    // Wiki: polished_blackstone matches stone — mobs AND players trigger.
     expect(
       signalStrength({ plate: 'polished_blackstone', entities: [{ kind: 'mob', count: 1 }] }),
-    ).toBe(0);
+    ).toBe(15);
     expect(
       signalStrength({ plate: 'polished_blackstone', entities: [{ kind: 'player', count: 1 }] }),
     ).toBe(15);
+    // Items + projectiles don't trigger.
+    expect(
+      signalStrength({ plate: 'polished_blackstone', entities: [{ kind: 'item', count: 1 }] }),
+    ).toBe(0);
   });
 
   it('iron scales', () => {
