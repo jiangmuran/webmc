@@ -9149,7 +9149,11 @@ const MOB_DROP_TABLES: Record<
     // Wiki: breeze drops 0-2 breeze_rod (was 0-1, half of vanilla rate).
     { name: 'breeze_rod', min: 0, max: 2, color: [180, 220, 255] },
   ],
-  armadillo: [{ name: 'armadillo_scute', min: 0, max: 1, color: [180, 140, 110] }],
+  // Wiki (minecraft.wiki/w/Armadillo): armadillos drop NOTHING when
+  // killed (only 1-3 XP). Scutes are obtained by brushing them with a
+  // brush, or from natural shedding while a baby grows. Old entry let
+  // killing drop scutes — non-vanilla.
+  armadillo: [],
   sniffer: [],
   dolphin: [{ name: 'cod', min: 0, max: 1, color: [196, 160, 106] }],
   cod: [{ name: 'cod', min: 1, max: 1, color: [196, 160, 106] }],
@@ -9223,8 +9227,15 @@ const MOB_DROP_TABLES: Record<
     { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
     { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
   ],
-  warden: [{ name: 'echo_shard', min: 0, max: 0, color: [80, 200, 220] }],
-  ender_dragon: [{ name: 'dragon_scale', min: 1, max: 1, color: [60, 50, 80] }],
+  // Wiki (minecraft.wiki/w/Warden): warden drops nothing on death,
+  // only 5 XP. Old entry `echo_shard, min 0 max 0` was a no-op
+  // already; cleaner as the empty list.
+  warden: [],
+  // Wiki (minecraft.wiki/w/Ender_Dragon): the dragon drops no items
+  // — only XP, the dragon egg (placed at the exit portal), and the
+  // exit portal itself. `dragon_scale` isn't a vanilla item; was
+  // confusing players seeking an "always-drop" loot.
+  ender_dragon: [],
   wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
 };
 
