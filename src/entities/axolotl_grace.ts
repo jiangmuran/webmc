@@ -4,7 +4,10 @@ export interface PlayerWithAxolotl {
   nowTick: number;
 }
 
-export const GRACE_DURATION_TICKS = 2400;
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): the post-combat Regen I +
+// Resistance I buff lasts 100 seconds (2000 ticks). Old constant was
+// 2400 (120s), inconsistent with axolotl_revive's wiki-aligned 100s.
+export const GRACE_DURATION_TICKS = 2000;
 export const REGEN_AMPLIFIER = 0;
 
 export function hasGrace(p: PlayerWithAxolotl): boolean {
