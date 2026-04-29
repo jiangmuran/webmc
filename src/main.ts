@@ -11563,6 +11563,18 @@ function frame(): void {
         // Was unconditional — eating in creative still depleted hotbar.
         if (vitalsActive) {
           consumeInventoryItem(itemId, 1);
+          // Wiki: stews + soups return an empty bowl on eat. Was
+          // unwired — players ate mushroom/rabbit stew + beetroot
+          // soup and silently lost the bowl.
+          if (
+            consumedName === 'webmc:mushroom_stew' ||
+            consumedName === 'webmc:rabbit_stew' ||
+            consumedName === 'webmc:beetroot_soup' ||
+            consumedName === 'webmc:suspicious_stew'
+          ) {
+            const bowlId = itemRegistry.byName('webmc:bowl');
+            if (bowlId !== undefined) addOneToInventory(bowlId);
+          }
         }
         // Re-arm: if the player is still holding right-click and still has
         // the same food in the held slot, start the next bite. Vanilla MC
