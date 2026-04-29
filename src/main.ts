@@ -623,6 +623,10 @@ itemRegistry.register({ name: 'webmc:raw_iron', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:raw_gold', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:raw_copper', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:diamond', maxStack: 64, durability: 0 });
+// Nether quartz item — the drop from nether_quartz_ore. The drop table
+// at DROP_OVERRIDES references 'webmc:quartz' but it was never registered,
+// so nether quartz mining silently produced no item in survival.
+itemRegistry.register({ name: 'webmc:quartz', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wheat', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:cocoa_beans', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
