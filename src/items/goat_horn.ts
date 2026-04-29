@@ -1,5 +1,7 @@
-// Goat horn — 7 tonal variants obtained by getting rammed by a screaming
-// goat. Blowing the horn plays a sound + pulses nearby raid villagers.
+// Goat horn — 8 tonal variants. Per wiki: 4 are obtained by getting
+// rammed by a screaming goat (admire, call, yearn, dream); 4 are
+// found in Ancient City chests (ponder, sing, seek, feel). Blowing
+// the horn plays a sound + pulses nearby raid villagers.
 
 export type HornVariant =
   | 'ponder'
