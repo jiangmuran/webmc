@@ -1902,6 +1902,12 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:composter', color: [165, 130, 70] as RGB, hardness: 0.6 },
     { name: 'webmc:barrel', color: [165, 130, 75] as RGB, hardness: 2.5 },
     { name: 'webmc:lectern', color: [180, 140, 80] as RGB, hardness: 2.5 },
+    // Bee nest + beehive — produced by world-gen (nest in flower forests
+    // and similar) or crafted (hive from honeycomb + planks). Both have
+    // a bee_nest_populate module modeling occupants/honey level. Wiki:
+    // bee_nest hardness 0.3, beehive hardness 0.6.
+    { name: 'webmc:bee_nest', color: [200, 145, 65] as RGB, hardness: 0.3 },
+    { name: 'webmc:beehive', color: [180, 145, 90] as RGB, hardness: 0.6 },
     // Bell — village mob-summon center block. Wiki: hardness 5, drops
     // itself when mined with wood pickaxe or higher. Has multiple bell
     // modules (bell_ring, bell_resonate, bell_ring_damage_raiders) but
