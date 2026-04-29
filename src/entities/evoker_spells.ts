@@ -9,10 +9,14 @@ export interface EvokerState {
   nextPickMs: number;
 }
 
+// Wiki (minecraft.wiki/w/Evoker): every evoker spell has a 100-tick
+// (5s) base cooldown. Some spells extend that by their cast animation
+// (vex summon ~340 ticks ≈ 17s). Old wololo cooldown was 10s — kept
+// inconsistent with the standalone evoker_wool_wololo module.
 export const SPELL_COOLDOWN_MS: Record<Spell, number> = {
-  summon_vex: 15_000,
+  summon_vex: 17_000,
   fangs_line: 5_000,
-  wololo: 10_000,
+  wololo: 5_000,
 };
 
 export function makeEvoker(): EvokerState {
