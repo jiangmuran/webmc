@@ -1501,7 +1501,8 @@ export function createDefaultRegistry(): BlockRegistry {
     },
     { name: 'webmc:bookshelf', color: [165, 130, 80] as RGB, hardness: 1.5 },
     { name: 'webmc:chiseled_bookshelf', color: [180, 140, 90] as RGB, hardness: 1.5 },
-    { name: 'webmc:enchanting_table', color: [135, 90, 165] as RGB, hardness: 5, lightEmission: 7 },
+    // Wiki: enchanting_table emits 0 light. Was 7 — non-vanilla glow.
+    { name: 'webmc:enchanting_table', color: [135, 90, 165] as RGB, hardness: 5 },
     { name: 'webmc:anvil', color: [80, 80, 80] as RGB, hardness: 5 },
     { name: 'webmc:chipped_anvil', color: [85, 85, 85] as RGB, hardness: 5 },
     { name: 'webmc:damaged_anvil', color: [90, 90, 90] as RGB, hardness: 5 },
