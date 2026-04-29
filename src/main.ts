@@ -8552,23 +8552,31 @@ const COMPOSTABLES: Record<string, number> = {
   azalea_leaves: 0.3,
   pink_petals: 0.3,
   moss_carpet: 0.3,
-  // 50% tier
+  // 50% tier — wiki: cactus, sugar_cane, melon_slice, vine, glow_lichen,
+  // sea_pickle, twisting_vines, weeping_vines, nether_sprouts, small_dripleaf.
   cactus: 0.5,
   sugar_cane: 0.5,
   melon_slice: 0.5,
   vine: 0.5,
-  fern: 0.5,
-  large_fern: 0.5,
   twisting_vines: 0.5,
   weeping_vines: 0.5,
   nether_sprouts: 0.5,
   small_dripleaf: 0.5,
-  big_dripleaf: 0.5,
   glow_lichen: 0.5,
   sea_pickle: 0.5,
-  red_mushroom: 0.5,
-  brown_mushroom: 0.5,
-  // 65% tier
+  // 65% tier — wiki: tall_grass, fern, large_fern, big_dripleaf, mushrooms
+  // (red+brown), mushroom_stem, crimson/warped_roots, mangrove_roots all
+  // moved up from 50%. Was treating these as 50%.
+  tall_grass: 0.65,
+  fern: 0.65,
+  large_fern: 0.65,
+  big_dripleaf: 0.65,
+  red_mushroom: 0.65,
+  brown_mushroom: 0.65,
+  mushroom_stem: 0.65,
+  crimson_roots: 0.65,
+  warped_roots: 0.65,
+  mangrove_roots: 0.65,
   wheat: 0.65,
   carrot: 0.65,
   potato: 0.65,
