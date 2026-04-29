@@ -2004,10 +2004,16 @@ const BREED_FOOD: Record<string, readonly string[]> = {
   turtle: ['webmc:seagrass'],
   hoglin: ['webmc:crimson_fungus'],
   strider: ['webmc:warped_fungus'],
-  llama: ['webmc:hay_block'],
-  horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
-  donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
-  mule: ['webmc:golden_apple', 'webmc:golden_carrot'],
+  // Wiki (minecraft.wiki/w/Llama): llamas accept wheat AND hay block
+  // for breeding. Old list missed wheat — players couldn't breed
+  // llamas with the more common feed.
+  llama: ['webmc:hay_block', 'webmc:wheat'],
+  // Wiki (minecraft.wiki/w/Horse): horse/donkey/mule breeding accepts
+  // golden_apple, enchanted_golden_apple, and golden_carrot. Old list
+  // missed enchanted_golden_apple.
+  horse: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
+  donkey: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
+  mule: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
   // Wiki: camels breed on cactus, sniffers on torchflower seeds
   // (1.20 Trails & Tales), armadillos on spider eye (1.20.5/1.21).
   // All three mob kinds existed in the entity registry but had no
