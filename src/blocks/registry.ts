@@ -1950,6 +1950,25 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [85, 130, 60] as RGB,
       hardness: 0.1,
     },
+    // Pale Garden / pale_moss family (1.21). Pale moss is the
+    // grayish-white biome variant in the pale garden biome.
+    { name: 'webmc:pale_moss_block', color: [185, 195, 175] as RGB, hardness: 0.1 },
+    {
+      name: 'webmc:pale_moss_carpet',
+      solid: false,
+      opaque: false,
+      color: [185, 195, 175] as RGB,
+      hardness: 0.1,
+    },
+    // Hanging moss — drops from pale moss block via shears, hangs down
+    // up to 8 blocks. Wiki: hardness 0, instabreak plant.
+    {
+      name: 'webmc:hanging_moss',
+      solid: false,
+      opaque: false,
+      color: [185, 195, 175] as RGB,
+      hardness: 0,
+    },
     {
       name: 'webmc:azalea',
       solid: false,
