@@ -23,9 +23,11 @@ export function shouldSpawnWithTrident(q: SpawnQuery): boolean {
   return q.rand() < holdsTridentChance(q.difficulty);
 }
 
-// Drop chance; 0.085 base + 0.01 per looting level, capped at 0.15.
+// Wiki: drowned drop their trident with 8.5% base chance, +1% per
+// looting level, capped at 11.5% with Looting III. Old cap was 15%
+// which exceeded the Looting III maximum.
 export const TRIDENT_DROP_BASE = 0.085;
-export const TRIDENT_DROP_CAP = 0.15;
+export const TRIDENT_DROP_CAP = 0.115;
 
 export function tridentDropChance(lootingLevel: number): number {
   return Math.min(TRIDENT_DROP_CAP, TRIDENT_DROP_BASE + lootingLevel * 0.01);
