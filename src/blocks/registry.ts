@@ -668,6 +668,14 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:cobbled_deepslate_wall', color: [70, 70, 75] as RGB, hardness: 3.5 },
     { name: 'webmc:stripped_mangrove_log', color: [120, 73, 60] as RGB, hardness: 2 },
     { name: 'webmc:stripped_cherry_log', color: [220, 175, 165] as RGB, hardness: 2 },
+    // Missing stripped log variants — registry had 6 of 10 wood types.
+    // Per wiki, axe-stripping any log produces the stripped variant.
+    { name: 'webmc:stripped_acacia_log', color: [200, 142, 86] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_dark_oak_log', color: [105, 73, 38] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_pale_oak_log', color: [220, 215, 210] as RGB, hardness: 2 },
+    // bamboo_block is the bamboo-equivalent of a log; stripped variant is
+    // stripped_bamboo_block.
+    { name: 'webmc:stripped_bamboo_block', color: [240, 220, 130] as RGB, hardness: 2 },
     { name: 'webmc:dirt_path', color: [148, 117, 73] as RGB, hardness: 0.65 },
     { name: 'webmc:farmland', color: [120, 80, 50] as RGB, hardness: 0.6 },
     { name: 'webmc:coarse_dirt', color: [110, 80, 53] as RGB, hardness: 0.5 },
