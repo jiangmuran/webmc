@@ -8601,6 +8601,23 @@ const COMPOSTABLES: Record<string, number> = {
   azalea: 0.65,
   flowering_azalea: 0.65,
   pitcher_pod: 0.65,
+  // Wiki (minecraft.wiki/w/Composter): every single-block flower
+  // composts at 65% chance. Old table omitted them — players had no
+  // efficient way to compost their flower drops.
+  dandelion: 0.65,
+  poppy: 0.65,
+  blue_orchid: 0.65,
+  allium: 0.65,
+  azure_bluet: 0.65,
+  red_tulip: 0.65,
+  orange_tulip: 0.65,
+  white_tulip: 0.65,
+  pink_tulip: 0.65,
+  oxeye_daisy: 0.65,
+  cornflower: 0.65,
+  lily_of_the_valley: 0.65,
+  wither_rose: 0.65,
+  torchflower: 0.65,
   // 85% tier
   bread: 0.85,
   cookie: 0.85,
