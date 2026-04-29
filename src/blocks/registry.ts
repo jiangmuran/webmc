@@ -2179,6 +2179,16 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [205, 145, 105] as RGB,
       hardness: 1,
     },
+    // Bogged skull (1.21) — drops 2.5% when bogged is killed by a
+    // charged creeper. Was referenced in entities/bogged.ts but missing
+    // from registry.
+    {
+      name: 'webmc:bogged_skull',
+      solid: false,
+      opaque: false,
+      color: [120, 130, 90] as RGB,
+      hardness: 1,
+    },
     // Plank variants for missing wood types.
     { name: 'webmc:spruce_planks', color: [115, 85, 50] as RGB, hardness: 2 },
     { name: 'webmc:birch_planks', color: [220, 200, 145] as RGB, hardness: 2 },
