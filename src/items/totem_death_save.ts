@@ -29,9 +29,12 @@ export function applyTotem(q: TotemDeathQuery): TotemSaveResult {
       appliedEffects: [],
     };
   }
+  // Wiki (minecraft.wiki/w/Totem_of_Undying): off-hand is checked
+  // FIRST when both hands hold a totem. Old code checked mainhand
+  // first, inconsistent with totem_offhand_priority.ts and wiki.
   let slot: 'mainhand' | 'offhand' | null = null;
-  if (q.heldMainhand === TOTEM_ID) slot = 'mainhand';
-  else if (q.heldOffhand === TOTEM_ID) slot = 'offhand';
+  if (q.heldOffhand === TOTEM_ID) slot = 'offhand';
+  else if (q.heldMainhand === TOTEM_ID) slot = 'mainhand';
   if (slot === null) {
     return {
       triggered: false,
