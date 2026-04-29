@@ -2064,6 +2064,19 @@ const AMETHYST_NEXT_STAGE_BY_ID = new Map<number, number>();
   if (medium !== undefined && large !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(medium, large);
   if (large !== undefined && cluster !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(large, cluster);
 }
+// Copper oxidation chain: unoxidized → exposed → weathered → oxidized.
+// 1/7500 random-tick chance per wiki. The bare-copper chain only;
+// waxed variants aren't registered as oxidation-progression sources.
+const COPPER_NEXT_STAGE_BY_ID = new Map<number, number>();
+{
+  const unox = registry.byName('webmc:copper_block');
+  const exp = registry.byName('webmc:exposed_copper');
+  const weath = registry.byName('webmc:weathered_copper');
+  const oxid = registry.byName('webmc:oxidized_copper');
+  if (unox !== undefined && exp !== undefined) COPPER_NEXT_STAGE_BY_ID.set(unox, exp);
+  if (exp !== undefined && weath !== undefined) COPPER_NEXT_STAGE_BY_ID.set(exp, weath);
+  if (weath !== undefined && oxid !== undefined) COPPER_NEXT_STAGE_BY_ID.set(weath, oxid);
+}
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -11155,6 +11168,17 @@ function frame(): void {
           const next = berryTryGrow(berryGrowCtxScratch, Math.random);
           if (next.age !== berryAge) {
             world.set(x, y, z, makeState(id, next.age));
+          }
+        } else if (COPPER_NEXT_STAGE_BY_ID.has(id)) {
+          // Copper oxidation — wiki spec 1/7500 per random tick. Was
+          // unwired despite copper_aging_stages shipping; placed copper
+          // blocks would never weather.
+          if (Math.random() < 1 / 7500) {
+            const nextId = COPPER_NEXT_STAGE_BY_ID.get(id);
+            if (nextId !== undefined) {
+              world.set(x, y, z, makeState(nextId, 0));
+              touchWorldEdit(x, y, z, nextId);
+            }
           }
         } else if (AMETHYST_NEXT_STAGE_BY_ID.has(id)) {
           // Amethyst bud growth — wiki spec: 20% chance per random
