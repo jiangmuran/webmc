@@ -1388,6 +1388,14 @@ itemRegistry.register({ name: 'webmc:wind_charge', maxStack: 64, durability: 0 }
 itemRegistry.register({ name: 'webmc:breeze_rod', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:echo_shard', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:goat_horn', maxStack: 1, durability: 0 });
+// Banner pattern items required by items/banner_patterns.ts but never
+// registered. These drop from specific structures (globe = cartographer
+// trade, piglin = bastion remnant, flow/guster = trial chambers) and
+// were silently un-receivable. Wiki: stack to 1.
+itemRegistry.register({ name: 'webmc:globe_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:piglin_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:flow_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:guster_banner_pattern', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:disc_fragment_5', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
