@@ -1346,11 +1346,13 @@ itemRegistry.register({ name: 'webmc:cornflower', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:lily_of_the_valley', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wither_rose', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
-// Music discs — wiki lists 15 vanilla discs (13, cat, blocks, chirp,
-// far, mall, mellohi, stal, strad, ward, 11, wait, pigstep, otherside,
-// 5). The jukebox_play module knows about all 15 but only music_disc_13
-// was registered, so the other 14 couldn't be obtained from creative
-// menu, dungeon loot, or the rare-creeper-killed-by-skeleton drop.
+// Music discs — wiki lists 19 vanilla discs across the C418 originals,
+// 1.16 nether/end additions (pigstep, otherside, 5), and 1.20+ trail
+// ruins / trial chamber additions (relic, precipice, creator,
+// creator_music_box). The jukebox_play + items/music_disc.ts modules
+// know about all of them but only music_disc_13 was registered, so the
+// rest couldn't be obtained from creative menu, dungeon loot, or the
+// rare-creeper-killed-by-skeleton drop.
 const MUSIC_DISCS = [
   '13',
   'cat',
@@ -1367,6 +1369,10 @@ const MUSIC_DISCS = [
   'pigstep',
   'otherside',
   '5',
+  'relic',
+  'precipice',
+  'creator',
+  'creator_music_box',
 ];
 for (const d of MUSIC_DISCS) {
   itemRegistry.register({ name: `webmc:music_disc_${d}`, maxStack: 1, durability: 0 });
