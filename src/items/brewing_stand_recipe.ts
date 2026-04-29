@@ -39,7 +39,11 @@ const INGREDIENT_TABLE: Record<string, Partial<Record<BaseKind, BaseKind>>> = {
   'webmc:magma_cream': { awkward: 'fire_resistance' },
   'webmc:pufferfish': { awkward: 'water_breathing' },
   'webmc:rabbit_foot': { awkward: 'leaping' },
-  'webmc:turtle_shell_scute': { awkward: 'turtle_master' },
+  // Wiki (minecraft.wiki/w/Potion_of_the_Turtle_Master): brew turtle
+  // master with TURTLE SHELL (the helmet item, id webmc:turtle_shell),
+  // not a scute. Old key 'turtle_shell_scute' didn't match any
+  // registered item, so this recipe was effectively unbrewable.
+  'webmc:turtle_shell': { awkward: 'turtle_master' },
   'webmc:phantom_membrane': { awkward: 'slow_falling' },
 };
 
