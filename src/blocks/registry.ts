@@ -1962,6 +1962,53 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [50, 110, 110] as RGB,
       hardness: 2,
     },
+    // Missing wood slab variants — block registry had oak/spruce/birch/
+    // jungle/crimson/warped but not acacia/dark_oak/cherry/mangrove/
+    // pale_oak. default-recipes.ts doesn't have slab recipes for those
+    // five but they were referenced elsewhere. Wiki: all wood slabs
+    // hardness 2.
+    {
+      name: 'webmc:acacia_slab',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_slab',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_slab',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_slab',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_slab',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_slab',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 2,
+    },
     {
       name: 'webmc:crimson_stairs',
       solid: true,
@@ -1974,6 +2021,72 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: true,
       opaque: false,
       color: [50, 110, 110] as RGB,
+      hardness: 2,
+    },
+    // Missing wood stairs — registry had oak/crimson/warped but missed
+    // spruce/birch/jungle/acacia/dark_oak/cherry/mangrove/pale_oak/bamboo
+    // (9 of 12 wood types). All hardness 2 per wiki.
+    {
+      name: 'webmc:spruce_stairs',
+      solid: true,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:birch_stairs',
+      solid: true,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:jungle_stairs',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:acacia_stairs',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_stairs',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_stairs',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_stairs',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_stairs',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_stairs',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
       hardness: 2,
     },
     {
