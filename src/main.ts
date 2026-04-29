@@ -5132,7 +5132,18 @@ canvas.addEventListener('mousedown', (e) => {
         // Milk has zero hunger restore but is drinkable for the effect-clear.
         const drinkable = restore > 0 || itemName === 'webmc:milk_bucket';
         if (drinkable && (playerState.hunger < 20 || alwaysEdible)) {
-          if (startEating(eatState, { itemId: itemName })) {
+          // Wiki eat-time overrides: honey_bottle is 2s (40 ticks),
+          // dried_kelp is faster than other food at ~0.85s (17 ticks).
+          // All other food uses the 1.6s (32 ticks) default. Was a
+          // flat default for everything — milk + honey_bottle eats
+          // were the same speed as bread.
+          const startQuery: Parameters<typeof startEating>[1] =
+            itemName === 'webmc:honey_bottle'
+              ? { itemId: itemName, eatTicks: 40 }
+              : itemName === 'webmc:dried_kelp'
+                ? { itemId: itemName, eatTicks: 17 }
+                : { itemId: itemName };
+          if (startEating(eatState, startQuery)) {
             rightClickHeldForEat = true;
           }
         }
