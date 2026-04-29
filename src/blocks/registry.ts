@@ -1065,6 +1065,44 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:redstone_block', color: [180, 30, 30] as RGB, hardness: 5 },
     { name: 'webmc:lapis_block', color: [40, 70, 170] as RGB, hardness: 3 },
     { name: 'webmc:netherite_block', color: [70, 60, 60] as RGB, hardness: 50 },
+    // Clay block — common building material near water. Wiki: hardness 0.6,
+    // drops 4 clay balls without silk touch.
+    { name: 'webmc:clay', color: [160, 165, 180] as RGB, hardness: 0.6 },
+    // Chain — iron-tier decorative block. Wiki: hardness 5, only minable
+    // with stone pickaxe or higher.
+    {
+      name: 'webmc:chain',
+      solid: true,
+      opaque: false,
+      color: [50, 50, 50] as RGB,
+      hardness: 5,
+    },
+    // Dried kelp block — 9 dried_kelp → 1 block. Common fuel (smelts 20
+    // items per block). Wiki: hardness 0.5.
+    { name: 'webmc:dried_kelp_block', color: [50, 90, 60] as RGB, hardness: 0.5 },
+    // Deepslate slab/stairs/wall — referenced in modules but missing.
+    // Wiki: hardness 3.5 matching cobbled_deepslate.
+    {
+      name: 'webmc:deepslate_slab',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:deepslate_stairs',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:deepslate_wall',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
     { name: 'webmc:copper_block', color: [195, 110, 70] as RGB, hardness: 3 },
     { name: 'webmc:exposed_copper', color: [165, 105, 75] as RGB, hardness: 3 },
     { name: 'webmc:weathered_copper', color: [110, 145, 110] as RGB, hardness: 3 },
