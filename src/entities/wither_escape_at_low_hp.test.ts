@@ -16,8 +16,13 @@ describe('wither escape at low hp', () => {
     );
   });
 
-  it('low hp no shield takes ranged', () => {
-    expect(takesRangedDamage({ hpPercent: 0.4, hasShield: true, inLowHpAerial: true })).toBe(true);
+  it('low hp shielded blocks ranged (wiki: armor below 50% is arrow-immune)', () => {
+    // Wiki: when wither's HP drops below 50%, the armored body kicks
+    // in and blocks ranged damage entirely.
+    expect(takesRangedDamage({ hpPercent: 0.4, hasShield: true, inLowHpAerial: true })).toBe(false);
+  });
+  it('shieldless wither takes ranged at any HP', () => {
+    expect(takesRangedDamage({ hpPercent: 0.4, hasShield: false, inLowHpAerial: true })).toBe(true);
   });
 
   it('approach explosion power', () => {
