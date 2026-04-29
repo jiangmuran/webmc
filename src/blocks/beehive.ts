@@ -34,14 +34,21 @@ export interface HarvestQuery {
   campfireBelow: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Beehive): shearing a full beehive drops 3
+// honeycombs; using a bottle drops 1 honey_bottle. Old return type
+// was just `string` without a count — callers couldn't distinguish
+// the 3-vs-1 split, and downstream players got only 1 honeycomb per
+// shear.
 export interface HarvestResult {
-  drop: string | null;
+  drop: { item: string; count: number } | null;
   agitated: boolean;
 }
 
 export function harvest(state: BeehiveState, q: HarvestQuery): HarvestResult {
   if (state.honeyLevel < MAX_HONEY) return { drop: null, agitated: false };
-  const drop = q.useBottle ? 'webmc:honey_bottle' : 'webmc:honeycomb';
+  const drop = q.useBottle
+    ? { item: 'webmc:honey_bottle', count: 1 }
+    : { item: 'webmc:honeycomb', count: 3 };
   state.honeyLevel = 0;
   if (!q.campfireBelow) {
     state.agitated = true;
