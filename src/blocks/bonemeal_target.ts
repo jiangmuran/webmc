@@ -15,7 +15,9 @@ export function accepts(t: BoneTarget): boolean {
 
 export function advanceCrop(t: BoneTarget, rand: () => number): BoneTarget {
   if (t.kind !== 'crop') return t;
-  const stepped = Math.min(t.maxAge, t.age + 2 + Math.floor(rand() * 4));
+  // Wiki: bone meal advances crops by 1-5 stages randomly. Was 2-5
+  // (`2 + floor(rand() * 4)`) — missing the 1-stage minimum.
+  const stepped = Math.min(t.maxAge, t.age + 1 + Math.floor(rand() * 5));
   return { ...t, age: stepped };
 }
 
