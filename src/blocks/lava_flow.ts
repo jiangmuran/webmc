@@ -26,21 +26,23 @@ export interface ContactQuery {
   otherIsStill: boolean;
 }
 
-// Overworld rules. lava source + water flow = stone above, obsidian
-// below. flowing lava + water = cobblestone. Nether uses same except
-// obsidian never forms in Nether-style basalt chains.
+// Wiki (minecraft.wiki/w/Stone#Generation): lava source + water (any)
+// → obsidian. Flowing lava + water source → STONE. Flowing lava +
+// flowing water → cobblestone. Old code returned cobblestone for any
+// flowing-lava case and missed the stone-formation rule entirely
+// (the 'stone' kind was defined but never produced).
 export function interact(q: ContactQuery): FlowReaction {
   if (q.source === 'lava') {
     if (q.other === 'water') {
-      if (q.sourceIsStill && !q.otherIsStill) return { kind: 'obsidian' };
-      if (!q.sourceIsStill) return { kind: 'cobblestone' };
+      if (q.sourceIsStill) return { kind: 'obsidian' };
+      return q.otherIsStill ? { kind: 'stone' } : { kind: 'cobblestone' };
     }
     if (q.other === 'soul_soil' && q.otherIsStill) return { kind: 'basalt' };
     if (q.other === 'blue_ice') return { kind: 'basalt' };
   }
   if (q.source === 'water' && q.other === 'lava') {
     if (q.otherIsStill) return { kind: 'obsidian' };
-    return { kind: 'cobblestone' };
+    return q.sourceIsStill ? { kind: 'stone' } : { kind: 'cobblestone' };
   }
   return { kind: 'none' };
 }

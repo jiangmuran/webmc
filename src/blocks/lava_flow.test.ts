@@ -16,13 +16,24 @@ describe('lava flow', () => {
     expect(r.kind).toBe('obsidian');
   });
 
-  it('lava flow + water = cobble', () => {
+  it('lava flow + water source = stone (wiki)', () => {
     expect(
       interact({
         source: 'lava',
         sourceIsStill: false,
         other: 'water',
         otherIsStill: true,
+      }).kind,
+    ).toBe('stone');
+  });
+
+  it('lava flow + flowing water = cobblestone', () => {
+    expect(
+      interact({
+        source: 'lava',
+        sourceIsStill: false,
+        other: 'water',
+        otherIsStill: false,
       }).kind,
     ).toBe('cobblestone');
   });
