@@ -5041,10 +5041,16 @@ function heldAttackFullChargeMs(heldName: string): number {
   if (cached !== undefined) return cached;
   let attacksPerSec = 4.0;
   if (heldName.includes('sword')) attacksPerSec = 1.6;
-  else if (heldName.includes('netherite_axe')) attacksPerSec = 1.0;
-  else if (heldName.includes('axe'))
-    attacksPerSec = heldName.includes('wood') || heldName.includes('gold') ? 0.8 : 0.9;
-  else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
+  else if (heldName.includes('axe')) {
+    // Wiki Java axe attack speeds: wood/stone 0.8, iron 0.9,
+    // gold/diamond/netherite 1.0. Was wood/gold→0.8 + everyone-else→0.9
+    // (so gold/diamond came out 0.8/0.9 instead of 1.0/1.0, and stone
+    // came out 0.9 instead of 0.8).
+    if (heldName.includes('netherite') || heldName.includes('diamond') || heldName.includes('gold'))
+      attacksPerSec = 1.0;
+    else if (heldName.includes('iron')) attacksPerSec = 0.9;
+    else attacksPerSec = 0.8; // wood, stone
+  } else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
   else if (heldName.includes('shovel')) attacksPerSec = 1.0;
   else if (heldName.includes('hoe')) {
     if (heldName.includes('netherite') || heldName.includes('diamond')) attacksPerSec = 4.0;
