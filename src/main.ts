@@ -1396,6 +1396,14 @@ itemRegistry.register({ name: 'webmc:globe_banner_pattern', maxStack: 1, durabil
 itemRegistry.register({ name: 'webmc:piglin_banner_pattern', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:flow_banner_pattern', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:guster_banner_pattern', maxStack: 1, durability: 0 });
+// Painting + item frames — entity-spawning items targeted by default
+// recipes (painting: 8 sticks + wool; item_frame: 8 sticks + leather)
+// but never registered. Crafting silently produced no output.
+// Wiki: painting + item_frame stack to 64; glow_item_frame is the lit
+// variant (item_frame + glow_ink_sac).
+itemRegistry.register({ name: 'webmc:painting', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:item_frame', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:glow_item_frame', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:disc_fragment_5', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
