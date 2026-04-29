@@ -14,8 +14,20 @@ export interface ShovelQuery {
   campfireLit: boolean;
 }
 
+// Wiki: shovels convert grass_block, dirt, coarse_dirt, podzol, mycelium
+// into dirt_path. Was grass_block-only — players couldn't make paths
+// from dirt or biome variants. rooted_dirt is special: drops hanging_roots
+// AND turns into dirt (not dirt_path).
+const PATH_TARGETS = new Set([
+  'webmc:grass_block',
+  'webmc:dirt',
+  'webmc:coarse_dirt',
+  'webmc:podzol',
+  'webmc:mycelium',
+]);
+
 export function useShovel(q: ShovelQuery): ShovelAction {
-  if (q.targetBlockName === 'webmc:grass_block' && q.airAbove) {
+  if (PATH_TARGETS.has(q.targetBlockName) && q.airAbove) {
     return { kind: 'place_path', newBlock: 'webmc:dirt_path' };
   }
   if (q.targetBlockName === 'webmc:campfire' && q.campfireLit) {
