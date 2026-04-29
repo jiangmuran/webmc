@@ -33,15 +33,19 @@ export function walkThroughDamage(bush: SweetBerryBush, moved: boolean): WalkThr
   return { damage: DAMAGE_PER_STEP, slownessSec: 1 };
 }
 
-export function harvestBush(bush: SweetBerryBush): string[] {
-  if (bush.stage < MAX_STAGE) {
-    if (bush.stage === 2) {
-      bush.stage = 1;
-      return ['webmc:sweet_berries'];
-    }
-    return [];
+// Wiki (minecraft.wiki/w/Sweet_Berries): mature stage 3 drops 2-3
+// berries; stage 2 drops 1-2 berries; both regress the bush to stage
+// 1. Old formula used Math.random() * 3 (2-4 range, off by one) and
+// was non-deterministic. Now takes an rng for testability and matches
+// wiki ranges.
+export function harvestBush(bush: SweetBerryBush, rng: () => number = Math.random): string[] {
+  if (bush.stage < 2) return [];
+  if (bush.stage === 2) {
+    bush.stage = 1;
+    const count = 1 + Math.floor(rng() * 2); // 1-2
+    return Array.from({ length: count }, () => 'webmc:sweet_berries');
   }
   bush.stage = 1;
-  const count = 2 + Math.floor(Math.random() * 3); // 2-3 berries
+  const count = 2 + Math.floor(rng() * 2); // 2-3
   return Array.from({ length: count }, () => 'webmc:sweet_berries');
 }
