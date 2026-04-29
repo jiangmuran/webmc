@@ -29,7 +29,10 @@ export function applyHoneyFallDamage(baseDamage: number): number {
   return Math.floor(baseDamage * HONEY_FALL_DAMAGE_MULT);
 }
 
-// Honey block sticks to slime but not to other blocks.
+// Wiki: honey blocks stick to other honey blocks but explicitly do
+// NOT stick to slime blocks (the famous piston trick — slime+honey
+// adjacency lets one push past the other for selective designs). Was
+// incorrectly treating slime_block as sticky.
 export function stickyConnection(other: string): boolean {
-  return other === 'webmc:honey_block' || other === 'webmc:slime_block';
+  return other === 'webmc:honey_block';
 }
