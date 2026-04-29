@@ -8779,7 +8779,10 @@ const MOB_DROP_TABLES: Record<
   donkey: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
   mule: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
   bee: [],
-  cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
+  // Wiki: cats drop NO items on death (only 1-3 XP). Was incorrectly
+  // dropping 0-2 string — likely a holdover from pre-1.14 ocelot data
+  // or confusion with spider drops.
+  cat: [],
   parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
   witch: [
     // Wiki: witches drop 0-2 of any of 7 items — was missing 4 of
