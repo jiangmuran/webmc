@@ -10,8 +10,24 @@ describe('wolf variant', () => {
     expect(variantForBiome('forest')).toBe('woods');
   });
 
-  it('savanna → spotted', () => {
-    expect(variantForBiome('savanna')).toBe('spotted');
+  it('savanna_plateau → spotted (wiki)', () => {
+    expect(variantForBiome('savanna_plateau')).toBe('spotted');
+  });
+
+  it('sparse_jungle → rusty (wiki)', () => {
+    expect(variantForBiome('sparse_jungle')).toBe('rusty');
+  });
+
+  it('grove → snowy (wiki)', () => {
+    expect(variantForBiome('grove')).toBe('snowy');
+  });
+
+  it('snowy_taiga → ashen (wiki)', () => {
+    expect(variantForBiome('snowy_taiga')).toBe('ashen');
+  });
+
+  it('wooded_badlands → striped (wiki)', () => {
+    expect(variantForBiome('wooded_badlands')).toBe('striped');
   });
 
   it('unknown biome fallback pale', () => {

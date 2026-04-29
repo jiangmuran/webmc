@@ -6,15 +6,23 @@ describe('wolf variant biome', () => {
     expect(variantForBiome('taiga')).toBe('pale');
   });
 
-  it('snowy taiga snowy', () => {
-    expect(variantForBiome('snowy_taiga')).toBe('snowy');
+  it('snowy taiga ashen (wiki)', () => {
+    expect(variantForBiome('snowy_taiga')).toBe('ashen');
   });
 
   it('forest woods', () => {
     expect(variantForBiome('forest')).toBe('woods');
   });
 
-  it('unknown default', () => {
-    expect(variantForBiome('desert')).toBe('woods');
+  it('grove snowy (wiki)', () => {
+    expect(variantForBiome('grove')).toBe('snowy');
+  });
+
+  it('savanna_plateau spotted (wiki)', () => {
+    expect(variantForBiome('savanna_plateau')).toBe('spotted');
+  });
+
+  it('unknown default pale', () => {
+    expect(variantForBiome('desert')).toBe('pale');
   });
 });
