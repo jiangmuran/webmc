@@ -8301,33 +8301,97 @@ for (let i = 0; i < registry.defs.length; i++) {
 // 100% (cake + pumpkin_pie). dried_kelp the ITEM is 30% (the BLOCK
 // is 85%; we don't have dried_kelp_block as a compostable input
 // here). Was 85% — overshooting wiki by ~3x.
+// Wiki: composter accepts a wide set of organic/plant items. Was missing
+// the entire mushroom + fungus + sapling + leaf + vine families plus
+// nether-wart + chorus + lily-pad + others — players couldn't compost
+// most of the actual decorative drops they collect. Tier mapping per
+// minecraft.wiki/w/Composter#Composting:
+//   0.30: seeds, saplings, kelp/dried_kelp, sweet_berries, glow_berries,
+//         pink_petals, pitcher_pod-as-seed, moss_carpet, leaves
+//   0.50: cactus, sugar_cane, vine, melon_slice, fern (small+large),
+//         nether_sprouts, twisting/weeping_vines, dripleaf (small+big),
+//         glow_lichen, sea_pickle, mushroom variants
+//   0.65: wheat, carrot, potato, beetroot, apple, pumpkin, melon,
+//         cocoa_beans, nether_wart, lily_pad, mushrooms (red+brown),
+//         crimson/warped_fungus, moss_block, shroomlight, spore_blossom
+//   0.85: bread, cookie, baked_potato, hay_block, nether/warped_wart_block
+//   1.00: cake, pumpkin_pie
 const COMPOSTABLES: Record<string, number> = {
-  wheat: 0.65,
+  // 30% tier
   wheat_seeds: 0.3,
   beetroot_seeds: 0.3,
   melon_seeds: 0.3,
   pumpkin_seeds: 0.3,
   torchflower_seeds: 0.3,
-  carrot: 0.65,
-  potato: 0.65,
-  beetroot: 0.65,
-  apple: 0.65,
-  bread: 0.85,
-  cookie: 0.85,
-  cactus: 0.5,
-  sugar_cane: 0.5,
   kelp: 0.3,
   dried_kelp: 0.3,
   sweet_berries: 0.3,
   glow_berries: 0.3,
-  melon_slice: 0.5,
-  pumpkin_pie: 1.0,
-  cake: 1.0,
-  baked_potato: 0.85,
   bamboo: 0.3,
-  hay_block: 0.85,
+  oak_sapling: 0.3,
+  spruce_sapling: 0.3,
+  birch_sapling: 0.3,
+  jungle_sapling: 0.3,
+  acacia_sapling: 0.3,
+  dark_oak_sapling: 0.3,
+  cherry_sapling: 0.3,
+  mangrove_propagule: 0.3,
+  oak_leaves: 0.3,
+  spruce_leaves: 0.3,
+  birch_leaves: 0.3,
+  jungle_leaves: 0.3,
+  acacia_leaves: 0.3,
+  dark_oak_leaves: 0.3,
+  cherry_leaves: 0.3,
+  mangrove_leaves: 0.3,
+  azalea_leaves: 0.3,
+  pink_petals: 0.3,
+  moss_carpet: 0.3,
+  // 50% tier
+  cactus: 0.5,
+  sugar_cane: 0.5,
+  melon_slice: 0.5,
+  vine: 0.5,
+  fern: 0.5,
+  large_fern: 0.5,
+  twisting_vines: 0.5,
+  weeping_vines: 0.5,
+  nether_sprouts: 0.5,
+  small_dripleaf: 0.5,
+  big_dripleaf: 0.5,
+  glow_lichen: 0.5,
+  sea_pickle: 0.5,
+  red_mushroom: 0.5,
+  brown_mushroom: 0.5,
+  // 65% tier
+  wheat: 0.65,
+  carrot: 0.65,
+  potato: 0.65,
+  beetroot: 0.65,
+  apple: 0.65,
   pumpkin: 0.65,
   melon: 0.65,
+  cocoa_beans: 0.65,
+  nether_wart: 0.65,
+  lily_pad: 0.65,
+  moss_block: 0.65,
+  shroomlight: 0.65,
+  spore_blossom: 0.65,
+  crimson_fungus: 0.65,
+  warped_fungus: 0.65,
+  azalea: 0.65,
+  flowering_azalea: 0.65,
+  pitcher_pod: 0.65,
+  // 85% tier
+  bread: 0.85,
+  cookie: 0.85,
+  baked_potato: 0.85,
+  hay_block: 0.85,
+  nether_wart_block: 0.85,
+  warped_wart_block: 0.85,
+  // 100% tier
+  pumpkin_pie: 1.0,
+  cake: 1.0,
 };
 // Seed → crop block. Right-click on farmland — was rebuilt per click.
 const PLANT_MAP: Record<string, string> = {
