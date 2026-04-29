@@ -324,12 +324,8 @@ export function registerDefaultRecipes(items: ItemRegistry, reg: RecipeRegistry)
   S(['SS', 'SS'], { S: 'webmc:polished_deepslate' }, 'webmc:deepslate_bricks', 4);
   S(['SS', 'SS'], { S: 'webmc:polished_deepslate' }, 'webmc:deepslate_tiles', 4);
   // Granite/diorite/andesite craftable from raw materials.
-  L(['webmc:diorite', 'webmc:nether_quartz'], 'webmc:granite');
-  L(
-    ['webmc:cobblestone', 'webmc:cobblestone', 'webmc:nether_quartz', 'webmc:nether_quartz'],
-    'webmc:diorite',
-    2,
-  );
+  L(['webmc:diorite', 'webmc:quartz'], 'webmc:granite');
+  L(['webmc:cobblestone', 'webmc:cobblestone', 'webmc:quartz', 'webmc:quartz'], 'webmc:diorite', 2);
   L(['webmc:diorite', 'webmc:cobblestone'], 'webmc:andesite', 2);
   // Bow.
   S([' SL', 'S L', ' SL'], { S: 'webmc:stick', L: 'webmc:string' }, 'webmc:bow');
