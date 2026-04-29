@@ -817,6 +817,35 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:raw_copper_block', color: [165, 105, 80] as RGB, hardness: 5 },
     { name: 'webmc:raw_gold_block', color: [220, 175, 65] as RGB, hardness: 5 },
     { name: 'webmc:hay_block', color: [200, 165, 35] as RGB, hardness: 0.5 },
+    // Storage/utility blocks referenced by recipes (default-recipes.ts) but
+    // missing from the registry — recipes silently produced no output.
+    // bone_block: 9 bones → 1 block (wiki: hardness 2.0).
+    // coal_block: 9 coal → 1 block (wiki: hardness 5.0, fuel value 800s).
+    // iron_trapdoor: 4 iron ingots → 1 trapdoor (wiki: hardness 5.0).
+    { name: 'webmc:bone_block', color: [220, 220, 200] as RGB, hardness: 2 },
+    { name: 'webmc:coal_block', color: [40, 40, 40] as RGB, hardness: 5 },
+    { name: 'webmc:iron_trapdoor', color: [200, 200, 200] as RGB, hardness: 5 },
+    // Pressure plates — missing wood/stone/iron/gold variants. The wood
+    // pressure plate is registered as part of the wood family elsewhere;
+    // these three are the metal/stone variants needed for redstone setups.
+    {
+      name: 'webmc:stone_pressure_plate',
+      color: [125, 125, 125] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
+    {
+      name: 'webmc:heavy_weighted_pressure_plate',
+      color: [220, 220, 220] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
+    {
+      name: 'webmc:light_weighted_pressure_plate',
+      color: [250, 215, 80] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
     // Honeycomb block — crafting result of 4 honeycombs (default-recipes.ts).
     // Block was missing from registry, so the recipe silently produced no
     // block (byName('webmc:honeycomb_block') returned undefined → 'air').
