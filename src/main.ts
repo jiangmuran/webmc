@@ -8893,7 +8893,11 @@ const MOB_DROP_TABLES: Record<
     { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
     { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
   ],
-  panda: [{ name: 'bamboo', min: 0, max: 2, color: [148, 192, 90] }],
+  // Wiki: pandas drop NO items on death (only 1-3 XP). They can be
+  // seen carrying bamboo or cake as a held item, but the held-item
+  // drop is conditional and requires per-mob held-item state which
+  // isn't modelled. Was incorrectly always-dropping 0-2 bamboo.
+  panda: [],
   villager: [],
   zombie_villager: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
   pillager: [
