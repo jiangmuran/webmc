@@ -30,7 +30,10 @@ export type TrimPattern =
   | 'snout'
   | 'rib'
   | 'eye'
-  | 'spire';
+  | 'spire'
+  // 1.21 trial chamber additions:
+  | 'flow'
+  | 'bolt';
 
 export interface Trim {
   material: TrimMaterial;
