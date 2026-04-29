@@ -8769,9 +8769,16 @@ const MOB_DROP_TABLES: Record<
   cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
   parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
   witch: [
+    // Wiki: witches drop 0-2 of any of 7 items — was missing 4 of
+    // them (spider_eye, stick, sugar, glowstone_dust). Players got
+    // a much sparser drop pool than vanilla.
     { name: 'glass_bottle', min: 0, max: 2, color: [220, 240, 250] },
     { name: 'redstone', min: 0, max: 2, color: [200, 30, 30] },
     { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
+    { name: 'spider_eye', min: 0, max: 2, color: [120, 30, 30] },
+    { name: 'stick', min: 0, max: 2, color: [150, 110, 60] },
+    { name: 'sugar', min: 0, max: 2, color: [240, 240, 240] },
+    { name: 'glowstone_dust', min: 0, max: 2, color: [240, 200, 80] },
   ],
   husk: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
   drowned: [
