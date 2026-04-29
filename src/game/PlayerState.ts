@@ -4,7 +4,10 @@ export const MAX_HEALTH = 20;
 export const MAX_HUNGER = 20;
 export const HUNGER_DECAY_PER_SEC = 20 / (20 * 60); // ≈ 20 shanks over 20 minutes baseline
 export const STARVE_HUNGER_THRESHOLD = 0;
-export const STARVE_DAMAGE_PER_SEC = 0.5;
+// Wiki: starvation damage is 1 HP every 4 seconds (= 0.25 HP/sec).
+// Was 0.5 HP/sec — twice as fast as vanilla, killing a starving player
+// in 40 seconds instead of 80.
+export const STARVE_DAMAGE_PER_SEC = 0.25;
 export const HUNGER_HEAL_MIN = 18; // above this, slow HP regen
 export const HP_REGEN_PER_SEC = 1;
 export const LAVA_DAMAGE_PER_SEC = 4;
