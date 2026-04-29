@@ -24,7 +24,14 @@ export interface HarvestResult {
 
 export function harvest(c: BerryBushCtx, rand: () => number): HarvestResult {
   if (c.age < 2) return { berries: 0, bush: c };
-  const max = c.age === 3 ? 3 : 2;
-  const berries = 1 + Math.floor(rand() * max);
+  // Wiki (minecraft.wiki/w/Sweet_Berries): age 3 yields 2-3 berries,
+  // age 2 yields 1-2. Old formula `1 + floor(rand * max)` produced
+  // 1-3 at age 3 (off by one on the low end; mature bushes should
+  // always drop at least 2).
+  if (c.age === 3) {
+    const berries = 2 + Math.floor(rand() * 2); // 2-3
+    return { berries, bush: { age: 1 } };
+  }
+  const berries = 1 + Math.floor(rand() * 2); // age 2: 1-2
   return { berries, bush: { age: 1 } };
 }
