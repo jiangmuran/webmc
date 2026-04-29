@@ -145,6 +145,9 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 2,
     },
     { name: 'webmc:sand', color: [219, 208, 160] as RGB, hardness: 0.5 },
+    // Red sand — desert biome variant. Recipe target for red_sandstone.
+    // Wiki: hardness 0.5, falls under gravity like regular sand.
+    { name: 'webmc:red_sand', color: [200, 110, 50] as RGB, hardness: 0.5 },
     { name: 'webmc:gravel', color: [143, 140, 134] as RGB, hardness: 0.6 },
     {
       name: 'webmc:water',
@@ -1376,6 +1379,23 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:red_mushroom_block', color: [195, 50, 50] as RGB, hardness: 0.2 },
     { name: 'webmc:brown_mushroom_block', color: [150, 110, 80] as RGB, hardness: 0.2 },
     { name: 'webmc:mushroom_stem', color: [200, 195, 175] as RGB, hardness: 0.2 },
+    // Small mushroom plant variants (the foot-tall version). Recipe targets
+    // for mushroom_stew + ingredients for fermented_spider_eye. Wiki:
+    // hardness 0, instabreak. Plant blocks (solid:false, opaque:false).
+    {
+      name: 'webmc:red_mushroom',
+      solid: false,
+      opaque: false,
+      color: [220, 50, 50] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brown_mushroom',
+      solid: false,
+      opaque: false,
+      color: [165, 120, 90] as RGB,
+      hardness: 0,
+    },
     // Prismarine + ocean blocks.
     { name: 'webmc:prismarine', color: [99, 156, 151] as RGB, hardness: 1.5 },
     { name: 'webmc:prismarine_bricks', color: [88, 167, 158] as RGB, hardness: 1.5 },
