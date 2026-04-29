@@ -31,9 +31,15 @@ export function tryTotem(q: TotemQuery): TotemResult {
   if (!hasMain && !hasOff) {
     return { saved: false, consumedFromMain: false, newHp: 0, effects: [] };
   }
+  // Wiki (minecraft.wiki/w/Totem_of_Undying): when both hands hold a
+  // totem, the OFF-HAND is consumed first. Old code returned
+  // consumedFromMain=true whenever mainhand had a totem (even when
+  // the offhand also had one) — opposite of wiki and inconsistent
+  // with sibling totem_offhand_priority module.
+  const consumedFromMain = !hasOff && hasMain;
   return {
     saved: true,
-    consumedFromMain: hasMain,
+    consumedFromMain,
     newHp: 1,
     effects: [
       { id: 'regeneration', amp: 1, durationTicks: 800 },

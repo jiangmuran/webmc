@@ -47,6 +47,17 @@ describe('totem', () => {
     expect(r.newHp).toBe(0);
   });
 
+  it('off-hand consumed first when both hold totems (wiki)', () => {
+    const r = tryTotem({
+      mainhand: 'webmc:totem_of_undying',
+      offhand: 'webmc:totem_of_undying',
+      incomingDamage: 100,
+      currentHp: 5,
+    });
+    expect(r.saved).toBe(true);
+    expect(r.consumedFromMain).toBe(false);
+  });
+
   it('applies 3 effects', () => {
     const r = tryTotem({
       mainhand: 'webmc:totem_of_undying',
