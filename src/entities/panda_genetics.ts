@@ -5,9 +5,13 @@
 
 export type PandaGene = 'normal' | 'aggressive' | 'lazy' | 'worried' | 'playful' | 'weak' | 'brown';
 
-// Dominance: "normal" is recessive to most; "brown" and "weak" are
-// recessive-only (never shown unless both genes match).
-const RECESSIVE_ONLY = new Set<PandaGene>(['brown', 'weak', 'normal']);
+// Wiki (minecraft.wiki/w/Panda#Personality): only `brown` and `weak`
+// are recessive — they only show when both alleles are recessive.
+// `normal` is a regular dominant personality (common by spawn
+// weight, not by recessivity). Old set lumped normal with the
+// recessives, which made e.g. `brown+normal` show brown instead of
+// normal.
+const RECESSIVE_ONLY = new Set<PandaGene>(['brown', 'weak']);
 
 export function visiblePersonality(dominant: PandaGene, recessive: PandaGene): PandaGene {
   if (dominant === recessive && RECESSIVE_ONLY.has(dominant)) return dominant;
