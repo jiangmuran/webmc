@@ -2050,6 +2050,20 @@ for (const color of ['tube', 'brain', 'bubble', 'fire', 'horn'] as const) {
     CORAL_DRY_DEAD_BY_LIVE.set(liveId, deadId);
   }
 }
+// Amethyst bud growth chain: small → medium → large → cluster. The
+// amethyst_crystal_growth module shipped with stage progression but
+// the random-tick dispatcher never invoked it — placed buds sat at
+// small forever.
+const AMETHYST_NEXT_STAGE_BY_ID = new Map<number, number>();
+{
+  const small = registry.byName('webmc:small_amethyst_bud');
+  const medium = registry.byName('webmc:medium_amethyst_bud');
+  const large = registry.byName('webmc:large_amethyst_bud');
+  const cluster = registry.byName('webmc:amethyst_cluster');
+  if (small !== undefined && medium !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(small, medium);
+  if (medium !== undefined && large !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(medium, large);
+  if (large !== undefined && cluster !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(large, cluster);
+}
 // Item-registry caches for frame-rate paths.
 const eggItemIdCached = itemRegistry.byName('webmc:egg');
 const stickItemIdCached = itemRegistry.byName('webmc:stick');
@@ -11141,6 +11155,19 @@ function frame(): void {
           const next = berryTryGrow(berryGrowCtxScratch, Math.random);
           if (next.age !== berryAge) {
             world.set(x, y, z, makeState(id, next.age));
+          }
+        } else if (AMETHYST_NEXT_STAGE_BY_ID.has(id)) {
+          // Amethyst bud growth — wiki spec: 20% chance per random
+          // tick to advance to the next stage (small → medium → large
+          // → cluster). The "must be attached to budding_amethyst"
+          // gate isn't enforced because budding_amethyst isn't a
+          // registered block in webmc yet.
+          if (Math.random() < 0.2) {
+            const nextId = AMETHYST_NEXT_STAGE_BY_ID.get(id);
+            if (nextId !== undefined) {
+              world.set(x, y, z, makeState(nextId, stateProps(s)));
+              touchWorldEdit(x, y, z, nextId);
+            }
           }
         } else if (CORAL_DRY_DEAD_BY_LIVE.has(id)) {
           // Coral drying — wiki spec: a live coral block out of water
