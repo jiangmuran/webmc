@@ -10033,19 +10033,27 @@ function frame(): void {
       cancelEating(eatState);
       rightClickHeldForEat = false;
     }
-    // Totem of Undying: vanilla checks main-hand AND offhand slot. webmc
-    // only scanned the inventory grids — a totem in offhand silently
-    // failed to save you.
+    // Totem of Undying: vanilla checks ONLY mainhand (selected hotbar
+    // slot) and offhand — a totem stored in the main inventory grid
+    // does NOT activate. The prior impl used countInventoryItem which
+    // scanned hotbar + main, so a totem buried in storage incorrectly
+    // saved you. Offhand has priority over mainhand per wiki.
     const totemId = totemItemIdCached;
     const totemInOffhand = totemId !== undefined && inventory.offhand?.itemId === totemId;
-    const totemInInventory = totemId !== undefined && countInventoryItem(totemId) > 0;
-    if (totemId !== undefined && (totemInInventory || totemInOffhand)) {
+    const mainhandStack = inventory.hotbar[inventory.selectedHotbar];
+    const totemInMainhand =
+      totemId !== undefined && mainhandStack?.itemId === totemId && mainhandStack.count > 0;
+    if (totemId !== undefined && (totemInOffhand || totemInMainhand)) {
       if (totemInOffhand) {
         const off = inventory.offhand!;
         const after = off.count - 1;
         inventory.offhand = after > 0 ? { ...off, count: after } : null;
       } else {
-        consumeInventoryItem(totemId, 1);
+        // Mainhand: decrement just the selected hotbar slot, not any
+        // other matching stacks in the inventory.
+        const slot = mainhandStack!;
+        const after = slot.count - 1;
+        inventory.hotbar[inventory.selectedHotbar] = after > 0 ? { ...slot, count: after } : null;
       }
       playerState.health = 1;
       playerState.justDied = false;
