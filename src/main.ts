@@ -1154,6 +1154,7 @@ const POTTERY_SHERDS = [
   'archer',
   'arms_up',
   'blade',
+  'bolt',
   'brewer',
   'brick',
   'burn',
