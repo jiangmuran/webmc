@@ -2246,6 +2246,44 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [50, 110, 110] as RGB,
       hardness: 3,
     },
+    // Missing wood doors — registry had oak/spruce/birch/dark_oak/
+    // cherry/crimson/warped (+iron+copper) but not jungle/acacia/
+    // mangrove/pale_oak/bamboo. All hardness 3.
+    {
+      name: 'webmc:jungle_door',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:acacia_door',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:mangrove_door',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:pale_oak_door',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:bamboo_door',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 3,
+    },
     {
       name: 'webmc:crimson_trapdoor',
       solid: true,
@@ -2258,6 +2296,71 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: true,
       opaque: false,
       color: [50, 110, 110] as RGB,
+      hardness: 3,
+    },
+    // Missing wood trapdoors — registry had oak/crimson/warped (+iron+
+    // copper). All hardness 3.
+    {
+      name: 'webmc:spruce_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:birch_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:jungle_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:acacia_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:dark_oak_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:cherry_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:mangrove_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:pale_oak_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:bamboo_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
       hardness: 3,
     },
     // Carpets — 16 dyed.
