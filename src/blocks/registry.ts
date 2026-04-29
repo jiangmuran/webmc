@@ -817,6 +817,11 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:raw_copper_block', color: [165, 105, 80] as RGB, hardness: 5 },
     { name: 'webmc:raw_gold_block', color: [220, 175, 65] as RGB, hardness: 5 },
     { name: 'webmc:hay_block', color: [200, 165, 35] as RGB, hardness: 0.5 },
+    // Honeycomb block — crafting result of 4 honeycombs (default-recipes.ts).
+    // Block was missing from registry, so the recipe silently produced no
+    // block (byName('webmc:honeycomb_block') returned undefined → 'air').
+    // Wiki: hardness 0.6, used for decoration + waxing copper variants.
+    { name: 'webmc:honeycomb_block', color: [220, 160, 50] as RGB, hardness: 0.6 },
     {
       name: 'webmc:slime_block',
       solid: true,
