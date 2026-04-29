@@ -9645,9 +9645,20 @@ function frame(): void {
               /* zombified_piglin not registered */
             }
           } else if (target.def.kind === 'creeper') {
-            // Mark for charged behavior; webmc doesn't track charged state, so just damage as visual.
-            const r = mobWorld.damage(target.id, 5);
-            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
+            // Wiki: lightning on a creeper turns it into a charged
+            // creeper and deals NO damage. webmc doesn't yet track
+            // charged state, so this is a visual-only flash. Damaging
+            // the creeper (prior behavior) was a wiki violation —
+            // unlucky lightning could one-shot creepers below 5 HP.
+            subtitles.push('Charged creeper!');
+          } else if (target.def.kind === 'villager') {
+            // Wiki: lightning on a villager converts it to a witch.
+            try {
+              mobWorld.spawn('witch', target.position);
+              mobWorld.remove(target.id);
+            } catch {
+              /* witch not registered */
+            }
           } else {
             const r = mobWorld.damage(target.id, 5);
             if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
