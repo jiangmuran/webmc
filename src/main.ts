@@ -8794,10 +8794,12 @@ const MOB_DROP_TABLES: Record<
     { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
   ],
   blaze: [{ name: 'blaze_rod', min: 0, max: 1, color: [240, 180, 40] }],
-  piglin: [
-    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-    { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
-  ],
+  // Wiki: piglins drop NO items naturally on death. They will drop
+  // their equipped golden weapon (sword/crossbow) with random damage,
+  // but that's an equipment-drop mechanism not in place yet. The
+  // rotten_flesh entry was likely confusion with zombified_piglin (which
+  // does drop rotten_flesh naturally per wiki).
+  piglin: [],
   wither_skeleton: [
     { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
     { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
