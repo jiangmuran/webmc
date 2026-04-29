@@ -1,5 +1,6 @@
-// Sponge absorbs up to 65 water blocks in a 7x7x7 volume (flood-fill
-// capped at 65). Becomes wet sponge; dried in furnace/nether.
+// Sponge absorbs up to 65 water source/flowing blocks within a taxicab
+// (Manhattan) distance of 7 from the sponge. Becomes wet sponge; dried
+// in furnace/nether. Wiki: minecraft.wiki/w/Sponge#Absorption.
 
 export interface AbsorbQuery {
   at: (x: number, y: number, z: number) => 'water' | 'air' | 'solid';
@@ -9,7 +10,10 @@ export interface AbsorbQuery {
 }
 
 export const ABSORB_LIMIT = 65;
-export const ABSORB_RADIUS = 6;
+// Wiki: taxicab radius 7 (not 6). Old constant was off-by-one and the
+// header comment described a 7×7×7 cube (Chebyshev radius 3) — neither
+// matched wiki.
+export const ABSORB_RADIUS = 7;
 
 type QEntry = [number, number, number, number];
 
