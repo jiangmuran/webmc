@@ -1732,6 +1732,11 @@ const BREED_FOOD: Record<string, readonly string[]> = {
     'webmc:melon_seeds',
     'webmc:pumpkin_seeds',
     'webmc:beetroot_seeds',
+    // 1.20 added torchflower_seeds and pitcher_pod to chicken's breeding
+    // foods. Both are item-registered already; without these entries
+    // chickens couldn't be bred with the new seeds.
+    'webmc:torchflower_seeds',
+    'webmc:pitcher_pod',
   ],
   rabbit: ['webmc:carrot', 'webmc:golden_carrot', 'webmc:dandelion'],
   wolf: [
