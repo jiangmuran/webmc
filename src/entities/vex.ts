@@ -42,7 +42,9 @@ export function tickVex(state: Vex, ctx: VexTickCtx): VexTickResult {
     const dy = ctx.targetPos.y - state.position.y;
     const dz = ctx.targetPos.z - state.position.z;
     const dist = Math.hypot(dx, dy, dz) || 1;
-    const speed = 2;
+    // Wiki (minecraft.wiki/w/Vex): movement speed 0.7 b/tick = 14 b/s.
+    // Old constant of 2 b/s left vex chasing molasses-slow.
+    const speed = 14;
     state.velocity.x = (dx / dist) * speed;
     state.velocity.y = (dy / dist) * speed;
     state.velocity.z = (dz / dist) * speed;
