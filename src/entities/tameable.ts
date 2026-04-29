@@ -20,7 +20,9 @@ const TAME_ITEMS: Record<TameableKind, readonly string[]> = {
   // 1.13+ renamed raw_fish → cod, raw_salmon → salmon. Old names were
   // never registered, so feeding cats with raw fish silently failed.
   cat: ['webmc:cod', 'webmc:salmon'],
-  parrot: ['webmc:wheat_seeds', 'webmc:melon_seeds', 'webmc:pumpkin_seeds'],
+  // Wiki: parrots tame on any seed — wheat, melon, pumpkin, beetroot
+  // (and torchflower in 1.20+, not registered locally).
+  parrot: ['webmc:wheat_seeds', 'webmc:melon_seeds', 'webmc:pumpkin_seeds', 'webmc:beetroot_seeds'],
   horse: [], // horses are tamed by riding, not feeding
   donkey: [],
   mule: [],
