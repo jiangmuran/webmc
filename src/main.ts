@@ -4919,6 +4919,21 @@ canvas.addEventListener('mousedown', (e) => {
           return;
         }
       }
+      // Cookie kills parrots (instant). Wiki: cookies are toxic to
+      // parrots; feeding one kills the parrot immediately. Was unwired
+      // — cookies on parrots silently fell through to the breed-food
+      // path and did nothing.
+      if (heldName === 'webmc:cookie' && kind === 'parrot') {
+        mobWorld.damage(aimedMob.id, 9999);
+        chatInput.addLine('Cookie poisoned the parrot', '#ff8080');
+        if (vitalsActive) {
+          const cookieId = itemRegistry.byName('webmc:cookie');
+          if (cookieId !== undefined) consumeInventoryItem(cookieId, 1);
+        }
+        sfx.play('break');
+        hand.swing();
+        return;
+      }
       // Sheep shearing: shears + sheep → wool drops + sheep marked sheared.
       if (heldName === 'webmc:shears' && kind === 'sheep') {
         const woolId = itemRegistry.byName('webmc:wool');
