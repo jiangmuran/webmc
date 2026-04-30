@@ -52,15 +52,20 @@ export function wax(state: CopperState): boolean {
   return true;
 }
 
-// Lightning striking a waxed block strips the wax AND advances one stage
-// (lightning accelerates oxidation in MC, but only unwaxed; here we model
-// the whole step deterministically).
+// Wiki (minecraft.wiki/w/Oxidation): "A lightning bolt striking a
+// non-waxed copper block removes all oxidation from the block, and
+// may also deoxidize randomly selected copper blocks nearby."
+//
+// Lightning DEOXIDIZES (resets stage to 'regular'), it does NOT
+// advance. And it has no effect on WAXED copper blocks. Old code:
+//   - Unwaxed waxed blocks (wiki: lightning doesn't touch waxed)
+//   - Advanced one stage (wiki: removes ALL oxidation, all the way
+//     back to 'regular')
+// Both behaviours were inverse of canon. Now matches wiki:
+// non-waxed → reset to 'regular'; waxed → no-op.
 export function lightningStrike(state: CopperState): void {
-  state.waxed = false;
-  const idx = STAGE_ORDER.indexOf(state.stage);
-  if (idx < 0 || idx >= STAGE_ORDER.length - 1) return;
-  const next = STAGE_ORDER[idx + 1];
-  if (next) state.stage = next;
+  if (state.waxed) return;
+  state.stage = 'regular';
 }
 
 export function asBlockId(base: string, state: CopperState): string {
