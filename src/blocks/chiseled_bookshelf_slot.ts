@@ -52,12 +52,15 @@ export function comparatorSignal(state: BookshelfState): number {
   return state.lastInteractedSlot < 0 ? 0 : state.lastInteractedSlot + 1;
 }
 
-// Enchantment-table power: a chiseled bookshelf contributes 1 power per
-// book slot filled (matches regular bookshelf if full).
-export function enchantmentPower(state: BookshelfState): number {
-  let n = 0;
-  for (const s of state.slots) if (s !== null) n++;
-  return n;
+// Wiki (minecraft.wiki/w/Chiseled_Bookshelf): "Chiseled bookshelves
+// do not increase the power of enchanting tables." This is the
+// explicit difference between regular and chiseled bookshelves —
+// the wiki calls it out in its own paragraph. Old code returned
+// "1 per filled slot", which silently let chiseled bookshelves
+// stand in for a regular bookshelf farm and reach Tier-30 enchants
+// with the wrong block. Returns 0 unconditionally now.
+export function enchantmentPower(_state: BookshelfState): number {
+  return 0;
 }
 
 // Breaking drops all contained books.
