@@ -15,9 +15,9 @@ describe('slime block bounce', () => {
     expect(landVelocity({ velocityY: -2, sneaking: true })).toBe(0);
   });
 
-  it('prevents fall damage unless sneak', () => {
+  it('prevents fall damage regardless of sneak (wiki, since 1.21.2)', () => {
     expect(preventsFallDamage(false)).toBe(true);
-    expect(preventsFallDamage(true)).toBe(false);
+    expect(preventsFallDamage(true)).toBe(true);
   });
 
   it('piston drags adjacent', () => {
