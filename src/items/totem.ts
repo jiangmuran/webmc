@@ -33,9 +33,13 @@ export function tryTotem(holder: TotemHolder): TotemResult {
     activated: true,
     consumedHand,
     appliedEffects: [
-      // Wiki: Regeneration II for 40s (not 45). Old constant was off
-      // by 5 seconds.
-      { id: 'regeneration', amplifier: 1, durationSec: 40 },
+      // Wiki (minecraft.wiki/w/Totem_of_Undying) Infobox:
+      //   Regeneration II (0:45) — 45 s, not 40 s.
+      //   Fire Resistance I (0:40)
+      //   Absorption II (0:05)
+      // An earlier comment claimed wiki said 40 s; that was a misread
+      // of the Infobox. Reverting to the canonical 45 s.
+      { id: 'regeneration', amplifier: 1, durationSec: 45 },
       { id: 'fire_resistance', amplifier: 0, durationSec: 40 },
       { id: 'absorption', amplifier: 1, durationSec: 5 },
     ],
