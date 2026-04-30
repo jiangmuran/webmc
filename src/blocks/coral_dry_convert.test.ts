@@ -26,8 +26,11 @@ describe('coral', () => {
     expect(deadName(coral({ color: 'fire' }))).toBe('webmc:dead_fire_coral_block');
   });
 
-  it('silk touch drops coral', () => {
+  it('silk touch drops live coral; without silk drops dead (wiki)', () => {
     expect(breakDrops(coral(), true)).toBe('webmc:tube_coral_block');
-    expect(breakDrops(coral(), false)).toBeNull();
+    // Wiki: "if mined with a pickaxe not enchanted with Silk Touch,
+    // they drop the respective dead coral block."
+    expect(breakDrops(coral(), false)).toBe('webmc:dead_tube_coral_block');
+    expect(breakDrops(coral({ dead: true }), false)).toBe('webmc:dead_tube_coral_block');
   });
 });
