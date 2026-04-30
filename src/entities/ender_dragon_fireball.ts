@@ -1,5 +1,16 @@
 // Ender Dragon fireball breath attack. A lingering purple area-effect
-// cloud deals poison-like damage every ~1s, lasts ~20s.
+// cloud deposited by a dragon fireball follows the standard
+// lingering-potion cloud lifetime.
+//
+// Wiki (minecraft.wiki/w/Lingering_Potion): "The cloud starts with
+// a radius of 3 blocks, decreasing to 0 over the course of 30
+// seconds." 30 s × 20 t/s = 600 ticks. Old MAX_AGE_TICKS = 400
+// (20 s) was 33% under the wiki cloud lifetime — JE dragon
+// fireball clouds last the full 30 s before fading.
+//
+// Wiki (minecraft.wiki/w/Ender_Dragon): the dragon's breath cloud
+// damages "similarly to a lingering potion of Harming II" — 6 HP
+// per second tick.
 
 export interface DragonBreath {
   posX: number;
@@ -11,9 +22,9 @@ export interface DragonBreath {
 }
 
 export const DEFAULT_RADIUS = 4;
-export const MAX_AGE_TICKS = 400; // 20s
-export const DMG_INTERVAL_TICKS = 20;
-export const DMG_PER_TICK = 6;
+export const MAX_AGE_TICKS = 600; // 30 s — wiki lingering-cloud lifetime
+export const DMG_INTERVAL_TICKS = 20; // damage applied every 1 s
+export const DMG_PER_TICK = 6; // 6 HP per damage tick (= 6 HP/s)
 
 export function makeBreath(x: number, y: number, z: number): DragonBreath {
   return {

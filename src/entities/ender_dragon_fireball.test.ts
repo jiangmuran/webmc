@@ -10,7 +10,8 @@ import {
 } from './ender_dragon_fireball';
 
 describe('dragon breath', () => {
-  it('expires after max age', () => {
+  it('expires after max age (wiki: 600 ticks = 30s)', () => {
+    expect(MAX_AGE_TICKS).toBe(600);
     const b = makeBreath(0, 64, 0);
     for (let i = 0; i < MAX_AGE_TICKS - 1; i++) tickBreath(b);
     expect(tickBreath(b).expired).toBe(true);
