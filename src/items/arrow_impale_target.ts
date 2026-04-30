@@ -33,5 +33,6 @@ export function isAquatic(mob: string): boolean {
     'tropical_fish',
     'pufferfish',
     'axolotl',
+    'tadpole',
   ].includes(mob);
 }
