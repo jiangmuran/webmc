@@ -13,13 +13,20 @@ describe('lightning rod', () => {
       makeLightningRod({ x: 0, y: 80, z: 0 }),
       makeLightningRod({ x: 30, y: 80, z: 0 }),
     ];
-    const r = attractStrike({ x: 5, z: 0 }, rods);
+    const r = attractStrike({ x: 5, y: 80, z: 0 }, rods);
     expect(r?.pos.x).toBe(0);
   });
 
-  it('ignores rods beyond 64 blocks', () => {
+  it('attracts within 128-block spherical radius (wiki: Java)', () => {
+    const rods = [makeLightningRod({ x: 100, y: 80, z: 0 })];
+    // strike at 100 blocks away on X axis, within the 128-sphere.
+    const r = attractStrike({ x: 0, y: 80, z: 0 }, rods);
+    expect(r?.pos.x).toBe(100);
+  });
+
+  it('ignores rods beyond 128-block sphere (wiki: Java)', () => {
     const rods = [makeLightningRod({ x: 200, y: 80, z: 0 })];
-    expect(attractStrike({ x: 0, z: 0 }, rods)).toBeNull();
+    expect(attractStrike({ x: 0, y: 80, z: 0 }, rods)).toBeNull();
   });
 
   it('signal fires for ~0.4s then clears', () => {
