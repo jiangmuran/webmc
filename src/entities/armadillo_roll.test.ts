@@ -32,12 +32,24 @@ describe('armadillo roll', () => {
     expect(s.rolled).toBe(false);
   });
 
-  it('rolled armadillo takes 50% melee damage (wiki)', () => {
-    expect(armadilloTakeDamage({ rolled: true, incoming: 6, source: 'melee' })).toBe(3);
+  it('rolled armadillo damage = (incoming - 1) / 2 (wiki, melee)', () => {
+    // 6 → (6-1)/2 = 2.5
+    expect(armadilloTakeDamage({ rolled: true, incoming: 6, source: 'melee' })).toBe(2.5);
   });
 
-  it('rolled armadillo immune to projectiles (wiki)', () => {
-    expect(armadilloTakeDamage({ rolled: true, incoming: 5, source: 'projectile' })).toBe(0);
+  it('rolled formula applies to projectiles too (wiki: uniform)', () => {
+    // 5 → (5-1)/2 = 2
+    expect(armadilloTakeDamage({ rolled: true, incoming: 5, source: 'projectile' })).toBe(2);
+  });
+
+  it('rolled formula applies to explosion (wiki: uniform in JE)', () => {
+    // 9 → (9-1)/2 = 4
+    expect(armadilloTakeDamage({ rolled: true, incoming: 9, source: 'explosion' })).toBe(4);
+  });
+
+  it('rolled clamps at 0 for ≤1 damage', () => {
+    expect(armadilloTakeDamage({ rolled: true, incoming: 1, source: 'melee' })).toBe(0);
+    expect(armadilloTakeDamage({ rolled: true, incoming: 0.5, source: 'melee' })).toBe(0);
   });
 
   it('unrolled armadillo takes all damage', () => {

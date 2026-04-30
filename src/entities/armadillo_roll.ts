@@ -53,12 +53,15 @@ export function tickArmadilloRoll(
   return { stateChanged: false };
 }
 
-// Wiki (minecraft.wiki/w/Armadillo): "When curled, an armadillo takes
-// 50% damage from melee attacks and 0% from projectiles." Old function
-// inverted both: it returned 0 for melee (immune) and full incoming
-// for projectiles (un-protected). Sibling armadillo.ts uses the
-// canonical 50%-melee / 0-projectile rule.
-export const ROLLED_MELEE_MULT = 0.5;
+// Wiki (minecraft.wiki/w/Armadillo): "While rolled up, it takes a
+// reduced amount of damage given by (original damage − 1) / 2."
+// The formula applies UNIFORMLY to every damage type in JE; the
+// only exception ('self_destruct') is BE-only. Earlier code used
+// a fictional 50%-melee / 0-projectile split that was nowhere
+// in the wiki — projectiles dealt full damage to a curled
+// armadillo when they should be reduced too.
+export const ROLLED_OFFSET = 1;
+export const ROLLED_DIVISOR = 2;
 
 export interface ArmadilloDamageQuery {
   rolled: boolean;
@@ -68,7 +71,5 @@ export interface ArmadilloDamageQuery {
 
 export function armadilloTakeDamage(q: ArmadilloDamageQuery): number {
   if (!q.rolled) return q.incoming;
-  if (q.source === 'projectile') return 0;
-  if (q.source === 'melee') return q.incoming * ROLLED_MELEE_MULT;
-  return q.incoming;
+  return Math.max(0, (q.incoming - ROLLED_OFFSET) / ROLLED_DIVISOR);
 }
