@@ -1,7 +1,11 @@
+// Accept both `gold_*` (webmc registry per items/armor.ts) and
+// `golden_*` (vanilla MC ID) so callers using either spelling resolve
+// the helmet slot. Old set only had `golden_helmet`.
 const HEAD_SLOTS = new Set<string>([
   'leather_helmet',
   'chainmail_helmet',
   'iron_helmet',
+  'gold_helmet',
   'golden_helmet',
   'diamond_helmet',
   'netherite_helmet',
@@ -21,7 +25,7 @@ export function isHeadWearable(id: string): boolean {
 }
 
 export function protectionFromHelmet(id: string): number {
-  if (id === 'leather_helmet' || id === 'golden_helmet') return 1;
+  if (id === 'leather_helmet' || id === 'gold_helmet' || id === 'golden_helmet') return 1;
   if (id === 'chainmail_helmet' || id === 'iron_helmet' || id === 'turtle_helmet') return 2;
   if (id === 'diamond_helmet' || id === 'netherite_helmet') return 3;
   return 0;
