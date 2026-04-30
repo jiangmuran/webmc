@@ -30,13 +30,21 @@ export function canRamDropHorn(blockId: string): boolean {
 
 export type HornKind = 'ponder' | 'sing' | 'seek' | 'feel' | 'admire' | 'call' | 'yearn' | 'dream';
 
-const VARIANTS: HornKind[] = ['ponder', 'sing', 'seek', 'feel', 'admire', 'call', 'yearn', 'dream'];
+// Wiki (minecraft.wiki/w/Goat): "There are four horn variants for
+// normal goats ('Ponder', 'Sing', 'Seek', and 'Feel'), and four
+// horn variants that only screaming goats drop ('Admire', 'Call',
+// 'Yearn', and 'Dream')." Old VARIANTS array picked randomly from
+// all 8, which let normal goats drop screaming-only horns (Admire,
+// Call, Yearn, Dream) and vice versa.
+const NORMAL_VARIANTS: HornKind[] = ['ponder', 'sing', 'seek', 'feel'];
+const SCREAMING_VARIANTS: HornKind[] = ['admire', 'call', 'yearn', 'dream'];
 
 export function ramDropHorn(g: Goat, rand: () => number): HornKind | null {
   if (g.hornsRemaining <= 0) return null;
   g.hornsRemaining -= 1;
-  const idx = Math.floor(rand() * VARIANTS.length);
-  return VARIANTS[idx] ?? 'ponder';
+  const pool = g.screaming ? SCREAMING_VARIANTS : NORMAL_VARIANTS;
+  const idx = Math.floor(rand() * pool.length);
+  return pool[idx] ?? pool[0]!;
 }
 
 // Screaming goat has higher chance per ram tick.
