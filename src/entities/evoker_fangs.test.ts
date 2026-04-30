@@ -2,11 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { FANG_DAMAGE, summonFangLine, tickFang } from './evoker_fangs';
 
 describe('evoker fangs', () => {
-  it('summons 8 fangs along direction', () => {
+  it('summons 16 fangs along direction (wiki)', () => {
+    // Wiki: "The evoker typically summons sixteen fangs in a
+    // straight line toward the target."
     const fangs = summonFangLine({ x: 0, y: 0, z: 0 }, { x: 1, z: 0 }, 42);
-    expect(fangs.length).toBe(8);
+    expect(fangs.length).toBe(16);
     expect(fangs[0]?.position.x).toBe(1);
-    expect(fangs[7]?.position.x).toBe(8);
+    expect(fangs[15]?.position.x).toBe(16);
   });
 
   it('warmup delays strike', () => {

@@ -1,6 +1,11 @@
-// Evoker fangs spell. An Evoker summons a line of 8 fangs in front of
-// itself; each fang waits 1 tick then strikes upward, dealing 6 HP on
-// whatever entity is standing over it.
+// Evoker fangs spell. An Evoker summons a line of 16 fangs toward
+// the target; each fang strikes after a per-fang warmup, dealing
+// 6 HP on whatever entity is standing over it (ignores armor).
+//
+// Wiki (minecraft.wiki/w/Evoker#Fang_attack): "The evoker typically
+// summons sixteen fangs in a straight line toward the target."
+// Old code summoned only 8 — half the wiki count, halving the
+// total damage potential of a fang line attack.
 
 export interface Vec3 {
   x: number;
@@ -27,7 +32,7 @@ export function summonFangLine(
   const dx = direction.x;
   const dz = direction.z;
   const norm = Math.hypot(dx, dz) || 1;
-  for (let step = 1; step <= 8; step++) {
+  for (let step = 1; step <= FANG_LINE_COUNT; step++) {
     fangs.push({
       position: {
         x: Math.floor(origin.x + (dx / norm) * step),
@@ -61,3 +66,4 @@ export function tickFang(state: FangState, ctx: FangTickCtx): FangStrike {
 }
 
 export const FANG_DAMAGE = 6;
+export const FANG_LINE_COUNT = 16;
