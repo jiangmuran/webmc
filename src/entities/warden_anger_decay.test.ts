@@ -43,7 +43,8 @@ describe('warden anger decay', () => {
     ).toBe('bob');
   });
 
-  it('ranged mode at 40', () => {
+  it('suspect/ranged mode at 35 (wiki: suspect threshold)', () => {
+    expect(RANGED_THRESHOLD).toBe(35);
     expect(attackMode(RANGED_THRESHOLD)).toBe('ranged');
   });
 
