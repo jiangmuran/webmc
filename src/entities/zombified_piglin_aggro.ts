@@ -1,5 +1,12 @@
 // Zombified piglin. Neutral by default; attacking one aggroes all
-// within 67 blocks. Anger cools down after 25-39 seconds.
+// within 67 blocks. Anger cools down after 20-40 seconds.
+//
+// Wiki (minecraft.wiki/w/Zombified_Piglin): the Java forgiveness
+// timer "ranges from 20 seconds to 55 seconds", with the base
+// 20-40 s applying when the player is out of follow range plus an
+// extra 15 s if out of sight but in range. webmc doesn't model the
+// sight/range distinction, so we use the base 20-40 s window. Old
+// 25-39 s was off on both ends and inside the wiki range.
 
 export interface ZPiglinAnger {
   angryAtPlayerId: string | null;
@@ -7,8 +14,8 @@ export interface ZPiglinAnger {
 }
 
 export const AGGRO_RADIUS = 67;
-export const ANGER_MIN_MS = 25_000;
-export const ANGER_MAX_MS = 39_000;
+export const ANGER_MIN_MS = 20_000;
+export const ANGER_MAX_MS = 40_000;
 
 export function makeAnger(): ZPiglinAnger {
   return { angryAtPlayerId: null, angerEndMs: 0 };
