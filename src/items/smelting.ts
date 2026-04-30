@@ -38,7 +38,9 @@ export const SMELTING_RECIPES: readonly SmeltingRecipe[] = [
   { input: 'webmc:iron_ore', output: 'webmc:iron_ingot', cookSec: 10, experience: 0.7 },
   { input: 'webmc:gold_ore', output: 'webmc:gold_ingot', cookSec: 10, experience: 1 },
   { input: 'webmc:copper_ore', output: 'webmc:copper_ingot', cookSec: 10, experience: 0.7 },
-  { input: 'webmc:diamond_ore', output: 'webmc:diamond', cookSec: 10, experience: 1.3 },
+  // Wiki (minecraft.wiki/w/Smelting): diamond_ore → diamond gives 1.0
+  // XP, the same as gold_ore → ingot. Old 1.3 was non-canonical.
+  { input: 'webmc:diamond_ore', output: 'webmc:diamond', cookSec: 10, experience: 1 },
   { input: 'webmc:emerald_ore', output: 'webmc:emerald', cookSec: 10, experience: 1 },
   { input: 'webmc:lapis_ore', output: 'webmc:lapis_lazuli', cookSec: 10, experience: 0.2 },
   { input: 'webmc:redstone_ore', output: 'webmc:redstone', cookSec: 10, experience: 0.7 },
