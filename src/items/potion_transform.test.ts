@@ -18,6 +18,14 @@ describe('potion transform', () => {
     expect(apply({ input: 'healing', ingredient: 'fermented_spider_eye' })).toBe('harming');
   });
 
+  it('poison + fsEye → harming (wiki)', () => {
+    expect(apply({ input: 'poison', ingredient: 'fermented_spider_eye' })).toBe('harming');
+  });
+
+  it('leaping + fsEye → slowness (wiki)', () => {
+    expect(apply({ input: 'leaping', ingredient: 'fermented_spider_eye' })).toBe('slowness');
+  });
+
   it('unknown returns null', () => {
     expect(apply({ input: 'water', ingredient: 'apple' })).toBeNull();
   });
