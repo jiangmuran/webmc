@@ -50,8 +50,15 @@ describe('tnt minecart', () => {
     expect(tickTnt(makeTntMinecart())).toBe('idle');
   });
 
-  it('explosion power scales', () => {
-    expect(explosionPower(0)).toBe(EXPLOSION_POWER_BASE);
-    expect(explosionPower(5)).toBe(8);
+  it('explosion power scales (wiki: 4 + random(0, min(7.5, 1.5 × velocity)))', () => {
+    // Velocity 0 → no bonus
+    expect(explosionPower(0, () => 0.5)).toBe(EXPLOSION_POWER_BASE);
+    // Velocity 1 with min roll → base only; max roll → +1.5
+    expect(explosionPower(1, () => 0)).toBe(EXPLOSION_POWER_BASE);
+    expect(explosionPower(1, () => 0.999)).toBeCloseTo(EXPLOSION_POWER_BASE + 1.5, 1);
+    // Velocity 5 with max roll → 4 + 7.5 = 11.5 (wiki ceiling)
+    expect(explosionPower(5, () => 0.999)).toBeCloseTo(11.5, 1);
+    // Velocity 100 capped at +7.5 bonus (1.5 × 100 capped to 7.5)
+    expect(explosionPower(100, () => 0.999)).toBeCloseTo(11.5, 1);
   });
 });

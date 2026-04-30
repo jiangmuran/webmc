@@ -48,9 +48,22 @@ export function tickTnt(c: TntMinecart): 'exploded' | 'ticking' | 'idle' {
   return 'ticking';
 }
 
+// Wiki (minecraft.wiki/w/Minecart_with_TNT): "The explosion has a
+// base power of 4. The game also adds a random bonus value up to
+// 1.5 times velocity, but no higher than 7.5."
+//
+// So total power = 4 + random(0, min(7.5, 1.5 × velocity)).
+// Maximum total: 4 + 7.5 = 11.5 (at velocity ≥ 5).
+//
+// Old `min(8, 4 + floor(speed * 4))` was wrong on two counts:
+//   1. Capped at 8 (wiki cap is 11.5)
+//   2. Linear `speed * 4` ramp instead of random(0, 1.5×speed)
+// At speed 1 the old function gave 8, while wiki says random(4, 5.5).
 export const EXPLOSION_POWER_BASE = 4;
+export const EXPLOSION_POWER_BONUS_MAX = 7.5;
 
-export function explosionPower(crashedAtSpeed: number): number {
-  // Faster crashes yield bigger explosions.
-  return Math.min(8, EXPLOSION_POWER_BASE + Math.floor(crashedAtSpeed * 4));
+export function explosionPower(crashedAtSpeed: number, rand: () => number = Math.random): number {
+  const bonusCap = Math.min(EXPLOSION_POWER_BONUS_MAX, 1.5 * crashedAtSpeed);
+  const bonus = bonusCap > 0 ? rand() * bonusCap : 0;
+  return EXPLOSION_POWER_BASE + bonus;
 }
