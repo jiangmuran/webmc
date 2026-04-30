@@ -1,12 +1,19 @@
-// Axe vs Shield. Hitting a shield with an axe disables the shield for
-// 5 seconds. Crit axe hits extend disable to 6.4 seconds.
+// Axe vs Shield disable.
+//
+// Wiki (minecraft.wiki/w/Shield#Disabling): "All of a user's shields
+// are disabled for 5 seconds if hit by an axe-wielding player while
+// the user's shield is up." A flat 5 seconds (100 ticks) regardless
+// of whether the hit was critical. Old code had DISABLE_CRIT_MS=6400
+// (1.4s extra on crits) — not in the wiki for modern versions.
 
 export interface ShieldDisable {
   disabledUntilMs: number;
 }
 
 export const DISABLE_BASE_MS = 5000;
-export const DISABLE_CRIT_MS = 6400;
+// Kept for API back-compat — wiki has no separate crit value, so
+// crits use the same 5-second window.
+export const DISABLE_CRIT_MS = DISABLE_BASE_MS;
 
 export interface AxeHitQuery {
   isAxe: boolean;

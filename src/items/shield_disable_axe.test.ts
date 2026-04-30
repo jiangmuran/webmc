@@ -15,10 +15,13 @@ describe('shield disable by axe', () => {
     expect(shieldDisabled(s, DISABLE_BASE_MS + 1)).toBe(false);
   });
 
-  it('crit longer', () => {
+  it('crit uses same 5s window as non-crit (wiki)', () => {
+    // Wiki: shield is disabled for 5 seconds, regardless of crit.
     const s = { disabledUntilMs: 0 };
     onAxeHitShield(s, { isAxe: true, isCrit: true, nowMs: 0 });
-    expect(shieldDisabled(s, DISABLE_CRIT_MS - 1)).toBe(true);
+    expect(DISABLE_CRIT_MS).toBe(DISABLE_BASE_MS);
+    expect(shieldDisabled(s, DISABLE_BASE_MS - 1)).toBe(true);
+    expect(shieldDisabled(s, DISABLE_BASE_MS + 1)).toBe(false);
   });
 
   it('non-axe no-op', () => {
