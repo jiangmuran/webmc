@@ -1,5 +1,10 @@
 // Axe "strip" interaction: right-click a log with an axe strips it.
 // Works for wood and hyphae. Copper + axe: de-oxidize / de-wax.
+//
+// Wiki (minecraft.wiki/w/Axe#Stripping): every wood/log/stem has a
+// stripped variant. Old table was missing pale_oak_log (added in
+// 1.21) which is a registered block in this project — players
+// stripping a pale oak log got null and the action no-op'd.
 
 const STRIP_TABLE: Record<string, string> = {
   'webmc:oak_log': 'webmc:stripped_oak_log',
@@ -10,6 +15,7 @@ const STRIP_TABLE: Record<string, string> = {
   'webmc:dark_oak_log': 'webmc:stripped_dark_oak_log',
   'webmc:mangrove_log': 'webmc:stripped_mangrove_log',
   'webmc:cherry_log': 'webmc:stripped_cherry_log',
+  'webmc:pale_oak_log': 'webmc:stripped_pale_oak_log',
   'webmc:oak_wood': 'webmc:stripped_oak_wood',
   'webmc:crimson_stem': 'webmc:stripped_crimson_stem',
   'webmc:warped_stem': 'webmc:stripped_warped_stem',
