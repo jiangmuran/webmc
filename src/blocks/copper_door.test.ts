@@ -16,25 +16,28 @@ describe('copper door', () => {
     expect(d.open).toBe(false);
   });
 
-  it('power toggles on rising edge only', () => {
+  it('power mirrors door state (wiki: activate→open, deactivate→close)', () => {
     const d = makeCopperDoor();
     updateCopperPower(d, 0);
     expect(d.open).toBe(false);
-    updateCopperPower(d, 5);
+    updateCopperPower(d, 5); // activated → opens
     expect(d.open).toBe(true);
-    updateCopperPower(d, 5); // sustained
+    updateCopperPower(d, 10); // sustained at different level, still open
     expect(d.open).toBe(true);
-    updateCopperPower(d, 0);
-    updateCopperPower(d, 10);
+    updateCopperPower(d, 0); // deactivated → closes
     expect(d.open).toBe(false);
+    updateCopperPower(d, 15); // re-activated → opens
+    expect(d.open).toBe(true);
   });
 
-  it('waxed door still right-clicks but ignores power', () => {
+  it('waxed door still responds to redstone (wiki: waxing only freezes oxidation)', () => {
     const d = makeCopperDoor();
     waxCopperDoor(d);
-    expect(updateCopperPower(d, 15)).toBe(false);
-    rightClickOpen(d);
+    expect(updateCopperPower(d, 15)).toBe(true);
     expect(d.open).toBe(true);
+    // Manual right-click can still toggle even with active redstone:
+    rightClickOpen(d);
+    expect(d.open).toBe(false);
   });
 
   it('oxidation progresses until oxidized', () => {
