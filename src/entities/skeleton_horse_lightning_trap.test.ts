@@ -19,7 +19,8 @@ describe('skeleton horse lightning trap', () => {
     expect(strikesLightning({ isTrapped: true, approachedByPlayer: true })).toBe(true);
   });
 
-  it('3 skeletons', () => {
+  it('4 skeleton riders (wiki)', () => {
+    expect(SKELETON_SPAWN_COUNT).toBe(4);
     expect(skeletonsOnHorsesCount()).toBe(SKELETON_SPAWN_COUNT);
   });
 });
