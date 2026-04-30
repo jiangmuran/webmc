@@ -1,13 +1,11 @@
 // Impaling. +2.5 damage per level to aquatic mobs (Java Edition).
 //
-// Wiki (minecraft.wiki/w/Impaling): "In Java Edition, Impaling deals
-// extra damage to aquatic mobs only — it does not affect players or
-// other entities, even when they are in water." The old `inWater`
-// branch implemented the Bedrock rule, which gave +12.5 hp to a
-// zombie that happened to wade into a lake. webmc targets Java
-// Edition; sibling arrow_impale_target.ts has the same fix. Also
-// added 'drowned' to the aquatic list per the Java source's
-// aquatic_mobs tag.
+// Wiki (minecraft.wiki/w/Impaling): "In Java Edition, only aquatic
+// mobs receive the extra damage … but NOT drowned, as drowned are
+// classified purely as undead mobs and not underwater mobs."
+// Earlier change wrongly added 'drowned' to the list citing the
+// 'aquatic_mobs' tag, but the wiki page (and JIRA bug MC-128249,
+// resolved Working-As-Intended) explicitly excludes drowned.
 
 export const IMPALING_MAX = 5;
 
@@ -21,7 +19,6 @@ const AQUATIC = new Set([
   'tropical_fish',
   'pufferfish',
   'dolphin',
-  'drowned',
   'turtle',
   'axolotl',
   'tadpole',

@@ -5,12 +5,12 @@ export interface ImpaleHit {
 
 export const BASE_BONUS_PER_LEVEL = 2.5;
 
-// Wiki (minecraft.wiki/w/Impaling): "In Java Edition, Impaling deals
-// extra damage to aquatic mobs only — it does not affect players (a
-// Bedrock-only behavior)." Old `target === 'player'` branch was the
-// Bedrock rule; webmc targets Java Edition, so trident PvP must NOT
-// receive the +2.5/level boost. Aquatic list also gained drowned,
-// glow_squid, and pufferfish (per the same page's affected-mobs list).
+// Wiki (minecraft.wiki/w/Impaling): "In Java Edition, only aquatic
+// mobs receive the extra damage … but NOT drowned, as drowned are
+// classified purely as undead mobs and not underwater mobs (JIRA
+// MC-128249 closed Working-As-Intended)." Players are also excluded
+// in JE — the old `target === 'player'` branch was the Bedrock rule.
+// Sibling impaling_trident.ts has the same aquatic list.
 export function bonusDamage(h: ImpaleHit): number {
   if (h.impalingLevel <= 0) return 0;
   if (isAquatic(h.target)) {
@@ -28,7 +28,6 @@ export function isAquatic(mob: string): boolean {
     'cod',
     'salmon',
     'dolphin',
-    'drowned',
     'turtle',
     'tropical_fish',
     'pufferfish',
