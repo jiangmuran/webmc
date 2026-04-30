@@ -27,4 +27,8 @@ describe('headwear', () => {
     expect(chargedCreeperDrop('skeleton')).toBe('webmc:skeleton_skull');
     expect(chargedCreeperDrop('cow')).toBeNull();
   });
+
+  it('piglin drops head on charged creeper kill (wiki: 1.20+)', () => {
+    expect(chargedCreeperDrop('piglin')).toBe('webmc:piglin_head');
+  });
 });

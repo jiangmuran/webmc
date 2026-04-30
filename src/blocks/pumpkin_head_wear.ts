@@ -31,7 +31,11 @@ export function hasPumpkinOverlay(h: Headwear): boolean {
   return h === 'carved_pumpkin';
 }
 
-// Player head drops on kill by charged creeper.
+// Wiki (minecraft.wiki/w/Mob_head): mob heads drop when the mob is
+// killed by a charged creeper. The full list is zombie, skeleton,
+// wither skeleton, creeper, and (since 1.20) piglin. The 'piglin'
+// case was missing — a charged-creeper kill on a piglin currently
+// drops nothing instead of a piglin head.
 export function chargedCreeperDrop(mobType: string): string | null {
   switch (mobType) {
     case 'zombie':
@@ -42,6 +46,8 @@ export function chargedCreeperDrop(mobType: string): string | null {
       return 'webmc:wither_skeleton_skull';
     case 'creeper':
       return 'webmc:creeper_head';
+    case 'piglin':
+      return 'webmc:piglin_head';
     default:
       return null;
   }
