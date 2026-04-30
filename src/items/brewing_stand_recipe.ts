@@ -24,7 +24,16 @@ export type BaseKind =
   | 'luck';
 
 const INGREDIENT_TABLE: Record<string, Partial<Record<BaseKind, BaseKind>>> = {
+  // Wiki (minecraft.wiki/w/Brewing): water-base recipes were missing.
+  // Per the Brewing wiki "redstone → mundane, glowstone → thick,
+  // fermented_spider_eye → weakness — the only modifier that can
+  // convert a water bottle directly into a usable potion." Old table
+  // had only water + nether_wart, so a fermented spider eye on
+  // water gave nothing instead of weakness, and glowstone + water
+  // didn't produce thick.
   'webmc:nether_wart': { water: 'awkward' },
+  'webmc:redstone': { water: 'mundane' },
+  'webmc:glowstone_dust': { water: 'thick' },
   'webmc:glistering_melon_slice': { awkward: 'healing' },
   'webmc:sugar': { awkward: 'speed' },
   'webmc:blaze_powder': { awkward: 'strength' },
@@ -32,6 +41,7 @@ const INGREDIENT_TABLE: Record<string, Partial<Record<BaseKind, BaseKind>>> = {
   'webmc:spider_eye': { awkward: 'poison', healing: 'harming' },
   'webmc:golden_carrot': { awkward: 'night_vision' },
   'webmc:fermented_spider_eye': {
+    water: 'weakness',
     night_vision: 'invisibility',
     speed: 'slowness',
     leaping: 'slowness',
