@@ -4,7 +4,7 @@ import {
   allowsSecondary,
   secondaryOptions,
   effectAt,
-  EFFECT_DURATION_TICKS,
+  effectDurationTicksForTier,
 } from './beacon_effect_apply';
 
 describe('beacon apply', () => {
@@ -46,6 +46,13 @@ describe('beacon apply', () => {
       radius: 50,
     });
     expect(r.amplifier).toBe(1);
-    expect(r.durationTicks).toBe(EFFECT_DURATION_TICKS);
+    expect(r.durationTicks).toBe(effectDurationTicksForTier(4));
+  });
+
+  it('duration scales with pyramid tier (wiki: 9 + 2*tier seconds)', () => {
+    expect(effectDurationTicksForTier(1)).toBe(11 * 20);
+    expect(effectDurationTicksForTier(2)).toBe(13 * 20);
+    expect(effectDurationTicksForTier(3)).toBe(15 * 20);
+    expect(effectDurationTicksForTier(4)).toBe(17 * 20);
   });
 });
