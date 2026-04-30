@@ -1,6 +1,12 @@
 // Totem of Undying. When held in main/off-hand, lethal damage instead
-// sets HP to 1 and applies Regen II, Absorption II, Fire Resistance I
-// for 40/100/40 ticks respectively. Consumes the totem.
+// sets HP to 1 and applies Regen II, Absorption II, Fire Resistance I.
+//
+// Wiki (minecraft.wiki/w/Totem_of_Undying):
+//   Regeneration II for 0:45 (45 s = 900 ticks) — sibling
+//     totem_undying_revive.ts had 800 (40 s) by an earlier wrong
+//     "fix"; wiki's Infobox shows Regeneration II (0:45).
+//   Fire Resistance I for 0:40 (800 ticks).
+//   Absorption II for 0:05 (100 ticks).
 
 export interface TotemQuery {
   mainhand: string | null;
@@ -42,7 +48,7 @@ export function tryTotem(q: TotemQuery): TotemResult {
     consumedFromMain,
     newHp: 1,
     effects: [
-      { id: 'regeneration', amp: 1, durationTicks: 800 },
+      { id: 'regeneration', amp: 1, durationTicks: 900 },
       { id: 'absorption', amp: 1, durationTicks: 100 },
       { id: 'fire_resistance', amp: 0, durationTicks: 800 },
     ],
