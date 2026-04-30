@@ -1,9 +1,17 @@
 // Armor defense model. Given a set of 4 armor slots and the enchants on
-// each piece, compute the damage the player actually takes from an incoming
-// hit. Matches MC's "armor points + toughness + protection enchant" formula:
+// each piece, compute the damage the player actually takes from an
+// incoming hit. Matches MC's "armor points + toughness + protection
+// enchant" formula:
 //
-//   mitigatedPercent = clamp(armor - damage/2/(toughness/4+2), armor*0.2) / 25
-//   finalDamage = damage * (1 - mitigatedPercent) * (1 - protectionMitigation)
+//   mitigationPoints = min(20, max(armor/5, armor - damage/(2 + toughness/4)))
+//   finalDamage      = damage * (1 - mitigationPoints/25) * (1 - protFactor)
+//
+// The MAX inside `mitigationPoints` is the canonical wiki formula: armor
+// always provides AT LEAST `armor/5` mitigation (the floor), and CAN
+// provide more when the incoming damage is small. Old code used `min`
+// here, inverting the floor — armor became LESS effective at low damage
+// and ineffective (clamped to 0) at high damage. Sibling
+// armor_set_bonus.ts already uses MAX.
 
 import { hasEnchant, type Enchanted } from './enchantment';
 
@@ -257,7 +265,8 @@ export function incomingDamage(rawDamage: number, set: ArmorSet): number {
   const toughness = totalToughness(set);
   const protection = protectionLevel(set);
   if (armor === 0 && protection === 0) return rawDamage;
-  const armorMitigation = Math.min(armor - rawDamage / (2 + toughness / 4), armor * 0.2) / 25;
+  const armorMitigation =
+    Math.min(20, Math.max(armor * 0.2, armor - rawDamage / (2 + toughness / 4))) / 25;
   const armorFactor = Math.max(0, Math.min(0.8, armorMitigation));
   const afterArmor = rawDamage * (1 - armorFactor);
   const protFactor = Math.min(0.8, protection * 0.04); // clamp at 80%
