@@ -17,9 +17,17 @@ export function requiresUpperBlock(age: PitcherCrop['age']): boolean {
   return age >= 2;
 }
 
-export function harvestYield(age: PitcherCrop['age']): number {
-  if (age < PITCHER_MAX_AGE) return 1; // returns seed
-  return 2 + Math.floor(Math.random() * 2); // mature: pitcher_plant block
+// Wiki (minecraft.wiki/w/Pitcher_Plant): "Pitcher plants do not
+// generate naturally and are obtained by growing a pitcher pod.
+// Breaking a fully grown pitcher crop drops one pitcher plant."
+// Wiki (minecraft.wiki/w/Pitcher_Pod): "Mining a pitcher crop also
+// drops the pitcher pod."
+//
+// Old harvestYield returned `2 + floor(random*2)` (i.e. 2-3) for
+// mature crops — wiki canon is exactly 1 pitcher plant. Immature
+// crop drops the original pod (1).
+export function harvestYield(_age: PitcherCrop['age']): number {
+  return 1;
 }
 
 export function isMature(c: PitcherCrop): boolean {
