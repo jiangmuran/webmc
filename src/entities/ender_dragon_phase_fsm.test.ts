@@ -27,8 +27,15 @@ describe('ender dragon phase FSM', () => {
     expect(pickNextPhase({ ...base, phase: 'landed', ticksInPhase: 300 })).toBe('breath_attack');
   });
 
-  it('crystals regen HP', () => {
-    expect(healthRegenPerTick({ ...base, health: 100 })).toBeGreaterThan(0);
+  it('crystals regen 0.5 HP/tick (wiki: 1 HP every other tick)', () => {
+    expect(healthRegenPerTick({ ...base, health: 100 })).toBe(0.5);
+  });
+
+  it('regen rate is fixed, not crystal-count scaled (wiki)', () => {
+    // 1 crystal alive vs 5 crystals alive — both should regen the
+    // same 0.5 HP/tick (heal comes from nearest active crystal).
+    expect(healthRegenPerTick({ ...base, health: 100, crystalsAlive: 1 })).toBe(0.5);
+    expect(healthRegenPerTick({ ...base, health: 100, crystalsAlive: 5 })).toBe(0.5);
   });
 
   it('full hp no regen', () => {
