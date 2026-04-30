@@ -14,10 +14,8 @@ describe('warden anger', () => {
     expect(angerLevel(a, 'p1')).toBe('calm');
   });
 
-  it('vibration raises calm → suspect', () => {
+  it('vibration raises calm → suspect (wiki: any non-projectile vibration adds 35)', () => {
     const a = makeWardenAnger();
-    addAnger(a, 'p1', 'vibration_close');
-    addAnger(a, 'p1', 'vibration_close');
     addAnger(a, 'p1', 'vibration_close');
     expect(angerLevel(a, 'p1')).toBe('suspect');
   });
@@ -52,16 +50,26 @@ describe('warden anger', () => {
 
   it('clears target below zero', () => {
     const a = makeWardenAnger();
-    addAnger(a, 'p1', 'vibration_far'); // +5
-    decayAnger(a, 10);
+    addAnger(a, 'p1', 'projectile_hit'); // +10
+    decayAnger(a, 11);
     expect(a.perTarget.has('p1')).toBe(false);
   });
 
   it('primary target is the highest-anger entity', () => {
     const a = makeWardenAnger();
     addAnger(a, 'p1', 'melee_hit'); // 35
-    addAnger(a, 'p2', 'vibration_close'); // 15
+    addAnger(a, 'p1', 'melee_hit'); // 70
+    addAnger(a, 'p2', 'projectile_hit'); // 10
     expect(primaryTarget(a)).toBe('p1');
+  });
+
+  it('non-projectile vibrations add 35 (wiki, no close/far falloff)', () => {
+    const a = makeWardenAnger();
+    addAnger(a, 'p1', 'vibration_close');
+    expect(a.perTarget.get('p1')).toBe(35);
+    const b = makeWardenAnger();
+    addAnger(b, 'p1', 'vibration_far');
+    expect(b.perTarget.get('p1')).toBe(35);
   });
 
   it('null when no angers', () => {
