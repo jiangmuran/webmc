@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { hasGrace, resistanceAmplifier, GRACE_DURATION_TICKS } from './axolotl_grace';
+import {
+  hasGrace,
+  regenerationAmplifier,
+  resistanceAmplifier,
+  GRACE_DURATION_TICKS,
+} from './axolotl_grace';
 
 describe('axolotl grace', () => {
   it('fresh grace', () => {
@@ -24,9 +29,13 @@ describe('axolotl grace', () => {
     );
   });
 
-  it('resistance only when in grace', () => {
+  it('regeneration only when in grace (wiki: Regen I, no Resistance)', () => {
+    expect(
+      regenerationAmplifier({ axolotlDamagedMobNearby: true, lastDamageAtTick: 0, nowTick: 0 }),
+    ).toBe(0);
+    // Back-compat alias still works for legacy callers.
     expect(
       resistanceAmplifier({ axolotlDamagedMobNearby: true, lastDamageAtTick: 0, nowTick: 0 }),
-    ).toBeGreaterThanOrEqual(0);
+    ).toBe(0);
   });
 });
