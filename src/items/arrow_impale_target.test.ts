@@ -14,12 +14,18 @@ describe('arrow impale target', () => {
     expect(bonusDamage({ target: 'squid', impalingLevel: 0 })).toBe(0);
   });
 
-  it('player is aquatic-ish for trident', () => {
-    expect(bonusDamage({ target: 'player', impalingLevel: 2 })).toBeGreaterThan(0);
+  it('player is NOT aquatic in Java Edition (wiki)', () => {
+    expect(bonusDamage({ target: 'player', impalingLevel: 2 })).toBe(0);
+  });
+
+  it('drowned and glow_squid receive impale bonus (wiki)', () => {
+    expect(bonusDamage({ target: 'drowned', impalingLevel: 2 })).toBeGreaterThan(0);
+    expect(bonusDamage({ target: 'glow_squid', impalingLevel: 2 })).toBeGreaterThan(0);
   });
 
   it('isAquatic lookup', () => {
     expect(isAquatic('turtle')).toBe(true);
+    expect(isAquatic('pufferfish')).toBe(true);
     expect(isAquatic('pig')).toBe(false);
   });
 });
