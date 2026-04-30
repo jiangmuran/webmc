@@ -26,7 +26,12 @@ const SLOT_BY_ITEM: Record<string, ArmorSlot> = {
   iron_chestplate: 'chestplate',
   iron_leggings: 'leggings',
   iron_boots: 'boots',
-  // Gold
+  // Gold (registry uses `gold_*` per armor.ts, but vanilla MC IDs are
+  // `golden_*` — accept both spellings for cross-module compatibility).
+  gold_helmet: 'helmet',
+  gold_chestplate: 'chestplate',
+  gold_leggings: 'leggings',
+  gold_boots: 'boots',
   golden_helmet: 'helmet',
   golden_chestplate: 'chestplate',
   golden_leggings: 'leggings',
