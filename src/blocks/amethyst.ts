@@ -43,6 +43,20 @@ export function dropsFor(state: AmethystState, hasSilkTouch: boolean): string[] 
   ];
 }
 
+// Wiki (minecraft.wiki/w/Amethyst_Cluster#Light): "Small, medium,
+// and large amethyst buds give off a light level of 1, 2 and 4
+// respectively, while amethyst clusters give off a light level of 5."
+// Old code returned 1 for every bud stage, dropping the per-stage
+// glow gradient (the visible cue that a bud is maturing).
 export function lightEmission(state: AmethystState): number {
-  return state.stage === 'cluster' ? 5 : 1;
+  switch (state.stage) {
+    case 'small_bud':
+      return 1;
+    case 'medium_bud':
+      return 2;
+    case 'large_bud':
+      return 4;
+    case 'cluster':
+      return 5;
+  }
 }
