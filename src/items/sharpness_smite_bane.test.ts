@@ -18,6 +18,11 @@ describe('sharpness smite bane', () => {
     expect(smiteBonus(5, 'cow')).toBe(0);
   });
 
+  it('smite affects skeleton_horse and zombie_horse (wiki: undead since 1.9)', () => {
+    expect(smiteBonus(5, 'skeleton_horse')).toBe(12.5);
+    expect(smiteBonus(5, 'zombie_horse')).toBe(12.5);
+  });
+
   it('bane vs spider', () => {
     expect(baneBonus(3, 'spider')).toBeCloseTo(7.5);
   });

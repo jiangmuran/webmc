@@ -20,6 +20,13 @@ describe('entity tags', () => {
     expect(hasTag(r, 'bogged', 'undead')).toBe(true);
   });
 
+  it('defaults: skeleton_horse + zombie_horse undead (wiki: 1.9+)', () => {
+    const r = makeEntityTags();
+    seedDefaults(r);
+    expect(hasTag(r, 'skeleton_horse', 'undead')).toBe(true);
+    expect(hasTag(r, 'zombie_horse', 'undead')).toBe(true);
+  });
+
   it('defaults: raiders include ravager', () => {
     const r = makeEntityTags();
     seedDefaults(r);

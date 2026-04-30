@@ -19,6 +19,10 @@ export function hasTag(r: EntityTagRegistry, type: string, tag: string): boolean
 }
 
 export function seedDefaults(r: EntityTagRegistry): void {
+  // Wiki (minecraft.wiki/w/Undead, history line 1.9 / 15w38b):
+  // 'Skeleton horses and zombie horses are now considered undead.'
+  // Both were missing — Smite/Instant Health/Bane wouldn't fire
+  // on them, contrary to wiki canon.
   tagEntity(r, 'undead', [
     'zombie',
     'skeleton',
@@ -32,6 +36,8 @@ export function seedDefaults(r: EntityTagRegistry): void {
     'zoglin',
     'wither',
     'zombie_villager',
+    'skeleton_horse',
+    'zombie_horse',
   ]);
   tagEntity(r, 'arthropod', ['spider', 'cave_spider', 'silverfish', 'endermite', 'bee']);
   tagEntity(r, 'aquatic', [

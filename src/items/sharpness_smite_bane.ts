@@ -35,7 +35,11 @@ function isUndead(t: string): boolean {
     t === 'stray' ||
     t === 'bogged' ||
     // Wither itself is undead per wiki — Smite damages it.
-    t === 'wither'
+    t === 'wither' ||
+    // Wiki (Undead, history 1.9/15w38b): skeleton/zombie horses
+    // were also marked undead in 1.9; both were missing here.
+    t === 'skeleton_horse' ||
+    t === 'zombie_horse'
   );
 }
 
