@@ -5,6 +5,7 @@ import {
   wolfArmoredDamage,
   SCUTE_DROP_MIN_TICKS,
   SCUTE_DROP_MAX_TICKS,
+  WOLF_ARMOR_MAX_DURABILITY,
 } from './armadillo_scute_drop';
 
 describe('armadillo scute drop', () => {
@@ -21,7 +22,24 @@ describe('armadillo scute drop', () => {
     expect(brushYieldsScute(SCUTE_DROP_MIN_TICKS)).toBe(true);
   });
 
-  it('wolf armor reduces damage', () => {
-    expect(wolfArmoredDamage(10)).toBeCloseTo(8.8);
+  it('wolf armor absorbs 100% damage with durability (wiki: full absorption)', () => {
+    const r = wolfArmoredDamage({ raw: 10, armorDurabilityLeft: 64 });
+    expect(r.damage).toBe(0);
+    expect(r.armorDurabilityLeft).toBe(63);
+  });
+
+  it('wolf armor max durability 64 (wiki Wolf_Armor infobox)', () => {
+    expect(WOLF_ARMOR_MAX_DURABILITY).toBe(64);
+  });
+
+  it('wolf armor passes magic damage through (wiki: magic exception)', () => {
+    const r = wolfArmoredDamage({ raw: 10, isMagicDamage: true, armorDurabilityLeft: 64 });
+    expect(r.damage).toBe(10);
+    expect(r.armorDurabilityLeft).toBe(64);
+  });
+
+  it('broken wolf armor stops absorbing', () => {
+    const r = wolfArmoredDamage({ raw: 10, armorDurabilityLeft: 0 });
+    expect(r.damage).toBe(10);
   });
 });
