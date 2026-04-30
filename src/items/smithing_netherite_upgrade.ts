@@ -5,6 +5,10 @@ export interface SmithingInput {
 }
 
 export const NETHERITE_TEMPLATE = 'netherite_upgrade_smithing_template';
+// Wiki (minecraft.wiki/w/Smithing_Template): Java Edition 1.21 ships
+// 18 trim templates. The 16-entry list was missing the two trial-chamber
+// additions (flow, bolt), so a player smithing-applying flow_armor_trim
+// or bolt_armor_trim was rejected as a non-trim template.
 export const ARMOR_TRIM_TEMPLATES = [
   'coast_armor_trim',
   'dune_armor_trim',
@@ -22,6 +26,8 @@ export const ARMOR_TRIM_TEMPLATES = [
   'ward_armor_trim',
   'wayfinder_armor_trim',
   'wild_armor_trim',
+  'flow_armor_trim',
+  'bolt_armor_trim',
 ];
 
 const DIAMOND_TO_NETHERITE: Record<string, string> = {
