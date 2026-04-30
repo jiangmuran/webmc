@@ -28,7 +28,15 @@ const GOLD_ITEMS = new Set<string>([
   'powered_rail',
 ]);
 
+// Accept both `gold_*` (webmc registry per src/items/armor.ts) and
+// `golden_*` (vanilla MC ID). Old set only listed `golden_*`, so
+// piglinPassiveIfWearing never triggered for the actual registered
+// armor IDs and piglins always aggroed players in gold armor.
 const GOLD_ARMOR = new Set<string>([
+  'gold_helmet',
+  'gold_chestplate',
+  'gold_leggings',
+  'gold_boots',
   'golden_helmet',
   'golden_chestplate',
   'golden_leggings',
