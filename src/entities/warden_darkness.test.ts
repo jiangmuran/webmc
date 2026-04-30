@@ -11,11 +11,11 @@ describe('warden darkness', () => {
     expect(out.some((e) => e.entityId === 2)).toBe(false);
   });
 
-  it('effect duration is 12s', () => {
+  it('effect duration is 13s (wiki: warden Darkness)', () => {
     const out = applyDarknessAround({ x: 0, y: 0, z: 0 }, [
       { id: 1, position: { x: 1, y: 0, z: 0 } },
     ]);
-    expect(out[0]?.effectDurationSec).toBe(12);
+    expect(out[0]?.effectDurationSec).toBe(13);
   });
 
   it('empty target list → no applications', () => {
