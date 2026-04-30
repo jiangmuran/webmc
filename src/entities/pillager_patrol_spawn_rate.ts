@@ -26,8 +26,14 @@ export function canSpawnPatrol(i: PatrolInput): boolean {
   return i.nowMs - i.lastPatrolMs >= PATROL_INTERVAL_MS && i.rng() < 0.2;
 }
 
+// Wiki (minecraft.wiki/w/Patrol#Spawning): "Patrols spawn as a group
+// of 1-5 pillagers in Java or 2-5 pillagers in Bedrock." webmc
+// targets Java per AGENT_CHARTER, so the lower bound is 1, not 2.
+// In Java the count depends on localDifficulty (rounded up) — this
+// model returns the uniform range; the difficulty integration is a
+// caller-side concern.
 export function patrolSize(rng: () => number): number {
-  return 2 + Math.floor(rng() * 4);
+  return 1 + Math.floor(rng() * 5);
 }
 
 export function captainChance(): number {
