@@ -35,12 +35,17 @@ export function planMove(s: SkeletonAim, q: MoveQuery): MoveIntent {
   return 'strafe';
 }
 
-// Armored / enchanted skeleton drops: on looting, bow may have durability left.
+// Wiki (minecraft.wiki/w/Skeleton): bow drops with an 8.5% base
+// chance, and Looting adds 1 percentage point per level (additive,
+// not multiplicative). 8.5% / 9.5% / 10.5% / 11.5% at 0/I/II/III.
+// Old `0.085 * (1 + level * 0.1)` was a multiplicative ~10% bonus
+// per level — by Looting III it gave 11.05% vs wiki 11.5%, and at
+// command-given high levels it scaled wildly.
 export interface DropQuery {
   lootingLevel: number;
   rand: () => number;
 }
 
 export function dropBowChance(q: DropQuery): boolean {
-  return q.rand() < 0.085 * (1 + q.lootingLevel * 0.1);
+  return q.rand() < 0.085 + q.lootingLevel * 0.01;
 }
