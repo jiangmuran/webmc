@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { beeAngered, beePollinate, depositAtNest, makeBee, sting, tickBee } from './bee';
+import {
+  ANGER_MAX_SEC,
+  ANGER_MIN_SEC,
+  beeAngered,
+  beePollinate,
+  depositAtNest,
+  makeBee,
+  rollAngerSec,
+  sting,
+  tickBee,
+} from './bee';
 
 describe('bee', () => {
   it('pollination marks the bee and sets return mood if home set', () => {
@@ -36,5 +46,23 @@ describe('bee', () => {
     const b = makeBee();
     beePollinate(b);
     expect(b.mood).toBe('wander');
+  });
+
+  it('rollAngerSec stays within wiki [20,39] (inclusive)', () => {
+    expect(rollAngerSec(() => 0)).toBe(ANGER_MIN_SEC);
+    expect(rollAngerSec(() => 0.999999)).toBe(ANGER_MAX_SEC);
+    for (let i = 0; i < 100; i++) {
+      const v = rollAngerSec(Math.random);
+      expect(v).toBeGreaterThanOrEqual(ANGER_MIN_SEC);
+      expect(v).toBeLessThanOrEqual(ANGER_MAX_SEC);
+    }
+  });
+
+  it('beeAngered with rand uses wiki random duration', () => {
+    const b = makeBee();
+    beeAngered(b, 1, () => 0);
+    expect(b.angerSec).toBe(ANGER_MIN_SEC);
+    beeAngered(b, 1, () => 0.999);
+    expect(b.angerSec).toBe(ANGER_MAX_SEC);
   });
 });
