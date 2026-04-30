@@ -5,19 +5,23 @@
 
 export type PandaGene = 'normal' | 'aggressive' | 'lazy' | 'worried' | 'playful' | 'weak' | 'brown';
 
-// Wiki (minecraft.wiki/w/Panda#Personality): only `brown` and `weak`
-// are recessive — they only show when both alleles are recessive.
-// `normal` is a regular dominant personality (common by spawn
-// weight, not by recessivity). Old set lumped normal with the
-// recessives, which made e.g. `brown+normal` show brown instead of
-// normal.
+// Wiki (minecraft.wiki/w/Panda#Genetics): only `brown` and `weak` are
+// recessive. MC's actual visible-personality rule (not strict
+// Mendelian) is:
+//   - main gene dominant                                    → main
+//   - main gene recessive AND hidden matches (homozygous)   → main
+//   - main gene recessive AND hidden differs                → 'normal'
+// Old code returned the OTHER allele when main was recessive and the
+// other was dominant (so brown+aggressive → aggressive). MC actually
+// falls back to 'normal' for heterozygous-recessive, regardless of
+// what the dominant allele is. Sibling panda_personality_breed.ts
+// implements the wiki rule.
 const RECESSIVE_ONLY = new Set<PandaGene>(['brown', 'weak']);
 
 export function visiblePersonality(dominant: PandaGene, recessive: PandaGene): PandaGene {
-  if (dominant === recessive && RECESSIVE_ONLY.has(dominant)) return dominant;
+  if (!RECESSIVE_ONLY.has(dominant)) return dominant;
   if (dominant === recessive) return dominant;
-  if (RECESSIVE_ONLY.has(dominant) && !RECESSIVE_ONLY.has(recessive)) return recessive;
-  return dominant;
+  return 'normal';
 }
 
 // Child inherits one gene from each parent with 50/50 probability.
