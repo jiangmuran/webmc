@@ -60,4 +60,14 @@ export function tickPhantom(state: PhantomState, ctx: PhantomTickCtx): PhantomTi
   };
 }
 
-export const PHANTOM_CONTACT_DAMAGE = 4;
+// Wiki (minecraft.wiki/w/Phantom): "Damage Java: Easy & Normal 2,
+// Hard 3. Bedrock: Easy 4, Normal 6, Hard 9." webmc targets Java
+// per AGENT_CHARTER, so 2 is the Easy/Normal value and the most
+// representative default. Old constant 4 was the Bedrock-Easy value
+// — Java phantoms hit half as hard.
+export const PHANTOM_CONTACT_DAMAGE = 2;
+export const PHANTOM_CONTACT_DAMAGE_HARD = 3;
+
+export function phantomContactDamage(difficulty: 'easy' | 'normal' | 'hard'): number {
+  return difficulty === 'hard' ? PHANTOM_CONTACT_DAMAGE_HARD : PHANTOM_CONTACT_DAMAGE;
+}

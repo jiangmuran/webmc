@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { PHANTOM_CONTACT_DAMAGE, makePhantomState, tickPhantom } from './phantom_dive';
+import {
+  PHANTOM_CONTACT_DAMAGE,
+  PHANTOM_CONTACT_DAMAGE_HARD,
+  makePhantomState,
+  phantomContactDamage,
+  tickPhantom,
+} from './phantom_dive';
 
 describe('phantom dive', () => {
   it('enters swoop when close + circled for 2s', () => {
@@ -30,7 +36,11 @@ describe('phantom dive', () => {
     expect(s.phase).toBe('circling');
   });
 
-  it('damage constant is 4', () => {
-    expect(PHANTOM_CONTACT_DAMAGE).toBe(4);
+  it('Java damage 2 / Hard 3 (wiki)', () => {
+    expect(PHANTOM_CONTACT_DAMAGE).toBe(2);
+    expect(PHANTOM_CONTACT_DAMAGE_HARD).toBe(3);
+    expect(phantomContactDamage('easy')).toBe(2);
+    expect(phantomContactDamage('normal')).toBe(2);
+    expect(phantomContactDamage('hard')).toBe(3);
   });
 });
