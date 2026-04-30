@@ -10,7 +10,10 @@ export interface Sniffer {
 
 export const SNIFF_TICKS = 400; // 20s
 export const DIG_TICKS = 160; // 8s
-export const SNIFF_COOLDOWN_TICKS = 1200; // 60s
+// Wiki (minecraft.wiki/w/Sniffer): "After sniffing out seeds, an
+// eight-minute cooldown is activated before it can search again."
+// 8 min = 9600 ticks. Old constant was 1200 (1 min) — 8× too short.
+export const SNIFF_COOLDOWN_TICKS = 9600;
 
 export function makeSniffer(): Sniffer {
   return { phase: 'idle', phaseEndTick: 0 };
