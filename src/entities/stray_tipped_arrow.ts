@@ -24,6 +24,18 @@ export function dropsOnDeath(rand: () => number): string[] {
   return drops;
 }
 
+// Wiki (minecraft.wiki/w/Stray): "A stray may spawn directly under
+// the sky in snowy plains or ice spikes, replacing 80% of skeletons."
+// Bedrock additionally allows frozen rivers, frozen oceans, deep
+// frozen oceans, legacy frozen oceans, snowy slopes, jagged peaks,
+// and frozen peaks; webmc targets Java per AGENT_CHARTER, so only
+// snowy_plains and ice_spikes apply.
+//
+// Old check `biome.includes('snowy')` matched 'snowy_plains' but
+// missed 'ice_spikes' entirely, and included Bedrock-only biomes
+// (frozen_ocean, frozen_river) that don't spawn strays in Java.
+const JE_STRAY_SPAWN_BIOMES = new Set<string>(['snowy_plains', 'ice_spikes']);
+
 export function onlySpawnsInSnowyBiomes(biome: string): boolean {
-  return biome.includes('snowy') || biome === 'frozen_ocean' || biome === 'frozen_river';
+  return JE_STRAY_SPAWN_BIOMES.has(biome);
 }
