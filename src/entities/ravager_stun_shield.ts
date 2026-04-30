@@ -1,4 +1,9 @@
-export const STUN_DURATION_TICKS = 60;
+// Wiki (minecraft.wiki/w/Ravager): "When a ravager attacks a player
+// blocking with a shield, the ravager is stunned for 40 ticks (2 s)."
+// Old 60-tick (3 s) duration was 1.5× the wiki value, leaving the
+// ravager helpless 1 s longer than vanilla. Siblings ravager_stun.ts
+// and ravager_stun_shield_detail.ts both already use 40.
+export const STUN_DURATION_TICKS = 40;
 export const ROAR_DURATION_TICKS = 20;
 
 export interface RavagerState {
