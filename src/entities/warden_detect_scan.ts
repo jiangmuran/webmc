@@ -6,9 +6,15 @@ export interface Anger {
   byEntity: Map<string, number>;
 }
 
+// Wiki (minecraft.wiki/w/Warden) anger thresholds:
+//   ≥ 35: "suspect" — warden notices the target.
+//   ≥ 80: "target"  — warden actively pursues, sonic boom available.
+// Old MELEE_THRESHOLD = 40 was 5 over the wiki suspect threshold.
+// Sibling warden modules (warden_anger.ts, warden_anger_decay.ts,
+// warden_navigation.ts) all use 35; this module now agrees.
 export const MAX_ANGER = 150;
 export const SONIC_THRESHOLD = 80;
-export const MELEE_THRESHOLD = 40;
+export const MELEE_THRESHOLD = 35;
 
 export function bumpAnger(a: Anger, id: string, amount: number): number {
   const cur = a.byEntity.get(id) ?? 0;
