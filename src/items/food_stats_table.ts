@@ -32,6 +32,16 @@ export function canEat(id: string, playerHungerPct: number): boolean {
   return s.alwaysEdible || playerHungerPct < 1;
 }
 
+// Wiki references:
+//   minecraft.wiki/w/Golden_Apple — Regen II 5s, Absorption I 2 min
+//   minecraft.wiki/w/Enchanted_Golden_Apple — Regen II 20s,
+//     Absorption IV 2 min, Resistance I 5 min, Fire Resistance I 5 min
+//   minecraft.wiki/w/Rotten_Flesh — Hunger 30s, 80% chance (chance is
+//     applied at call site)
+//   minecraft.wiki/w/Spider_Eye — Poison 5s
+// Old code returned [] for enchanted_golden_apple, dropping all four
+// of its canonical effects — eating one in this engine gave only
+// hunger restore, not the iconic Notch-apple buffs.
 export function postEatEffects(
   id: string,
 ): { id: string; durationTicks: number; amplifier: number }[] {
@@ -41,6 +51,13 @@ export function postEatEffects(
     return [
       { id: 'regeneration', durationTicks: 100, amplifier: 1 },
       { id: 'absorption', durationTicks: 2400, amplifier: 0 },
+    ];
+  if (id === 'enchanted_golden_apple')
+    return [
+      { id: 'regeneration', durationTicks: 400, amplifier: 1 },
+      { id: 'absorption', durationTicks: 2400, amplifier: 3 },
+      { id: 'resistance', durationTicks: 6000, amplifier: 0 },
+      { id: 'fire_resistance', durationTicks: 6000, amplifier: 0 },
     ];
   return [];
 }
