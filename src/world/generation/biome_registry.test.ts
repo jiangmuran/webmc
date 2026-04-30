@@ -15,7 +15,8 @@ describe('biome registry', () => {
     expect(n.every((b) => b.dimension === 'nether')).toBe(true);
   });
 
-  it('snowy has subzero temp', () => {
-    expect(biomeOf('snowy_plains')?.temperature).toBeLessThan(0);
+  it('snowy plains temperature 0.0 (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Snowy_Plains): "temperature 0.0".
+    expect(biomeOf('snowy_plains')?.temperature).toBe(0);
   });
 });
