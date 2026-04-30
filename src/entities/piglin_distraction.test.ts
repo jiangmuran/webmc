@@ -86,4 +86,36 @@ describe('piglin', () => {
       ),
     ).toBe(true);
   });
+
+  it('any single piece of gold armor pacifies (wiki)', () => {
+    const s = makePiglin();
+    expect(
+      isHostileTo(
+        s,
+        {
+          playerWearsAnyGoldArmor: true,
+          playerOpenedChestNearby: false,
+          playerAttackedRecently: false,
+          nowTick: 0,
+        },
+        'p1',
+      ),
+    ).toBe(false);
+  });
+
+  it('hostile when no gold armor', () => {
+    const s = makePiglin();
+    expect(
+      isHostileTo(
+        s,
+        {
+          playerWearsAnyGoldArmor: false,
+          playerOpenedChestNearby: false,
+          playerAttackedRecently: false,
+          nowTick: 0,
+        },
+        'p1',
+      ),
+    ).toBe(true);
+  });
 });
