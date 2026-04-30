@@ -25,9 +25,13 @@ export interface NoteBlockState {
   instrument: NoteInstrument;
 }
 
-// Block-above → instrument. Matches MC's lookup table.
-export function instrumentFor(aboveBlockName: string | null): NoteInstrument {
-  if (!aboveBlockName) return 'harp';
+// Wiki (minecraft.wiki/w/Note_Block): "The instrument played is
+// determined by the block directly BELOW the note block." Old
+// parameter was named `aboveBlockName` and the comment claimed
+// "block-above" — inverted from wiki. Siblings note_block_tuning.ts
+// and noteblock_pitch.ts already key on the block-below.
+export function instrumentFor(belowBlockName: string | null): NoteInstrument {
+  if (!belowBlockName) return 'harp';
   const map: Record<string, NoteInstrument> = {
     'webmc:wool_white': 'guitar',
     'webmc:wool_red': 'guitar',
@@ -50,14 +54,17 @@ export function instrumentFor(aboveBlockName: string | null): NoteInstrument {
     'webmc:hay_block': 'banjo',
     'webmc:glowstone': 'pling',
   };
-  return map[aboveBlockName] ?? 'harp';
+  return map[belowBlockName] ?? 'harp';
 }
 
-// Frequency in Hz for a given note (0 = F#3).
+// Wiki (minecraft.wiki/w/Note_Block): the 25-note range is F#3 (185 Hz)
+// at note=0 to F#5 (740 Hz) at note=24. Old formula
+// `440 * 2^((n-12)/12)` placed n=12 at A4 (440 Hz) instead of F#4
+// (370 Hz), so every produced frequency was ~19% high. Sibling
+// note_block_tuning.ts already uses the F#3-anchored 185 Hz base.
 export function noteFrequency(note: number): number {
   const n = Math.max(0, Math.min(24, note));
-  // MC: pitch = 2^((note - 12) / 12), base freq ≈ 440 at note=12 (A4 ish).
-  return 440 * Math.pow(2, (n - 12) / 12);
+  return 185 * Math.pow(2, n / 12);
 }
 
 export function cycleNote(state: NoteBlockState): void {
