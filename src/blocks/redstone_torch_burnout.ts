@@ -1,5 +1,13 @@
-// Redstone torch burns out if it rapidly toggles (4 or more flips
-// within 60 ticks). Stays off until nearby block updates.
+// Redstone torch burns out if it rapidly toggles. Stays off until a
+// nearby block update arrives.
+//
+// Wiki (minecraft.wiki/w/Redstone_Torch): a torch experiences burnout
+// when forced to turn off **more than eight times** in 60 game ticks
+// — i.e. the 9th turn-off in the window is the trip. Old threshold
+// was 4, ~2× too sensitive: hand-built clocks that should have run
+// reliably (the 3-torch loop the wiki specifically calls out as fixed
+// in 1.2 once the window dropped to 60 ticks) were burning out on the
+// 4th flip instead.
 
 export interface TorchState {
   on: boolean;
@@ -8,7 +16,7 @@ export interface TorchState {
 }
 
 export const TORCH_BURNOUT_WINDOW = 60;
-export const TORCH_BURNOUT_THRESHOLD = 4;
+export const TORCH_BURNOUT_THRESHOLD = 9;
 
 export function flip(s: TorchState, nowTick: number): TorchState {
   const recent = s.recentFlipTicks.filter((t) => nowTick - t < TORCH_BURNOUT_WINDOW);
