@@ -14,8 +14,9 @@ describe('sweet berry growth', () => {
     expect(tryGrow({ age: BERRY_MAX_AGE }, () => 0).age).toBe(BERRY_MAX_AGE);
   });
 
-  it('walk damage at 2+', () => {
-    expect(walkDamage({ age: 1 })).toBe(false);
+  it('walk damage at age 1+ (wiki: only age-0 sapling is harmless)', () => {
+    expect(walkDamage({ age: 0 })).toBe(false);
+    expect(walkDamage({ age: 1 })).toBe(true);
     expect(walkDamage({ age: 2 })).toBe(true);
     expect(walkDamage({ age: 3 })).toBe(true);
   });

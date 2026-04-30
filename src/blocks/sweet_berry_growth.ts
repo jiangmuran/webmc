@@ -13,8 +13,14 @@ export function tryGrow(c: BerryBushCtx, rand: () => number): BerryBushCtx {
   return { age: (c.age + 1) as BerryBushCtx['age'] };
 }
 
+// Wiki (minecraft.wiki/w/Sweet_Berries): "Sweet berry bushes damage
+// entities walking through them at age 1, 2, or 3" — only the age-0
+// sapling is harmless. Old check was `age >= 2`, so a small bush at
+// age 1 was passable damage-free, when wiki says any non-sapling
+// stage damages walkers. Sibling sweet_berry.ts already triggers
+// damage at age 1+.
 export function walkDamage(c: BerryBushCtx): boolean {
-  return c.age >= 2;
+  return c.age >= 1;
 }
 
 export interface HarvestResult {
