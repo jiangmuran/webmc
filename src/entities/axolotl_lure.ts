@@ -33,15 +33,23 @@ export function breedColor(
   return rand() < 0.5 ? parentA : parentB;
 }
 
-// Target selection: axolotls hate guardians, elder guardians, drowned,
-// all underwater hostile mobs.
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): axolotls "automatically
+// attack" every aquatic mob — squid, glow squid, cod, salmon,
+// pufferfish, tropical fish, drowned, guardians, elder guardians,
+// and tadpole. Old set was missing the four fish (cod, salmon,
+// tropical_fish are aquatic) and tadpole, so a tropical_fish in the
+// same lake as an axolotl was simply ignored.
 const HATED = new Set<string>([
   'guardian',
   'elder_guardian',
   'drowned',
   'squid',
   'glow_squid',
+  'cod',
+  'salmon',
   'pufferfish',
+  'tropical_fish',
+  'tadpole',
 ]);
 
 export function isHatedMob(mobType: string): boolean {
