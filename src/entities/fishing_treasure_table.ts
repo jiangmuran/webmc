@@ -6,10 +6,14 @@ export interface CatchEntry {
   weight: number;
 }
 
+// Wiki (minecraft.wiki/w/Fishing#Catch_table): canonical weights are
+// cod 60, salmon 25, pufferfish 13, tropical_fish 2 (total 100). Old
+// pufferfish weight 2 was 1/6.5× the wiki value, making pufferfish
+// essentially as rare as tropical fish — not vanilla.
 export const FISH_POOL: CatchEntry[] = [
   { itemId: 'webmc:cod', weight: 60 },
   { itemId: 'webmc:salmon', weight: 25 },
-  { itemId: 'webmc:pufferfish', weight: 2 },
+  { itemId: 'webmc:pufferfish', weight: 13 },
   { itemId: 'webmc:tropical_fish', weight: 2 },
 ];
 
