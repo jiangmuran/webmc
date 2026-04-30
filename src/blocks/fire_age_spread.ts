@@ -35,10 +35,17 @@ export interface FireTickQuery {
 
 export type TickResult = 'age_up' | 'burn_out';
 
+// Wiki (minecraft.wiki/w/Fire): "Fire is extinguished by rain
+// immediately, regardless of humidity, age, or block underneath
+// (except infinite-fuel blocks which don't see rain)." Old code
+// rolled a 20% chance to burn out under rain, leaving fires alive
+// 80% of ticks during a thunderstorm. Humid biomes slow spread but
+// do NOT cause burn-out — that branch was dropping fire 20% of the
+// time in jungles too. Sibling fire_burnout_age.ts already
+// extinguishes unconditionally on rain.
 export function tickFire(q: FireTickQuery): TickResult {
-  if (q.isRaining || q.humidityIsHigh) {
-    if (q.rand() < 0.2) return 'burn_out';
-  }
+  if (q.isRaining) return 'burn_out';
+  void q.humidityIsHigh;
   if (q.age >= FIRE_AGE_MAX && q.rand() < 0.25) return 'burn_out';
   return 'age_up';
 }
