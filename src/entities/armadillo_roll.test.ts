@@ -32,12 +32,12 @@ describe('armadillo roll', () => {
     expect(s.rolled).toBe(false);
   });
 
-  it('rolled armadillo ignores melee damage', () => {
-    expect(armadilloTakeDamage({ rolled: true, incoming: 5, source: 'melee' })).toBe(0);
+  it('rolled armadillo takes 50% melee damage (wiki)', () => {
+    expect(armadilloTakeDamage({ rolled: true, incoming: 6, source: 'melee' })).toBe(3);
   });
 
-  it('rolled armadillo still takes projectile damage', () => {
-    expect(armadilloTakeDamage({ rolled: true, incoming: 5, source: 'projectile' })).toBe(5);
+  it('rolled armadillo immune to projectiles (wiki)', () => {
+    expect(armadilloTakeDamage({ rolled: true, incoming: 5, source: 'projectile' })).toBe(0);
   });
 
   it('unrolled armadillo takes all damage', () => {

@@ -53,8 +53,13 @@ export function tickArmadilloRoll(
   return { stateChanged: false };
 }
 
-// Damage handling: rolled armadillo takes 0 damage from melee; projectiles
-// still hurt (wind_charge, arrows). Returns the final damage to apply.
+// Wiki (minecraft.wiki/w/Armadillo): "When curled, an armadillo takes
+// 50% damage from melee attacks and 0% from projectiles." Old function
+// inverted both: it returned 0 for melee (immune) and full incoming
+// for projectiles (un-protected). Sibling armadillo.ts uses the
+// canonical 50%-melee / 0-projectile rule.
+export const ROLLED_MELEE_MULT = 0.5;
+
 export interface ArmadilloDamageQuery {
   rolled: boolean;
   incoming: number;
@@ -63,6 +68,7 @@ export interface ArmadilloDamageQuery {
 
 export function armadilloTakeDamage(q: ArmadilloDamageQuery): number {
   if (!q.rolled) return q.incoming;
-  if (q.source === 'melee') return 0;
+  if (q.source === 'projectile') return 0;
+  if (q.source === 'melee') return q.incoming * ROLLED_MELEE_MULT;
   return q.incoming;
 }
