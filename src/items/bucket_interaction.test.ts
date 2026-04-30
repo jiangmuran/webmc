@@ -22,6 +22,10 @@ describe('bucket interaction', () => {
 
   it('place returns empty', () => {
     expect(returnsEmptyAfterPlacement('water')).toBe(true);
+    expect(returnsEmptyAfterPlacement('lava')).toBe(true);
+    expect(returnsEmptyAfterPlacement('powder_snow')).toBe(true);
+    expect(returnsEmptyAfterPlacement('fish')).toBe(true);
+    expect(returnsEmptyAfterPlacement('axolotl')).toBe(true);
     expect(returnsEmptyAfterPlacement('milk')).toBe(false);
   });
 });
