@@ -1,12 +1,16 @@
-// Chicken jockey. Tiny zombie riding a chicken; rare spawn (~5% of
-// baby zombie spawns).
+// Chicken jockey. Tiny zombie riding a chicken; rare spawn.
+//
+// Wiki (minecraft.wiki/w/Zombie#Jockeys): "every baby zombie has a
+// chance to spawn as a chicken jockey. In a chicken-free environment,
+// each baby has a 4.75% chance of spawning as a chicken jockey."
+// Old constant 5% was rounded; the canonical value is 4.75%.
 
 export interface JockeyQuery {
   babyZombieSpawning: boolean;
   rand: () => number;
 }
 
-export const JOCKEY_CHANCE = 0.05;
+export const JOCKEY_CHANCE = 0.0475;
 
 export function shouldBeJockey(q: JockeyQuery): boolean {
   if (!q.babyZombieSpawning) return false;
