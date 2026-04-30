@@ -11,8 +11,8 @@ describe('anvil fall', () => {
     expect(anvilFallDamage(10)).toBe(18);
   });
 
-  it('cap at 20 for extreme falls', () => {
-    expect(anvilFallDamage(1000)).toBe(20);
+  it('cap at 40 for extreme falls (wiki)', () => {
+    expect(anvilFallDamage(1000)).toBe(40);
   });
 
   it('tier progresses intact → chipped → damaged → broken', () => {
