@@ -45,7 +45,11 @@ describe('mace smash damage', () => {
     expect(breachReducesArmor(4, 20)).toBeLessThan(20);
   });
 
-  it('wind burst velocity scales', () => {
-    expect(windBurstVelocity(3)).toBe(1.5);
+  it('wind burst velocity 1.15 + 0.35 × level (wiki)', () => {
+    // Wiki formula: knockback multiplier = 1.15 + 0.35 × level
+    expect(windBurstVelocity(0)).toBe(0);
+    expect(windBurstVelocity(1)).toBeCloseTo(1.5);
+    expect(windBurstVelocity(2)).toBeCloseTo(1.85);
+    expect(windBurstVelocity(3)).toBeCloseTo(2.2);
   });
 });

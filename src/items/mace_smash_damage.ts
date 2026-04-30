@@ -34,6 +34,14 @@ export function breachReducesArmor(breachLevel: number, armor: number): number {
   return Math.max(0, armor - breachLevel * 0.15 * armor);
 }
 
+// Wiki (minecraft.wiki/w/Wind_Burst): "Wind Burst levels use the
+// formula `1.15 + 0.35 * level` to calculate the knockback
+// multiplier" — at level I/II/III the multiplier is 1.5/1.85/2.2.
+// Old formula `level * 0.5` returned 0.5/1.0/1.5 and missed the
+// 1.15 base entirely; level I gave 0.5 instead of the wiki's 1.5,
+// so the upward launch was 67% short and players couldn't chain
+// smash attacks at all.
 export function windBurstVelocity(windBurstLevel: number): number {
-  return windBurstLevel * 0.5;
+  if (windBurstLevel <= 0) return 0;
+  return 1.15 + 0.35 * windBurstLevel;
 }
