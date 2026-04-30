@@ -54,6 +54,13 @@ export interface InsertResult {
   leveledUp: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Composter): "When the composter is empty,
+// any compostable item added always creates the first layer of
+// compost, regardless of its usual composting chance." Old code
+// rolled the per-item chance even at level 0, so a wheat-seed
+// (30%) would fail 70% of the time on an empty composter even
+// though canon says it should always succeed. MC-196452 confirms
+// this is intended behaviour, not a bug.
 export function insertIntoComposter(
   state: ComposterState,
   itemName: string,
@@ -62,6 +69,11 @@ export function insertIntoComposter(
   if (state.level >= FULL_LEVEL) return { accepted: false, leveledUp: false };
   const chance = composterChance(itemName);
   if (chance <= 0) return { accepted: false, leveledUp: false };
+  // Empty composter: first compostable item ALWAYS creates layer 1.
+  if (state.level === 0) {
+    state.level = 1;
+    return { accepted: true, leveledUp: true };
+  }
   if (rng() < chance) {
     state.level++;
     return { accepted: true, leveledUp: true };
