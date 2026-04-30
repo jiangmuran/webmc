@@ -28,7 +28,10 @@ export interface GuardianTickResult {
   chargingProgress: number; // 0..1
 }
 
-const DAMAGE_BY_DIFFICULTY = { peaceful: 0, easy: 6, normal: 8, hard: 12 };
+// Wiki (minecraft.wiki/w/Guardian): "Laser: Easy 4, Normal 6,
+// Hard 9 hp." Old table 6/8/12 was inflated 50% above the wiki at
+// every difficulty.
+const DAMAGE_BY_DIFFICULTY = { peaceful: 0, easy: 4, normal: 6, hard: 9 };
 
 export function tickGuardian(state: GuardianLaserState, ctx: GuardianTickCtx): GuardianTickResult {
   state.cooldownSec = Math.max(0, state.cooldownSec - ctx.dtSec);
