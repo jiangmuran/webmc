@@ -50,9 +50,19 @@ describe('warden sonic', () => {
     expect(sonicDamage()).toBe(SONIC_DAMAGE);
   });
 
-  it('vibration priority', () => {
+  it('vibration frequency higher for shooting than walking (wiki: 3 vs 1)', () => {
     expect(vibrationPriorityFor('projectile_shoot')).toBeGreaterThan(
       vibrationPriorityFor('footstep'),
     );
+  });
+
+  it('wiki canonical frequencies (minecraft.wiki/w/Vibration)', () => {
+    expect(vibrationPriorityFor('footstep')).toBe(1);
+    expect(vibrationPriorityFor('projectile_land')).toBe(2);
+    expect(vibrationPriorityFor('projectile_shoot')).toBe(3);
+    expect(vibrationPriorityFor('entity_damage')).toBe(7);
+    expect(vibrationPriorityFor('container_open')).toBe(10);
+    expect(vibrationPriorityFor('block_break')).toBe(12);
+    expect(vibrationPriorityFor('block_place')).toBe(13);
   });
 });

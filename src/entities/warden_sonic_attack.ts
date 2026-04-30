@@ -38,14 +38,29 @@ export function sonicDamage(): number {
   return SONIC_DAMAGE;
 }
 
-// Vibration detection thresholds (subscript: event → detection priority).
+// Vibration frequency by event. Wiki (minecraft.wiki/w/Vibration#
+// Vibration_frequency) defines a 1..15 scale where the sculk sensor's
+// redstone output equals the vibration frequency. Old values invented
+// thresholds that didn't match canon (block_break 11 vs wiki 12,
+// footstep 6 vs wiki 1, projectile_shoot 14 vs wiki 3, etc.). Now
+// keyed to the wiki table:
+//   Step:               1
+//   Projectile Land:    2  (also Hit Ground, Splash)
+//   Projectile Shoot:   3
+//   Entity Damage:      7
+//   Container Open:     10
+//   Block Destroy:      12 (block break)
+//   Block Place:        13
 export const VIBRATION_PRIORITY: Record<string, number> = {
-  block_break: 11,
-  block_place: 11,
-  footstep: 6,
-  projectile_shoot: 14,
-  projectile_land: 13,
-  entity_damage: 10,
+  footstep: 1,
+  projectile_land: 2,
+  projectile_shoot: 3,
+  entity_damage: 7,
+  container_open: 10,
+  block_break: 12,
+  block_place: 13,
+  // Sculk shriek itself is not a vibration; warden anger comes from
+  // the shrieker's witness call separately.
   sculk_shriek: 0,
 };
 
