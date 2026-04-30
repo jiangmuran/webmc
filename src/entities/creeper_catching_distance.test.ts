@@ -3,7 +3,6 @@ import {
   shouldIgnite,
   shouldAbort,
   readyToExplode,
-  IGNITE_RANGE,
   MAX_FUSE_TICKS,
 } from './creeper_catching_distance';
 
@@ -16,10 +15,11 @@ describe('creeper catching distance', () => {
     expect(shouldIgnite({ distanceToTarget: 2, fuseTicks: 0, lineOfSight: false })).toBe(false);
   });
 
-  it('aborts when out of range', () => {
-    expect(
-      shouldAbort({ distanceToTarget: IGNITE_RANGE * 3, fuseTicks: 10, lineOfSight: true }),
-    ).toBe(true);
+  it('aborts beyond 7-block cancel range (wiki)', () => {
+    // Just outside 7-block cancel range
+    expect(shouldAbort({ distanceToTarget: 8, fuseTicks: 10, lineOfSight: true })).toBe(true);
+    // Within cancel range (between ignite=3 and cancel=7) — does NOT abort
+    expect(shouldAbort({ distanceToTarget: 5, fuseTicks: 10, lineOfSight: true })).toBe(false);
   });
 
   it('explodes at max fuse', () => {
