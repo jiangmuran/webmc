@@ -26,11 +26,17 @@ export function makeBrewingStand(): BrewingState {
 }
 
 export const BREW_TOTAL_SEC = 20;
+// Wiki (minecraft.wiki/w/Brewing_Stand): "Each blaze powder added to
+// a brewing stand provides 20 brewing operations of fuel." Old
+// addFuel bumped fuelPower by +1 per blaze powder, so a stand needed
+// 20 blaze powders to fill its fuel bar — 20× the canonical cost
+// per brew.
+export const BLAZE_POWDER_BREWS = 20;
 
 // Add a blaze powder; returns true on success.
 export function addFuel(state: BrewingState): boolean {
-  if (state.fuelPower >= 20) return false;
-  state.fuelPower = Math.min(20, state.fuelPower + 1);
+  if (state.fuelPower >= BLAZE_POWDER_BREWS) return false;
+  state.fuelPower = Math.min(BLAZE_POWDER_BREWS, state.fuelPower + BLAZE_POWDER_BREWS);
   return true;
 }
 
