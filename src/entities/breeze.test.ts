@@ -51,4 +51,15 @@ describe('breeze', () => {
     const d = breezeDrops(0);
     expect(d[0]?.item).toBe('webmc:breeze_rod');
   });
+
+  it('drops 1-2 base (wiki quantity=1-2)', () => {
+    expect(breezeDrops(0, () => 0)[0]?.count).toBe(1);
+    expect(breezeDrops(0, () => 0.999)[0]?.count).toBe(2);
+  });
+
+  it('Looting +1-2 per level (wiki lootingquantity=1-2)', () => {
+    // Looting III at min roll: 1 + 1+1+1 = 4. At max: 2 + 2+2+2 = 8.
+    expect(breezeDrops(3, () => 0)[0]?.count).toBe(4);
+    expect(breezeDrops(3, () => 0.999)[0]?.count).toBe(8);
+  });
 });

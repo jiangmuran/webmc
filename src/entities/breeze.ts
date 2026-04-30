@@ -89,8 +89,18 @@ export interface BreezeDrop {
   count: number;
 }
 
-export function breezeDrops(lootingLevel: number): BreezeDrop[] {
-  const base = 1;
-  const bonus = lootingLevel > 0 ? Math.floor(Math.random() * (lootingLevel + 1)) : 0;
-  return [{ item: 'webmc:breeze_rod', count: base + bonus }];
+// Wiki (minecraft.wiki/w/Breeze#Drops): "Breeze Rod (quantity=1-2,
+// lootingquantity=1-2, only when killed by player or pet)." Old
+// formula gave base 1 + floor(rand × (looting+1)), yielding 1 at
+// Looting 0 (vs wiki 1-2) and 1-4 at Looting III (vs wiki 4-8).
+// Now base rolls 1-2 and each Looting level adds an independent
+// 1-2 roll, matching the wiki's lootingquantity notation. Caller
+// supplies the killed-by-player check; this just computes the
+// stack size when the drop fires.
+export function breezeDrops(lootingLevel: number, rand: () => number = Math.random): BreezeDrop[] {
+  let count = 1 + Math.floor(rand() * 2); // 1-2 base
+  for (let i = 0; i < Math.max(0, lootingLevel); i++) {
+    count += 1 + Math.floor(rand() * 2); // +1-2 per level
+  }
+  return [{ item: 'webmc:breeze_rod', count }];
 }
