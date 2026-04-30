@@ -27,11 +27,20 @@ export interface ExplosionResult {
   damagedEntities: readonly { id: number; damage: number }[];
 }
 
-// MC's "ray-trace from center to sphere surface, deplete strength by block
-// resistance" algorithm, simplified to a uniform sphere and an integer
-// lattice traversal. Power 4 (creeper) destroys most blocks within ~3m;
-// power 8 (charged creeper) within ~5m.
+// Wiki (minecraft.wiki/w/Explosion): the per-step ray algorithm is:
+//   1. If block isn't air, intensity -= (blast_resistance + 0.3) × 0.3
+//   2. If intensity > 0 and breakable, add block to destroy list
+//   3. Position += direction × 0.3
+//   4. Intensity -= 0.22500001
+//   5. Loop while intensity > 0
+//
+// Step 4's air-step attenuation is a constant 0.225 per step,
+// independent of step size. Old code multiplied by RAY_STEP (0.3),
+// yielding 0.0675 per step — about 1/3 of the wiki rate. That made
+// rays travel ~3× further than canon and destroyed far more blocks
+// than expected.
 const RAY_STEP = 0.3;
+const AIR_ATTENUATION_PER_STEP = 0.22500001;
 const RAY_RESOLUTION = 16;
 
 export function computeExplosion(
@@ -66,7 +75,7 @@ export function computeExplosion(
           strength -= (res + 0.3) * RAY_STEP;
           if (strength > 0) destroyed.add(key(bx, by, bz));
         }
-        strength -= 0.225 * RAY_STEP; // air attenuation
+        strength -= AIR_ATTENUATION_PER_STEP; // wiki: per-step constant, not × RAY_STEP
         cx += dx * RAY_STEP;
         cy += dy * RAY_STEP;
         cz += dz * RAY_STEP;
