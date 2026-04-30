@@ -4,16 +4,22 @@ export interface Raider {
   isRaider: boolean;
 }
 
-// Wiki: bell rings highlight illagers within 32 blocks horizontally
-// (and 4 vertical). Was 48 — matches bell_ring_radius.RING_SOUND_RADIUS
-// but that's the audio range, not the highlight range. The
-// bell_resonate module had 32 correctly.
-export const HIGHLIGHT_RADIUS = 32;
+// Wiki (minecraft.wiki/w/Bell#Glowing_effect): "If a bell is rung
+// and there is a raid mob within a 32 block spherical range, the
+// Glowing effect is applied to all raid mobs within 48 blocks for
+// 3 seconds." Two distinct radii — a 32-block TRIGGER (must have
+// at least one raider in range to activate the effect at all) and
+// a 48-block APPLY (the actual highlight reach once triggered).
+// Old code conflated them at 32, missing raiders in the 32–48
+// shell that should glow per wiki.
+export const TRIGGER_RADIUS = 32;
+export const APPLY_RADIUS = 48;
 
 export function raidersHighlighted(bellX: number, bellZ: number, entities: Raider[]): Raider[] {
-  return entities.filter(
-    (e) => e.isRaider && Math.hypot(e.x - bellX, e.z - bellZ) <= HIGHLIGHT_RADIUS,
-  );
+  const dist = (e: Raider) => Math.hypot(e.x - bellX, e.z - bellZ);
+  const triggered = entities.some((e) => e.isRaider && dist(e) <= TRIGGER_RADIUS);
+  if (!triggered) return [];
+  return entities.filter((e) => e.isRaider && dist(e) <= APPLY_RADIUS);
 }
 
 export function highlightDurationTicks(): number {
