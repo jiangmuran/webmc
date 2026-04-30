@@ -12,9 +12,9 @@ describe('bogged skeleton', () => {
     expect(nextShot().arrowType).toBe('tipped_poison');
   });
 
-  it('poison 7s', () => {
-    expect(nextShot().poisonDurationTicks).toBe(140);
-    expect(BOGGED_POISON_DURATION_TICKS).toBe(140);
+  it('poison 4s = 80 ticks (wiki Bogged: Arrow of Poison for 4 seconds)', () => {
+    expect(nextShot().poisonDurationTicks).toBe(80);
+    expect(BOGGED_POISON_DURATION_TICKS).toBe(80);
   });
 
   it('cooldown slower than skeleton', () => {
