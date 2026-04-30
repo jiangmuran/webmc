@@ -48,7 +48,12 @@ export function tickSonic(state: SonicBoomState, ctx: SonicContext): SonicResult
   return { fired: true, charging: false };
 }
 
-export const SONIC_BOOM_DAMAGE = 30;
+// Wiki (minecraft.wiki/w/Warden): "Ranged: (ignores armor and
+// Protection) Easy 6, Normal 10, Hard 15." Old constant was 30 —
+// that's the Normal MELEE damage, not the sonic ranged damage.
+// Default to the Normal value (10); difficulty scaling is applied
+// at the damage-pipeline boundary.
+export const SONIC_BOOM_DAMAGE = 10;
 export const SONIC_BOOM_RANGE = 20;
 export const SONIC_BOOM_WIDTH = 2; // half-width of beam
 

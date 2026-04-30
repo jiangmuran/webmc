@@ -40,7 +40,8 @@ describe('warden sonic boom', () => {
     expect(hits).not.toContain(4);
   });
 
-  it('damage constant is 30', () => {
-    expect(SONIC_BOOM_DAMAGE).toBe(30);
+  it('damage constant is 10 (Normal difficulty, wiki)', () => {
+    // Wiki: Sonic Boom 6/10/15 on Easy/Normal/Hard. Default Normal.
+    expect(SONIC_BOOM_DAMAGE).toBe(10);
   });
 });
