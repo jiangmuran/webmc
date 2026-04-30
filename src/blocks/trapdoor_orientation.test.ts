@@ -13,8 +13,12 @@ describe('trapdoor orientation', () => {
     expect(blocksMovementWhenClosed(base)).toBe(true);
   });
 
-  it('open climbable', () => {
-    expect(isClimbable({ ...base, open: true })).toBe(true);
+  it('open trapdoor only climbable when ladder is below (wiki)', () => {
+    expect(isClimbable({ ...base, open: true }, 'ladder')).toBe(true);
+    // Without a ladder below, an open trapdoor is just passable, not climbable.
+    expect(isClimbable({ ...base, open: true }, 'other')).toBe(false);
+    // Default-arg overload also defaults to non-climbable.
+    expect(isClimbable({ ...base, open: true })).toBe(false);
   });
 
   it('redstone opens', () => {
