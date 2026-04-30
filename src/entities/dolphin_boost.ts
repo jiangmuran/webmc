@@ -8,11 +8,20 @@ export interface DolphinAffinity {
   leadingToStructure: 'shipwreck' | 'ruin' | null;
 }
 
+// Wiki (minecraft.wiki/w/Dolphin's_Grace): "The player must sprint-
+// swim within 9 blocks (Euclidean) of a dolphin to achieve this
+// effect with it being replenished if the player continues sprint-
+// swimming within 15 blocks (Euclidean)." Old GRACE_RADIUS = 6 was
+// 33% short of the 9-block trigger range and didn't model the
+// hysteresis between "trigger" and "sustain" radii.
 export const GRACE_SPEED_MULT = 1.4;
-export const GRACE_RADIUS = 6;
+export const GRACE_TRIGGER_RADIUS = 9;
+export const GRACE_SUSTAIN_RADIUS = 15;
+// Back-compat alias for callers that referenced the single radius.
+export const GRACE_RADIUS = GRACE_TRIGGER_RADIUS;
 
-export function playerHasGrace(distance: number): boolean {
-  return distance <= GRACE_RADIUS;
+export function playerHasGrace(distance: number, alreadyHasGrace = false): boolean {
+  return alreadyHasGrace ? distance <= GRACE_SUSTAIN_RADIUS : distance <= GRACE_TRIGGER_RADIUS;
 }
 
 export function swimSpeedMult(grace: boolean): number {

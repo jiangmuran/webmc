@@ -83,7 +83,14 @@ export function feedDolphin(state: DolphinState, playerId: string): boolean {
 }
 
 // Applies Dolphin's Grace to nearby swimming players.
-export const DOLPHIN_GRACE_RADIUS = 10;
+// Wiki (minecraft.wiki/w/Dolphin's_Grace): "The player must sprint-
+// swim within 9 blocks (Euclidean) of a dolphin to achieve this
+// effect with it being replenished if the player continues sprint-
+// swimming within 15 blocks (Euclidean)." Old constant 10 split the
+// difference between trigger (9) and sustain (15) radii. Sibling
+// dolphin_boost.ts now exposes both — this function uses the
+// trigger radius for the initial-grace check.
+export const DOLPHIN_GRACE_RADIUS = 9;
 
 export function playersInGraceRange(
   state: DolphinState,
