@@ -13,13 +13,24 @@ describe('anvil stage damage', () => {
     expect(damageOnUse('anvil', () => 0.99)).toBe('anvil');
   });
 
-  it('fall compounds damage', () => {
-    expect(damageOnFall('anvil', 2)).toBe('damaged_anvil');
-    expect(damageOnFall('anvil', 3)).toBe('destroyed');
+  it('fall advances at most one stage on a lucky roll (wiki)', () => {
+    // Wiki: 5% × blocks chance of single-stage degrade. 10-block drop
+    // → 50% chance. With rng()=0 (always passes) we get exactly one
+    // stage, NOT three.
+    expect(damageOnFall('anvil', 10, () => 0)).toBe('chipped_anvil');
+    expect(damageOnFall('anvil', 3, () => 0)).toBe('chipped_anvil');
+  });
+
+  it('fall ≤1 block never damages', () => {
+    expect(damageOnFall('anvil', 1, () => 0)).toBe('anvil');
+  });
+
+  it('high roll spares the anvil', () => {
+    expect(damageOnFall('anvil', 5, () => 0.99)).toBe('anvil');
   });
 
   it('destroyed stays destroyed', () => {
     expect(damageOnUse('destroyed', () => 0)).toBe('destroyed');
-    expect(damageOnFall('destroyed', 10)).toBe('destroyed');
+    expect(damageOnFall('destroyed', 10, () => 0)).toBe('destroyed');
   });
 });
