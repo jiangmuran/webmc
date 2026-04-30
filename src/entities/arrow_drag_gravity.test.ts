@@ -16,4 +16,11 @@ describe('arrow drag gravity', () => {
     const water = step({ vx: 10, vy: 0, vz: 0, inWater: true });
     expect(water.vx).toBeLessThan(air.vx);
   });
+
+  it('drag-first then gravity (wiki: V_1.y = 0.99·V_0.y − 0.05)', () => {
+    const a = step({ vx: 0, vy: 0, vz: 0, inWater: false });
+    expect(a.vy).toBeCloseTo(-0.05, 10);
+    const b = step({ vx: 0, vy: 1, vz: 0, inWater: false });
+    expect(b.vy).toBeCloseTo(0.99 * 1 - 0.05, 10);
+  });
 });
