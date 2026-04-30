@@ -17,11 +17,18 @@ export interface BreakDoorQuery {
   deltaTicks: number;
 }
 
+// Wiki (minecraft.wiki/w/Vindicator): "On Normal and Hard
+// difficulties, vindicators that are part of a raid can break
+// wooden doors." Old code allowed raid door-break on Easy too,
+// contradicting the wiki's explicit "Normal and Hard" gate.
+// Johnny vindicators (joke variant) can break regardless of
+// difficulty since they aren't gated by raid status.
 export function tickBreakDoor(
   v: VindicatorState,
   q: BreakDoorQuery,
 ): 'broken' | 'progress' | 'not_attacking' {
   if (!v.inRaid && !v.isJohnny) return 'not_attacking';
+  if (v.inRaid && !v.isJohnny && q.difficulty === 'easy') return 'not_attacking';
   const total = q.difficulty === 'hard' ? BREAK_TICKS_HARD : BREAK_TICKS_NORMAL;
   if (!v.breakTargetPos) {
     v.breakTargetPos = q.doorPos;

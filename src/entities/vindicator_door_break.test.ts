@@ -44,4 +44,26 @@ describe('vindicator', () => {
         .length,
     ).toBeGreaterThan(3);
   });
+
+  it('Easy difficulty raid does NOT break doors (wiki: Normal+ only)', () => {
+    const v = { inRaid: true, breakTargetPos: null, breakProgress: 0, isJohnny: false };
+    expect(
+      tickBreakDoor(v, {
+        difficulty: 'easy',
+        doorPos: { x: 0, y: 0, z: 0 },
+        deltaTicks: 1000,
+      }),
+    ).toBe('not_attacking');
+  });
+
+  it('Easy difficulty Johnny still breaks doors (joke variant ungated)', () => {
+    const v = { inRaid: false, breakTargetPos: null, breakProgress: 0, isJohnny: true };
+    expect(
+      tickBreakDoor(v, {
+        difficulty: 'easy',
+        doorPos: { x: 0, y: 0, z: 0 },
+        deltaTicks: 10,
+      }),
+    ).toBe('progress');
+  });
 });
