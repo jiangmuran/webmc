@@ -18,6 +18,17 @@ describe('zombie reinforcement', () => {
     ).toBe(false);
   });
 
+  it('Normal difficulty does NOT summon (wiki: Hard only)', () => {
+    expect(
+      shouldSummonReinforcement({
+        difficulty: 'normal',
+        zombiesNearby: 0,
+        canSummon: true,
+        roll: 0.01,
+      }).summon,
+    ).toBe(false);
+  });
+
   it('hard with low roll summons', () => {
     const r = shouldSummonReinforcement({
       difficulty: 'hard',

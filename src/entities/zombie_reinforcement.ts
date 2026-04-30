@@ -1,7 +1,17 @@
-// Zombie reinforcement. On Hard difficulty, a zombie taking damage has
-// a (randomized) chance to call a new zombie to spawn nearby. Normal
-// and Easy have lower/zero chance. The spawning zombie inherits any
-// "reinforcement" flag suppression so it doesn't chain.
+// Zombie reinforcement. Only Hard difficulty allows reinforcements;
+// the spawning zombie inherits a "reinforcement" flag so it doesn't
+// chain.
+//
+// Wiki (minecraft.wiki/w/Zombie#Reinforcements): "In Hard difficulty,
+// zombie mobs can spawn additional zombie mobs of the same type to
+// 'help' when damaged while targeting a player or other entity. Each
+// mob has a 'likeliness to call reinforcements' statistic ranging
+// from 0–10%, and 'leader' zombie mobs get a bonus of 50–75
+// percentage points."
+//
+// Old chances allowed Normal difficulty (0.05) reinforcements — the
+// wiki explicitly limits the mechanic to Hard. The 10% upper bound
+// matches the wiki for non-leader zombies.
 
 export type Difficulty = 'peaceful' | 'easy' | 'normal' | 'hard';
 
@@ -15,7 +25,7 @@ export interface ReinforcementQuery {
 const CHANCES: Record<Difficulty, number> = {
   peaceful: 0,
   easy: 0,
-  normal: 0.05,
+  normal: 0,
   hard: 0.1,
 };
 
