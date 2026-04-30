@@ -8,7 +8,12 @@ export interface Breeze {
   charging: boolean;
 }
 
-export const CHARGE_COOLDOWN_MS = 3000;
+// Wiki (minecraft.wiki/w/Breeze): "Each Breeze takes ~30 ticks (1.5 s)
+// to shoot one wind charge after locking on a target." Old 3 s
+// cooldown was 2× the wiki value, halving the breeze's fire rate.
+// Sibling breeze_attack.ts now uses 30 ticks; bringing this copy
+// into line at 1.5 s.
+export const CHARGE_COOLDOWN_MS = 1500;
 export const MAX_HP = 30;
 
 export function makeBreeze(): Breeze {
