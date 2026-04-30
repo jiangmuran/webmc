@@ -10,9 +10,11 @@ describe('turtle egg hatch', () => {
     expect(randomTick({ stage: 0, onSand: true }, true, () => 0.9).stage).toBe(0);
   });
 
-  it('day chance low', () => {
-    // p=0.015 ⇒ rand 0.02 does not trigger
-    expect(randomTick({ stage: 0, onSand: true }, false, () => 0.02).stage).toBe(0);
+  it('day chance is 1/500 (wiki)', () => {
+    // p=1/500=0.002 ⇒ rand 0.003 does not trigger
+    expect(randomTick({ stage: 0, onSand: true }, false, () => 0.003).stage).toBe(0);
+    // rand 0.001 does trigger
+    expect(randomTick({ stage: 0, onSand: true }, false, () => 0.001).stage).toBe(1);
   });
 
   it('hatch only at stage 2 night on sand', () => {
