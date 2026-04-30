@@ -1,5 +1,12 @@
-// Shulker teleport defensive. When hurt at > 50% HP, the shulker searches
-// for a wall within 17 blocks to teleport to, retreating from danger.
+// Shulker teleport defensive. When hurt below half HP, the shulker
+// searches for a wall to teleport to, retreating from danger.
+//
+// Wiki (minecraft.wiki/w/Shulker#Teleportation): "Each attempt checks
+// a random position within a 17x17x17 cube centered on the shulker's
+// current position." That cube spans ±8 on each axis (17 positions).
+// Old `hypot(dx,dy,dz) <= 17` treated this as a 17-block sphere,
+// allowing teleport destinations far outside the wiki cube — e.g.
+// a wall at (17, 0, 0) was reachable (wiki: max axis distance is 8).
 
 export interface Vec3 {
   x: number;
@@ -33,12 +40,13 @@ export function tickShulkerTeleport(state: ShulkerTeleportState, q: TeleportQuer
   state.teleportCooldownSec = Math.max(0, state.teleportCooldownSec - q.dtSec);
   if (state.teleportCooldownSec > 0) return { teleportTo: null };
   if (state.hp > state.maxHp / 2) return { teleportTo: null };
-  // Pick the first candidate wall within 17 blocks.
+  // Pick the first candidate wall inside the wiki's 17×17×17 cube
+  // (±8 on each axis).
   for (const wall of q.candidateWalls) {
     const dx = wall.x - state.position.x;
     const dy = wall.y - state.position.y;
     const dz = wall.z - state.position.z;
-    if (Math.hypot(dx, dy, dz) <= 17) {
+    if (Math.max(Math.abs(dx), Math.abs(dy), Math.abs(dz)) <= TELEPORT_AXIS_RANGE) {
       state.teleportCooldownSec = COOLDOWN_SEC;
       state.position = { ...wall };
       return { teleportTo: wall };
@@ -46,3 +54,5 @@ export function tickShulkerTeleport(state: ShulkerTeleportState, q: TeleportQuer
   }
   return { teleportTo: null };
 }
+
+export const TELEPORT_AXIS_RANGE = 8;
