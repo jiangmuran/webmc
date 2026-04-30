@@ -1,10 +1,11 @@
 // Endermen hold and drop blocks. Only a fixed allowlist is holdable.
 //
-// Wiki (minecraft.wiki/w/Enderman): the canonical #enderman_holdable
-// tag covers the dirt family + sand/red_sand/gravel/clay + pumpkin/
-// melon/cactus/TNT + both mushrooms + every small flower. Old set
-// only had dandelion+poppy among flowers and was missing podzol,
-// coarse_dirt, rooted_dirt, and 12 other small flowers.
+// Wiki (minecraft.wiki/w/Enderman#Moving_blocks, list of holdable
+// blocks). Earlier audits added the dirt family + small flowers
+// but missed several Nether-update and post-Wild-update additions:
+// mud, muddy_mangrove_roots, moss_block, pale_moss_block, both
+// nyliums, both fungi, both root variants, carved_pumpkin, and
+// the 1.21.5 cactus_flower.
 
 export const HELD_BLOCK_WHITELIST = new Set([
   'grass_block',
@@ -20,9 +21,21 @@ export const HELD_BLOCK_WHITELIST = new Set([
   'brown_mushroom',
   'red_mushroom',
   'pumpkin',
+  'carved_pumpkin',
   'melon',
   'tnt',
   'cactus',
+  'cactus_flower',
+  'mud',
+  'muddy_mangrove_roots',
+  'moss_block',
+  'pale_moss_block',
+  'crimson_nylium',
+  'warped_nylium',
+  'crimson_fungus',
+  'warped_fungus',
+  'crimson_roots',
+  'warped_roots',
   'dandelion',
   'poppy',
   'blue_orchid',
