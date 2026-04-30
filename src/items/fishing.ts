@@ -12,21 +12,17 @@ export interface FishingDrop {
   pool: FishingPool;
 }
 
-// Wiki (minecraft.wiki/w/Fishing): canonical fishing-loot weights.
-// Fixes:
-//  - 'raw_fish' / 'raw_salmon' (legacy 1.12 names) → cod / salmon (the
-//    raw form in modern MC, registered in webmc as cod/salmon).
-//  - pufferfish weight 13 → 2 (matches wiki; old 13 made pufferfish
-//    catches ~10× too common).
-//  - treasure pool entries weight 5 → 1 each (wiki: equal weights of
-//    1; the 5 inflates total but the proportional split was already
-//    even, so behaviour was OK — set to 1 for clarity and to match
-//    fishing_treasure_table.ts).
-//  - junk pool gains bamboo, bone, ink_sac, tripwire_hook from wiki.
+// Wiki (minecraft.wiki/w/Fishing#Catch_table): canonical fishing-loot
+// weights. Fish pool: cod 60, salmon 25, pufferfish 13, tropical_fish
+// 2 (total 100). A previous edit of this file flipped pufferfish
+// 13 → 2 with a comment claiming the wiki said 2, but the wiki
+// canonically lists pufferfish at 13 — restoring it. Also keeps
+// 'cod'/'salmon' as the modern raw-fish IDs (legacy 'raw_fish' is
+// gone).
 export const FISHING_DROPS: readonly FishingDrop[] = [
   { item: 'webmc:cod', count: 1, weight: 60, pool: 'fish' },
   { item: 'webmc:salmon', count: 1, weight: 25, pool: 'fish' },
-  { item: 'webmc:pufferfish', count: 1, weight: 2, pool: 'fish' },
+  { item: 'webmc:pufferfish', count: 1, weight: 13, pool: 'fish' },
   { item: 'webmc:tropical_fish', count: 1, weight: 2, pool: 'fish' },
   { item: 'webmc:bow', count: 1, weight: 1, pool: 'treasure' },
   { item: 'webmc:enchanted_book', count: 1, weight: 1, pool: 'treasure' },
