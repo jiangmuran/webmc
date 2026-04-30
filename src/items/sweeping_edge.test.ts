@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { sweepFraction, damageToSweepTarget, canSweep } from './sweeping_edge';
+import {
+  sweepFraction,
+  damageToSweepTarget,
+  canSweep,
+  SWEEP_COOLDOWN_THRESHOLD,
+} from './sweeping_edge';
 
 describe('sweeping edge', () => {
   it('fraction 0 at level 0', () => {
@@ -18,7 +23,11 @@ describe('sweeping edge', () => {
     expect(damageToSweepTarget(8, 3, { distance: 2 })).toBe(0);
   });
 
-  it('needs full cooldown', () => {
+  it('needs 84.8% cooldown (wiki), not 90%', () => {
+    expect(SWEEP_COOLDOWN_THRESHOLD).toBe(0.848);
+    // 0.85 above the wiki threshold → can sweep.
+    expect(canSweep({ attackStrengthPct: 0.85, sprinting: false, critical: false })).toBe(true);
+    // 0.5 below threshold → cannot.
     expect(canSweep({ attackStrengthPct: 0.5, sprinting: false, critical: false })).toBe(false);
   });
 

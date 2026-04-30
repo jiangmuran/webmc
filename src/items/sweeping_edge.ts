@@ -25,13 +25,21 @@ export function damageToSweepTarget(
   return mainDamage * sweepFraction(level);
 }
 
-// Sweep attacks require: sword + full attack cooldown + not sprinting + not critical.
+// Sweep attacks require: sword + 84.8%+ attack cooldown + not sprinting + not critical.
 export interface SweepCondition {
   attackStrengthPct: number;
   sprinting: boolean;
   critical: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Melee_attack#Attack_cooldown): "An attack
+// cooldown percentage of 84.8% or above is also required for
+// critical hits, sprint-knockback attacks, and sweep attacks to
+// activate." Old threshold of 90% was too strict — players hitting
+// at the wiki's 85–89% would lose the sweep, leaving slightly-early
+// swings that should sweep firing as plain hits.
+export const SWEEP_COOLDOWN_THRESHOLD = 0.848;
+
 export function canSweep(c: SweepCondition): boolean {
-  return c.attackStrengthPct >= 0.9 && !c.sprinting && !c.critical;
+  return c.attackStrengthPct >= SWEEP_COOLDOWN_THRESHOLD && !c.sprinting && !c.critical;
 }
