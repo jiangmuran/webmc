@@ -38,4 +38,14 @@ describe('piglin gold priority', () => {
   it('block not barterable', () => {
     expect(barterable('gold_block')).toBe(false);
   });
+
+  it('powered_rail is NOT piglin-loved (wiki: not in piglin_loved tag)', () => {
+    expect(isGoldItem('powered_rail')).toBe(false);
+  });
+
+  it('1.21+ piglin-loved additions (wiki)', () => {
+    expect(isGoldItem('golden_dandelion')).toBe(true);
+    expect(isGoldItem('golden_spear')).toBe(true);
+    expect(isGoldItem('golden_nautilus_armor')).toBe(true);
+  });
 });
