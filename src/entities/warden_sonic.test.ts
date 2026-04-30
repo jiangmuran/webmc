@@ -2,18 +2,27 @@ import { describe, it, expect } from 'vitest';
 import { SONIC_BOOM_DAMAGE, entitiesInBeam, makeSonicBoom, tickSonic } from './warden_sonic';
 
 describe('warden sonic boom', () => {
-  it('needs 3 seconds of charge + line of sight', () => {
+  it('needs 1.7s of charge + line of sight (wiki)', () => {
     const s = makeSonicBoom();
     let fired = false;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 30; i++) {
       if (tickSonic(s, { hasTarget: true, lineOfSight: true, dtSec: 0.1 }).fired) fired = true;
     }
     expect(fired).toBe(true);
   });
 
+  it('does not fire before 1.7s charge (wiki)', () => {
+    const s = makeSonicBoom();
+    // 1 second of charging — should not fire (wiki: needs 1.7s)
+    for (let i = 0; i < 10; i++) {
+      const r = tickSonic(s, { hasTarget: true, lineOfSight: true, dtSec: 0.1 });
+      expect(r.fired).toBe(false);
+    }
+  });
+
   it('breaks charge when line of sight lost', () => {
     const s = makeSonicBoom();
-    tickSonic(s, { hasTarget: true, lineOfSight: true, dtSec: 1.5 });
+    tickSonic(s, { hasTarget: true, lineOfSight: true, dtSec: 1 });
     tickSonic(s, { hasTarget: true, lineOfSight: false, dtSec: 0.1 });
     expect(s.chargingSec).toBe(0);
   });
