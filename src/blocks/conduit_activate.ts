@@ -59,7 +59,13 @@ export function evaluateConduit(q: ConduitQuery): ConduitStatus {
     }
   }
   const active = count >= MIN_FRAME_BLOCKS_FOR_ACTIVATION;
-  const radius = active ? Math.floor(16 * (Math.min(count, FULL_FRAME_MAX) / 7)) : 0;
+  // Wiki (minecraft.wiki/w/Conduit): "The conduit's power range, in
+  // blocks, is 16 × floor(activator_count / 7)" — the floor is on
+  // the inner division, not the outer product. Old code did
+  // `floor(16 * count/7)` which gave 36 at the 16-block activation
+  // threshold (where wiki says 32) and similar drift at every
+  // intermediate count not a multiple of 7.
+  const radius = active ? 16 * Math.floor(Math.min(count, FULL_FRAME_MAX) / 7) : 0;
   const attackHostiles = count >= FULL_FRAME_MAX;
   return { active, frameBlockCount: count, powerRadius: radius, attackHostiles };
 }
