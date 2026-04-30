@@ -30,6 +30,14 @@ export function canCast(s: EvokerState, spell: Spell, nowMs: number): boolean {
   return nowMs - s.lastCastMs[spell] >= SPELL_COOLDOWN_MS[spell];
 }
 
+// Wiki (minecraft.wiki/w/Evoker): "The evoker can summon vexes as
+// long as there are fewer than eight vexes within sixteen blocks
+// centered on the evoker." Old vexCount < 3 cap let an evoker rest
+// after only 3 vexes around it — the wiki cap is 8, more than 2×.
+// Each vex summon spawns 3 vexes, so a 3-cap effectively limited
+// the evoker to 1 vex burst before going dry.
+export const VEX_NEARBY_CAP = 8;
+
 export interface PickQuery {
   nowMs: number;
   rand: () => number;
@@ -43,7 +51,10 @@ export function pickSpell(s: EvokerState, q: PickQuery): Spell | null {
   const candidates: Spell[] = [];
   if (q.sheepNearby && canCast(s, 'wololo', q.nowMs)) candidates.push('wololo');
   if (q.enemyNearby && canCast(s, 'fangs_line', q.nowMs)) candidates.push('fangs_line');
-  if (q.vexCount < 3 && canCast(s, 'summon_vex', q.nowMs)) candidates.push('summon_vex');
+  // Wiki: vex summoning is one of the evoker's two attack spells, so
+  // it requires a hostile target like fangs_line.
+  if (q.enemyNearby && q.vexCount < VEX_NEARBY_CAP && canCast(s, 'summon_vex', q.nowMs))
+    candidates.push('summon_vex');
   if (candidates.length === 0) return null;
   const choice = candidates[Math.floor(q.rand() * candidates.length)];
   if (!choice) return null;
