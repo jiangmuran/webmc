@@ -32,8 +32,9 @@ describe('respawn anchor', () => {
     expect(r.reason).toBe('no_charge');
   });
 
-  it('overworld use triggers explosion', () => {
+  it('non-nether use triggers explosion (wiki: overworld AND end)', () => {
     expect(shouldExplodeOnUse('overworld')).toBe(true);
+    expect(shouldExplodeOnUse('end')).toBe(true);
     expect(shouldExplodeOnUse('nether')).toBe(false);
   });
 });

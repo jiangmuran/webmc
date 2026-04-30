@@ -40,7 +40,12 @@ export function useAnchor(ctx: RespawnContext): RespawnResult {
   return { usable: true, chargesAfter: ctx.anchor.charges };
 }
 
-// Overworld use: explodes like a charged creeper (caller triggers).
+// Wiki (minecraft.wiki/w/Respawn_Anchor): "Using a respawn anchor in
+// any dimension other than the Nether causes it to explode." Old
+// check was `dimension === 'overworld'`, missing the End — players
+// could use a charged anchor on the End island and have it silently
+// no-op instead of exploding. Sibling respawn_anchor_explode.ts and
+// respawn_anchor_charge.ts already use `dimension !== 'nether'`.
 export function shouldExplodeOnUse(dimension: string): boolean {
-  return dimension === 'overworld';
+  return dimension !== 'nether';
 }
