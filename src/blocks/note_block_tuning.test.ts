@@ -11,10 +11,11 @@ describe('note block', () => {
     expect(nextNote(0)).toBe(1);
   });
 
-  it('instrument by below', () => {
+  it('instrument by below (default harp, wiki)', () => {
     expect(instrumentBelow('webmc:sand')).toBe('snare');
     expect(instrumentBelow('webmc:oak_planks')).toBe('bass');
-    expect(instrumentBelow('webmc:dirt')).toBe('piano');
+    expect(instrumentBelow('webmc:dirt')).toBe('harp');
+    expect(instrumentBelow('webmc:stone')).toBe('basedrum');
   });
 
   it('frequency 12 semitones = 2×', () => {

@@ -17,12 +17,17 @@ export function nextNote(n: number): number {
   return (n + 1) % (MAX_NOTE + 1);
 }
 
+// Wiki (minecraft.wiki/w/Note_Block): canonical instrument IDs match the
+// `block.note_block.<name>` sound events — `harp` (default), `basedrum`
+// (one word, no underscore), `bit`, etc. Old code used `piano` for the
+// default and `bass_drum` for stone-family blocks; sibling
+// note_block_instrument.ts already uses the canonical names.
 export type Instrument =
-  | 'piano'
+  | 'harp'
   | 'bass'
   | 'snare'
   | 'hat'
-  | 'bass_drum'
+  | 'basedrum'
   | 'flute'
   | 'bell'
   | 'guitar'
@@ -32,16 +37,17 @@ export type Instrument =
   | 'banjo'
   | 'didgeridoo'
   | 'iron_xylophone'
-  | 'cow_bell';
+  | 'cow_bell'
+  | 'bit';
 
 const INSTRUMENT_BELOW: Record<string, Instrument> = {
   'webmc:sand': 'snare',
   'webmc:red_sand': 'snare',
   'webmc:gravel': 'snare',
   'webmc:glass': 'hat',
-  'webmc:stone': 'bass_drum',
-  'webmc:obsidian': 'bass_drum',
-  'webmc:netherrack': 'bass_drum',
+  'webmc:stone': 'basedrum',
+  'webmc:obsidian': 'basedrum',
+  'webmc:netherrack': 'basedrum',
   'webmc:clay': 'flute',
   'webmc:gold_block': 'bell',
   'webmc:wool': 'guitar',
@@ -50,7 +56,7 @@ const INSTRUMENT_BELOW: Record<string, Instrument> = {
   'webmc:iron_block': 'iron_xylophone',
   'webmc:soul_sand': 'cow_bell',
   'webmc:pumpkin': 'didgeridoo',
-  'webmc:emerald_block': 'bit' as unknown as Instrument,
+  'webmc:emerald_block': 'bit',
   'webmc:hay_block': 'banjo',
   'webmc:glowstone': 'pling',
 };
@@ -58,7 +64,7 @@ const INSTRUMENT_BELOW: Record<string, Instrument> = {
 export function instrumentBelow(blockId: string): Instrument {
   // wood family defaults to bass
   if (blockId.endsWith('_log') || blockId.endsWith('_planks')) return 'bass';
-  return INSTRUMENT_BELOW[blockId] ?? 'piano';
+  return INSTRUMENT_BELOW[blockId] ?? 'harp';
 }
 
 // Frequency lookup: F#3 = 185 Hz, each semitone = *2^(1/12)
