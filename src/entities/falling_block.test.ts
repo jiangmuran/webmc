@@ -41,7 +41,8 @@ describe('falling block', () => {
     expect(damage).toBe(0);
   });
 
-  it('cap at 20 damage', () => {
+  it('cap at 40 damage (wiki)', () => {
+    // Wiki: anvil/dripstone fall damage capped at 40 hp.
     const f = makeFallingBlock({ x: 0, y: 1000, z: 0 }, 'webmc:anvil');
     let damage = 0;
     for (let i = 0; i < 2000; i++) {
@@ -51,6 +52,6 @@ describe('falling block', () => {
         break;
       }
     }
-    expect(damage).toBe(20);
+    expect(damage).toBe(40);
   });
 });
