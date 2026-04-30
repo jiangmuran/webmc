@@ -37,11 +37,17 @@ describe('warden anger', () => {
     expect(angerLevel(a, 'p1')).toBe('sonic_windup');
   });
 
-  it('decays over time', () => {
+  it('projectile adds 10 anger (wiki)', () => {
     const a = makeWardenAnger();
     addAnger(a, 'p1', 'projectile_hit');
+    expect(a.perTarget.get('p1')).toBe(10);
+  });
+
+  it('decays over time', () => {
+    const a = makeWardenAnger();
+    addAnger(a, 'p1', 'melee_hit'); // 35
     decayAnger(a, 5);
-    expect(a.perTarget.get('p1')).toBe(15);
+    expect(a.perTarget.get('p1')).toBe(30);
   });
 
   it('clears target below zero', () => {
