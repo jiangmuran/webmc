@@ -19,9 +19,21 @@ describe('zombie villager conversion ticks', () => {
     expect(tick(p).ticksRemaining).toBe(99);
   });
 
-  it('dark + beds double', () => {
-    const p = { ticksRemaining: 100, inLight: false, nearbyBedsOrBars: 3 };
-    expect(tick(p).ticksRemaining).toBe(98);
+  it('14 accelerants → 4.2% extra (wiki)', () => {
+    const p = { ticksRemaining: 100, inLight: false, nearbyBedsOrBars: 14 };
+    // Each tick now removes 1 + 14×0.003 = 1.042 ticks.
+    expect(tick(p).ticksRemaining).toBeCloseTo(100 - 1.042, 5);
+  });
+
+  it('beyond 14 accelerants does not stack (wiki: capped)', () => {
+    const p = { ticksRemaining: 100, inLight: false, nearbyBedsOrBars: 100 };
+    expect(tick(p).ticksRemaining).toBeCloseTo(100 - 1.042, 5);
+  });
+
+  it('light has no effect (wiki: not a factor)', () => {
+    const dark = tick({ ticksRemaining: 100, inLight: false, nearbyBedsOrBars: 14 });
+    const lit = tick({ ticksRemaining: 100, inLight: true, nearbyBedsOrBars: 14 });
+    expect(dark.ticksRemaining).toBe(lit.ticksRemaining);
   });
 
   it('cured threshold', () => {
