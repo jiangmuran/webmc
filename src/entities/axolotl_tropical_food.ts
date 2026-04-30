@@ -9,15 +9,15 @@ export function canFeed(itemId: string): boolean {
 export const REGEN_DURATION_ON_PLAYER_REVIVE = 20 * 100;
 export const EFFECT_AMPLIFIER = 0;
 
-// Wiki (minecraft.wiki/w/Axolotl#Behavior): when an axolotl helps a
-// player kill a hostile, the player gains Regeneration I + Resistance
-// I and Mining Fatigue is REMOVED. Old code returned mining_fatigue
-// as an effect to APPLY — opposite of wiki. Now grants regen +
-// resistance; callers should clear mining_fatigue via clearsOnAttack.
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): "when an axolotl helps
+// the player kill a hostile mob, the player receives the
+// Regeneration I effect for 100 seconds and any Mining Fatigue
+// effects are removed." Just Regeneration I — Resistance was a
+// previous misread of the wiki and isn't part of the buff. Mining
+// Fatigue is cleared (see clearsOnAttack), not added.
 export function grantsRegenOnAttack(): { id: string; duration: number; amplifier: number }[] {
   return [
     { id: 'regeneration', duration: REGEN_DURATION_ON_PLAYER_REVIVE, amplifier: EFFECT_AMPLIFIER },
-    { id: 'resistance', duration: REGEN_DURATION_ON_PLAYER_REVIVE, amplifier: EFFECT_AMPLIFIER },
   ];
 }
 

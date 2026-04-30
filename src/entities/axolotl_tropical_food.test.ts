@@ -19,8 +19,8 @@ describe('axolotl tropical food', () => {
     expect(grantsRegenOnAttack().some((e) => e.id === 'regeneration')).toBe(true);
   });
 
-  it('regen-on-attack grants resistance (wiki)', () => {
-    expect(grantsRegenOnAttack().some((e) => e.id === 'resistance')).toBe(true);
+  it('regen-on-attack does NOT grant Resistance (wiki: Regeneration only)', () => {
+    expect(grantsRegenOnAttack().some((e) => e.id === 'resistance')).toBe(false);
   });
 
   it('mining fatigue is CLEARED, not granted (wiki)', () => {
