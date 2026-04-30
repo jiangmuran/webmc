@@ -36,8 +36,9 @@ describe('sculk shrieker', () => {
     );
   });
 
-  it('darkness scales', () => {
-    expect(darknessDurationTicks(0)).toBeLessThan(darknessDurationTicks(WARNING_LEVEL_MAX));
+  it('darkness fixed 12s = 240 ticks (wiki)', () => {
+    expect(darknessDurationTicks(0)).toBe(240);
+    expect(darknessDurationTicks(WARNING_LEVEL_MAX)).toBe(240);
   });
 
   it('next shriek after cooldown', () => {
