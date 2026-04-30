@@ -64,7 +64,10 @@ export const MUSIC_DISCS: Record<MusicDiscId, MusicDiscDef> = {
     durationSec: 195,
     comparatorValue: 14,
   },
-  five: { id: 'five', displayName: 'Samuel Åberg - 5', durationSec: 36, comparatorValue: 15 },
+  // Wiki (minecraft.wiki/w/Music_Disc_5): 178 seconds (~2:58). Old
+  // 36 was off by ~5×; sibling jukebox_music_disc_play.ts has the
+  // correct duration.
+  five: { id: 'five', displayName: 'Samuel Åberg - 5', durationSec: 178, comparatorValue: 15 },
   relic: {
     id: 'relic',
     displayName: 'Aaron Cherof - Relic',

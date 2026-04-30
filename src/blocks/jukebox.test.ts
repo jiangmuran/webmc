@@ -34,9 +34,9 @@ describe('jukebox', () => {
 
   it('tickJukebox advances playback and signals done', () => {
     const j = makeJukebox();
-    insertDisc(j, 'five'); // 36s
+    insertDisc(j, 'five'); // 178s per minecraft.wiki/w/Music_Disc_5
     let finished = false;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
       if (tickJukebox(j, 1)) finished = true;
     }
     expect(finished).toBe(true);
