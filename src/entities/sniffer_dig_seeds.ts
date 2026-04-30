@@ -1,5 +1,11 @@
 export const DIG_CHANCE_PER_ATTEMPT = 0.25;
-export const DIG_COOLDOWN_TICKS = 200;
+// Wiki (minecraft.wiki/w/Sniffer): "After sniffing out seeds, an
+// eight-minute cooldown is activated before it can search again."
+// 8 min = 480 s = 9600 ticks. Old DIG_COOLDOWN_TICKS = 200 (10 s)
+// was 48× too short — sniffers would dig non-stop instead of the
+// long wiki-canonical pause. Sibling sniffer_dig.ts and
+// entities/sniffer.ts already use this value (or equivalents).
+export const DIG_COOLDOWN_TICKS = 9600;
 
 export interface SnifferState {
   currentTask: 'idle' | 'sniff' | 'dig';
