@@ -23,4 +23,12 @@ describe('sniffer baby grow', () => {
   it('warm biome faster', () => {
     expect(hatchSpeedMultInWarmBiome(true)).toBeGreaterThan(hatchSpeedMultInWarmBiome(false));
   });
+
+  it('GROW_TICKS = 48000 (wiki: 40 minutes, 2× normal baby)', () => {
+    expect(GROW_TICKS).toBe(48000);
+  });
+
+  it('EGG_HATCH_TICKS = 24000 (wiki: 20 min default, non-moss)', () => {
+    expect(EGG_HATCH_TICKS).toBe(24000);
+  });
 });
