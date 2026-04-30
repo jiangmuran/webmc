@@ -53,13 +53,21 @@ export type DustShape =
   | 'tshape_e'
   | 'tshape_w';
 
-export function dustShape(conns: Record<Side, Connection>): DustShape {
+// Wiki (minecraft.wiki/w/Redstone_Dust): "When there are no adjacent
+// components, a single redstone wire configures itself into a cross
+// plus sign, which can provide power in all four directions. By
+// right-clicking, it can be changed into a dot, which does not
+// provide power to any of the four directions." (Java only.) Old
+// code returned 'dot' for the no-neighbor case as the default — the
+// inverse of canon. The optional `dottedByPlayer` flag toggles to
+// the dot variant.
+export function dustShape(conns: Record<Side, Connection>, dottedByPlayer = false): DustShape {
   const n = conns.north !== 'none';
   const s = conns.south !== 'none';
   const e = conns.east !== 'none';
   const w = conns.west !== 'none';
   const count = (n ? 1 : 0) + (s ? 1 : 0) + (e ? 1 : 0) + (w ? 1 : 0);
-  if (count === 0) return 'dot';
+  if (count === 0) return dottedByPlayer ? 'dot' : 'cross';
   if (n && s && e && w) return 'cross';
   if (count === 2) {
     if (n && s) return 'ns_line';
@@ -75,7 +83,8 @@ export function dustShape(conns: Record<Side, Connection>): DustShape {
     if (!e) return 'tshape_w';
     return 'tshape_e';
   }
-  // count 1 → dot with stub (represent as ns or ew line)
+  // count 1 → dust extends across the block to form a line through
+  // the connected side and its opposite (per wiki).
   if (n || s) return 'ns_line';
   return 'ew_line';
 }

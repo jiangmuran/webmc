@@ -55,10 +55,26 @@ export function dustShape(lookup: DustLookup): DustShape {
   };
 }
 
+// Wiki (minecraft.wiki/w/Redstone_Dust): "When there are no adjacent
+// components, a single redstone wire configures itself into a cross
+// plus sign, which can provide power in all four directions. By
+// right-clicking, it can be changed into a dot, which does not
+// provide power to any of the four directions." (Java only.) Old
+// classifier returned 'dot' as the default for an isolated wire,
+// the inverse of canon. The dot variant is reachable only via
+// player toggle and is exposed through `classifyKindDotted`.
 function classifyKind(mask: number): 'dot' | 'side' | 'cross' {
-  if (mask === 0) return 'dot';
+  if (mask === 0) return 'cross';
   const ns = mask & (CONN_N | CONN_S);
   const ew = mask & (CONN_E | CONN_W);
   if (ns !== 0 && ew !== 0) return 'cross';
   return 'side';
+}
+
+export function classifyKindDotted(
+  mask: number,
+  dottedByPlayer: boolean,
+): 'dot' | 'side' | 'cross' {
+  if (mask === 0 && dottedByPlayer) return 'dot';
+  return classifyKind(mask);
 }
