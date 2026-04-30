@@ -2,23 +2,26 @@ import { describe, it, expect } from 'vitest';
 import { makeZombieDoorState, tickZombieDoor } from './zombie_door';
 
 describe('zombie door break', () => {
-  it('breaks after 60s on hard', () => {
+  it('breaks after 12 s on hard (wiki: ~240 ticks)', () => {
     const s = makeZombieDoorState();
     let broke = false;
-    for (let i = 0; i < 700; i++) {
-      if (
-        tickZombieDoor(s, {
-          dtSec: 0.1,
-          difficulty: 'hard',
-          adjacentDoor: true,
-          doorKind: 'webmc:oak_door',
-        }).breaksDoor
-      ) {
+    let elapsed = 0;
+    for (let i = 0; i < 200; i++) {
+      const r = tickZombieDoor(s, {
+        dtSec: 0.1,
+        difficulty: 'hard',
+        adjacentDoor: true,
+        doorKind: 'webmc:oak_door',
+      });
+      elapsed += 0.1;
+      if (r.breaksDoor) {
         broke = true;
         break;
       }
     }
     expect(broke).toBe(true);
+    expect(elapsed).toBeGreaterThanOrEqual(12);
+    expect(elapsed).toBeLessThan(13);
   });
 
   it('iron doors immune', () => {
