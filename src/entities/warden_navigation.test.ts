@@ -6,8 +6,10 @@ describe('warden navigation', () => {
     expect(phaseFor({ x: 0, y: 0, z: 0, anger: 0 })).toBe('calm');
   });
 
-  it('investigate mid', () => {
+  it('investigate at 35 = wiki suspect threshold', () => {
+    expect(phaseFor({ x: 0, y: 0, z: 0, anger: 35 })).toBe('investigate');
     expect(phaseFor({ x: 0, y: 0, z: 0, anger: 50 })).toBe('investigate');
+    expect(phaseFor({ x: 0, y: 0, z: 0, anger: 34 })).toBe('calm');
   });
 
   it('attack high', () => {
