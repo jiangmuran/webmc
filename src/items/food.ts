@@ -51,7 +51,15 @@ export const FOODS: Record<string, FoodDef> = {
     hunger: 4,
     saturation: 9.6,
     eatSec: 1.6,
-    effect: { id: 'regeneration', amplifier: 4, durationSec: 30 },
+    // Wiki (minecraft.wiki/w/Enchanted_Golden_Apple): "Regeneration II
+    // for 20 seconds, Absorption IV for 2 minutes, Resistance I for
+    // 5 minutes, Fire Resistance I for 5 minutes." This single-effect
+    // record can only carry one entry — model it as the canonical
+    // primary (Regeneration II / 20s); sibling
+    // src/items/enchanted_golden_apple_buffs.ts already returns the
+    // full 4-effect list. Old amplifier=4 (Regen V) / 30s was wrong
+    // on both axes. Full multi-effect support pending an API change.
+    effect: { id: 'regeneration', amplifier: 1, durationSec: 20 },
   },
   golden_carrot: { name: 'webmc:golden_carrot', hunger: 6, saturation: 14.4, eatSec: 1.6 },
   beetroot: { name: 'webmc:beetroot', hunger: 1, saturation: 1.2, eatSec: 1.6 },
