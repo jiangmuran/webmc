@@ -12,9 +12,13 @@ export interface BreezeCtx {
   cooldownRemaining: number;
 }
 
+// Wiki (minecraft.wiki/w/Breeze): "Each Breeze takes about 30 ticks
+// (1.5 s) to shoot one wind charge after locking on a target." Old
+// 60-tick (3 s) cooldown was 2× the wiki value, halving the breeze's
+// fire rate. Sibling breeze.ts uses 1.5 s.
 export const BREEZE_SIGHT_RANGE = 24;
 export const BREEZE_MELEE_FLEE_RANGE = 3;
-export const BREEZE_ATTACK_COOLDOWN_TICKS = 60;
+export const BREEZE_ATTACK_COOLDOWN_TICKS = 30;
 
 export function chooseAttack(c: BreezeCtx): BreezeAttackResult {
   if (!c.canSeeTarget || c.distanceToTarget > BREEZE_SIGHT_RANGE) return { kind: 'idle' };
