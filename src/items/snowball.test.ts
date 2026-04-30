@@ -22,6 +22,11 @@ describe('snowball', () => {
     expect(damageOnHit('zombie')).toBe(0);
   });
 
+  it('enderman takes 0 damage from snowball (wiki: projectile-immune)', () => {
+    // The enderman teleports away (hurt event), but no damage.
+    expect(damageOnHit('enderman')).toBe(0);
+  });
+
   it('knockback constant set', () => {
     expect(SNOWBALL_KNOCKBACK).toBeGreaterThan(0);
   });
