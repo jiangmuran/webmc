@@ -20,10 +20,10 @@ describe('wither skull', () => {
     expect(r.explosionPower).toBe(1);
   });
 
-  it('charged skull explodes with power 2', () => {
+  it('charged (blue) skull also explodes with power 1 (wiki: same blast power)', () => {
     const s = makeWitherSkull({ x: 0, y: 80, z: 0 }, { x: 1, y: 0, z: 0 }, 5, true);
     const r = tickWitherSkull(s, 0.1, { isSolid: () => true });
-    expect(r.explosionPower).toBe(2);
+    expect(r.explosionPower).toBe(1);
   });
 
   it('expires after 30s', () => {
@@ -35,8 +35,8 @@ describe('wither skull', () => {
     expect(expired).toBe(true);
   });
 
-  it('damage + effect constants', () => {
-    expect(WITHER_SKULL_DAMAGE).toBe(6);
+  it('damage + effect constants (wiki: 8 HP on Normal, Wither II 10s)', () => {
+    expect(WITHER_SKULL_DAMAGE).toBe(8);
     expect(WITHER_EFFECT_DURATION_SEC).toBe(10);
   });
 });
