@@ -1,6 +1,9 @@
 // Armadillo. Rolls into a ball when scared (hostile mob or undead
-// within 8 blocks, or player sprinting). While curled, projectiles
-// slide off, melee takes ~50% damage.
+// within 8 blocks, or player sprinting). While curled, the wiki
+// (minecraft.wiki/w/Armadillo) says damage is reduced by the
+// formula (original damage − 1) / 2 — uniformly across all damage
+// types in JE; the old "0 projectile / 0.5 melee" split was a
+// misreading. Sibling armadillo_roll.ts has the same fix.
 
 export interface Armadillo {
   rolled: boolean;
@@ -9,7 +12,8 @@ export interface Armadillo {
 
 export const CURL_RADIUS = 8;
 export const UNCURL_DELAY_MS = 3000;
-export const DAMAGE_MULT_WHILE_CURLED = 0.5;
+export const ROLLED_OFFSET = 1;
+export const ROLLED_DIVISOR = 2;
 
 export function makeArmadillo(): Armadillo {
   return { rolled: false, rollStartedMs: -Infinity };
@@ -34,12 +38,10 @@ export function updateCurl(a: Armadillo, q: ScareQuery): void {
 export function incomingDamage(
   a: Armadillo,
   raw: number,
-  kind: 'projectile' | 'melee' | 'other',
+  _kind: 'projectile' | 'melee' | 'other',
 ): number {
   if (!a.rolled) return raw;
-  if (kind === 'projectile') return 0;
-  if (kind === 'melee') return raw * DAMAGE_MULT_WHILE_CURLED;
-  return raw;
+  return Math.max(0, (raw - ROLLED_OFFSET) / ROLLED_DIVISOR);
 }
 
 // Brushing a curled armadillo drops a scute (up to 1 per 5 min per animal).
