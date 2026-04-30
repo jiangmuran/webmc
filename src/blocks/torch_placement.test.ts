@@ -41,9 +41,12 @@ describe('torch placement', () => {
     expect(onSupportRemoved('torch')[0]?.item).toBe('webmc:torch');
   });
 
-  it('water contact behavior', () => {
+  it('water destroys both torch variants without drop (wiki)', () => {
     expect(onWaterContact('torch').dropped).toBe(false);
-    expect(onWaterContact('soul_torch').dropped).toBe(true);
+    expect(onWaterContact('soul_torch').dropped).toBe(false);
+    expect(onWaterContact('redstone_torch').dropped).toBe(false);
+    expect(onWaterContact('torch').extinguished).toBe(true);
+    expect(onWaterContact('soul_torch').extinguished).toBe(true);
   });
 
   it('light levels', () => {
