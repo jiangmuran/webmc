@@ -31,9 +31,15 @@ describe('wolf taming', () => {
     expect(canBreedWolves({ a, b, aFed: true, bFed: true })).toBe(true);
   });
 
-  it('different owners cannot breed', () => {
+  it('different owners CAN breed (wiki: random-owner offspring)', () => {
     const a = { ownerId: 'A', sitting: false, collarColor: 'red' };
     const b = { ownerId: 'B', sitting: false, collarColor: 'red' };
+    expect(canBreedWolves({ a, b, aFed: true, bFed: true })).toBe(true);
+  });
+
+  it('sitting wolves cannot breed (wiki: must be standing)', () => {
+    const a = { ownerId: 'S', sitting: true, collarColor: 'red' };
+    const b = { ownerId: 'S', sitting: false, collarColor: 'red' };
     expect(canBreedWolves({ a, b, aFed: true, bFed: true })).toBe(false);
   });
 });
