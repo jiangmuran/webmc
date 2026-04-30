@@ -56,9 +56,15 @@ describe('zombie reinforcement', () => {
     expect(Math.hypot(o.dx, o.dz)).toBeLessThanOrEqual(12);
   });
 
-  it('baby probability higher on hard', () => {
-    expect(isBabyZombie(0.06, 'hard')).toBe(true);
+  it('baby probability is fixed 5% across difficulties (wiki)', () => {
+    // Wiki: 'Zombies have a 5% chance to spawn as babies' — no
+    // difficulty scaling.
+    expect(isBabyZombie(0.04, 'easy')).toBe(true);
+    expect(isBabyZombie(0.04, 'normal')).toBe(true);
+    expect(isBabyZombie(0.04, 'hard')).toBe(true);
+    expect(isBabyZombie(0.06, 'easy')).toBe(false);
     expect(isBabyZombie(0.06, 'normal')).toBe(false);
+    expect(isBabyZombie(0.06, 'hard')).toBe(false);
   });
 
   it('weapons have higher pickup chance than food', () => {

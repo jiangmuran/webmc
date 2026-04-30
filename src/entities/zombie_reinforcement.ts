@@ -44,10 +44,12 @@ export function pickSummonOffset(roll1: number, roll2: number): { dx: number; dz
   };
 }
 
-// Baby zombies have a 5% chance at spawn (scales with hard difficulty).
-export function isBabyZombie(roll: number, difficulty: Difficulty): boolean {
-  const chance = difficulty === 'hard' ? 0.075 : 0.05;
-  return roll < chance;
+// Wiki (minecraft.wiki/w/Zombie#Spawning): "Zombies have a 5% chance
+// to spawn as babies." The chance is constant across all difficulties;
+// old code scaled it to 7.5% on Hard difficulty, which is nowhere in
+// the wiki.
+export function isBabyZombie(roll: number, _difficulty: Difficulty): boolean {
+  return roll < 0.05;
 }
 
 // Zombies pick up armor and items placed nearby; this has a per-item
