@@ -10,10 +10,25 @@ export interface TrialSpawnerState {
 }
 
 export const TRIAL_SPAWNER_BASE_WAVES = 3;
-export const MAX_ACTIVE_MOBS_PER_PLAYER = 2;
+
+// Wiki (minecraft.wiki/w/Trial_Spawner) default Spawning values:
+// "Simultaneous mobs (base) = 2, Simultaneous mobs added per
+// player = 1." Wiki: "With 2 players, 8 mobs spawn in total with 3
+// at once, and with 3 players, 10 mobs spawn in total with 4 at
+// once." So the simultaneous-mob cap is `2 + (N − 1) × 1` for
+// N ≥ 1 players.
+//
+// Old `nearbyPlayers × 2` matched canon at 1 player (2 mobs) but
+// over-spawned at higher counts: 4 mobs vs 3 at 2 players, 6 vs 4
+// at 3 players — making multi-player trial chambers significantly
+// more chaotic than canon.
+export const SIMULTANEOUS_MOBS_BASE = 2;
+export const SIMULTANEOUS_MOBS_PER_EXTRA_PLAYER = 1;
+export const MAX_ACTIVE_MOBS_PER_PLAYER = 2; // legacy export, kept for callers
 
 export function activeMobCap(s: TrialSpawnerState): number {
-  return Math.max(1, s.nearbyPlayers * MAX_ACTIVE_MOBS_PER_PLAYER);
+  if (s.nearbyPlayers <= 0) return 1;
+  return SIMULTANEOUS_MOBS_BASE + (s.nearbyPlayers - 1) * SIMULTANEOUS_MOBS_PER_EXTRA_PLAYER;
 }
 
 export function shouldSpawn(s: TrialSpawnerState): boolean {
