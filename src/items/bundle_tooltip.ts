@@ -27,14 +27,19 @@ export function bundleTooltip(q: BundleTooltipQuery): BundleTooltipResult {
     const e = previewContents[i];
     slots.push(e ? { item: e.item, count: e.count } : { item: null, count: 0 });
   }
-  // Fractional fill: each item fraction = count / maxStack, total weight capped 64.
+  // Wiki (minecraft.wiki/w/Bundle): "A bundle has 64 'capacity slots'.
+  // Each item takes `64 / max_stack_size` slots, so 64 stone (max 64),
+  // 16 ender pearls (max 16), or 1 saddle (max 1) all fill the
+  // bundle. fillFraction = sum(count / maxStack), clamped to [0, 1]."
+  // Old code divided by an extra 64 — 32 stone reported 0.78% full
+  // instead of 50%, and the overfull warning required weight > 64
+  // (i.e. 4096 stones, 64× the wiki cap).
   let weight = 0;
   for (const e of q.contents) weight += e.count / e.maxStack;
-  const fraction = Math.min(1, weight / 64);
   return {
     slots,
-    fillFraction: fraction,
-    overfullWarning: weight > 64,
+    fillFraction: Math.min(1, weight),
+    overfullWarning: weight > 1,
   };
 }
 

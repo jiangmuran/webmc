@@ -8,12 +8,13 @@ describe('bundle tooltip', () => {
     expect(r.fillFraction).toBe(0);
   });
 
-  it('single stack', () => {
+  it('single stack — half-full bundle (wiki)', () => {
+    // Wiki: 32 stone (maxStack 64) takes 32/64 = 0.5 of bundle capacity.
     const r = bundleTooltip({
       contents: [{ item: 'webmc:stone', count: 32, maxStack: 64 }],
     });
     expect(r.slots[0]?.item).toBe('webmc:stone');
-    expect(r.fillFraction).toBeCloseTo(32 / 64 / 64);
+    expect(r.fillFraction).toBeCloseTo(0.5);
   });
 
   it('caps at 12 slots preview', () => {
