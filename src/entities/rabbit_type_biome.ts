@@ -20,11 +20,16 @@ export function rollRabbitType(q: SpawnQuery): RabbitType {
   return 'black_white';
 }
 
-// Killer bunny: 1/1000 natural spawn, very rare.
-export const KILLER_SPAWN_CHANCE = 1 / 1000;
+// Wiki (minecraft.wiki/w/Rabbit#The_Killer_Bunny): "The killer bunny
+// does not spawn naturally and must instead be spawned using the
+// command /summon minecraft:rabbit ~ ~ ~ {RabbitType:99}."
+// Old code rolled a 1/1000 natural spawn — wrong; killer bunnies
+// are exclusively command-summoned in JE. KILLER_SPAWN_CHANCE kept
+// as 0 (rather than removed) to preserve the export.
+export const KILLER_SPAWN_CHANCE = 0;
 
-export function rollKillerBunny(rand: () => number): boolean {
-  return rand() < KILLER_SPAWN_CHANCE;
+export function rollKillerBunny(_rand: () => number): boolean {
+  return false;
 }
 
 // Rabbit food: carrots, golden carrots, dandelions.

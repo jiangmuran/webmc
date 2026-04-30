@@ -25,9 +25,11 @@ describe('rabbit variants', () => {
     expect(types.size).toBeGreaterThan(1);
   });
 
-  it('killer bunny rare', () => {
-    expect(rollKillerBunny(() => 0)).toBe(true);
-    expect(rollKillerBunny(() => KILLER_SPAWN_CHANCE + 0.01)).toBe(false);
+  it('killer bunny does NOT spawn naturally (wiki: command-only)', () => {
+    expect(rollKillerBunny(() => 0)).toBe(false);
+    expect(rollKillerBunny(() => 0.5)).toBe(false);
+    expect(rollKillerBunny(() => 0.99999)).toBe(false);
+    expect(KILLER_SPAWN_CHANCE).toBe(0);
   });
 
   it('breed food', () => {
