@@ -1,8 +1,21 @@
-// Saddles. Horses, donkeys, mules, striders, pigs (with carrot-on-stick)
-// accept saddles. A saddled mount can be ridden; steering speed
-// depends on mount type.
+// Saddles. Horses, donkeys, mules, striders, pigs (with carrot-on-stick),
+// camels, and the two undead horse variants accept saddles. A saddled
+// mount can be ridden; steering speed depends on mount type.
+//
+// Wiki (minecraft.wiki/w/Saddle): saddleable mobs in Java Edition are
+// horse, donkey, mule, pig, strider, camel (1.20+), skeleton_horse,
+// and zombie_horse. Old set was missing camel and the two undead
+// horse variants — saddling any of those silently no-op'd.
 
-export type MountKind = 'horse' | 'donkey' | 'mule' | 'pig' | 'strider';
+export type MountKind =
+  | 'horse'
+  | 'donkey'
+  | 'mule'
+  | 'pig'
+  | 'strider'
+  | 'camel'
+  | 'skeleton_horse'
+  | 'zombie_horse';
 
 export interface Mount {
   kind: MountKind;
@@ -11,7 +24,16 @@ export interface Mount {
   riderId: string | null;
 }
 
-const ALLOWED_SADDLE = new Set<MountKind>(['horse', 'donkey', 'mule', 'pig', 'strider']);
+const ALLOWED_SADDLE = new Set<MountKind>([
+  'horse',
+  'donkey',
+  'mule',
+  'pig',
+  'strider',
+  'camel',
+  'skeleton_horse',
+  'zombie_horse',
+]);
 
 export function canSaddle(m: Mount): boolean {
   return ALLOWED_SADDLE.has(m.kind);
