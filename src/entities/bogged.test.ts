@@ -24,7 +24,9 @@ describe('bogged', () => {
     expect(fired).toBe(true);
   });
 
-  it('arrow is poison-tipped', () => {
-    expect(boggedArrow().tip).toBe('poison');
+  it('arrow is poison-tipped for 4 seconds (wiki)', () => {
+    const a = boggedArrow();
+    expect(a.tip).toBe('poison');
+    expect(a.durationSec).toBe(4);
   });
 });

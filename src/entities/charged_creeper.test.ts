@@ -29,4 +29,22 @@ describe('charged creeper', () => {
     electrify(c);
     expect(killDrop(c, 'axolotl')).toBeNull();
   });
+
+  it('bogged → no skull (wiki: bogged not in charged-creeper drop list)', () => {
+    const c = makeChargedCreeper();
+    electrify(c);
+    expect(killDrop(c, 'bogged')).toBeNull();
+  });
+
+  it('charged + skeleton → skeleton skull', () => {
+    const c = makeChargedCreeper();
+    electrify(c);
+    expect(killDrop(c, 'skeleton')).toBe('webmc:skeleton_skull');
+  });
+
+  it('charged + piglin → piglin head', () => {
+    const c = makeChargedCreeper();
+    electrify(c);
+    expect(killDrop(c, 'piglin')).toBe('webmc:piglin_head');
+  });
 });

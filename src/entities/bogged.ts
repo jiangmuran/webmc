@@ -50,17 +50,32 @@ export interface BoggedArrow {
   durationSec: number;
 }
 
+// Wiki (minecraft.wiki/w/Bogged): "Arrow of Poison: Poison for 4
+// seconds, dealing 3 damage." Old durationSec = 3.75 was a quarter-
+// second short of the wiki value.
 export function boggedArrow(): BoggedArrow {
-  return { item: 'webmc:arrow', tip: 'poison', durationSec: 3.75 };
+  return { item: 'webmc:arrow', tip: 'poison', durationSec: 4 };
 }
 
-export function boggedDrops(lootingLevel: number): { item: string; count: number }[] {
-  const drops: { item: string; count: number }[] = [
-    { item: 'webmc:arrow', count: Math.floor(Math.random() * 3) },
-    { item: 'webmc:bone', count: Math.floor(Math.random() * 3) },
-  ];
-  if (Math.random() < 0.025 + lootingLevel * 0.01) {
-    drops.push({ item: 'webmc:bogged_skull', count: 1 });
+// Wiki (minecraft.wiki/w/Bogged) drops:
+//   Bone:             0-2 (Looting +1)
+//   Arrow:            0-2 (Looting +1)
+//   Arrow of Poison:  0-1 (Looting +1, only when killed by player/pet)
+// Old drop list had a fictitious "bogged_skull" — boggeds do NOT drop
+// a head in vanilla; mob heads only drop from charged-creeper kills,
+// and the wiki Mob_head page has no entry for Bogged. The Arrow of
+// Poison drop was missing entirely.
+export function boggedDrops(
+  lootingLevel: number,
+  killedByPlayerOrPet = false,
+  rand: () => number = Math.random,
+): { item: string; count: number }[] {
+  const drops: { item: string; count: number }[] = [];
+  const max = 2 + lootingLevel;
+  drops.push({ item: 'webmc:bone', count: Math.floor(rand() * (max + 1)) });
+  drops.push({ item: 'webmc:arrow', count: Math.floor(rand() * (max + 1)) });
+  if (killedByPlayerOrPet) {
+    drops.push({ item: 'webmc:arrow_of_poison', count: rand() < 0.5 ? 1 : 0 });
   }
   return drops.filter((d) => d.count > 0);
 }

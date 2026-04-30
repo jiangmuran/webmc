@@ -23,14 +23,19 @@ export function explosionPower(state: ChargedCreeperState): number {
 }
 
 // Mob skulls dropped when charged creeper kills another mob.
+// Wiki (minecraft.wiki/w/Head#Mob_loot): "The following heads drop
+// when the corresponding mob is killed by a charged creeper's
+// explosion: Skeleton skull, Zombie head, Creeper head, Piglin head,
+// Wither skeleton skull." Bogged is NOT in the wiki's drop list and
+// no "bogged_skull" item exists in vanilla — the prior entry was
+// fabricated. Dragon/player/wither heads are also explicitly
+// excluded by MC-132933 (WAI), so they're not added.
 const MOB_TO_SKULL: Record<string, string> = {
   zombie: 'webmc:zombie_head',
   skeleton: 'webmc:skeleton_skull',
   wither_skeleton: 'webmc:wither_skeleton_skull',
   creeper: 'webmc:creeper_head',
   piglin: 'webmc:piglin_head',
-  // 1.21: charged creeper kill on bogged drops bogged_skull.
-  bogged: 'webmc:bogged_skull',
 };
 
 export function killDrop(state: ChargedCreeperState, victimKind: string): string | null {
