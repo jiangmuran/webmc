@@ -2,6 +2,7 @@
 // when inserted; emits a comparator signal equal to the disc's ordinal.
 
 export type MusicDiscId =
+  | 'thirteen'
   | 'cat'
   | 'blocks'
   | 'chirp'
@@ -25,7 +26,21 @@ export interface MusicDiscDef {
   comparatorValue: number; // 1..15
 }
 
+// Wiki (minecraft.wiki/w/Music_Disc and per-disc pages): the
+// canonical comparator values are
+//   "13" → 1, cat → 2, blocks → 3, chirp → 4, far → 5,
+//   mall → 6, mellohi → 7, stal → 8, strad → 9, ward → 10,
+//   "11" → 11, wait → 12, pigstep → 13, otherside → 14, "5" → 15.
+// Newer discs (Relic, Lava Chicken, etc.) reuse existing values
+// per their wiki pages — Relic's signal is 14 (not 1) per the
+// Music_Disc_Relic page and the 26.1 update line.
+//
+// Old table was missing the canonical "13" disc entirely AND
+// gave Relic the comparator value 1 that "13" should hold —
+// any redstone circuit gating off "signal == 1" was firing on
+// Relic when the wiki says it should fire on "13".
 export const MUSIC_DISCS: Record<MusicDiscId, MusicDiscDef> = {
+  thirteen: { id: 'thirteen', displayName: 'C418 - 13', durationSec: 178, comparatorValue: 1 },
   cat: { id: 'cat', displayName: 'C418 - cat', durationSec: 185, comparatorValue: 2 },
   blocks: { id: 'blocks', displayName: 'C418 - blocks', durationSec: 345, comparatorValue: 3 },
   chirp: { id: 'chirp', displayName: 'C418 - chirp', durationSec: 185, comparatorValue: 4 },
@@ -50,7 +65,12 @@ export const MUSIC_DISCS: Record<MusicDiscId, MusicDiscDef> = {
     comparatorValue: 14,
   },
   five: { id: 'five', displayName: 'Samuel Åberg - 5', durationSec: 36, comparatorValue: 15 },
-  relic: { id: 'relic', displayName: 'Aaron Cherof - Relic', durationSec: 218, comparatorValue: 1 },
+  relic: {
+    id: 'relic',
+    displayName: 'Aaron Cherof - Relic',
+    durationSec: 218,
+    comparatorValue: 14,
+  },
 };
 
 export interface JukeboxState {

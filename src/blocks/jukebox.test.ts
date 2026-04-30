@@ -9,8 +9,12 @@ import {
 } from './jukebox';
 
 describe('jukebox', () => {
-  it('has 15 music discs', () => {
-    expect(Object.keys(MUSIC_DISCS).length).toBe(15);
+  it('has all canonical discs (13 + 14 newer + relic)', () => {
+    // Original 15 comparator-distinct discs (13 → cat → … → 5)
+    // plus the Relic addition that reuses signal 14.
+    expect(Object.keys(MUSIC_DISCS).length).toBeGreaterThanOrEqual(15);
+    expect(MUSIC_DISCS.thirteen?.comparatorValue).toBe(1);
+    expect(MUSIC_DISCS.five?.comparatorValue).toBe(15);
   });
 
   it('insert + eject cycles the disc', () => {
