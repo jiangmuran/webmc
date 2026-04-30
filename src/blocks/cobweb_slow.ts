@@ -15,10 +15,15 @@ export function fallDamageInCobweb(q: CobwebQuery, rawDamage: number): number {
   return q.inCobweb ? 0 : rawDamage;
 }
 
-// Cobweb breaks with shears (drops string) or sword (drops string).
+// Wiki (minecraft.wiki/w/Cobweb): "Shears break a cobweb instantly,
+// dropping the cobweb item itself. Swords (and any other valid tool)
+// break a cobweb in 0.4 seconds, dropping 1 string." Old function
+// had shears drop string — non-vanilla and inconsistent with sibling
+// cobweb_physics.ts which already returns the cobweb item for shears.
 export function cobwebDrop(
   tool: 'shears' | 'sword' | 'hand',
 ): 'webmc:string' | 'webmc:cobweb' | null {
-  if (tool === 'shears' || tool === 'sword') return 'webmc:string';
+  if (tool === 'shears') return 'webmc:cobweb';
+  if (tool === 'sword') return 'webmc:string';
   return null;
 }
