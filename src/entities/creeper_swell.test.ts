@@ -37,7 +37,8 @@ describe('creeper swell', () => {
     expect(c.swellTicks).toBe(0);
   });
 
-  it('charged swells faster', () => {
+  it('charged uses the same fuse timer as normal (wiki)', () => {
+    expect(SWELL_CHARGED_TICKS).toBe(SWELL_NORMAL_TICKS);
     const c = { swellTicks: 0, charged: true };
     for (let i = 0; i < SWELL_CHARGED_TICKS - 1; i++) tickSwell(c, 2);
     expect(tickSwell(c, 2).exploded).toBe(true);

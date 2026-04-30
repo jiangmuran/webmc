@@ -1,17 +1,25 @@
 // Creeper swell. When a player is within 3 blocks, a creeper's fuse
-// builds up (1.5 s at normal, 0.75 s if charged by lightning). If the
-// player leaves the cancel range, the fuse reverses.
+// builds up to 1.5 s (30 ticks) before detonating; charged creepers
+// have the same countdown timer as normal creepers — only the
+// explosion power differs.
 //
 // Wiki (minecraft.wiki/w/Creeper): "When within 3 blocks of a player,
 // a creeper stops moving, hisses, flashes and expands, and explodes
 // after 1.5 seconds (30 ticks) … the distance that the player must
 // move in order for a creeper to cancel its explosion is 7 blocks,
-// regardless of difficulty."
+// regardless of difficulty." On charged creepers: "Their countdown
+// timers are the same as normal creepers, both in terms of range and
+// time. Charged creepers' explosions are 50% more powerful than an
+// explosion of TNT and 100% more powerful than their normal
+// counterparts."
 //
-// Old code conflated the two thresholds at IGNITE_RANGE = 3.0 — a
-// player who triggered swell at 2.5 blocks could cancel it by
-// stepping to 3.5 blocks (vs wiki, which requires moving past 7).
-// Now: ignite at ≤3, sustain swell while ≤7, cancel only beyond 7.
+// Old SWELL_CHARGED_TICKS = 15 (0.75 s) made charged creepers explode
+// twice as fast as normal — the wiki explicitly says timers are the
+// SAME, only power differs (3 → 6).
+// Old code also conflated IGNITE_RANGE with CANCEL_RANGE — a player
+// who triggered swell at 2.5 blocks could cancel it by stepping to
+// 3.5 blocks. Now: ignite at ≤3, sustain swell while ≤7, cancel only
+// beyond 7.
 
 export interface CreeperState {
   swellTicks: number; // 0..maxSwell
@@ -19,7 +27,9 @@ export interface CreeperState {
 }
 
 export const SWELL_NORMAL_TICKS = 30;
-export const SWELL_CHARGED_TICKS = 15;
+// Charged creepers share the normal countdown timer per wiki —
+// only the explosion power differs.
+export const SWELL_CHARGED_TICKS = 30;
 export const IGNITE_RANGE = 3.0;
 export const CANCEL_RANGE = 7.0;
 
