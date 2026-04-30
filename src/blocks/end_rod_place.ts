@@ -50,13 +50,18 @@ export function isVertical(axis: EndRodAxis): boolean {
   return axis === 'up' || axis === 'down';
 }
 
-// Craft: 4 popped chorus fruit + 1 blaze rod → 4 end rods.
+// Wiki (minecraft.wiki/w/End_Rod): "1 Blaze Rod + 1 Popped Chorus
+// Fruit → 4 End Rods." Old code required 4 popped chorus fruit per
+// craft, ~4× the wiki's per-rod cost (since a player needs 4× more
+// chorus fruit per recipe to get the same 4 rods). Popped chorus
+// fruit is bottleneck for end-rod farming, so the wrong cost made
+// end rods feel ~4× as expensive as they should be.
 export interface CraftEndRodQuery {
   poppedChorusFruit: number;
   blazeRod: number;
 }
 
 export function craftEndRod(q: CraftEndRodQuery): { item: 'webmc:end_rod'; count: 4 } | null {
-  if (q.poppedChorusFruit < 4 || q.blazeRod < 1) return null;
+  if (q.poppedChorusFruit < 1 || q.blazeRod < 1) return null;
   return { item: 'webmc:end_rod', count: 4 };
 }
