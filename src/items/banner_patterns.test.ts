@@ -14,13 +14,14 @@ describe('banner patterns', () => {
     expect(patternById('xyz' as never)).toBeNull();
   });
 
-  it('max is 16 layers', () => {
-    expect(MAX_PATTERNS_PER_BANNER).toBe(16);
+  it('max is 6 layers (wiki)', () => {
+    expect(MAX_PATTERNS_PER_BANNER).toBe(6);
   });
 
   it('addLayer stacks up to the cap', () => {
     const b = { baseColor: 'white', layers: [] as { id: 'cross'; color: string }[] };
-    for (let i = 0; i < 16; i++) expect(addLayer(b, 'cross', 'red')).toBe(true);
+    for (let i = 0; i < MAX_PATTERNS_PER_BANNER; i++)
+      expect(addLayer(b, 'cross', 'red')).toBe(true);
     expect(addLayer(b, 'cross', 'red')).toBe(false);
   });
 

@@ -1,6 +1,6 @@
 // Banner pattern registry. Each pattern has an id, a single-char loom
 // code, and optional ingredient requirements (some patterns need a
-// specific pattern item). Stacking up to 16 patterns on one banner.
+// specific pattern item). Stacking up to 6 patterns on one banner.
 
 export type BannerPatternId =
   | 'base'
@@ -103,7 +103,13 @@ export function patternById(id: BannerPatternId): BannerPatternDef | null {
   return PATTERNS.find((p) => p.id === id) ?? null;
 }
 
-export const MAX_PATTERNS_PER_BANNER = 16;
+// Wiki (minecraft.wiki/w/Banner): "A banner can have up to 6 patterns
+// applied to it." Old 16 was the same bug already fixed in three
+// blocks-side siblings (banner.ts, banner_pattern.ts,
+// banner_pattern_layering.ts) and items/banner_craft_pattern.ts —
+// this items-side copy was the holdout, allowing players to stack 16
+// loom layers when the canonical loom UI tops out at 6.
+export const MAX_PATTERNS_PER_BANNER = 6;
 
 export interface BannerStack {
   baseColor: string;

@@ -3,7 +3,10 @@ export interface Layer {
   color: string;
 }
 
-export const MAX_LAYERS = 16;
+// Wiki (minecraft.wiki/w/Banner): "A banner can have up to 6 patterns
+// applied to it." Same 16→6 bug previously fixed in three sibling
+// modules; this fourth copy was the outlier.
+export const MAX_LAYERS = 6;
 
 export function addLayerOrFail(layers: Layer[], l: Layer): Layer[] | undefined {
   if (layers.length >= MAX_LAYERS) return undefined;
