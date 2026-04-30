@@ -35,12 +35,19 @@ export function tickBat(b: Bat, q: TickQuery): void {
   }
 }
 
-// Bats spawn only in dark places (light < 4) and y < 63.
+// Wiki (minecraft.wiki/w/Bat): "Bats can spawn in groups of 8 (JE)
+// or 2 (BE) in the Overworld at a light level of 3 or less at any
+// y-level, on blocks of stone, granite, diorite, andesite, tuff,
+// or deepslate that are not directly exposed to the sky." The old
+// `y < 63` floor was dropped in 24w33a / 1.21.2 — bats now spawn
+// at any height as long as the light/sky/block conditions are met.
 export interface SpawnQuery {
   lightLevel: number;
-  y: number;
+  exposedToSky?: boolean;
 }
 
 export function canSpawnBat(q: SpawnQuery): boolean {
-  return q.lightLevel < 4 && q.y < 63;
+  if (q.lightLevel > 3) return false;
+  if (q.exposedToSky === true) return false;
+  return true;
 }

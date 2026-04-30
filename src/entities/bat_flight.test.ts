@@ -24,9 +24,19 @@ describe('bat', () => {
     expect(b.flying).toBe(true);
   });
 
-  it('spawn only dark + low', () => {
-    expect(canSpawnBat({ lightLevel: 2, y: 20 })).toBe(true);
-    expect(canSpawnBat({ lightLevel: 10, y: 20 })).toBe(false);
-    expect(canSpawnBat({ lightLevel: 2, y: 80 })).toBe(false);
+  it('spawn requires light ≤ 3 (wiki: any y-level since 1.21.2)', () => {
+    expect(canSpawnBat({ lightLevel: 2 })).toBe(true);
+    expect(canSpawnBat({ lightLevel: 3 })).toBe(true);
+    expect(canSpawnBat({ lightLevel: 4 })).toBe(false);
+    expect(canSpawnBat({ lightLevel: 10 })).toBe(false);
+  });
+
+  it('spawn allowed at high y (wiki: any y-level)', () => {
+    expect(canSpawnBat({ lightLevel: 2 })).toBe(true);
+  });
+
+  it('spawn blocked when sky-exposed', () => {
+    expect(canSpawnBat({ lightLevel: 2, exposedToSky: true })).toBe(false);
+    expect(canSpawnBat({ lightLevel: 2, exposedToSky: false })).toBe(true);
   });
 });
