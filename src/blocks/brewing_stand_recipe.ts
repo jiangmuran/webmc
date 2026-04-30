@@ -30,7 +30,17 @@ export interface BrewCtx {
 }
 
 export function resultPotion(c: BrewCtx): Potion | undefined {
-  if (c.base === 'water' && c.ingredient === 'nether_wart') return 'awkward';
+  // Wiki (minecraft.wiki/w/Brewing): water-base recipes. Nether wart →
+  // awkward (the standard effect base). Redstone → mundane, glowstone
+  // dust → thick (the two canonical "modifier on water" potions).
+  // Sibling items/brewing_stand_recipe.ts had these; this one was
+  // missing them, so a glowstone-on-water brew silently returned
+  // undefined and a redstone-on-water brew was no-op.
+  if (c.base === 'water') {
+    if (c.ingredient === 'nether_wart') return 'awkward';
+    if (c.ingredient === 'redstone') return 'mundane';
+    if (c.ingredient === 'glowstone_dust') return 'thick';
+  }
   if (c.base === 'awkward') {
     // Wiki (minecraft.wiki/w/Brewing): effect ingredients applied to
     // awkward give effect potions. Per minecraft.wiki/w/Potion_of_Invisibility,

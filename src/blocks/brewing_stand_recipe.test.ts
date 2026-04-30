@@ -11,6 +11,14 @@ describe('brewing stand recipe', () => {
     expect(resultPotion({ base: 'water', ingredient: 'nether_wart' })).toBe('awkward');
   });
 
+  it('water + redstone → mundane (wiki)', () => {
+    expect(resultPotion({ base: 'water', ingredient: 'redstone' })).toBe('mundane');
+  });
+
+  it('water + glowstone_dust → thick (wiki)', () => {
+    expect(resultPotion({ base: 'water', ingredient: 'glowstone_dust' })).toBe('thick');
+  });
+
   it('awkward + blaze powder → strength', () => {
     expect(resultPotion({ base: 'awkward', ingredient: 'blaze_powder' })).toBe('strength');
   });
