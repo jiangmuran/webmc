@@ -26,8 +26,10 @@ describe('fire burnout age', () => {
     expect(extinguishInRain(true, true)).toBe(false);
   });
 
-  it('netherrack eternal', () => {
+  it('netherrack and soul_soil eternal, magma is NOT (wiki)', () => {
     expect(infiniteFuelBlock('netherrack')).toBe(true);
+    expect(infiniteFuelBlock('soul_soil')).toBe(true);
+    expect(infiniteFuelBlock('magma_block')).toBe(false);
     expect(infiniteFuelBlock('stone')).toBe(false);
   });
 });
