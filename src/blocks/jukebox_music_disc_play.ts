@@ -3,6 +3,10 @@ export interface Jukebox {
   playingSinceTick: number;
 }
 
+// Wiki (minecraft.wiki/w/Music_Disc, table column "Length"):
+//   pigstep 2:28, relic 3:39, creator 2:56 — the old values
+//   were 2520/4180/3600 ticks (126/209/180 s), the first two
+//   way too short. Aligned to canonical lengths × 20 ticks/s.
 export const DISC_DURATION_TICKS: Record<string, number> = {
   music_disc_13: 3560,
   music_disc_cat: 3700,
@@ -16,12 +20,12 @@ export const DISC_DURATION_TICKS: Record<string, number> = {
   music_disc_ward: 5040,
   music_disc_11: 1420,
   music_disc_wait: 4760,
-  music_disc_pigstep: 2520,
+  music_disc_pigstep: 2960,
   music_disc_otherside: 3920,
   music_disc_5: 3580,
-  music_disc_relic: 4180,
+  music_disc_relic: 4380,
   music_disc_precipice: 5980,
-  music_disc_creator: 3600,
+  music_disc_creator: 3520,
 };
 
 export function shouldStop(j: Jukebox, nowTick: number): boolean {
