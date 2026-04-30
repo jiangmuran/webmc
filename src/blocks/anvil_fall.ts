@@ -25,8 +25,14 @@ export function anvilFallDamage(fallBlocks: number): number {
   return Math.min(ANVIL_DAMAGE_CAP, Math.max(0, fallBlocks * 2 - 2));
 }
 
-// Per MC, anvil has ~12% chance to degrade per use at a non-zero cost.
-const DEGRADE_CHANCE = 0.12;
+// Wiki (minecraft.wiki/w/Anvil#Falling_anvils): "If it falls from a
+// height greater than one block, the chance of degrading by one stage
+// is 5% × the number of blocks fallen." 12% is the per-USE chance
+// (anvil_damage_chain.ts), not the fall-context chance — old code
+// used 12% regardless of distance, so a 1-block fall could degrade
+// (wiki: cannot) and a 20-block fall had the same odds as a 2-block
+// one (wiki: 100% vs 10%).
+export const FALL_DEGRADE_PER_BLOCK = 0.05;
 const NEXT_TIER: Record<AnvilTier, AnvilTier> = {
   intact: 'chipped',
   chipped: 'damaged',
@@ -34,9 +40,15 @@ const NEXT_TIER: Record<AnvilTier, AnvilTier> = {
   broken: 'broken',
 };
 
-export function maybeDegrade(state: AnvilState, rng: () => number = Math.random): boolean {
+export function maybeDegrade(
+  state: AnvilState,
+  fallBlocks: number,
+  rng: () => number = Math.random,
+): boolean {
   if (state.tier === 'broken') return false;
-  if (rng() < DEGRADE_CHANCE) {
+  if (fallBlocks <= 1) return false;
+  const chance = Math.min(1, FALL_DEGRADE_PER_BLOCK * fallBlocks);
+  if (rng() < chance) {
     state.tier = NEXT_TIER[state.tier];
     return true;
   }

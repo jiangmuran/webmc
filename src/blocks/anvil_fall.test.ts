@@ -17,20 +17,37 @@ describe('anvil fall', () => {
 
   it('tier progresses intact → chipped → damaged → broken', () => {
     const a = makeAnvil();
-    // Force the rng to always trigger degrade.
-    maybeDegrade(a, () => 0.01);
+    // 10-block fall → 50% chance, rng 0.01 always triggers.
+    maybeDegrade(a, 10, () => 0.01);
     expect(a.tier).toBe('chipped');
-    maybeDegrade(a, () => 0.01);
+    maybeDegrade(a, 10, () => 0.01);
     expect(a.tier).toBe('damaged');
-    maybeDegrade(a, () => 0.01);
+    maybeDegrade(a, 10, () => 0.01);
     expect(a.tier).toBe('broken');
-    maybeDegrade(a, () => 0.01);
+    maybeDegrade(a, 10, () => 0.01);
     expect(a.tier).toBe('broken');
   });
 
   it('rng above chance leaves tier', () => {
     const a = makeAnvil();
-    maybeDegrade(a, () => 0.9);
+    // 10-block fall → 50% chance, rng 0.9 stays.
+    maybeDegrade(a, 10, () => 0.9);
     expect(a.tier).toBe('intact');
+  });
+
+  it('1-block fall cannot degrade (wiki: only falls > 1 block)', () => {
+    const a = makeAnvil();
+    maybeDegrade(a, 1, () => 0); // rng 0 would always degrade if chance > 0
+    expect(a.tier).toBe('intact');
+  });
+
+  it('degrade chance scales 5% × blocks fallen', () => {
+    const a = makeAnvil();
+    // 4-block fall → 20% chance, rng 0.21 just above → no degrade.
+    maybeDegrade(a, 4, () => 0.21);
+    expect(a.tier).toBe('intact');
+    // rng 0.19 just below → degrade.
+    maybeDegrade(a, 4, () => 0.19);
+    expect(a.tier).toBe('chipped');
   });
 });
