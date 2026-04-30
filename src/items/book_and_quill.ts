@@ -1,8 +1,14 @@
-// Book-and-Quill (writable book). Players author pages, paginate at
-// ~255 chars. Signing converts to a written book (see written_book.ts).
+// Book-and-Quill (writable book). Players author pages and sign to
+// convert to a written book (see written_book.ts).
+//
+// Wiki (minecraft.wiki/w/Book_and_Quill): "the player can write a
+// single book up to 100 pages, with up to 1023 characters per page,
+// and up to 102,300 characters inside the entire book." Old constant
+// was 1024 — off by 1 from the canonical Java Edition limit.
+// Bedrock Edition uses 256 chars/page; this code targets JE.
 
 export const MAX_PAGES = 100;
-export const MAX_CHARS_PER_PAGE = 1024;
+export const MAX_CHARS_PER_PAGE = 1023;
 
 export interface WritableBook {
   pages: string[];
