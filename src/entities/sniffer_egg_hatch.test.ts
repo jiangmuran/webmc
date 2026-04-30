@@ -9,9 +9,11 @@ import {
 } from './sniffer_egg_hatch';
 
 describe('sniffer egg hatch', () => {
-  it('moss halves hatch time', () => {
+  it('moss halves hatch time (wiki: 12000 / 24000 ticks)', () => {
     expect(hatchTicksFor(true)).toBe(EGG_MOSS_HATCH_TICKS);
     expect(hatchTicksFor(false)).toBe(EGG_DEFAULT_HATCH_TICKS);
+    expect(EGG_MOSS_HATCH_TICKS).toBe(12000); // 10 min
+    expect(EGG_DEFAULT_HATCH_TICKS).toBe(24000); // 20 min
   });
 
   it('tick increments', () => {
