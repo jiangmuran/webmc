@@ -36,14 +36,44 @@ describe('blaze fireball', () => {
 });
 
 describe('blaze attack pattern', () => {
-  it('fires 3 shots per burst', () => {
+  it('fires 3 shots per burst (wiki: 0.3s apart over 0.9s)', () => {
     const s = makeBlazeAttackState();
     let fires = 0;
-    for (let i = 0; i < 10; i++) {
-      const r = tickBlazeAttack(s, { hasTarget: true, dtSec: 0.25 });
+    for (let i = 0; i < 20; i++) {
+      const r = tickBlazeAttack(s, { hasTarget: true, dtSec: 0.4 });
       if (r.fire) fires++;
     }
     expect(fires).toBeGreaterThanOrEqual(3);
+  });
+
+  it('post-burst cooldown is at least 4s (wiki: 5s)', () => {
+    const s = makeBlazeAttackState();
+    // Fire 3 shots; collect when each fires.
+    let lastFireT = 0;
+    let t = 0;
+    let firedShots = 0;
+    for (let i = 0; i < 60; i++) {
+      const dt = 0.05;
+      const r = tickBlazeAttack(s, { hasTarget: true, dtSec: dt });
+      t += dt;
+      if (r.fire) {
+        lastFireT = t;
+        firedShots++;
+        if (firedShots === 3) break;
+      }
+    }
+    expect(firedShots).toBe(3);
+    // Now check no fires for ≥4s after the 3rd shot.
+    let firedDuringCooldown = false;
+    const cooldownStartT = t;
+    while (t - cooldownStartT < 4) {
+      const dt = 0.05;
+      const r = tickBlazeAttack(s, { hasTarget: true, dtSec: dt });
+      t += dt;
+      if (r.fire) firedDuringCooldown = true;
+    }
+    expect(firedDuringCooldown).toBe(false);
+    expect(lastFireT).toBeGreaterThan(0);
   });
 
   it('no target = no fire', () => {

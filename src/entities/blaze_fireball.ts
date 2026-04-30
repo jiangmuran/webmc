@@ -1,6 +1,12 @@
 // Blaze fireball. Small burning projectile that travels in a straight
 // line for 1 second, dealing 5 damage + 5 seconds of fire on impact.
-// Blazes fire in 3-round bursts with a 0.2s gap, then 3s cooldown.
+//
+// Wiki (minecraft.wiki/w/Blaze): "shoots 3 small fireballs over the
+// course of 0.9 seconds, then extinguishes its flames and waits for
+// 5 seconds before attacking again." 3 shots / 0.9 s = 0.3 s between
+// shots; cooldown 5 s. Old code used 0.2 s inter-shot and 3 s
+// cooldown — bursts fired ~33% faster and the rest period was 60%
+// of wiki, both leading to ~2× the wiki rate of fireballs.
 
 export interface Vec3 {
   x: number;
@@ -72,8 +78,8 @@ export function makeBlazeAttackState(): BlazeAttackState {
 }
 
 const BURST_SIZE = 3;
-const INTER_SHOT_SEC = 0.2;
-const BURST_COOLDOWN_SEC = 3;
+const INTER_SHOT_SEC = 0.3;
+const BURST_COOLDOWN_SEC = 5;
 
 export interface BlazeAttackCtx {
   hasTarget: boolean;
