@@ -31,15 +31,23 @@ export function biomeTemperature(b: Biome): number {
   return TEMPERATURE[b];
 }
 
+// Wiki (minecraft.wiki/w/Biome#Climate): "Snow falls when biome
+// temperature is below 0.15. Rain falls when temperature is
+// between 0.15 (inclusive) and 0.95 (inclusive). Biomes with
+// temperature above 0.95 have no precipitation."
+//
+// Old `rainsInBiome` upper bound was 1.5 — way too permissive,
+// allowed rain in 0.95-1.5 range that wiki says is dry. Old
+// `dryInBiome` threshold was 1.5; wiki's threshold is 0.95.
 export function snowsInBiome(b: Biome): boolean {
   return biomeTemperature(b) < 0.15;
 }
 
 export function rainsInBiome(b: Biome): boolean {
   const t = biomeTemperature(b);
-  return t >= 0.15 && t < 1.5;
+  return t >= 0.15 && t <= 0.95;
 }
 
 export function dryInBiome(b: Biome): boolean {
-  return biomeTemperature(b) >= 1.5;
+  return biomeTemperature(b) > 0.95;
 }
