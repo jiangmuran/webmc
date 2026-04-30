@@ -19,13 +19,20 @@ describe('sea pickle', () => {
     expect(addPickle(p)).toBe(false);
   });
 
-  it('bone meal on full pickle + coral spreads', () => {
-    const r = boneMealPickle({
-      state: makeSeaPickle(4),
-      onCoralBlock: true,
-      rng: () => 0.5,
-    });
-    expect(r.duplicates).toBeGreaterThan(0);
+  it('bone meal on full pickle + coral spreads 1-3 (wiki)', () => {
+    // rng 0 → 1, rng 0.99 → 3
+    expect(
+      boneMealPickle({ state: makeSeaPickle(4), onCoralBlock: true, rng: () => 0 }).duplicates,
+    ).toBe(1);
+    expect(
+      boneMealPickle({ state: makeSeaPickle(4), onCoralBlock: true, rng: () => 0.99 }).duplicates,
+    ).toBe(3);
+    // Range stays within 1-3 across many random rolls.
+    for (let i = 0; i < 20; i++) {
+      const r = boneMealPickle({ state: makeSeaPickle(4), onCoralBlock: true, rng: Math.random });
+      expect(r.duplicates).toBeGreaterThanOrEqual(1);
+      expect(r.duplicates).toBeLessThanOrEqual(3);
+    }
   });
 
   it('bone meal without coral → no duplicates', () => {

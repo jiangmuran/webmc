@@ -35,8 +35,13 @@ export interface BoneMealResult {
   duplicates: number;
 }
 
+// Wiki (minecraft.wiki/w/Sea_Pickle#Growing): "any living coral block
+// within a taxicab distance of 2 blocks (horizontally from either the
+// coral block or the sea pickle itself) can generate 1-3 sea pickles."
+// Old formula `2 + Math.floor(rng()*3)` gave 2-4 — high by 1 across
+// the range.
 export function boneMealPickle(q: BoneMealQuery): BoneMealResult {
   if (!q.onCoralBlock || q.state.count !== 4) return { duplicates: 0 };
-  const count = 2 + Math.floor(q.rng() * 3);
+  const count = 1 + Math.floor(q.rng() * 3); // 1-3 per wiki
   return { duplicates: count };
 }
