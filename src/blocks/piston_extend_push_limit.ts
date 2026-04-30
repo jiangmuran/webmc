@@ -24,8 +24,16 @@ export const IMMOVABLE = new Set([
   'jigsaw',
 ]);
 
+// Wiki (minecraft.wiki/w/Piston#Behavior): "Tile-entity blocks
+// (furnaces, dispensers, droppers, hoppers, brewing stands, beacons,
+// shulker boxes, etc.) became movable by pistons in Java Edition
+// 1.13." Old `endsWith('_furnace')` short-circuit kept furnace,
+// blast_furnace, and smoker classed as immovable, breaking common
+// modern piston-pushed furnace contraptions. Furnace family is now
+// pushable per wiki; the strict IMMOVABLE set above is the canonical
+// list (bedrock, barriers, end-portal family, command/spawner/etc.).
 export function isImmovable(block: string): boolean {
-  return IMMOVABLE.has(block) || block.endsWith('_furnace');
+  return IMMOVABLE.has(block);
 }
 
 export function canPush(chain: string[]): boolean {
