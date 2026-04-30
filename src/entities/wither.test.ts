@@ -8,7 +8,7 @@ describe('wither boss', () => {
     expect(taken).toBe(0);
   });
 
-  it('spawn completes after 10 seconds + triggers explosion', () => {
+  it('spawn completes after 11 seconds + triggers explosion (wiki: 220 ticks)', () => {
     const w = makeWither();
     let sawExplosion = false;
     for (let i = 0; i < 120; i++) {
@@ -34,12 +34,20 @@ describe('wither boss', () => {
     expect(w.explosionResist).toBe(true);
   });
 
-  it('low_health wither is explosion-immune', () => {
+  it('low_health wither is projectile-immune (wiki: arrows etc.)', () => {
+    const w = makeWither();
+    for (let i = 0; i < 120; i++) tickWither(w, 0.1);
+    damageWither(w, { amount: 160, source: 'player' });
+    const taken = damageWither(w, { amount: 50, source: 'projectile' });
+    expect(taken).toBe(0);
+  });
+
+  it('low_health wither still takes explosion damage (wiki)', () => {
     const w = makeWither();
     for (let i = 0; i < 120; i++) tickWither(w, 0.1);
     damageWither(w, { amount: 160, source: 'player' });
     const taken = damageWither(w, { amount: 50, source: 'explosion' });
-    expect(taken).toBe(0);
+    expect(taken).toBe(50);
   });
 
   it('fatal damage moves to dead', () => {

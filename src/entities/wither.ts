@@ -1,6 +1,15 @@
 // Wither boss state machine. Summoned via the 3-wither-skull T formation;
-// has a 10-second "invulnerability grow-up" state before attacking.
-// 300 HP total; at <= half HP gains explosion resistance.
+// has an 11-second "invulnerability grow-up" state before attacking.
+// 300 HP total; at <= half HP gains immunity to projectiles.
+//
+// Wiki (minecraft.wiki/w/Wither):
+//   Spawn invulnerability: "When this state ends after 11 seconds or
+//     220 game ticks" — old SPAWN_DURATION_SEC = 10 was 1 s short.
+//   Half-HP shield: "becomes immune to projectiles below half health"
+//     — old code immunized against EXPLOSIONS, not projectiles.
+//
+// Explosions still hurt the wither at low HP; arrows, snowballs, and
+// trident throws bounce off.
 
 export type WitherStage = 'spawning' | 'charged' | 'low_health' | 'dead';
 
@@ -14,7 +23,7 @@ export interface WitherState {
 }
 
 const MAX_HEALTH = 300;
-const SPAWN_DURATION_SEC = 10;
+const SPAWN_DURATION_SEC = 11;
 
 export function makeWither(): WitherState {
   return {
@@ -59,7 +68,7 @@ export interface DamageQuery {
 
 export function damageWither(state: WitherState, q: DamageQuery): number {
   if (state.stage === 'spawning') return 0; // invulnerable
-  if (state.stage === 'low_health' && q.source === 'explosion') return 0;
+  if (state.stage === 'low_health' && q.source === 'projectile') return 0;
   state.health = Math.max(0, state.health - q.amount);
   if (state.health <= 0) {
     state.stage = 'dead';
