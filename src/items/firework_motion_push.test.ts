@@ -20,6 +20,15 @@ describe('firework motion push', () => {
   });
 
   it('longer flight more ticks', () => {
-    expect(flightDurationTicks(3)).toBeGreaterThan(flightDurationTicks(1));
+    expect(flightDurationTicks(3, () => 0)).toBeGreaterThan(flightDurationTicks(1, () => 0));
+  });
+
+  it('LifeTime = (Flight+1)*10 + random(0..5) + random(0..6) (wiki NBT)', () => {
+    expect(flightDurationTicks(1, () => 0)).toBe(20);
+    expect(flightDurationTicks(2, () => 0)).toBe(30);
+    expect(flightDurationTicks(3, () => 0)).toBe(40);
+    // Max with rand→0.999 should add 5 + 6 = 11 ticks
+    expect(flightDurationTicks(1, () => 0.999)).toBe(20 + 11);
+    expect(flightDurationTicks(3, () => 0.999)).toBe(40 + 11);
   });
 });
