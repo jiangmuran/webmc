@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { transition, contactDamage, contactPoison, fullyInflated } from './pufferfish_inflate';
+import {
+  transition,
+  contactDamage,
+  contactPoison,
+  fullyInflated,
+  poisonDurationTicks,
+  POISON_AMPLIFIER,
+  POISON_TICKS_SEMI,
+  POISON_TICKS_FULL,
+} from './pufferfish_inflate';
 
 describe('pufferfish inflate', () => {
   it('inflates with threat', () => {
@@ -30,5 +39,17 @@ describe('pufferfish inflate', () => {
 
   it('fullyInflated', () => {
     expect(fullyInflated({ state: 2, threatNearby: false })).toBe(true);
+  });
+
+  it('poison duration: semi 3s / full 6s (wiki)', () => {
+    expect(POISON_TICKS_SEMI).toBe(60);
+    expect(POISON_TICKS_FULL).toBe(120);
+    expect(poisonDurationTicks(0)).toBe(0);
+    expect(poisonDurationTicks(1)).toBe(60);
+    expect(poisonDurationTicks(2)).toBe(120);
+  });
+
+  it('poison amplifier 0 = Poison I (wiki: just "Poison")', () => {
+    expect(POISON_AMPLIFIER).toBe(0);
   });
 });
