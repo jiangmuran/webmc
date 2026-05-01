@@ -1,6 +1,15 @@
-// Creeper fuse + explosion. A creeper starts fusing when within 3 blocks
-// of a player; 1.5s of fuse before detonating (power 3 base, power 6 if
-// charged by lightning). Cat nearby makes creepers flee.
+// Creeper fuse + explosion. Wiki (minecraft.wiki/w/Creeper):
+// "When within 3 blocks of a player … explodes after 1.5 seconds
+// (30 ticks) … the distance that the player must move in order
+// for a creeper to cancel its explosion is 7 blocks." So the fuse
+// ignites at ≤ 3 but only cancels when > 7 — between 3 and 7 the
+// fuse continues to count down. Old code only advanced the fuse
+// while ≤ 3 (so a player who stepped to 4 blocks would freeze the
+// fuse instead of letting it complete) and let the caller flip
+// `ctx.escape` for cancellation. Cat-nearby makes creepers flee.
+//
+// Sibling creeper_swell.ts already uses the wiki-correct ignite=3 /
+// cancel=7 split.
 
 export interface Vec3 {
   x: number;
@@ -37,7 +46,8 @@ export interface CreeperTickCtx {
   playerDistance: number;
   catNearby: boolean;
   dtSec: number;
-  escape: boolean; // player moved out of fuse range
+  /** Forced cancel from caller (e.g. obstruction, fluid). */
+  escape: boolean;
 }
 
 export interface CreeperTickResult {
@@ -45,7 +55,8 @@ export interface CreeperTickResult {
   power: number;
 }
 
-const FUSE_RADIUS = 3;
+export const IGNITE_RANGE = 3;
+export const CANCEL_RANGE = 7;
 
 export function tickCreeper(state: CreeperState, ctx: CreeperTickCtx): CreeperTickResult {
   if (state.health <= 0) return { explode: false, power: 0 };
@@ -55,7 +66,14 @@ export function tickCreeper(state: CreeperState, ctx: CreeperTickCtx): CreeperTi
     return { explode: false, power: 0 };
   }
   state.fleeing = false;
-  if (ctx.playerDistance <= FUSE_RADIUS) {
+  // Forced cancel or player past 7-block threshold — reset.
+  if (ctx.escape || ctx.playerDistance > CANCEL_RANGE) {
+    state.fuseSec = 0;
+    return { explode: false, power: 0 };
+  }
+  // Sustain or ignite. Already swelling? Keep going regardless of
+  // 3-vs-7 (wiki: only > 7 cancels). Not yet swelling? Ignite at ≤ 3.
+  if (state.fuseSec > 0 || ctx.playerDistance <= IGNITE_RANGE) {
     state.fuseSec += ctx.dtSec;
     if (state.fuseSec >= FUSE_DURATION_SEC) {
       return {
@@ -63,8 +81,6 @@ export function tickCreeper(state: CreeperState, ctx: CreeperTickCtx): CreeperTi
         power: state.charged ? CHARGED_EXPLOSION_POWER : EXPLOSION_POWER,
       };
     }
-  } else if (ctx.escape) {
-    state.fuseSec = 0;
   }
   return { explode: false, power: 0 };
 }
