@@ -17,6 +17,13 @@ describe('dripstone cave', () => {
     expect(stalactiteFallDamage(10)).toBe(20);
     expect(stalactiteFallDamage(0)).toBe(2);
   });
+
+  it('fall damage capped at 40 (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Pointed_Dripstone): max 40 damage.
+    expect(stalactiteFallDamage(20)).toBe(40);
+    expect(stalactiteFallDamage(30)).toBe(40);
+    expect(stalactiteFallDamage(100)).toBe(40);
+  });
 });
 
 describe('drip cauldron', () => {

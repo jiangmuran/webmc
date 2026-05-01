@@ -24,9 +24,15 @@ export function planDripstoneCave(q: DripstoneCaveQuery): DripstoneCaveLayout {
   };
 }
 
-// Stalactite fall damage: scales with how tall the stalactite is.
+// Wiki (minecraft.wiki/w/Pointed_Dripstone): "A falling stalactite
+// deals damage equal to twice the number of stalactite blocks that
+// hit a target, with a maximum of 40 damage." Old `max(2, length*2)`
+// had no upper cap, so a 30-block stalactite would deal 60 damage —
+// 50% over the wiki ceiling.
+export const STALACTITE_MIN_DAMAGE = 2;
+export const STALACTITE_MAX_DAMAGE = 40;
 export function stalactiteFallDamage(length: number): number {
-  return Math.max(2, length * 2);
+  return Math.max(STALACTITE_MIN_DAMAGE, Math.min(STALACTITE_MAX_DAMAGE, length * 2));
 }
 
 // Stalactite tip "dripping" — 1/45 chance per tick to drip water/lava.
