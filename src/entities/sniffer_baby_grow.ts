@@ -22,6 +22,20 @@ export function isBabyGrown(baby: { ageTicks: number }): boolean {
   return baby.ageTicks >= GROW_TICKS;
 }
 
-export function hatchSpeedMultInWarmBiome(isWarm: boolean): number {
-  return isWarm ? 2 : 1;
+// Wiki (minecraft.wiki/w/Sniffer_Egg): the only documented hatch
+// speedup is "10 minutes if placed on a moss block" vs the 20-minute
+// default. There is NO warm-biome speedup in the wiki — `isWarm` was
+// fabricated. Sibling sniffer_egg_hatch.ts uses the moss/non-moss
+// split (12000 / 24000 ticks).
+export function hatchSpeedMultOnMoss(onMoss: boolean): number {
+  return onMoss ? 2 : 1;
+}
+
+/** @deprecated Wiki has no warm-biome speedup. Use hatchSpeedMultOnMoss instead. */
+export function hatchSpeedMultInWarmBiome(_isWarm: boolean): number {
+  // Always 1× — keeps callers compiling but stops applying a
+  // non-canonical biome bonus. Real moss speedup is in
+  // hatchSpeedMultOnMoss.
+  void _isWarm;
+  return 1;
 }

@@ -3,6 +3,7 @@ import {
   shouldHatch,
   isBabyGrown,
   hatchSpeedMultInWarmBiome,
+  hatchSpeedMultOnMoss,
   GROW_TICKS,
   EGG_HATCH_TICKS,
 } from './sniffer_baby_grow';
@@ -20,8 +21,20 @@ describe('sniffer baby grow', () => {
     expect(isBabyGrown({ ageTicks: GROW_TICKS })).toBe(true);
   });
 
-  it('warm biome faster', () => {
-    expect(hatchSpeedMultInWarmBiome(true)).toBeGreaterThan(hatchSpeedMultInWarmBiome(false));
+  it('moss block hatches 2× faster (wiki)', () => {
+    // Wiki minecraft.wiki/w/Sniffer_Egg: "10 minutes on moss, 20
+    // minutes elsewhere" → 2× speedup on moss.
+    expect(hatchSpeedMultOnMoss(true)).toBe(2);
+    expect(hatchSpeedMultOnMoss(false)).toBe(1);
+  });
+
+  it('warm-biome speedup is not in wiki (deprecated, always 1×)', () => {
+    // Wiki has no warm-biome speedup; the legacy function stays
+    // callable but no longer falsely doubles the rate.
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    expect(hatchSpeedMultInWarmBiome(true)).toBe(1);
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    expect(hatchSpeedMultInWarmBiome(false)).toBe(1);
   });
 
   it('GROW_TICKS = 48000 (wiki: 40 minutes, 2× normal baby)', () => {
