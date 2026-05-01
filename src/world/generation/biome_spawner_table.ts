@@ -13,10 +13,17 @@ export const BY_BIOME: Record<string, SpawnEntry[]> = {
     { mob: 'horse', weight: 5, min: 2, max: 6 },
   ],
   desert: [{ mob: 'rabbit', weight: 4, min: 2, max: 3 }],
+  // Wiki (minecraft.wiki/w/Nether_Wastes): hostile mob spawns include
+  // zombified_piglin (100), ghast (50), magma_cube (2), piglin (15),
+  // and enderman (1). Old table was missing piglin and enderman, which
+  // meant a fresh nether_wastes generation could never produce piglins
+  // — breaking bartering loops.
   nether_wastes: [
     { mob: 'zombified_piglin', weight: 100, min: 4, max: 4 },
     { mob: 'ghast', weight: 50, min: 4, max: 4 },
     { mob: 'magma_cube', weight: 2, min: 4, max: 4 },
+    { mob: 'piglin', weight: 15, min: 4, max: 4 },
+    { mob: 'enderman', weight: 1, min: 4, max: 4 },
   ],
 };
 

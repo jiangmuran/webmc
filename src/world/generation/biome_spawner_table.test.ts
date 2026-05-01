@@ -18,4 +18,12 @@ describe('biome spawner table', () => {
     const piglin = spawnersFor('nether_wastes').find((e) => e.mob === 'zombified_piglin');
     expect(piglin?.weight).toBeGreaterThan(50);
   });
+
+  it('nether wastes spawns piglins (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Nether_Wastes): piglin weight 15.
+    // Without this entry, fresh worlds could never produce naturally
+    // spawned piglins for bartering.
+    const ids = spawnersFor('nether_wastes').map((e) => e.mob);
+    expect(ids).toContain('piglin');
+  });
 });
