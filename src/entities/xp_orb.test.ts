@@ -29,9 +29,10 @@ describe('XpOrbWorld', () => {
     expect(w.size).toBe(0);
   });
 
-  it('magnet pulls orbs within 6 blocks', () => {
+  it('magnet pulls orbs within 7.25 blocks (wiki)', () => {
     const w = new XpOrbWorld();
-    w.drop(1, { x: 5, y: 50, z: 0 });
+    // Drop at 7 blocks → still in magnet range.
+    w.drop(1, { x: 7, y: 50, z: 0 });
     const orb = Array.from(w.all())[0];
     if (!orb) throw new Error();
     const before = { ...orb.position };
