@@ -37,7 +37,11 @@ export function arrowDamage(powerLevel: number, velocity: number, critical: bool
   return base + powerBonus + critBonus;
 }
 
-// Fire-immune mobs (zombified piglins, blazes, magma cubes, etc.).
+// Wiki (minecraft.wiki/w/Damage#Immunity): mobs immune to fire damage.
+// Removed `skeleton_horse` — wiki says it does not burn in SUNLIGHT
+// (a separate mechanic) but takes normal fire damage from arrows,
+// lava, and fire blocks. Added `ender_dragon` which is wiki-canonical
+// fire-immune (e.g. lava in The End deals no damage to it).
 const FIRE_IMMUNE = new Set<string>([
   'blaze',
   'magma_cube',
@@ -46,7 +50,7 @@ const FIRE_IMMUNE = new Set<string>([
   'wither',
   'wither_skeleton',
   'zombified_piglin',
-  'skeleton_horse',
+  'ender_dragon',
 ]);
 
 export function isFireImmune(mob: string): boolean {

@@ -32,4 +32,16 @@ describe('flame arrow', () => {
   it('cow is not', () => {
     expect(isFireImmune('cow')).toBe(false);
   });
+
+  it('skeleton_horse is NOT fire-immune (wiki: only sunlight-immune)', () => {
+    // Wiki minecraft.wiki/w/Skeleton_Horse: "does not burn in
+    // sunlight" — that's a sunlight-only carve-out, not a general
+    // fire immunity. Skeleton horses take normal fire damage from
+    // arrows / lava / fire blocks.
+    expect(isFireImmune('skeleton_horse')).toBe(false);
+  });
+
+  it('ender_dragon is fire-immune (wiki)', () => {
+    expect(isFireImmune('ender_dragon')).toBe(true);
+  });
 });
