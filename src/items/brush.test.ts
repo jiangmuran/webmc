@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { brushOnce, makeBrushState, rollBrushLoot } from './brush';
 
 describe('brush', () => {
-  it('reveals after 4 brushes', () => {
+  it('reveals after 96 brushes (wiki: 4.8 sec)', () => {
     const s = makeBrushState();
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 95; i++) {
       const r = brushOnce(s, 'suspicious_sand');
       expect(r.revealed).toBe(false);
     }
@@ -15,7 +15,7 @@ describe('brush', () => {
 
   it('gravel variant resolves to gravel', () => {
     const s = makeBrushState();
-    for (let i = 0; i < 4; i++) brushOnce(s, 'suspicious_gravel');
+    for (let i = 0; i < 96; i++) brushOnce(s, 'suspicious_gravel');
     const again = brushOnce(s, 'suspicious_gravel');
     expect(again.revealed).toBe(false);
     expect(s.done).toBe(true);
