@@ -3,7 +3,7 @@ import {
   blocksNeededForFullFrame,
   validFrameBlock,
   activationRadius,
-  dolphinsGraceProvided,
+  conduitPowerProvided,
 } from './conduit_prismarine_frame';
 
 describe('conduit prismarine frame', () => {
@@ -27,8 +27,8 @@ describe('conduit prismarine frame', () => {
     expect(activationRadius(9999)).toBeLessThanOrEqual(96);
   });
 
-  it('grace at activation', () => {
-    expect(dolphinsGraceProvided(true, 16)).toBe(true);
-    expect(dolphinsGraceProvided(false, 42)).toBe(false);
+  it("Conduit Power provided when activated (wiki: NOT Dolphin's Grace)", () => {
+    expect(conduitPowerProvided(true, 16)).toBe(true);
+    expect(conduitPowerProvided(false, 42)).toBe(false);
   });
 });
