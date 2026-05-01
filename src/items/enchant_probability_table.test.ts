@@ -34,4 +34,25 @@ describe('enchant probability table', () => {
     expect(l).toBeGreaterThanOrEqual(e.minLevel);
     expect(l).toBeLessThanOrEqual(e.maxLevel);
   });
+
+  it('default selector excludes treasure (mending) per wiki', () => {
+    // Wiki minecraft.wiki/w/Enchanting_mechanics: mending is treasure-
+    // only — never appears from the enchanting table. Sample many
+    // rolls; mending must NOT appear with the default no-filter call.
+    const seen = new Set<string>();
+    for (let i = 0; i < 200; i++) {
+      const e = pickFromTable(() => i / 200);
+      if (e) seen.add(e.id);
+    }
+    expect(seen.has('mending')).toBe(false);
+  });
+
+  it('explicit treasure filter can include mending (loot/trade paths)', () => {
+    // Loot tables / villager trades opt in to treasure draws.
+    const onlyMending = pickFromTable(
+      () => 0.5,
+      (e) => e.id === 'mending',
+    );
+    expect(onlyMending?.id).toBe('mending');
+  });
 });
