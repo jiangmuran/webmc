@@ -1,6 +1,10 @@
 // Brewing stand. Ingredient + base potion → output potion. Blaze
 // powder fuel lasts 20 operations. Each brew takes 400 ticks (20s).
 
+// Wiki (minecraft.wiki/w/Brewing#Effect_potions): canonical potions
+// include the four 1.21 Trial Chambers additions (wind_charged,
+// weaving, oozing, infested) added in 24w13a / 1.20.5+. Old union
+// was missing all four.
 export type BaseKind =
   | 'water'
   | 'awkward'
@@ -21,7 +25,11 @@ export type BaseKind =
   | 'leaping'
   | 'turtle_master'
   | 'slow_falling'
-  | 'luck';
+  | 'luck'
+  | 'wind_charged'
+  | 'weaving'
+  | 'oozing'
+  | 'infested';
 
 const INGREDIENT_TABLE: Record<string, Partial<Record<BaseKind, BaseKind>>> = {
   // Wiki (minecraft.wiki/w/Brewing): water-base recipes were missing.
@@ -55,6 +63,11 @@ const INGREDIENT_TABLE: Record<string, Partial<Record<BaseKind, BaseKind>>> = {
   // registered item, so this recipe was effectively unbrewable.
   'webmc:turtle_shell': { awkward: 'turtle_master' },
   'webmc:phantom_membrane': { awkward: 'slow_falling' },
+  // 1.21 Trial Chambers potions (24w13a):
+  'webmc:breeze_rod': { awkward: 'wind_charged' },
+  'webmc:cobweb': { awkward: 'weaving' },
+  'webmc:slime_block': { awkward: 'oozing' },
+  'webmc:stone': { awkward: 'infested' },
 };
 
 export function brew(input: BaseKind, ingredient: string): BaseKind | null {
