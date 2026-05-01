@@ -1,3 +1,9 @@
+// Wiki (minecraft.wiki/w/Suspicious_Stew): canonical flower-to-effect
+// table. 1.20 added torchflower (Night Vision) and 1.21.4 added the
+// eyeblossoms (Open: Blindness, same duration as azure bluet per
+// 24w46a; Closed: Nausea). Old union omitted all three — feeding a
+// brown mooshroom one of those flowers produced no stew effect even
+// though the wiki recipes accept them.
 export type FlowerSource =
   | 'dandelion'
   | 'poppy'
@@ -8,7 +14,10 @@ export type FlowerSource =
   | 'oxeye_daisy'
   | 'cornflower'
   | 'lily_of_the_valley'
-  | 'wither_rose';
+  | 'wither_rose'
+  | 'torchflower'
+  | 'open_eyeblossom'
+  | 'closed_eyeblossom';
 
 // Wiki (minecraft.wiki/w/Suspicious_Stew, History 24w45a): Java
 // durations now match Bedrock:
@@ -37,6 +46,16 @@ const EFFECT_BY_FLOWER: Record<FlowerSource, { id: string; durationTicks: number
   cornflower: { id: 'jump_boost', durationTicks: 100 },
   lily_of_the_valley: { id: 'poison', durationTicks: 220 },
   wither_rose: { id: 'wither', durationTicks: 140 },
+  // 1.20 addition (wiki Suspicious_Stew History 23w12a):
+  // Torchflower → Night Vision (matches poppy, 5 s = 100 ticks).
+  torchflower: { id: 'night_vision', durationTicks: 100 },
+  // 1.21.4 addition (24w46a): open_eyeblossom → Blindness with the
+  // same 11 s duration as azure_bluet.
+  open_eyeblossom: { id: 'blindness', durationTicks: 220 },
+  // 1.21.4 addition: closed_eyeblossom → Nausea. Wiki history
+  // doesn't pin the duration explicitly; the only stew-source nausea
+  // effect; Bedrock-parity for nausea-style stews is 7 s = 140 ticks.
+  closed_eyeblossom: { id: 'nausea', durationTicks: 140 },
 };
 
 export function effectFromSource(source: FlowerSource): { id: string; durationTicks: number } {
