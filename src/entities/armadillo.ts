@@ -7,7 +7,14 @@ export interface ArmadilloState {
 }
 
 const SCUTE_COOLDOWN_SEC = 300; // 5 min between scutes
-const SCARE_DISTANCE_SQ = 3 * 3;
+// Wiki (minecraft.wiki/w/Armadillo): "The distance an armadillo checks
+// for threats is the size of its hitbox inflated by 7 blocks
+// horizontally and 2 blocks vertically." Hitbox is ~0.7 wide so the
+// effective horizontal threat radius is ≈ 7.35 blocks. Old value of
+// 9 (= 3²) only triggered curl within 3 blocks — far less than the
+// ~7 blocks of wiki canon. Sibling armadillo_curl.ts uses CURL_RADIUS=8;
+// 49 (=7²) is the closest integer-radius match to wiki.
+const SCARE_DISTANCE_SQ = 7 * 7;
 
 export function makeArmadilloState(): ArmadilloState {
   return { rolled: false, scuteCooldownSec: 0 };
