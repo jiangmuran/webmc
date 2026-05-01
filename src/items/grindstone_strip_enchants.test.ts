@@ -25,8 +25,12 @@ describe('grindstone strip enchants', () => {
     expect(grind(tool).result.priorWorkPenalty).toBe(0);
   });
 
-  it('repairs some durability', () => {
-    expect(grind(tool).result.damage).toBeLessThan(tool.damage);
+  it('single-item grind preserves durability (wiki: no repair)', () => {
+    // Wiki (minecraft.wiki/w/Grindstone): single-item disenchanting
+    // returns the same durability as input. The 5% repair bonus
+    // applies only to two-item combine. Old code repaired 5% on
+    // single grinds, giving free repairs.
+    expect(grind(tool).result.damage).toBe(tool.damage);
   });
 
   it('combine repair with bonus', () => {
