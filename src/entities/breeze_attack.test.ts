@@ -10,6 +10,20 @@ describe('breeze attack', () => {
     });
   });
 
+  it('sight range is 16 blocks (wiki)', () => {
+    // 17 = out of range, 16 = at edge (in range, fires).
+    expect(
+      chooseAttack({ distanceToTarget: 17, canSeeTarget: true, cooldownRemaining: 0 }),
+    ).toEqual({ kind: 'idle' });
+    expect(
+      chooseAttack({ distanceToTarget: 16, canSeeTarget: true, cooldownRemaining: 0 }).kind,
+    ).toBe('wind_charge');
+  });
+
+  it('attack cooldown is 32 ticks = 1.6s (wiki)', () => {
+    expect(BREEZE_ATTACK_COOLDOWN_TICKS).toBe(32);
+  });
+
   it('no sight idle', () => {
     expect(
       chooseAttack({ distanceToTarget: 5, canSeeTarget: false, cooldownRemaining: 0 }),
