@@ -42,7 +42,10 @@ describe('illager patrol spawn', () => {
     ).toBe(true);
   });
 
-  it('patrol of 5', () => {
-    expect(patrolSize()).toBe(5);
+  it('patrol size is 1-5 random per wiki', () => {
+    // minecraft.wiki/w/Patrol#Spawning: 1-5 pillagers in Java.
+    expect(patrolSize(() => 0)).toBe(1);
+    expect(patrolSize(() => 0.5)).toBe(3);
+    expect(patrolSize(() => 0.99)).toBe(5);
   });
 });
