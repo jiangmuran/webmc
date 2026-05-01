@@ -46,9 +46,9 @@ describe('warden spawn', () => {
 });
 
 describe('warden emergence', () => {
-  it('progresses over 5s', () => {
+  it('progresses across emergence duration (wiki: 11.25 s)', () => {
     const s = makeEmergence({ x: 0, y: 20, z: 0 });
-    tickEmergence(s, 2.5);
+    tickEmergence(s, EMERGENCE_DURATION_SEC / 2);
     expect(emergenceFraction(s)).toBeCloseTo(0.5);
   });
 
