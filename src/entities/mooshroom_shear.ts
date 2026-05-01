@@ -51,20 +51,34 @@ export function bowlInteract(state: MooshroomState): StewResult {
   return { stew: { item: 'webmc:mushroom_stew', effect: null } };
 }
 
+// Wiki (minecraft.wiki/w/Suspicious_Stew, History 24w45a): "Changed
+// durations of the Suspicious Stew effects to match Bedrock Edition:
+//   Fire Resistance: 3 seconds
+//   Blindness:       11 seconds
+//   Weakness:        7 seconds
+//   Regeneration:    7 seconds
+//   Jump Boost:      5 seconds
+//   Wither:          7 seconds
+//   Poison:          11 seconds"
+//
+// Old durations were off by 1 second on most of these, with allium
+// and lily_of_the_valley a full second longer than wiki canon.
+// Saturation and Night Vision are not in the 24w45a change list and
+// remain at their pre-existing values.
 const FLOWER_EFFECTS: Record<string, { effect: string; durationSec: number }> = {
   'webmc:dandelion': { effect: 'saturation', durationSec: 7 },
   'webmc:poppy': { effect: 'night_vision', durationSec: 5 },
   'webmc:blue_orchid': { effect: 'saturation', durationSec: 7 },
-  'webmc:allium': { effect: 'fire_resistance', durationSec: 4 },
-  'webmc:azure_bluet': { effect: 'blindness', durationSec: 8 },
-  'webmc:red_tulip': { effect: 'weakness', durationSec: 9 },
-  'webmc:orange_tulip': { effect: 'weakness', durationSec: 9 },
-  'webmc:white_tulip': { effect: 'weakness', durationSec: 9 },
-  'webmc:pink_tulip': { effect: 'weakness', durationSec: 9 },
-  'webmc:oxeye_daisy': { effect: 'regeneration', durationSec: 8 },
-  'webmc:cornflower': { effect: 'jump_boost', durationSec: 6 },
-  'webmc:lily_of_the_valley': { effect: 'poison', durationSec: 12 },
-  'webmc:wither_rose': { effect: 'wither', durationSec: 8 },
+  'webmc:allium': { effect: 'fire_resistance', durationSec: 3 },
+  'webmc:azure_bluet': { effect: 'blindness', durationSec: 11 },
+  'webmc:red_tulip': { effect: 'weakness', durationSec: 7 },
+  'webmc:orange_tulip': { effect: 'weakness', durationSec: 7 },
+  'webmc:white_tulip': { effect: 'weakness', durationSec: 7 },
+  'webmc:pink_tulip': { effect: 'weakness', durationSec: 7 },
+  'webmc:oxeye_daisy': { effect: 'regeneration', durationSec: 7 },
+  'webmc:cornflower': { effect: 'jump_boost', durationSec: 5 },
+  'webmc:lily_of_the_valley': { effect: 'poison', durationSec: 11 },
+  'webmc:wither_rose': { effect: 'wither', durationSec: 7 },
   'webmc:torchflower': { effect: 'night_vision', durationSec: 5 },
 };
 
