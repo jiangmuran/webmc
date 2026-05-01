@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { FANG_DAMAGE, summonFangLine, tickFang } from './evoker_fangs';
+import { FANG_CHARGE_SEC, FANG_DAMAGE, summonFangLine, tickFang } from './evoker_fangs';
 
 describe('evoker fangs', () => {
   it('summons 16 fangs along direction (wiki)', () => {
@@ -17,15 +17,28 @@ describe('evoker fangs', () => {
     expect(last.warmupSec).toBeGreaterThan(first.warmupSec);
   });
 
-  it('strike fires once after warmup', () => {
+  it('strike fires once after full 1.25s warmup (wiki)', () => {
+    // Wiki: "Each fang individually rises out of the ground, charges
+    // for 1.25 seconds (25 ticks), then strikes downward."
     const fangs = summonFangLine({ x: 0, y: 0, z: 0 }, { x: 1, z: 0 }, 42);
     const f = fangs[0];
     if (!f) throw new Error();
+    // Halfway through wiki charge time: no strike yet.
+    expect(tickFang(f, { dtSec: 0.5, entityOnFang: 5 }).strike).toBe(false);
+    // Past 1.25s total: strike fires.
     const r = tickFang(f, { dtSec: 1, entityOnFang: 5 });
     expect(r.strike).toBe(true);
     expect(r.targetEntity).toBe(5);
     const r2 = tickFang(f, { dtSec: 0.1, entityOnFang: 5 });
     expect(r2.strike).toBe(false);
+  });
+
+  it('first fang charges at least 1.25s (wiki)', () => {
+    const fangs = summonFangLine({ x: 0, y: 0, z: 0 }, { x: 1, z: 0 }, 42);
+    const f = fangs[0];
+    if (!f) throw new Error();
+    expect(f.warmupSec).toBeGreaterThanOrEqual(FANG_CHARGE_SEC);
+    expect(FANG_CHARGE_SEC).toBeCloseTo(1.25);
   });
 
   it('damage is 6', () => {
