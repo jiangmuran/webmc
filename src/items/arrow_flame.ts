@@ -23,15 +23,16 @@ export function onFlameArrowHit(q: FlameArrowQuery): FlameArrowHitResult {
 
 // Arrow damage formula. Flame does NOT modify damage — only ignition.
 //
-// Wiki (minecraft.wiki/w/Power): Power bonus = floor(base * (0.25 *
-// level + 0.25)). Old `floor(0.25 * (level+1) + 0.5)` was a flat
-// number (1 at level 1, 2 at level 5) and did NOT scale with base —
-// Power V on a 6-hp shot gave +2, not +9. This was the third copy
-// of the same bug across arrow modules; siblings arrow_crit_damage
-// and arrow_critical now both use the wiki formula.
+// Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+// 25% × (level + 1), rounded up to nearest half-heart." Damage in
+// MC is in half-heart units, so "rounded up" = Math.ceil. Old
+// Math.floor rounded DOWN, under-shooting on fractional bonuses
+// (e.g. base=5, Power IV: bonus 6.25 → floor=6 vs ceil=7).
+// Siblings arrow_critical.ts, arrow_trajectory.ts, and
+// arrow_crit_damage.ts all use Math.ceil now.
 export function arrowDamage(powerLevel: number, velocity: number, critical: boolean): number {
   const base = Math.max(1, Math.ceil(2 * velocity));
-  const powerBonus = powerLevel > 0 ? Math.floor(base * (0.25 * powerLevel + 0.25)) : 0;
+  const powerBonus = powerLevel > 0 ? Math.ceil(base * (0.25 * powerLevel + 0.25)) : 0;
   const critBonus = critical ? Math.floor(Math.random() * (base / 2 + 1)) : 0;
   return base + powerBonus + critBonus;
 }

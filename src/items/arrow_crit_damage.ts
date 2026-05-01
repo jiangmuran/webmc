@@ -29,6 +29,11 @@ export function arrowDamage(i: ArrowShotInput): number {
   const frac = drawFraction(i);
   const velocity = frac * 3;
   const base = Math.max(0, Math.ceil(velocity * BASE_ARROW_DAMAGE));
-  const powerBonus = i.powerLevel > 0 ? Math.floor(base * (0.25 * i.powerLevel + 0.25)) : 0;
+  // Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+  // 25% × (level + 1), rounded up to nearest half-heart." Old
+  // Math.floor rounded DOWN, under-shooting on fractional bonuses.
+  // Siblings arrow_critical.ts and arrow_trajectory.ts already use
+  // Math.ceil; this is the third arrow-Power formula aligned.
+  const powerBonus = i.powerLevel > 0 ? Math.ceil(base * (0.25 * i.powerLevel + 0.25)) : 0;
   return base + powerBonus;
 }
