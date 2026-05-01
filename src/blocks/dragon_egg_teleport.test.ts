@@ -12,10 +12,13 @@ describe('dragon egg teleport', () => {
     expect(t).toBeNull();
   });
 
-  it('stays within 15-block radius', () => {
-    const t = teleportDragonEgg({ x: 0, y: 60, z: 0 }, { isReplaceable: () => true });
-    if (!t) return;
-    expect(Math.abs(t.x)).toBeLessThanOrEqual(15);
-    expect(Math.abs(t.y - 60)).toBeLessThanOrEqual(15);
+  it('stays within 31×15×31 volume (wiki ±15 horizontal, ±7 vertical)', () => {
+    for (let i = 0; i < 100; i++) {
+      const t = teleportDragonEgg({ x: 0, y: 60, z: 0 }, { isReplaceable: () => true });
+      if (!t) continue;
+      expect(Math.abs(t.x)).toBeLessThanOrEqual(15);
+      expect(Math.abs(t.z)).toBeLessThanOrEqual(15);
+      expect(Math.abs(t.y - 60)).toBeLessThanOrEqual(7);
+    }
   });
 });
