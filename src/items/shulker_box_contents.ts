@@ -34,9 +34,21 @@ export function totalItems(b: ShulkerBox): number {
   return b.slots.reduce((acc, s) => acc + (s?.count ?? 0), 0);
 }
 
-// Comparator output based on fullness (like normal container).
+// Wiki (minecraft.wiki/w/Redstone_Comparator): container comparator
+// output is `1 + floor(weighted_items / inventory_size * 14)` where
+// weighted_items sums `count / maxStack` per slot. Old code used
+// FILLED-SLOT count instead of item-weight, so a box with 27 single
+// items (1/64 of a stack each) emitted signal 15 instead of the
+// wiki-canonical 1.
+//
+// Simplification: assumes maxStack=64 for every item. Non-stackable
+// items (tools, armor) compute as 1.0 weight which slightly inflates
+// signal — close enough for typical shulker-loaded contraptions.
 export function comparatorOutput(b: ShulkerBox): number {
-  const filledFraction = b.slots.filter((s) => s !== null).length / BOX_SIZE;
-  if (filledFraction === 0) return 0;
-  return Math.min(15, Math.floor(filledFraction * 14) + 1);
+  if (b.slots.every((s) => s === null)) return 0;
+  let weighted = 0;
+  for (const s of b.slots) {
+    if (s) weighted += s.count / 64;
+  }
+  return Math.min(15, 1 + Math.floor((weighted / BOX_SIZE) * 14));
 }

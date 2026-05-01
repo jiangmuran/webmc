@@ -34,10 +34,22 @@ describe('shulker box', () => {
     expect(totalItems(b)).toBe(15);
   });
 
-  it('comparator fullness', () => {
+  it('comparator scales by item-weight, not slot count (wiki)', () => {
+    // Wiki: signal = 1 + floor(weight / inventory_size * 14), where
+    // weight = sum(count / maxStack). Old code used filled-slot
+    // count, which over-rated barely-filled boxes.
     const b = makeBox();
     expect(comparatorOutput(b)).toBe(0);
+    // 27 slots × 1 stone each = 27/64 ≈ 0.42 weight ≈ 0.016 fill.
+    // Wiki: 1 + floor(0.016 × 14) = 1 (NOT 15).
     for (let i = 0; i < BOX_SIZE; i++) tryPlace(b, i, 'webmc:stone', 1);
+    expect(comparatorOutput(b)).toBe(1);
+  });
+
+  it('comparator hits 15 only when fully packed', () => {
+    const b = makeBox();
+    // 27 slots × 64 stone = 27 weight = full = signal 15.
+    for (let i = 0; i < BOX_SIZE; i++) tryPlace(b, i, 'webmc:stone', 64);
     expect(comparatorOutput(b)).toBe(15);
   });
 });
