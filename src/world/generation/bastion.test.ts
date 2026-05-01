@@ -23,8 +23,17 @@ describe('bastion', () => {
   });
 
   it('all variants have piglins', () => {
-    for (const v of ['housing_units', 'stables', 'hoglin_stables', 'treasure'] as const) {
+    for (const v of ['housing_units', 'bridge', 'hoglin_stables', 'treasure'] as const) {
       expect(planBastion(v).piglins).toBeGreaterThan(0);
     }
+  });
+
+  it('bridge + hoglin_stables both spawn hoglins (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Bastion_Remnant): "bridges, hoglin stables"
+    // are the two variants that can spawn hoglins on generation.
+    expect(planBastion('bridge').hoglins).toBeGreaterThan(0);
+    expect(planBastion('hoglin_stables').hoglins).toBeGreaterThan(0);
+    expect(planBastion('housing_units').hoglins).toBe(0);
+    expect(planBastion('treasure').hoglins).toBe(0);
   });
 });
