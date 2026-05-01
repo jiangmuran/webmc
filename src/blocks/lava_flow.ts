@@ -24,25 +24,44 @@ export interface ContactQuery {
   sourceIsStill: boolean;
   other: 'lava' | 'water' | 'soul_soil' | 'blue_ice' | null;
   otherIsStill: boolean;
+  /**
+   * Per wiki, stone forms ONLY when flowing lava drops onto water from
+   * above (the directional case). Default false produces the canonical
+   * horizontal cobblestone-generator behavior.
+   */
+  lavaFlowFromAbove?: boolean;
 }
 
-// Wiki (minecraft.wiki/w/Stone#Generation): lava source + water (any)
-// → obsidian. Flowing lava + water source → STONE. Flowing lava +
-// flowing water → cobblestone. Old code returned cobblestone for any
-// flowing-lava case and missed the stone-formation rule entirely
-// (the 'stone' kind was defined but never produced).
+// Wiki (minecraft.wiki/w/Cobblestone#Post-generation): "When water
+// and flowing lava come into contact, the flowing lava is replaced
+// by cobblestone. However, if the lava flows on top of the water
+// from above, stone is created instead. Non-flowing lava (a lava
+// source block) turns into obsidian upon contact with water."
+//
+// So:
+//   lava SOURCE + any water           → obsidian
+//   flowing lava FROM ABOVE + water   → stone (vertical-flow case)
+//   flowing lava ANY OTHER direction  → cobblestone
+//
+// Old code used `otherIsStill` (water-source flag) as the stone
+// trigger — but per wiki the stone case is the directional
+// "lava-from-above-onto-water" rule, NOT "water happens to be a
+// source." Horizontal flowing lava meeting a water source (the
+// classic cobblestone generator) was incorrectly producing stone.
+// Sibling lava_encounter_water.ts has the same fix; this aligns the
+// second copy.
 export function interact(q: ContactQuery): FlowReaction {
   if (q.source === 'lava') {
     if (q.other === 'water') {
       if (q.sourceIsStill) return { kind: 'obsidian' };
-      return q.otherIsStill ? { kind: 'stone' } : { kind: 'cobblestone' };
+      return q.lavaFlowFromAbove === true ? { kind: 'stone' } : { kind: 'cobblestone' };
     }
     if (q.other === 'soul_soil' && q.otherIsStill) return { kind: 'basalt' };
     if (q.other === 'blue_ice') return { kind: 'basalt' };
   }
   if (q.source === 'water' && q.other === 'lava') {
     if (q.otherIsStill) return { kind: 'obsidian' };
-    return q.sourceIsStill ? { kind: 'stone' } : { kind: 'cobblestone' };
+    return q.lavaFlowFromAbove === true ? { kind: 'stone' } : { kind: 'cobblestone' };
   }
   return { kind: 'none' };
 }
