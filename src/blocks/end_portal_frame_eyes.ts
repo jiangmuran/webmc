@@ -1,6 +1,11 @@
-// End portal frame. 12 frames arranged in a 4x4 ring (corners empty).
-// Each needs an Eye of Ender to complete the portal. When all 12 filled,
-// the 3x3 interior becomes active end portal blocks.
+// End portal frame. Wiki (minecraft.wiki/w/End_Portal): 12 frames
+// arranged as a 5×5 outer ring around a 3×3 inner space, with the
+// 4 corner positions of the outer ring left empty. Each frame
+// accepts an Eye of Ender; when all 12 are filled (and facing
+// inward), the 3×3 interior becomes active end-portal blocks.
+// Old comment "4x4 ring" was a coordinate misdescription —
+// 12 frames don't fit in a 4×4 ring (16 - 4 corners = 12 fits 5×5
+// minus corners, NOT 4×4).
 
 export interface FrameCell {
   hasEye: boolean;
