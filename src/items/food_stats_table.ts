@@ -39,14 +39,22 @@ export function canEat(id: string, playerHungerPct: number): boolean {
 //   minecraft.wiki/w/Rotten_Flesh — Hunger 30s, 80% chance (chance is
 //     applied at call site)
 //   minecraft.wiki/w/Spider_Eye — Poison 5s
-// Old code returned [] for enchanted_golden_apple, dropping all four
-// of its canonical effects — eating one in this engine gave only
-// hunger restore, not the iconic Notch-apple buffs.
+//   minecraft.wiki/w/Pufferfish — eating raw inflicts Hunger III for
+//     15s (300 ticks, amp 2), Poison II for 60s (1200 ticks, amp 1),
+//     Nausea for 15s (300 ticks, amp 0). Old code returned no
+//     effects for pufferfish — players could eat raw pufferfish for
+//     free hunger restore, missing the wiki's signature triple-debuff.
 export function postEatEffects(
   id: string,
 ): { id: string; durationTicks: number; amplifier: number }[] {
   if (id === 'rotten_flesh') return [{ id: 'hunger', durationTicks: 600, amplifier: 0 }];
   if (id === 'spider_eye') return [{ id: 'poison', durationTicks: 100, amplifier: 0 }];
+  if (id === 'pufferfish')
+    return [
+      { id: 'hunger', durationTicks: 300, amplifier: 2 },
+      { id: 'poison', durationTicks: 1200, amplifier: 1 },
+      { id: 'nausea', durationTicks: 300, amplifier: 0 },
+    ];
   if (id === 'golden_apple')
     return [
       { id: 'regeneration', durationTicks: 100, amplifier: 1 },
