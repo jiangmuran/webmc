@@ -15,6 +15,21 @@ describe('water source form', () => {
     expect(shouldBecomeSource([{ isSource: true, level: 0, solidBelow: true }])).toBe(false);
   });
 
+  it('cell over air cannot become a source per wiki', () => {
+    // minecraft.wiki/w/Water#Source_blocks: "on top of an opaque
+    // solid block" is a hard requirement — two sources in mid-air
+    // do NOT yield infinite water.
+    expect(
+      shouldBecomeSource(
+        [
+          { isSource: true, level: 0, solidBelow: true },
+          { isSource: true, level: 0, solidBelow: true },
+        ],
+        false,
+      ),
+    ).toBe(false);
+  });
+
   it('flow level increments', () => {
     expect(flowLevelFrom(0)).toBe(1);
     expect(flowLevelFrom(6)).toBe(7);
