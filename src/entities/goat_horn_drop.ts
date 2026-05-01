@@ -10,38 +10,41 @@ export interface Goat {
 export const MAX_HORNS = 2;
 
 // Wiki (minecraft.wiki/w/Goat#Goat_horns): "An adult goat ... will
-// lose one of [its horns] and drop a goat horn if it charges into any
-// of the following solid blocks: stone, coal ore, copper ore, iron
-// ore, emerald ore, logs, or packed ice. In Java, these blocks are
-// listed under the snaps_goat_horn block tag."
+// lose one of [its horns] and drop a goat horn if it charges into
+// any of the following solid blocks: stone, coal ore, copper ore,
+// iron ore, emerald ore, logs, or packed ice." Java tag
+// `snaps_goat_horn` resolves "logs" through the `#minecraft:logs`
+// tag, which includes ALL log/stem variants — base, stripped, wood,
+// hyphae, plus bamboo block and stripped bamboo block.
 //
-// Old list had the wrong category for two entries (copper_BLOCK and
-// iron_BLOCK instead of copper_ORE and iron_ORE) and was missing all
-// four ores the wiki names. It also included deepslate, which is
-// neither in the wiki text nor in the snaps_goat_horn tag.
-const RAMMABLE = new Set<string>([
+// Old set had only the bare *_log family — stripped logs, wood blocks,
+// hyphae, and bamboo blocks dropped no horn even though the wiki
+// `logs` tag classifies them as horn-snapping.
+const NON_LOG_RAMMABLE = new Set<string>([
   'webmc:stone',
   'webmc:coal_ore',
   'webmc:copper_ore',
   'webmc:iron_ore',
   'webmc:emerald_ore',
   'webmc:packed_ice',
-  // All log variants
-  'webmc:oak_log',
-  'webmc:spruce_log',
-  'webmc:birch_log',
-  'webmc:jungle_log',
-  'webmc:acacia_log',
-  'webmc:dark_oak_log',
-  'webmc:mangrove_log',
-  'webmc:cherry_log',
-  'webmc:pale_oak_log',
-  'webmc:crimson_stem',
-  'webmc:warped_stem',
 ]);
 
 export function canRamDropHorn(blockId: string): boolean {
-  return RAMMABLE.has(blockId);
+  if (NON_LOG_RAMMABLE.has(blockId)) return true;
+  // Java #minecraft:logs membership: log / stem / hyphae / wood /
+  // stripped variants + bamboo block + stripped bamboo block.
+  const stripped = blockId.replace(/^webmc:/, '');
+  if (
+    stripped.endsWith('_log') ||
+    stripped.endsWith('_wood') ||
+    stripped.endsWith('_hyphae') ||
+    stripped.endsWith('_stem') ||
+    stripped === 'bamboo_block' ||
+    stripped === 'stripped_bamboo_block'
+  ) {
+    return true;
+  }
+  return false;
 }
 
 export type HornKind = 'ponder' | 'sing' | 'seek' | 'feel' | 'admire' | 'call' | 'yearn' | 'dream';

@@ -8,7 +8,9 @@ describe('goat horn', () => {
   });
 
   it('rammable list matches wiki snaps_goat_horn tag', () => {
-    // Per wiki: stone, coal/copper/iron/emerald ore, packed_ice, all logs.
+    // Per wiki: stone, coal/copper/iron/emerald ore, packed_ice, all
+    // logs (#minecraft:logs tag — includes stripped, wood, hyphae,
+    // stems, bamboo block).
     for (const id of [
       'webmc:stone',
       'webmc:coal_ore',
@@ -18,6 +20,13 @@ describe('goat horn', () => {
       'webmc:packed_ice',
       'webmc:oak_log',
       'webmc:cherry_log',
+      'webmc:stripped_oak_log',
+      'webmc:oak_wood',
+      'webmc:stripped_birch_wood',
+      'webmc:crimson_stem',
+      'webmc:warped_hyphae',
+      'webmc:bamboo_block',
+      'webmc:stripped_bamboo_block',
     ]) {
       expect(canRamDropHorn(id)).toBe(true);
     }
