@@ -25,4 +25,18 @@ describe('campfire cooking', () => {
   it('stone not cookable', () => {
     expect(acceptable('stone')).toBe(false);
   });
+
+  it('Java canonical raw-meat IDs (no raw_ prefix) cook (wiki)', () => {
+    // Wiki minecraft.wiki/w/Campfire lists raw items by their Java
+    // canonical names (beef/chicken/etc., no `raw_` prefix). Modern
+    // raw meat must cook; cod/salmon also have no `raw_` prefix
+    // even in legacy.
+    expect(acceptable('beef')).toBe(true);
+    expect(cookedResult('beef')).toBe('cooked_beef');
+    expect(cookedResult('chicken')).toBe('cooked_chicken');
+    expect(cookedResult('cod')).toBe('cooked_cod');
+    expect(cookedResult('salmon')).toBe('cooked_salmon');
+    // raw_cod was never a valid id; should not resolve.
+    expect(cookedResult('raw_cod')).toBeNull();
+  });
 });
