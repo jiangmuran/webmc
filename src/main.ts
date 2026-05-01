@@ -190,7 +190,7 @@ import { SurvivalInventory } from './ui/SurvivalInventory';
 import { ChestUI } from './ui/ChestUI';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
-import { DebugOverlay } from './ui/DebugOverlay';
+import { DebugOverlay, type DebugFrame } from './ui/DebugOverlay';
 import { Crosshair } from './ui/Crosshair';
 import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { FluidOverlay } from './ui/FluidOverlay';
@@ -3492,7 +3492,7 @@ const leashCtxScratch: {
 const debugFramePos = { x: 0, y: 0, z: 0 };
 const debugFrameLook = { yaw: 0, pitch: 0 };
 const debugFrameChunkPos = { cx: 0, cz: 0 };
-const debugFramePayload: import('./ui/DebugOverlay').DebugFrame = {
+const debugFramePayload: DebugFrame = {
   fps: 0,
   frameMs: 0,
   position: debugFramePos,
