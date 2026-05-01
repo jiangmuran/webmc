@@ -24,4 +24,10 @@ describe('sugar cane', () => {
     const s = { age: MAX_AGE };
     expect(randomTick({ state: s, currentHeight: MAX_HEIGHT })).toBe('noop');
   });
+
+  it('mycelium accepts sugar cane per wiki', () => {
+    // Wiki minecraft.wiki/w/Sugar_Cane: lists mycelium among valid
+    // ground blocks; old set omitted it.
+    expect(canPlace({ groundBlockId: 'webmc:mycelium', waterAdjacentToGround: true })).toBe(true);
+  });
 });

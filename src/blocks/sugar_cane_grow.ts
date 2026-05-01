@@ -1,6 +1,13 @@
-// Sugar cane. Grows on sand/dirt/grass blocks adjacent to water, up to
-// 3 stalks tall. Random tick: 1 age++; at age 16, grows up (if height<3).
-
+// Sugar cane. Grows on sand/dirt/grass-family blocks adjacent to
+// water, up to 3 stalks tall. Random tick: 1 age++; at age 16, grows
+// up (if height<3).
+//
+// Wiki (minecraft.wiki/w/Sugar_Cane): "Sugar cane can be planted on
+// a grass block, dirt, coarse dirt, podzol, mycelium, sand, red
+// sand, mud, rooted dirt, or moss block, but only if at least one
+// block adjacent to it is water." Old VALID_GROUND was missing
+// `mycelium` — sugar cane silently couldn't be placed on the
+// mushroom-fields surface even though the wiki includes it.
 export const MAX_HEIGHT = 3;
 export const MAX_AGE = 15;
 
@@ -10,6 +17,7 @@ const VALID_GROUND = new Set<string>([
   'webmc:dirt',
   'webmc:grass_block',
   'webmc:podzol',
+  'webmc:mycelium',
   'webmc:coarse_dirt',
   'webmc:rooted_dirt',
   'webmc:moss_block',
