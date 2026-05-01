@@ -57,4 +57,14 @@ describe('lectern', () => {
     pulseAdvance(l);
     expect(l.currentPage).toBe(0);
   });
+
+  it('1-page book outputs 15 per wiki (was 1)', () => {
+    // Wiki minecraft.wiki/w/Lectern: a single-page book's only page
+    // IS the last page → comparator emits 15. Sibling
+    // lectern_book_signal.ts and lectern_eject_book.ts special-case
+    // this; lectern_book_state.ts now matches.
+    const l = makeLectern();
+    placeBook(l, { bookItem: 'webmc:book', totalPages: 1 });
+    expect(comparatorSignal(l)).toBe(15);
+  });
 });
