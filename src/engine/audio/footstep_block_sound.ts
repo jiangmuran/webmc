@@ -38,7 +38,16 @@ const GROUP_MAP: Record<string, SoundGroup> = {
   powder_snow: 'powder_snow',
 };
 
+// Wool prefix lookup. Project blocks/registry.ts uses `wool_<color>`
+// (16 wool variants); also accept Java-style `<color>_wool` for
+// imported saves. Without this prefix match every webmc wool block
+// fell through to the default 'stone' footstep group.
+function isWoolId(id: string): boolean {
+  return id === 'wool' || id.startsWith('wool_') || id.endsWith('_wool');
+}
+
 export function soundGroupFor(id: string): SoundGroup {
+  if (isWoolId(id)) return 'wool';
   return GROUP_MAP[id] ?? 'stone';
 }
 
