@@ -30,7 +30,23 @@ describe('sheep dye', () => {
     expect(breedColor('blue', 'green')).toBe('cyan');
   });
 
-  it('breed color: no match = white', () => {
-    expect(breedColor('red', 'purple')).toBe('white');
+  it('breed color: full wiki mix table', () => {
+    // Wiki (minecraft.wiki/w/Sheep#Breeding) sheep-breed mix table.
+    expect(breedColor('white', 'gray')).toBe('light_gray');
+    expect(breedColor('white', 'green')).toBe('lime');
+    expect(breedColor('white', 'blue')).toBe('light_blue');
+    expect(breedColor('pink', 'purple')).toBe('magenta');
+    expect(breedColor('white', 'black')).toBe('gray');
+    expect(breedColor('white', 'red')).toBe('pink');
+    // Mix table is order-independent.
+    expect(breedColor('green', 'white')).toBe('lime');
+  });
+
+  it('breed color: no mix → random parent (wiki, not white)', () => {
+    // Wiki: "If the dye colors cannot normally be mixed, the baby
+    // sheep spawns with the same color as one of the parents, chosen
+    // randomly." Old code fell back to 'white' — non-vanilla.
+    expect(breedColor('red', 'purple', () => 0.0)).toBe('red');
+    expect(breedColor('red', 'purple', () => 0.99)).toBe('purple');
   });
 });
