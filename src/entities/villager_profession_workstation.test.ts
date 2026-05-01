@@ -29,4 +29,12 @@ describe('villager profession workstation', () => {
   it('untraded villager can switch', () => {
     expect(canChangeProfession('librarian', false)).toBe(true);
   });
+
+  it('nitwit has no workstation and never changes profession (wiki)', () => {
+    // Wiki minecraft.wiki/w/Villager#Professions: "Nitwits cannot
+    // claim a workstation and cannot change profession."
+    expect(workstationForProfession('nitwit')).toBe('');
+    expect(canChangeProfession('nitwit', false)).toBe(false);
+    expect(canChangeProfession('nitwit', true)).toBe(false);
+  });
 });
