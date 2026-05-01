@@ -33,4 +33,13 @@ describe('coral', () => {
     expect(breakDrops(coral(), false)).toBe('webmc:dead_tube_coral_block');
     expect(breakDrops(coral({ dead: true }), false)).toBe('webmc:dead_tube_coral_block');
   });
+
+  it('coral fans drop nothing without silk touch (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Coral_Fan): "Breaking coral fans without
+    // Silk Touch destroys the coral fan." Unlike coral blocks, there
+    // is no dead-fan dropped fallback.
+    expect(breakDrops(coral({ shape: 'fan' }), false)).toBeNull();
+    expect(breakDrops(coral({ shape: 'wall_fan' }), false)).toBeNull();
+    expect(breakDrops(coral({ shape: 'fan' }), true)).toBe('webmc:tube_coral_fan');
+  });
 });

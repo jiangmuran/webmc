@@ -34,18 +34,23 @@ export function deadName(c: Coral): string {
   return `webmc:${prefix}`;
 }
 
-// Coral breaking. Wiki (minecraft.wiki/w/Coral_Block): "Coral blocks
-// can be obtained only with a pickaxe enchanted with Silk Touch; if
-// mined with a pickaxe not enchanted with Silk Touch, they drop the
-// respective dead coral block." Old code returned null for the
-// no-silk-touch case, which dropped *nothing* — players mining a
-// live coral pillar lost it entirely instead of getting the dead
-// variant they could replant elsewhere.
-export function breakDrops(c: Coral, silkTouch: boolean): string {
+// Coral breaking. Wiki has DIFFERENT rules for blocks vs fans:
+//
+// Coral blocks (minecraft.wiki/w/Coral_Block): "if mined with a
+// pickaxe not enchanted with Silk Touch, they drop the respective
+// dead coral block." → no-silk yields the dead variant.
+//
+// Coral fans / wall fans (minecraft.wiki/w/Coral_Fan): "Breaking
+// coral fans without Silk Touch destroys the coral fan." → no-silk
+// yields NOTHING. Old code returned a dead-fan ID for fans too,
+// which would have made coral-fan farms self-renewing without silk
+// touch — exactly the case wiki carves out.
+export function breakDrops(c: Coral, silkTouch: boolean): string | null {
   const prefix = c.shape === 'block' ? 'coral_block' : 'coral_fan';
   if (silkTouch) {
     return c.dead ? `webmc:dead_${c.color}_${prefix}` : `webmc:${c.color}_${prefix}`;
   }
-  // Without silk touch: live coral converts to dead, dead drops itself.
-  return `webmc:dead_${c.color}_${prefix}`;
+  // No silk touch: blocks drop dead variant, fans drop nothing.
+  if (c.shape === 'block') return `webmc:dead_${c.color}_${prefix}`;
+  return null;
 }
