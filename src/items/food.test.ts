@@ -53,10 +53,12 @@ describe('food', () => {
     expect(p.effects[0]?.id).toBe('regeneration');
   });
 
-  it('spider eye applies poison 100% of the time', () => {
+  it('spider eye applies poison for 5 seconds (wiki)', () => {
     const p = new StubPlayer();
     applyFood('spider_eye', p, () => 0.5);
-    expect(p.effects.some((e) => e.id === 'poison')).toBe(true);
+    const poison = p.effects.find((e) => e.id === 'poison');
+    expect(poison).toBeDefined();
+    expect(poison?.dur).toBe(5);
   });
 
   it('raw chicken sometimes applies hunger', () => {

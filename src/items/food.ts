@@ -75,7 +75,11 @@ export const FOODS: Record<string, FoodDef> = {
     hunger: 2,
     saturation: 3.2,
     eatSec: 1.6,
-    effect: { id: 'poison', amplifier: 0, durationSec: 4, chance: 1 },
+    // Wiki (minecraft.wiki/w/Spider_Eye): "It also applies a Poison
+    // effect lasting 5 seconds to the player, causing 4 damage."
+    // Old durationSec: 4 was 1 second under wiki canon — sibling
+    // src/entities/spider_eye_food.ts already uses 5s (100 ticks).
+    effect: { id: 'poison', amplifier: 0, durationSec: 5, chance: 1 },
   },
 };
 
