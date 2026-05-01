@@ -8,12 +8,18 @@ export interface Hook {
   luckLevel: number;
 }
 
+// Wiki (minecraft.wiki/w/Fishing): wait time is uniform [100, 600]
+// ticks (5-30s), Lure subtracts 100 ticks per level. With Lure III
+// (-300 ticks) on a low roll the wait can drop to 0 — bite is
+// immediate. Sibling fishing_hook_bite_timer.ts (and now
+// fishing_rod_cast.ts) floors at 0; old 20-tick (1s) floor here was
+// too restrictive.
 export function castHook(lureLevel: number, luckLevel: number, rand: () => number): Hook {
   const base = 100 + Math.floor(rand() * 500); // 5-30s in ticks
   const lureReduction = lureLevel * 100;
   return {
     inWater: false,
-    catchTicksRemaining: Math.max(20, base - lureReduction),
+    catchTicksRemaining: Math.max(0, base - lureReduction),
     lureLevel,
     luckLevel,
   };
