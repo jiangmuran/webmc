@@ -21,4 +21,23 @@ describe('enchant compat matrix', () => {
   it('incompatibleWith list', () => {
     expect(incompatibleWith('sharpness')).toContain('smite');
   });
+
+  it('Density only conflicts with Breach (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Density): "Density is mutually exclusive
+    // with Breach" — and ONLY Breach. Density+Sharpness on a mace is
+    // canonical.
+    expect(incompatibleWith('density')).toEqual(['breach']);
+    expect(isCompatible('density', 'sharpness')).toBe(true);
+    expect(isCompatible('density', 'smite')).toBe(true);
+    expect(isCompatible('density', 'bane_of_arthropods')).toBe(true);
+    expect(isCompatible('density', 'breach')).toBe(false);
+  });
+
+  it('Breach conflicts with damage family + density + impaling (wiki)', () => {
+    expect(isCompatible('breach', 'sharpness')).toBe(false);
+    expect(isCompatible('breach', 'smite')).toBe(false);
+    expect(isCompatible('breach', 'bane_of_arthropods')).toBe(false);
+    expect(isCompatible('breach', 'density')).toBe(false);
+    expect(isCompatible('breach', 'impaling')).toBe(false);
+  });
 });
