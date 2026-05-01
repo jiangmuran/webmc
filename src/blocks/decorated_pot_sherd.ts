@@ -8,7 +8,14 @@ export interface DecoratedPot {
   faces: Record<PotFace, SherdOrBrick>;
 }
 
+// Wiki (minecraft.wiki/w/Pottery_Sherd): 23 canonical sherds. Old
+// list was missing 4: angler (Trail Ruins), flow + guster (1.21
+// Trial Chambers), and scrape (Trail Ruins). Crafting a pot with
+// any of those silently failed `isValidSherd` and rejected an
+// otherwise canon recipe. Sibling decorated_pot.ts already has all
+// 23 in its PotSherd union.
 export const ALL_SHERDS = [
+  'angler',
   'archer',
   'arms_up',
   'blade',
@@ -16,7 +23,9 @@ export const ALL_SHERDS = [
   'burn',
   'danger',
   'explorer',
+  'flow',
   'friend',
+  'guster',
   'heart',
   'heartbreak',
   'howl',
@@ -24,6 +33,7 @@ export const ALL_SHERDS = [
   'mourner',
   'plenty',
   'prize',
+  'scrape',
   'sheaf',
   'shelter',
   'skull',

@@ -7,6 +7,36 @@ describe('decorated pot', () => {
     expect(isValidSherd('xyz')).toBe(false);
   });
 
+  it('all 23 wiki sherds accepted (incl. angler / flow / guster / scrape)', () => {
+    for (const s of [
+      'angler',
+      'archer',
+      'arms_up',
+      'blade',
+      'brewer',
+      'burn',
+      'danger',
+      'explorer',
+      'flow',
+      'friend',
+      'guster',
+      'heart',
+      'heartbreak',
+      'howl',
+      'miner',
+      'mourner',
+      'plenty',
+      'prize',
+      'scrape',
+      'sheaf',
+      'shelter',
+      'skull',
+      'snort',
+    ]) {
+      expect(isValidSherd(s)).toBe(true);
+    }
+  });
+
   it('craft accepts bricks', () => {
     const pot = craftPot(
       { kind: 'brick' },
