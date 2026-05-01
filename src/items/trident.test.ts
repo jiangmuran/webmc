@@ -43,6 +43,30 @@ describe('trident riptide', () => {
     expect(r.launchVelocity.y).toBeGreaterThan(0);
   });
 
+  it('Riptide III launch magnitude is 21 blocks/sec (wiki: 6L+3)', () => {
+    const t = applyEnchant(trident(), 'riptide', 3);
+    const r = computeRiptide({
+      trident: t,
+      inWater: true,
+      inRain: false,
+      lookDirection: { x: 1, y: 0, z: 0 },
+      chargeSec: 1,
+    });
+    expect(r.launchVelocity.x).toBe(21);
+  });
+
+  it('Riptide I launch magnitude is 9 blocks/sec (wiki: 6L+3)', () => {
+    const t = applyEnchant(trident(), 'riptide', 1);
+    const r = computeRiptide({
+      trident: t,
+      inWater: true,
+      inRain: false,
+      lookDirection: { x: 1, y: 0, z: 0 },
+      chargeSec: 1,
+    });
+    expect(r.launchVelocity.x).toBe(9);
+  });
+
   it('refuses with <0.5s charge', () => {
     const t = applyEnchant(trident(), 'riptide', 1);
     const r = computeRiptide({
