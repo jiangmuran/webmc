@@ -60,24 +60,29 @@ export function rollWaitSec(q: WaitQuery): number {
   return min + q.rng() * (max - min);
 }
 
-// Treasure items: enchanted book, name tag, saddle, enchanted bow, etc.
+// Wiki (minecraft.wiki/w/Fishing): treasure pool has exactly 6 items
+// at equal 16.7% (1/6) weight each — Bow, Enchanted Book, Fishing
+// Rod, Name Tag, Nautilus Shell, Saddle. Old code added `lily_pad`
+// as a 7th treasure item (~14.3% chance), but wiki places lily_pad
+// in the JUNK pool, not treasure. Including it here both stole 14%
+// of treasure rolls from canonical items AND let players "fish"
+// lily pads as treasure (an oddly common build resource that wiki
+// never offered as treasure).
 export type TreasureItem =
   | 'webmc:enchanted_book'
   | 'webmc:enchanted_bow'
   | 'webmc:enchanted_fishing_rod'
   | 'webmc:name_tag'
   | 'webmc:saddle'
-  | 'webmc:nautilus_shell'
-  | 'webmc:lily_pad';
+  | 'webmc:nautilus_shell';
 
 const TREASURE_POOL: readonly { item: TreasureItem; weight: number }[] = [
-  { item: 'webmc:enchanted_book', weight: 1 },
   { item: 'webmc:enchanted_bow', weight: 1 },
+  { item: 'webmc:enchanted_book', weight: 1 },
   { item: 'webmc:enchanted_fishing_rod', weight: 1 },
   { item: 'webmc:name_tag', weight: 1 },
-  { item: 'webmc:saddle', weight: 1 },
   { item: 'webmc:nautilus_shell', weight: 1 },
-  { item: 'webmc:lily_pad', weight: 1 },
+  { item: 'webmc:saddle', weight: 1 },
 ];
 
 export function pickTreasureItem(roll: number): TreasureItem {
