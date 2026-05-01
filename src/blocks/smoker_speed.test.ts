@@ -36,4 +36,17 @@ describe('smoker / blast furnace', () => {
   it('unknown input = null', () => {
     expect(smeltOutput('webmc:xyz')).toBeNull();
   });
+
+  it('mutton + rabbit cook (wiki: full meat coverage)', () => {
+    // Wiki (minecraft.wiki/w/Smelting#Inputs): raw_mutton →
+    // cooked_mutton, raw_rabbit → cooked_rabbit. Old SMELT_OUTPUTS
+    // omitted both, so a smoker loaded with raw lamb/rabbit
+    // returned no cooked output.
+    expect(smeltOutput('webmc:raw_mutton')).toBe('webmc:cooked_mutton');
+    expect(smeltOutput('webmc:raw_rabbit')).toBe('webmc:cooked_rabbit');
+  });
+
+  it('nether gold ore smelts to gold ingot (wiki)', () => {
+    expect(smeltOutput('webmc:nether_gold_ore')).toBe('webmc:gold_ingot');
+  });
 });
