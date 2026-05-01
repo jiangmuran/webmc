@@ -22,11 +22,25 @@ describe('cave vines', () => {
     expect(harvestBerries(seg)).toBe(0);
   });
 
-  it('bone meal adds 1-2 segments with berries', () => {
+  it('bone meal grows berries on berry-less vines (wiki: does NOT extend)', () => {
+    // Wiki (minecraft.wiki/w/Glow_Berries): "Using bone meal on a
+    // cave vine block does not grow a new vine block... Using bone
+    // meal on any block of a cave vine causes it to grow glow
+    // berries, if it was not already bearing them."
     const v = makeCaveVine();
+    growVine(v, () => 0.01);
+    growVine(v, () => 0.01);
+    const beforeLen = v.segments.length;
+    for (const s of v.segments) s.hasBerries = false;
     const added = boneMealVine(v, () => 0.5);
-    expect(added).toBeGreaterThanOrEqual(1);
-    expect(added).toBeLessThanOrEqual(2);
-    expect(v.segments[v.segments.length - 1]?.hasBerries).toBe(true);
+    expect(added).toBe(beforeLen);
+    expect(v.segments.length).toBe(beforeLen);
+    expect(v.segments.every((s) => s.hasBerries)).toBe(true);
+  });
+
+  it('bone meal does nothing if all segments already berry', () => {
+    const v = makeCaveVine();
+    v.segments[0]!.hasBerries = true;
+    expect(boneMealVine(v, () => 0)).toBe(0);
   });
 });

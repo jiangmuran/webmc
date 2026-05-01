@@ -52,7 +52,11 @@ export function removeBook(state: ChiseledBookshelfState, slot: number): ItemSta
   return s;
 }
 
-// MC: comparator reads 1..15 based on lastChangedSlot. Empty = 0.
+// Wiki (minecraft.wiki/w/Chiseled_Bookshelf): comparator output equals
+// (lastChangedSlot + 1), giving values 1..6 (since the shelf has 6
+// slots). Empty/never-touched = 0. Old comment "1..15" overstated
+// the range — comparator scale tops at 15 in general but a chiseled
+// bookshelf can never emit higher than 6.
 export function comparatorSignal(state: ChiseledBookshelfState): number {
   if (state.lastChangedSlot < 0) return 0;
   return state.lastChangedSlot + 1;
