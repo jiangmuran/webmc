@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { isSlimeChunk, canSpawnSlimeHere, SLIME_UNDERGROUND_MAX_Y } from './slime_chunk_check';
+import {
+  isSlimeChunk,
+  canSpawnSlimeHere,
+  SLIME_UNDERGROUND_MAX_Y,
+  SWAMP_SLIME_MIN_Y,
+  SWAMP_SLIME_MAX_Y,
+} from './slime_chunk_check';
 
 describe('slime chunk check', () => {
   it('deterministic', () => {
@@ -49,5 +55,16 @@ describe('slime chunk check', () => {
 
   it('y threshold', () => {
     expect(SLIME_UNDERGROUND_MAX_Y).toBe(40);
+  });
+
+  it('swamp y range is 51..69 inclusive per wiki, sibling-aligned', () => {
+    // minecraft.wiki/w/Slime: swamp slime altitudes are Y=51..Y=69
+    // inclusive. Sibling slime_spawn_chunks.ts uses the same bounds.
+    expect(SWAMP_SLIME_MIN_Y).toBe(51);
+    expect(SWAMP_SLIME_MAX_Y).toBe(69);
+    expect(canSpawnSlimeHere(1, 0, 0, 51, 'swamp', true, 1, () => 0.5)).toBe(true);
+    expect(canSpawnSlimeHere(1, 0, 0, 69, 'swamp', true, 1, () => 0.5)).toBe(true);
+    expect(canSpawnSlimeHere(1, 0, 0, 50, 'swamp', true, 1, () => 0.5)).toBe(false);
+    expect(canSpawnSlimeHere(1, 0, 0, 70, 'swamp', true, 1, () => 0.5)).toBe(false);
   });
 });

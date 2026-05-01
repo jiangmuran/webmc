@@ -23,6 +23,11 @@ export function isSlimeChunk(seed: number, chunkX: number, chunkZ: number): bool
 //     but per wiki should pass only ~75% of attempts.
 // This made swamp slime spawning bimodal (full/new) instead of the
 // canonical 8-step ramp.
+// Wiki (minecraft.wiki/w/Slime#Swamps): swamp slime spawn altitude
+// is Y=51..Y=69 inclusive, not 50..70. Tightened to match.
+export const SWAMP_SLIME_MIN_Y = 51;
+export const SWAMP_SLIME_MAX_Y = 69;
+
 export function canSpawnSlimeHere(
   seed: number,
   chunkX: number,
@@ -33,7 +38,7 @@ export function canSpawnSlimeHere(
   moonFullness: number,
   rand: () => number = Math.random,
 ): boolean {
-  if (biome === 'swamp' && y >= 50 && y <= 70 && isNight) {
+  if (biome === 'swamp' && y >= SWAMP_SLIME_MIN_Y && y <= SWAMP_SLIME_MAX_Y && isNight) {
     return rand() < moonFullness;
   }
   if (y < 40 && isSlimeChunk(seed, chunkX, chunkZ)) return true;

@@ -1,6 +1,11 @@
 // Slime spawn rules. Slimes spawn in special "slime chunks" at y<40
-// on any light level, and also in swamp biomes between y=50-70 on
-// light ≤ 7.
+// on any light level, and also in swamp biomes between Y=51 and Y=69
+// (inclusive) on light ≤ 7.
+//
+// Wiki (minecraft.wiki/w/Slime#Swamps): "Slimes can spawn in swamps
+// and mangrove swamps between the altitudes of Y=51 and Y=69
+// (inclusive) when the provided light level is 7 or less." Old
+// `y < 50 || y > 70` allowed Y=50 and Y=70 — both wiki-disallowed.
 
 export interface SlimeChunkQuery {
   worldSeed: bigint;
@@ -26,9 +31,12 @@ export interface SwampQuery {
   lightLevel: number;
 }
 
+export const SWAMP_SLIME_MIN_Y = 51;
+export const SWAMP_SLIME_MAX_Y = 69;
+
 export function canSpawnInSwamp(q: SwampQuery): boolean {
   if (q.biome !== 'swamp' && q.biome !== 'mangrove_swamp') return false;
-  if (q.y < 50 || q.y > 70) return false;
+  if (q.y < SWAMP_SLIME_MIN_Y || q.y > SWAMP_SLIME_MAX_Y) return false;
   return q.lightLevel <= 7;
 }
 
