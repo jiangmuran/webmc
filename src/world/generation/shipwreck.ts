@@ -47,13 +47,16 @@ export type TreasureLoot =
   | 'lapis'
   | 'diamond'
   | 'experience_bottle';
+// Wiki (minecraft.wiki/w/Shipwreck#Loot) Supply chest pool — Java
+// uses leather_helmet (the Bedrock name 'leather_cap' doesn't exist
+// as an item ID). Same naming fix as buried_treasure / ocean_ruin.
 export type SupplyLoot =
   | 'suspicious_stew'
   | 'wheat'
   | 'carrot'
   | 'potato'
   | 'rotten_flesh'
-  | 'leather_cap'
+  | 'leather_helmet'
   | 'tnt'
   | 'gunpowder';
 
@@ -79,7 +82,7 @@ const SUPPLY_POOL: readonly { item: SupplyLoot; weight: number }[] = [
   { item: 'carrot', weight: 15 },
   { item: 'potato', weight: 15 },
   { item: 'rotten_flesh', weight: 10 },
-  { item: 'leather_cap', weight: 5 },
+  { item: 'leather_helmet', weight: 5 },
   { item: 'tnt', weight: 5 },
   { item: 'gunpowder', weight: 5 },
 ];
