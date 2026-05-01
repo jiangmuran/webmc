@@ -1,6 +1,13 @@
 // Pillager crossbow reload. Pillagers carry a crossbow and cycle
-// between shooting and reloading. Reload takes 25 ticks; shot cooldown
-// is 20 ticks. Captain pillagers (raid leaders) shoot slightly faster.
+// between shooting and reloading.
+//
+// Wiki (minecraft.wiki/w/Pillager): "A pillager attacks by shooting
+// arrows from its crossbow every three seconds from up to eight
+// blocks away." Total cycle: 60 ticks = 3 seconds = reload (25
+// ticks per crossbow charge, wiki) + post-shot pause (35 ticks).
+// Old SHOT_COOLDOWN_TICKS = 20 (1 s) gave a 45-tick (2.25 s) cycle
+// — pillagers fired ~33% faster than wiki canon. Captain pillagers
+// keep their faster 20-tick reload (raid-leader buff).
 
 export type PillagerRole = 'normal' | 'captain';
 
@@ -22,7 +29,8 @@ export function makePillager(role: PillagerRole = 'normal'): PillagerState {
 
 const RELOAD_DURATION_TICKS = 25;
 const CAPTAIN_RELOAD_DURATION_TICKS = 20;
-const SHOT_COOLDOWN_TICKS = 20;
+// Wiki: 3-second total cycle ÷ 25-tick reload = 35-tick post-shot pause.
+const SHOT_COOLDOWN_TICKS = 35;
 
 export interface PillagerTickCtx {
   hasTarget: boolean;

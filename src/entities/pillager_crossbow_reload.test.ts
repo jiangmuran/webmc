@@ -48,4 +48,26 @@ describe('pillager crossbow', () => {
   it('patrol defaults reasonable', () => {
     expect(PATROL_DEFAULTS.minGroupSize).toBeLessThan(PATROL_DEFAULTS.maxGroupSize);
   });
+
+  it('shoots every 3s = 60 ticks per cycle (wiki)', () => {
+    // Wiki minecraft.wiki/w/Pillager: "A pillager attacks by shooting
+    // arrows from its crossbow every three seconds." 60 ticks total
+    // = reload (25) + post-shot pause (35).
+    const p = makePillager();
+    p.loaded = true;
+    // First shot.
+    expect(tickPillagerCrossbow(p, { hasTarget: true, inLineOfSight: true }).shot).toBe(true);
+    // 35 ticks of post-shot cooldown blocks any further action.
+    for (let i = 0; i < 35; i++) {
+      expect(tickPillagerCrossbow(p, { hasTarget: true, inLineOfSight: true }).reloading).toBe(
+        false,
+      );
+    }
+    // Reload begins; takes 25 ticks for normal pillager.
+    for (let i = 0; i < 25; i++) {
+      tickPillagerCrossbow(p, { hasTarget: true, inLineOfSight: true });
+    }
+    // After ~60 ticks the pillager is loaded and ready to shoot again.
+    expect(p.loaded).toBe(true);
+  });
 });
