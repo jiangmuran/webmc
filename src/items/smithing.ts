@@ -5,6 +5,11 @@
 import { applyTrim, type TrimMaterial, type TrimPattern } from './armor_trim';
 import type { Enchanted } from './enchantment';
 
+// Wiki (minecraft.wiki/w/Smithing_Template): 18 canonical trim
+// templates + netherite_upgrade. Old union was 16 trims, missing
+// the 1.21+ Trial Chambers additions (bolt, flow). Sibling
+// smithing_template_duplicate.ts already has both — this main
+// dispatch was the holdout.
 export type SmithingTemplate =
   | 'netherite_upgrade'
   | 'coast_trim'
@@ -22,7 +27,9 @@ export type SmithingTemplate =
   | 'vex_trim'
   | 'ward_trim'
   | 'wayfinder_trim'
-  | 'wild_trim';
+  | 'wild_trim'
+  | 'bolt_trim'
+  | 'flow_trim';
 
 export interface NetheriteUpgrade {
   diamond: string; // input item name like 'webmc:diamond_pickaxe'

@@ -57,4 +57,22 @@ describe('smithing — trim application', () => {
     });
     expect(r).toBeNull();
   });
+
+  it('1.21 trial chamber trims (bolt + flow) (wiki)', () => {
+    // Wiki adds bolt + flow trim templates from Trial Chambers.
+    const bolt = applySmithing({
+      template: 'bolt_trim',
+      tool: { itemId: 1, count: 1, damage: 0 },
+      toolName: 'webmc:iron_helmet',
+      ingredientName: 'webmc:copper_ingot',
+    });
+    expect(bolt?.trim?.pattern).toBe('bolt');
+    const flow = applySmithing({
+      template: 'flow_trim',
+      tool: { itemId: 1, count: 1, damage: 0 },
+      toolName: 'webmc:iron_helmet',
+      ingredientName: 'webmc:diamond',
+    });
+    expect(flow?.trim?.pattern).toBe('flow');
+  });
 });
