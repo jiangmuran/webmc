@@ -7,11 +7,28 @@ export function canSpawnIn(biome: string): biome is FossilBiome {
   return biome === 'desert' || biome === 'swamp' || biome === 'mangrove_swamp';
 }
 
-export const FOSSIL_Y_MIN = -24;
-export const FOSSIL_Y_MAX = 0;
+// Wiki (minecraft.wiki/w/Fossil): "Each chunk has two attempts within
+// Y-coordinates 0 to 320 or -63 to -8 underground to generate a
+// fossil, each with a chance of 1/64."
+//
+// Two distinct ranges:
+//   ABOVE: Y 0 to 320 (above-surface fossils, e.g. exposed in cliffs)
+//   UNDERGROUND: Y -63 to -8 (the common cave-region fossils with
+//                              diamond ore in their bones)
+//
+// Old constants -24 to 0 covered neither wiki range — fossils
+// generated in a narrow band that wasn't underground enough for
+// diamond ore (wiki: < -8) and not high enough for the surface set.
+export const FOSSIL_Y_MIN = -63;
+export const FOSSIL_Y_MAX = 320;
+export const FOSSIL_UNDERGROUND_MAX = -8;
+export const FOSSIL_ABOVE_MIN = 0;
 
 export function yInRange(y: number): boolean {
-  return y >= FOSSIL_Y_MIN && y <= FOSSIL_Y_MAX;
+  // Wiki: Y in [0, 320] OR Y in [-63, -8].
+  if (y >= FOSSIL_ABOVE_MIN && y <= FOSSIL_Y_MAX) return true;
+  if (y >= FOSSIL_Y_MIN && y <= FOSSIL_UNDERGROUND_MAX) return true;
+  return false;
 }
 
 export const FOSSIL_VARIANT_COUNT = 14;
