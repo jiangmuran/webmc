@@ -1,7 +1,11 @@
 // Archaeology brush. Slowly dusts suspicious_sand/gravel; reveals an
-// item over ~3s of continuous brushing.
+// item over 96 ticks (4.8 seconds) of continuous brushing per wiki
+// (minecraft.wiki/w/Brush): "It takes 96 game ticks (4.8 seconds)
+// to brush a single suspicious block." Old constant was 60 ticks
+// (3 sec) — 38% too fast, letting players speedrun archaeology
+// digs in 60% of the canon time.
 
-export const BRUSH_DUSTING_TICKS = 60;
+export const BRUSH_DUSTING_TICKS = 96;
 
 export interface BrushState {
   progressTicks: number;
