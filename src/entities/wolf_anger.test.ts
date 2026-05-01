@@ -10,11 +10,13 @@ import {
 } from './wolf_anger';
 
 describe('wolf anger', () => {
-  it('tamed wolf has 20 HP', () => {
+  it('tamed wolf has 40 HP (wiki)', () => {
+    expect(WOLF_MAX_HEALTH_TAMED).toBe(40);
     expect(makeWolf(1, true, 'p1').health).toBe(WOLF_MAX_HEALTH_TAMED);
   });
 
-  it('wild wolf has 8 HP', () => {
+  it('wild wolf has 8 HP (wiki)', () => {
+    expect(WOLF_MAX_HEALTH_WILD).toBe(8);
     expect(makeWolf(1, false).health).toBe(WOLF_MAX_HEALTH_WILD);
   });
 
