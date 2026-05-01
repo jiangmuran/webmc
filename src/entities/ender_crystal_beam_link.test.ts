@@ -21,8 +21,12 @@ describe('ender crystal beam link', () => {
     expect(beamActive({ crystalAlive: false, dragonAlive: true, distance: 1 })).toBe(false);
   });
 
-  it('heal tick when active', () => {
-    expect(healThisTick({ crystalAlive: true, dragonAlive: true, distance: 5 })).toBe(1);
+  it('heal rate = 1/20 HP/tick (wiki: 1 HP/sec per crystal)', () => {
+    // Wiki minecraft.wiki/w/End_Crystal: "Each end crystal heals the
+    // dragon at a rate of 1 HP per second" — that's 0.05 HP per
+    // 20-Hz game tick. Old `1 HP/tick` was 20× too aggressive,
+    // making the dragon effectively immortal while crystals stood.
+    expect(healThisTick({ crystalAlive: true, dragonAlive: true, distance: 5 })).toBeCloseTo(0.05);
   });
 
   it('no heal when inactive', () => {
