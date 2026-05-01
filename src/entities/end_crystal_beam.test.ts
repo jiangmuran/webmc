@@ -8,8 +8,9 @@ import {
 } from './end_crystal_beam';
 
 describe('end crystal beam', () => {
-  it('dragon nearby + LOS = heals at 1/20 HP/tick (wiki: 1 HP/sec)', () => {
-    // Wiki minecraft.wiki/w/End_Crystal: 1 HP per second per crystal.
+  it('dragon nearby + LOS = heals at 0.1 HP/tick (wiki: 1 HP per half-second)', () => {
+    // Wiki minecraft.wiki/w/End_Crystal#Healing_the_ender_dragon:
+    // "The dragon is healed 1 HP each half-second."
     const c = makeEndCrystal(1, { x: 0, y: 60, z: 0 });
     const r = tickCrystalBeam(c, {
       dragonHead: { x: 10, y: 60, z: 0 },
@@ -17,7 +18,7 @@ describe('end crystal beam', () => {
     });
     expect(r.healing).toBe(true);
     expect(r.amount).toBeCloseTo(CRYSTAL_HEAL_PER_TICK);
-    expect(r.amount).toBeCloseTo(0.05);
+    expect(r.amount).toBeCloseTo(0.1);
   });
 
   it('no dragon = no heal', () => {

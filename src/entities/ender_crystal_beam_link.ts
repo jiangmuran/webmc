@@ -2,12 +2,18 @@
 // range. Beam appears while both crystal and dragon are alive and in
 // range.
 //
-// Wiki (minecraft.wiki/w/End_Crystal): "Each end crystal heals the
-// dragon at a rate of 1 HP per second when both are present and the
-// dragon is within 32 blocks." 1 HP/s = 1/20 HP per game tick. Old
-// CRYSTAL_HEAL_PER_TICK = 1 was 20× too aggressive — the dragon
-// regenerated 20 HP/s per nearby crystal, making the boss fight
-// effectively unwinnable until every crystal was popped.
+// Wiki (minecraft.wiki/w/End_Crystal#Healing_the_ender_dragon): "The
+// dragon is healed 1 HP each half-second" from the nearest active
+// crystal within a 32-block cuboid. The healing is single-source
+// (only the nearest crystal contributes — multiple crystals don't
+// stack).
+//
+// 1 HP per half-second = 1 HP per 10 ticks = 0.1 HP per tick.
+// Old CRYSTAL_HEAL_PER_TICK = 1 was 10× too aggressive — the dragon
+// regenerated 20 HP/s per visible crystal, making the boss fight
+// effectively unwinnable. Callers accumulating across multiple
+// ticks should sum the fractional amount and apply integer heals
+// once the accumulator crosses 1.
 
 export interface BeamQuery {
   crystalAlive: boolean;
@@ -16,11 +22,9 @@ export interface BeamQuery {
 }
 
 export const CRYSTAL_BEAM_RANGE = 32;
-// 1 HP/sec = 0.05 HP per game tick. Callers accumulating across
-// multiple ticks should sum the fractional amount and apply integer
-// heals once the accumulator crosses 1.
-export const CRYSTAL_HEAL_PER_TICK = 1 / 20;
-export const CRYSTAL_HEAL_PER_SECOND = 1;
+// Wiki: 1 HP per 0.5s = 2 HP/sec = 0.1 HP/tick.
+export const CRYSTAL_HEAL_PER_TICK = 0.1;
+export const CRYSTAL_HEAL_PER_SECOND = 2;
 
 export function beamActive(q: BeamQuery): boolean {
   if (!q.crystalAlive || !q.dragonAlive) return false;
