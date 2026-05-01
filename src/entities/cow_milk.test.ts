@@ -8,6 +8,12 @@ describe('cow milk', () => {
   it('mooshroom + bowl = stew', () => {
     expect(milk({ bucketKind: 'bowl', mobType: 'mooshroom' }).kind).toBe('mushroom_stew');
   });
+
+  it('mooshroom + empty bucket = milk (wiki: same as cow)', () => {
+    // Wiki (minecraft.wiki/w/Mooshroom): "Mooshrooms can be milked
+    // the same way as a normal cow with an empty bucket."
+    expect(milk({ bucketKind: 'empty', mobType: 'mooshroom' }).kind).toBe('milk_bucket');
+  });
   it('wrong container = none', () => {
     expect(milk({ bucketKind: 'other', mobType: 'cow' }).kind).toBe('none');
   });
