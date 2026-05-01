@@ -2,8 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { PAINTING_VARIANTS, pickPainting } from './painting';
 
 describe('painting', () => {
-  it('has 28 variants', () => {
-    expect(PAINTING_VARIANTS.length).toBe(28);
+  it('has 47 variants per wiki (1.21+ canonical set)', () => {
+    // Wiki (minecraft.wiki/w/Painting): "There are 47 paintings in
+    // the game." Excludes the 4 command-only elemental paintings
+    // (earth/wind/fire/water) which are not rollable. Old code had
+    // 28 entries with a non-existent 'sun' motif and the
+    // command-only 'earth' wrongly in the random pool.
+    expect(PAINTING_VARIANTS.length).toBe(47);
+    expect(PAINTING_VARIANTS.find((v) => v.key === 'sun')).toBeUndefined();
+    expect(PAINTING_VARIANTS.find((v) => v.key === 'earth')).toBeUndefined();
   });
 
   it('small wall → only 1x1 paintings', () => {
