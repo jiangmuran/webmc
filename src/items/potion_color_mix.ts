@@ -1,3 +1,8 @@
+// Wiki (minecraft.wiki/w/Potion#Effect_colors) — canonical Java RGB
+// values per status effect. Old `instant_health` was [249, 128, 40]
+// (an orange) — wiki canon is [249, 36, 73] (the red-pink bottle of
+// healing). Sibling potion_color_for_effect.ts already has the
+// correct red-pink value.
 export const POTION_COLORS: Record<string, [number, number, number]> = {
   speed: [124, 175, 198],
   slowness: [90, 108, 129],
@@ -9,7 +14,7 @@ export const POTION_COLORS: Record<string, [number, number, number]> = {
   water_breathing: [46, 82, 153],
   night_vision: [31, 31, 161],
   invisibility: [127, 131, 146],
-  instant_health: [249, 128, 40],
+  instant_health: [249, 36, 73],
   instant_damage: [67, 10, 9],
   leaping: [34, 255, 76],
   slow_falling: [248, 245, 223],
