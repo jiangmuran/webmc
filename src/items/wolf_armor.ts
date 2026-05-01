@@ -2,8 +2,12 @@
 // a U-pattern. Applied to a tamed wolf; absorbs damage with durability and
 // can be repaired by feeding more scutes to the wolf.
 
+// Wiki (minecraft.wiki/w/Wolf_Armor): "Using an armadillo scute on
+// a wolf wearing wolf armor heals 8 points of the armor's
+// durability." Old REPAIR_PER_SCUTE = 16 was 2× the wiki value,
+// halving the player's scute cost to keep wolf armor in repair.
 const MAX_DURABILITY = 64;
-const REPAIR_PER_SCUTE = 16;
+const REPAIR_PER_SCUTE = 8;
 
 export interface WolfArmor {
   durability: number;
