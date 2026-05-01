@@ -18,9 +18,9 @@ describe('frog', () => {
     expect(tickTadpole(t)).toBe(true);
   });
 
-  it('only magma cubes drop froglight, color by variant (wiki)', () => {
-    expect(froglightFor('temperate', 'magma_cube')).toBe('webmc:pearlescent_froglight');
-    expect(froglightFor('warm', 'magma_cube')).toBe('webmc:ochre_froglight');
+  it('only magma cubes drop froglight, color by variant (wiki Froglight#Acquisition)', () => {
+    expect(froglightFor('warm', 'magma_cube')).toBe('webmc:pearlescent_froglight');
+    expect(froglightFor('temperate', 'magma_cube')).toBe('webmc:ochre_froglight');
     expect(froglightFor('cold', 'magma_cube')).toBe('webmc:verdant_froglight');
     expect(froglightFor('cold', 'slime')).toBeNull();
     expect(froglightFor('warm', 'strider')).toBeNull();

@@ -21,20 +21,24 @@ export function tickTadpole(t: Tadpole): boolean {
   return t.ageTicks >= TADPOLE_MATURE_TICKS;
 }
 
-// Wiki (minecraft.wiki/w/Froglight): only small magma cubes produce
-// froglight; the COLOR is determined by the frog's variant (slimes
-// are eaten without dropping a froglight; striders aren't a frog
-// food source). Old logic ignored variant entirely and used `eaten`
-// as the color selector — both wrong.
-//   temperate (white)  → pearlescent
-//   warm     (orange)  → ochre
-//   cold     (green)   → verdant
+// Wiki (minecraft.wiki/w/Froglight#Acquisition): only small magma
+// cubes produce froglight; the COLOR is determined by the frog's
+// variant per the wiki table:
+//   Warm      → Pearlescent
+//   Temperate → Ochre
+//   Cold      → Verdant
+//
+// 5th sibling froglight-mapping module. A previous "fix" had
+// temperate↔warm swapped based on a thematic guess; the wiki table
+// reverses that intuition. Siblings frog_eat_entity,
+// frog_light_produce, frog_variant_biome, frog_tongue_catch are
+// already corrected.
 export function froglightFor(
   variant: FrogVariant,
   eaten: 'magma_cube' | 'slime' | 'strider',
 ): 'webmc:pearlescent_froglight' | 'webmc:ochre_froglight' | 'webmc:verdant_froglight' | null {
   if (eaten !== 'magma_cube') return null;
-  if (variant === 'temperate') return 'webmc:pearlescent_froglight';
-  if (variant === 'warm') return 'webmc:ochre_froglight';
+  if (variant === 'warm') return 'webmc:pearlescent_froglight';
+  if (variant === 'temperate') return 'webmc:ochre_froglight';
   return 'webmc:verdant_froglight';
 }
