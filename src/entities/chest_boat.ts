@@ -9,6 +9,10 @@ import { tickBoat } from './boat';
 export interface ChestBoat {
   boat: Boat;
   inventory: Container;
+  // Wiki (minecraft.wiki/w/Boat): 1.21.4 added pale oak boats incl.
+  // chest boat. Old union was missing pale_oak — pale-garden players
+  // crafting a chest boat got a TS narrowing miss against the wiki
+  // canonical 10-species set.
   woodKind:
     | 'oak'
     | 'spruce'
@@ -18,7 +22,8 @@ export interface ChestBoat {
     | 'dark_oak'
     | 'mangrove'
     | 'cherry'
-    | 'bamboo';
+    | 'bamboo'
+    | 'pale_oak';
 }
 
 export function makeChestBoat(
