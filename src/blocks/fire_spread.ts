@@ -119,7 +119,13 @@ export function tickFire(ctx: FireTickCtx): FireTickResult {
   SHARED_IGNITIONS.length = 0;
   if (!ctx.fireTickAllowed) return result;
   result.newAge = Math.min(15, ctx.age + 1);
-  if (result.newAge >= 15 && ctx.rng() < 0.04) {
+  // Wiki (minecraft.wiki/w/Fire#Burning_out): "At age 15, as long as
+  // there isn't a flammable block below the fire, a block tick has a
+  // 1/4 chance to extinguish the fire." Old 0.04 was 6× under wiki
+  // canon, so fires that should naturally burn out in a few seconds
+  // lingered for over half a minute. Sibling fire_age_spread.ts
+  // already uses 0.25.
+  if (result.newAge >= 15 && ctx.rng() < 0.25) {
     result.extinguish = true;
   }
   let poolIdx = 0;
