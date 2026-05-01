@@ -21,4 +21,14 @@ describe('enchant incompatibility', () => {
   it('invalid combo fails', () => {
     expect(validCombination(['sharpness', 'smite'])).toBe(false);
   });
+
+  it('1.21 mace conflicts (wiki: breach + density / damage family / impaling)', () => {
+    expect(areIncompatible('breach', 'density')).toBe(true);
+    expect(areIncompatible('breach', 'sharpness')).toBe(true);
+    expect(areIncompatible('breach', 'smite')).toBe(true);
+    expect(areIncompatible('breach', 'bane_of_arthropods')).toBe(true);
+    expect(areIncompatible('breach', 'impaling')).toBe(true);
+    // Density only conflicts with Breach, not damage family.
+    expect(areIncompatible('density', 'sharpness')).toBe(false);
+  });
 });
