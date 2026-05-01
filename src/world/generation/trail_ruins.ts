@@ -44,9 +44,21 @@ export type TrailLoot =
 export function drawTrailLoot(roll: number, rareRoll: number): TrailLoot {
   if (rareRoll < 0.02) return { kind: 'disc', id: 'relic' };
   if (rareRoll < 0.08) {
-    const trims = ['webmc:flow_armor_trim', 'webmc:bolt_armor_trim', 'webmc:host_armor_trim'];
+    // Wiki (minecraft.wiki/w/Trail_Ruins): trail-ruin suspicious-gravel
+    // brushing yields the wayfinder, raiser, shaper, host, and silence
+    // trim templates. flow_armor_trim + bolt_armor_trim are 1.21
+    // Trial Chamber drops, not trail-ruin loot — listing them here let
+    // archaeology brushing produce trims that wiki canon never spawns
+    // there.
+    const trims = [
+      'webmc:wayfinder_armor_trim',
+      'webmc:raiser_armor_trim',
+      'webmc:shaper_armor_trim',
+      'webmc:host_armor_trim',
+      'webmc:silence_armor_trim',
+    ];
     const pick = trims[Math.min(trims.length - 1, Math.floor(rareRoll * 100) % trims.length)];
-    return { kind: 'trim', id: pick ?? 'webmc:flow_armor_trim' };
+    return { kind: 'trim', id: pick ?? 'webmc:wayfinder_armor_trim' };
   }
   if (roll < 0.4) {
     const sherds = [
