@@ -2,15 +2,47 @@
 // then burns out. Spreads to nearby flammable blocks with probability
 // scaled by flammability.
 
+// Wiki (minecraft.wiki/w/Fire): every wood-family planks/log/leaves
+// is flammable, plus wool, tnt, hay_block, coal_block, bamboo, vines,
+// short/tall grass, fern, bookshelf, dried_kelp_block, bed.
+//
+// Old table only listed oak — fire ignited oak forests but the same
+// fire next to a spruce log silently did nothing. Sibling
+// fire_spread.ts already covers all 9 wood types via a list-driven
+// fill; this module now matches.
 const FLAMMABILITY: Record<string, { encouragement: number; flammability: number }> = {
-  'webmc:oak_planks': { encouragement: 5, flammability: 20 },
-  'webmc:oak_log': { encouragement: 5, flammability: 5 },
-  'webmc:oak_leaves': { encouragement: 30, flammability: 60 },
   'webmc:wool': { encouragement: 30, flammability: 60 },
   'webmc:tnt': { encouragement: 15, flammability: 100 },
   'webmc:hay_block': { encouragement: 60, flammability: 20 },
   'webmc:coal_block': { encouragement: 5, flammability: 5 },
+  'webmc:bookshelf': { encouragement: 30, flammability: 20 },
+  'webmc:dried_kelp_block': { encouragement: 30, flammability: 60 },
+  'webmc:bamboo': { encouragement: 60, flammability: 60 },
+  'webmc:bamboo_block': { encouragement: 5, flammability: 5 },
+  'webmc:vine': { encouragement: 15, flammability: 100 },
+  'webmc:short_grass': { encouragement: 60, flammability: 100 },
+  'webmc:tall_grass': { encouragement: 60, flammability: 100 },
+  'webmc:fern': { encouragement: 60, flammability: 100 },
+  'webmc:large_fern': { encouragement: 60, flammability: 100 },
+  'webmc:bed': { encouragement: 5, flammability: 20 },
 };
+const FLAMMABLE_WOODS = [
+  'oak',
+  'spruce',
+  'birch',
+  'jungle',
+  'acacia',
+  'dark_oak',
+  'cherry',
+  'mangrove',
+  'pale_oak',
+];
+for (const w of FLAMMABLE_WOODS) {
+  FLAMMABILITY[`webmc:${w}_log`] = { encouragement: 5, flammability: 5 };
+  FLAMMABILITY[`webmc:${w}_planks`] = { encouragement: 5, flammability: 20 };
+  FLAMMABILITY[`webmc:${w}_leaves`] = { encouragement: 30, flammability: 60 };
+  FLAMMABILITY[`webmc:stripped_${w}_log`] = { encouragement: 5, flammability: 5 };
+}
 
 export function isFlammable(id: string): boolean {
   return id in FLAMMABILITY;
