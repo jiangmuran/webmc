@@ -53,11 +53,18 @@ export interface PoolWeights {
 }
 
 export function poolWeightsFor(luckOfTheSea: number): PoolWeights {
-  // MC: each Luck of the Sea level: +2% treasure, -1% junk.
+  // Wiki (minecraft.wiki/w/Fishing#Luck_of_the_Sea): "Each level of
+  // Luck of the Sea decreases the chance of getting a 'junk' item by
+  // 2.1% and increases the chance of getting a 'treasure' item by 2%."
+  // Fish stays at 85 — only treasure and junk shift. Old formula
+  // dropped fish weight by 2 and junk by 1 per level, contradicting
+  // both numbers (junk should drop by 2.1, not 1; fish unchanged, not
+  // -2). Sibling fishing_rod_rarity_table.ts already uses these values.
+  const t = Math.max(0, luckOfTheSea);
   return {
-    fish: 85 - 2 * luckOfTheSea,
-    treasure: 5 + 2 * luckOfTheSea,
-    junk: 10 - luckOfTheSea,
+    fish: 85,
+    treasure: 5 + 2 * t,
+    junk: Math.max(0, 10 - 2.1 * t),
   };
 }
 
