@@ -15,10 +15,16 @@ export interface TickQuery {
   rand: () => number;
 }
 
-// Each tick roll: 10% at night, 2% at day.
+// Wiki (minecraft.wiki/w/Turtle_Egg): "Turtle eggs have a 1/500
+// chance of cracking if they are randomly ticked during the day."
+// And during the night (especially the 21062-21904 tick window)
+// they crack/hatch reliably. Sibling turtle_egg_hatch.ts uses 1/500
+// for day and 0.35 as a coarse night average. Old day-chance 0.02
+// was 10× wiki canon, so daytime turtle-egg progression was way
+// faster than canon.
 export function hatchProgressChance(worldTick: number): number {
   const t = ((worldTick % DAY_TICKS) + DAY_TICKS) % DAY_TICKS;
-  return t >= 13000 || t < 1000 ? 0.1 : 0.02;
+  return t >= 13000 || t < 1000 ? 0.35 : 1 / 500;
 }
 
 export interface TickResult {
