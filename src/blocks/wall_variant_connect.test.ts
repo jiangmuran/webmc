@@ -61,4 +61,17 @@ describe('wall shape', () => {
     );
     expect(r.up.north).toBe('tall');
   });
+
+  it('single-side connection still has post (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Wall block-states): "up=false ONLY when
+    // walls connect on opposite sides only (N/S or E/W)." Single-side
+    // connections must keep the post column.
+    const r = wallShape(
+      q({
+        north: { wall: true, full: false, fenceGate: false },
+      }),
+    );
+    expect(r.post).toBe(true);
+    expect(r.up.north).toBe('low');
+  });
 });
