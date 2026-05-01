@@ -74,4 +74,22 @@ describe('food', () => {
     expect(isFood('webmc:bread')).toBe(true);
     expect(isFood('webmc:stone')).toBe(false);
   });
+
+  it('chorus_fruit + suspicious_stew + honey_bottle bypass full-hunger (wiki)', () => {
+    // Wiki: always-edible foods include golden apples + chorus fruit
+    // + suspicious stew + honey bottle.
+    for (const id of ['chorus_fruit', 'suspicious_stew', 'honey_bottle']) {
+      const p = new StubPlayer();
+      p.hunger = 20;
+      expect(applyFood(id, p)).toBe(true);
+    }
+  });
+
+  it('regular foods still rejected at full hunger', () => {
+    const p = new StubPlayer();
+    p.hunger = 20;
+    for (const id of ['bread', 'apple', 'cooked_beef']) {
+      expect(applyFood(id, p)).toBe(false);
+    }
+  });
 });
