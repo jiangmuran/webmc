@@ -32,15 +32,17 @@ export function tryGrow(c: Cocoa, rand: () => number): boolean {
   return false;
 }
 
-export function drops(c: Cocoa, fortuneLevel: number, rand: () => number): number {
+export function drops(c: Cocoa, _fortuneLevel: number, _rand: () => number): number {
+  // Wiki (minecraft.wiki/w/Cocoa_Beans): "Fully grown cocoa pods drop
+  // 3 cocoa beans. Using a tool enchanted with Fortune does not
+  // increase the amount of cocoa beans dropped."
+  //
+  // Old code rolled 2-3 base + a Fortune bonus (capped at 6) — TWO
+  // bugs vs wiki: (1) immature drop 1 ✓ but mature should be exactly
+  // 3, not 2-3; (2) Fortune was ignored per wiki, but code added a
+  // 0..level bonus on top.
   if (c.age < MAX_AGE) return 1;
-  const base = 2 + Math.floor(rand() * 2); // 2..3
-  // Wiki (minecraft.wiki/w/Cocoa_Beans#Drops): fortune adds a uniform
-  // 0..level bonus, not a deterministic +level. Old formula always
-  // added the full fortune level (Fortune III always +3) instead of
-  // the wiki's 0..3 roll. Cap remains 6 to match wiki's maximum.
-  const fortuneBonus = fortuneLevel > 0 ? Math.floor(rand() * (fortuneLevel + 1)) : 0;
-  return Math.min(6, base + fortuneBonus);
+  return 3;
 }
 
 export function boneMealGrow(c: Cocoa): boolean {

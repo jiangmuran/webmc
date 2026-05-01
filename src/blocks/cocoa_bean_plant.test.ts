@@ -13,21 +13,18 @@ describe('cocoa', () => {
     expect(randomTick(c, { rand: () => 0, jungleLogAttached: false })).toBe('fell_off');
   });
 
-  it('mature gives 2-3 beans', () => {
+  it('mature drops exactly 3 beans (wiki)', () => {
     const c = makeCocoa('north');
     c.stage = 2;
-    const n = beansOnBreak(c, 0, () => 0);
-    expect([2, 3]).toContain(n);
+    expect(beansOnBreak(c, 0, () => 0)).toBe(3);
+    expect(beansOnBreak(c, 0, () => 0.99)).toBe(3);
   });
 
-  it('fortune III adds uniform 0..3 bonus (wiki)', () => {
+  it('Fortune does not increase yield (wiki)', () => {
     const c = makeCocoa('north');
     c.stage = 2;
-    // High roll exercises the bonus side. base = 2 + floor(0.99*2) = 3,
-    // fortune = floor(0.99 * 4) = 3 → 6 total (cap).
-    const high = beansOnBreak(c, 3, () => 0.99);
-    expect(high).toBeGreaterThanOrEqual(2);
-    expect(high).toBeLessThanOrEqual(6);
+    expect(beansOnBreak(c, 3, () => 0)).toBe(3);
+    expect(beansOnBreak(c, 3, () => 0.99)).toBe(3);
   });
 
   it('bone meal advances', () => {

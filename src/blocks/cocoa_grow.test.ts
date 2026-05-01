@@ -18,14 +18,12 @@ describe('cocoa', () => {
     expect(tryGrow(c, () => 0)).toBe(false);
   });
 
-  it('drops scale with fortune (uniform 0..level)', () => {
+  it('mature pod always drops exactly 3 beans (wiki: Fortune does not affect)', () => {
     const c = { age: MAX_AGE, facing: 'north' as const };
-    const base = drops(c, 0, () => 0);
-    expect(base).toBe(2);
-    // High roll exercises both base bonus + fortune bonus.
-    const f3High = drops(c, 3, () => 0.99);
-    expect(f3High).toBeGreaterThanOrEqual(base);
-    expect(f3High).toBeLessThanOrEqual(6);
+    expect(drops(c, 0, () => 0)).toBe(3);
+    expect(drops(c, 0, () => 0.99)).toBe(3);
+    expect(drops(c, 3, () => 0)).toBe(3);
+    expect(drops(c, 3, () => 0.99)).toBe(3);
   });
 
   it('immature drops 1', () => {
