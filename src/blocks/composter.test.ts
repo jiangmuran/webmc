@@ -8,6 +8,24 @@ describe('composter', () => {
     expect(composterChance('webmc:stone')).toBe(0);
   });
 
+  it('accepts canonical Java items (wiki: full table coverage)', () => {
+    // Spot-check the previously-missing Nether/lush-cave/mangrove
+    // items that silently registered as 0% before.
+    expect(composterChance('webmc:nether_wart')).toBe(0.65);
+    expect(composterChance('webmc:nether_wart_block')).toBe(0.85);
+    expect(composterChance('webmc:glow_berries')).toBe(0.3);
+    expect(composterChance('webmc:moss_block')).toBe(0.65);
+    expect(composterChance('webmc:moss_carpet')).toBe(0.3);
+    expect(composterChance('webmc:twisting_vines')).toBe(0.5);
+    expect(composterChance('webmc:weeping_vines')).toBe(0.5);
+    expect(composterChance('webmc:sweet_berries')).toBe(0.3);
+    expect(composterChance('webmc:cocoa_beans')).toBe(0.65);
+    expect(composterChance('webmc:spruce_sapling')).toBe(0.3);
+    expect(composterChance('webmc:cherry_leaves')).toBe(0.3);
+    expect(composterChance('webmc:brown_mushroom')).toBe(0.65);
+    expect(composterChance('webmc:flowering_azalea')).toBe(0.85);
+  });
+
   it('refuses non-compostable items', () => {
     const c = makeComposter();
     const r = insertIntoComposter(c, 'webmc:stone');
