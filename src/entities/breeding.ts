@@ -47,7 +47,11 @@ const BREED_ITEMS: Record<BreedableKind, readonly string[]> = {
     'webmc:beetroot_seeds',
   ],
   wolf: ['webmc:cooked_beef', 'webmc:cooked_chicken', 'webmc:cooked_mutton'],
-  cat: ['webmc:raw_fish', 'webmc:raw_salmon'],
+  // Wiki (minecraft.wiki/w/Cat + /w/Ocelot): tamed/bred with raw cod
+  // and raw salmon. Old IDs `raw_fish` / `raw_salmon` were the legacy
+  // pre-1.13 generic names — there's no such item in modern MC.
+  // Project canonical (smelting.ts) uses `webmc:cod` / `webmc:salmon`.
+  cat: ['webmc:cod', 'webmc:salmon'],
   horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
   donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
   rabbit: ['webmc:dandelion', 'webmc:carrot', 'webmc:golden_carrot'],
@@ -55,7 +59,7 @@ const BREED_ITEMS: Record<BreedableKind, readonly string[]> = {
   panda: ['webmc:bamboo'],
   turtle: ['webmc:seagrass'],
   bee: ['webmc:dandelion', 'webmc:poppy', 'webmc:blue_orchid', 'webmc:allium'],
-  ocelot: ['webmc:raw_fish', 'webmc:raw_salmon'],
+  ocelot: ['webmc:cod', 'webmc:salmon'],
   hoglin: ['webmc:crimson_fungus'],
   strider: ['webmc:warped_fungus'],
   axolotl: ['webmc:tropical_fish_bucket'],

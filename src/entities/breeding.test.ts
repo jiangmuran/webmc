@@ -52,4 +52,17 @@ describe('breeding', () => {
     tickBreedable(c, 1201);
     expect(c.isAdult).toBe(true);
   });
+
+  it('cats + ocelots breed with cod and salmon (wiki, not legacy raw_fish)', () => {
+    // Wiki (minecraft.wiki/w/Cat + /w/Ocelot): "tamed/bred with raw cod
+    // and raw salmon." `raw_fish` was the pre-1.13 generic name and
+    // doesn't exist in modern MC.
+    const c = makeBreedable('cat');
+    expect(canBreedWith(c, 'webmc:cod')).toBe(true);
+    expect(canBreedWith(c, 'webmc:salmon')).toBe(true);
+    expect(canBreedWith(c, 'webmc:raw_fish')).toBe(false);
+    const o = makeBreedable('ocelot');
+    expect(canBreedWith(o, 'webmc:cod')).toBe(true);
+    expect(canBreedWith(o, 'webmc:salmon')).toBe(true);
+  });
 });
