@@ -21,4 +21,16 @@ describe('villager levels', () => {
   it('offers unlocked grows monotonically', () => {
     expect(offersUnlocked('novice')).toBeLessThan(offersUnlocked('master'));
   });
+
+  it('Java offer counts 2/4/6/8/10 per wiki', () => {
+    // Wiki (minecraft.wiki/w/Trading): "Java: villagers have a
+    // maximum of 10 trades. Each level unlocks a maximum of two new
+    // trades." Old table added 1 per level (2/3/4/5/6) — wrong, and
+    // capped masters at 6 instead of 10.
+    expect(offersUnlocked('novice')).toBe(2);
+    expect(offersUnlocked('apprentice')).toBe(4);
+    expect(offersUnlocked('journeyman')).toBe(6);
+    expect(offersUnlocked('expert')).toBe(8);
+    expect(offersUnlocked('master')).toBe(10);
+  });
 });
