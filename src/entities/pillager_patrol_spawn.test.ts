@@ -19,10 +19,29 @@ describe('pillager patrol spawn', () => {
     ).toBe(false);
   });
 
-  it('no patrol near spawn', () => {
+  it('no patrol before day 5.5 (wiki: "after 5½ in-game days")', () => {
     expect(
       shouldSpawnPatrol({
         daysSinceWorldStart: 5,
+        distanceFromSpawn: 100,
+        ticksSinceLastPatrol: 1e6,
+        rand: () => 0,
+      }),
+    ).toBe(false);
+    expect(
+      shouldSpawnPatrol({
+        daysSinceWorldStart: 5.5,
+        distanceFromSpawn: 100,
+        ticksSinceLastPatrol: 1e6,
+        rand: () => 0,
+      }),
+    ).toBe(true);
+  });
+
+  it('no patrol near spawn', () => {
+    expect(
+      shouldSpawnPatrol({
+        daysSinceWorldStart: 6,
         distanceFromSpawn: MIN_DISTANCE_FROM_SPAWN - 1,
         ticksSinceLastPatrol: 1e6,
         rand: () => 0,
@@ -33,7 +52,7 @@ describe('pillager patrol spawn', () => {
   it('spawns after conditions', () => {
     expect(
       shouldSpawnPatrol({
-        daysSinceWorldStart: 5,
+        daysSinceWorldStart: 6,
         distanceFromSpawn: 100,
         ticksSinceLastPatrol: MIN_PATROL_COOLDOWN_TICKS,
         rand: () => 0,
