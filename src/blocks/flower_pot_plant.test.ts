@@ -23,4 +23,11 @@ describe('flower pot', () => {
   it('wither rose in pot inert', () => {
     expect(appliesWitherEffect()).toBe(false);
   });
+
+  it('recent plants pottable (wiki: torchflower, pale oak, eyeblossoms)', () => {
+    expect(canPot('webmc:torchflower')).toBe(true);
+    expect(canPot('webmc:pale_oak_sapling')).toBe(true);
+    expect(canPot('webmc:closed_eyeblossom')).toBe(true);
+    expect(canPot('webmc:open_eyeblossom')).toBe(true);
+  });
 });
