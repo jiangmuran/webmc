@@ -21,4 +21,11 @@ describe('dirt path convert', () => {
   it('farmland no effect', () => {
     expect(tramplingPreventedByFarmland()).toBe(false);
   });
+
+  it('rooted_dirt does NOT convert to dirt_path (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Shovel): rooted_dirt is a separate shovel
+    // action — converts to dirt + drops hanging_roots, not dirt_path.
+    // Sibling items/shovel_path.ts has the rooted_dirt action.
+    expect(canConvert({ target: 'rooted_dirt', topBlockIsAir: true })).toBe(false);
+  });
 });
