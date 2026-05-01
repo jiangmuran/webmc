@@ -29,8 +29,6 @@ export function makeBell(): BellState {
 
 export const BELL_RAIDER_TRIGGER_RADIUS = 32;
 export const BELL_RAIDER_GLOW_RADIUS = 48;
-/** @deprecated kept for back-compat; prefer BELL_RAIDER_TRIGGER_RADIUS / BELL_RAIDER_GLOW_RADIUS. */
-export const BELL_RAIDER_RADIUS = BELL_RAIDER_TRIGGER_RADIUS;
 export const BELL_GLOWING_SEC = 3;
 export const BELL_SOUND_RADIUS = 24;
 export const BELL_RING_DURATION_SEC = 1;

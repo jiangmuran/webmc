@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  BELL_RAIDER_RADIUS,
+  BELL_RAIDER_TRIGGER_RADIUS,
   computeRingEffect,
   makeBell,
   onBellChime,
@@ -67,8 +67,8 @@ describe('bell', () => {
     expect(r.soundsTo).not.toContain(2);
   });
 
-  it('radius is 32', () => {
-    expect(BELL_RAIDER_RADIUS).toBe(32);
+  it('trigger radius is 32 (wiki)', () => {
+    expect(BELL_RAIDER_TRIGGER_RADIUS).toBe(32);
   });
 
   it('schedule cycles', () => {
