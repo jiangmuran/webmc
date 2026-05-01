@@ -8,7 +8,15 @@ export interface SculkShriekerState {
 }
 
 const SHRIEKS_FOR_WARDEN = 4;
-const RESET_SEC = 200; // ~3.3 min warning timer
+// Wiki (minecraft.wiki/w/Sculk_Shrieker): "If a player does not
+// activate any sculk shrieker, the warning level decreases by 1
+// every 10 minutes (12000 ticks)." Old 200 s (~3.3 min) was 3× too
+// fast — players who narrowly escaped a warden could fully reset
+// their warning in a single dive instead of having to wait the
+// wiki-canonical ten minutes per level. Simplified model still
+// uses a full-reset (vs graduated −1/level) but at least matches
+// the per-level decay rate for parity.
+const RESET_SEC = 600;
 
 export function makeShrieker(): SculkShriekerState {
   return {
