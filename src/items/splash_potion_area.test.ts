@@ -24,6 +24,13 @@ describe('splash potion area', () => {
     expect(appliedDurationTicks(800, 2)).toBe(400);
   });
 
+  it('duration ≤ 20 ticks (1 second) drops to 0 (wiki)', () => {
+    // 800 × (1 - 3.95/4) = 10 ticks → wiki: no effect.
+    expect(appliedDurationTicks(800, 3.95)).toBe(0);
+    // 800 × (1 - 3.5/4) = 100 ticks → above threshold, applies.
+    expect(appliedDurationTicks(800, 3.5)).toBe(100);
+  });
+
   it('no effect beyond radius', () => {
     expect(hasAnyEffect(10)).toBe(false);
   });
