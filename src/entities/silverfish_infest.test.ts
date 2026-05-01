@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { blockFor, onBreak, cascadeRadius } from './silverfish_infest';
+import {
+  blockFor,
+  onBreak,
+  cascadeRadius,
+  CASCADE_RADIUS_XZ,
+  CASCADE_RADIUS_Y,
+} from './silverfish_infest';
 
 describe('silverfish infest', () => {
   it('strips infested_ prefix', () => {
@@ -20,7 +26,11 @@ describe('silverfish infest', () => {
     });
   });
 
-  it('cascade radius 2', () => {
-    expect(cascadeRadius()).toBe(2);
+  it('cascade radius matches wiki 21×11×21 area', () => {
+    // minecraft.wiki/w/Silverfish: "21×11×21 area" → ±10 XZ, ±5 Y.
+    // Sibling silverfish_summon.ts uses these same values.
+    expect(CASCADE_RADIUS_XZ).toBe(10);
+    expect(CASCADE_RADIUS_Y).toBe(5);
+    expect(cascadeRadius()).toBe(CASCADE_RADIUS_XZ);
   });
 });
