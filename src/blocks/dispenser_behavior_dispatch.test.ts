@@ -30,7 +30,12 @@ describe('dispenser behavior dispatch', () => {
     expect(behaviorFor('wheat_seeds')).toBe('drop_item');
   });
 
-  it('default places block', () => {
-    expect(behaviorFor('stone')).toBe('place_block');
+  it('default drops item, not places block (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Dispenser): "Items that are not handled
+    // by a custom behavior are simply launched as item entities."
+    // A dispenser does NOT place arbitrary blocks.
+    expect(behaviorFor('stone')).toBe('drop_item');
+    expect(behaviorFor('diamond')).toBe('drop_item');
+    expect(behaviorFor('cobblestone')).toBe('drop_item');
   });
 });
