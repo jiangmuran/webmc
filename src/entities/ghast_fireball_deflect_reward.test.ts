@@ -3,8 +3,7 @@ import {
   grantsAdvancement,
   returnsToOriginDirection,
   shootInterval,
-  GHAST_SHOOT_INTERVAL_MIN,
-  GHAST_SHOOT_INTERVAL_MAX,
+  GHAST_SHOOT_INTERVAL_TICKS,
 } from './ghast_fireball_deflect_reward';
 
 describe('ghast fireball deflect reward', () => {
@@ -42,9 +41,9 @@ describe('ghast fireball deflect reward', () => {
     expect(returnsToOriginDirection(true)).toBe(true);
   });
 
-  it('shoot interval bounded', () => {
-    const i = shootInterval(() => 0.5);
-    expect(i).toBeGreaterThanOrEqual(GHAST_SHOOT_INTERVAL_MIN);
-    expect(i).toBeLessThan(GHAST_SHOOT_INTERVAL_MAX);
+  it('shoot interval is exactly 3s per wiki', () => {
+    expect(GHAST_SHOOT_INTERVAL_TICKS).toBe(60);
+    expect(shootInterval(() => 0.0)).toBe(60);
+    expect(shootInterval(() => 0.999)).toBe(60);
   });
 });
