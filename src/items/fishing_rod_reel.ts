@@ -6,7 +6,12 @@ export interface ReelCtx {
   playerPosition: { x: number; y: number; z: number };
 }
 
-export const REEL_VELOCITY_MULT = 0.15;
+// Wiki (minecraft.wiki/w/Fishing_Rod): "Reeling a mob pulls it toward
+// the player with a speed of 1/10 the distance between the mob and
+// the player." Old 0.15 was 50% over wiki canon — hooked mobs got
+// yanked toward the player faster than expected, breaking knockback
+// timing in fishing-rod combat strategies.
+export const REEL_VELOCITY_MULT = 0.1;
 
 export function reelVelocity(c: ReelCtx): { vx: number; vy: number; vz: number } {
   if (!c.hookedEntity) return { vx: 0, vy: 0, vz: 0 };
