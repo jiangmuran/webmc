@@ -70,4 +70,13 @@ describe('crop random tick', () => {
     expect(boneMealSteps('nether_wart', () => 0)).toBe(0);
     expect(boneMealSteps('wheat', () => 0.99)).toBeLessThanOrEqual(5);
   });
+
+  it('beetroot bone meal: 75% chance +1, 25% chance 0 (wiki)', () => {
+    // rand < 0.75 → +1
+    expect(boneMealSteps('beetroot', () => 0)).toBe(1);
+    expect(boneMealSteps('beetroot', () => 0.74)).toBe(1);
+    // rand >= 0.75 → 0
+    expect(boneMealSteps('beetroot', () => 0.75)).toBe(0);
+    expect(boneMealSteps('beetroot', () => 0.99)).toBe(0);
+  });
 });
