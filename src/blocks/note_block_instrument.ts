@@ -14,34 +14,22 @@ export type Instrument =
   | 'didgeridoo'
   | 'bit'
   | 'banjo'
-  | 'pling';
-
-const BY_BLOCK: Record<string, Instrument> = {
-  air: 'harp',
-  wood: 'bass',
-  wool: 'guitar',
-  sand: 'snare',
-  glass: 'hat',
-  stone: 'basedrum',
-  gold: 'bell',
-  clay: 'flute',
-  packed_ice: 'chime',
-  bone_block: 'xylophone',
-  iron_block: 'iron_xylophone',
-  soul_sand: 'cow_bell',
-  pumpkin: 'didgeridoo',
-  emerald_block: 'bit',
-  hay_block: 'banjo',
-  glowstone: 'pling',
-};
+  | 'pling'
+  | 'trumpet';
 
 // Wiki (minecraft.wiki/w/Note_Block): the instrument is determined by
 // the block BELOW the note block (the block above must be air or
 // non-solid for the block to play). Old name `instrumentForBlockAbove`
 // inverted the relationship in the API surface; kept the alias for
-// backward compatibility.
+// backward compatibility. Old BY_BLOCK exact-match table missed every
+// real game block name (e.g. "wood" doesn't exist — it's "oak_wood",
+// "spruce_wood", etc.), so the function returned harp for everything.
+// Now delegates to noteblock_pitch.instrumentForBelow which handles
+// the full wiki classification by family.
+import { instrumentForBelow } from './noteblock_pitch';
+
 export function instrumentForBlockBelow(block: string): Instrument {
-  return BY_BLOCK[block] ?? 'harp';
+  return instrumentForBelow(block) as Instrument;
 }
 
 /** @deprecated Wiki: instrument is selected by the block BELOW.
