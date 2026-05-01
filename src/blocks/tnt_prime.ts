@@ -17,11 +17,22 @@ export interface TntEntity {
 
 export const FUSE_TICKS = 80;
 
-export function primeTnt(source: PrimeSource, inWater: boolean): TntEntity {
+// Wiki (minecraft.wiki/w/TNT): "If TNT is ignited by another
+// explosion, the fuse is randomized between 10 and 30 ticks
+// (0.5–1.5 seconds)." Old code computed
+// `10 + ((source.length * 7) % 21)` — deterministic and equal to
+// 10 for every input (since 'explosion'.length * 7 % 21 = 0). All
+// chain-primed TNT got the minimum fuse, making chain reactions
+// significantly faster than canon. Now uses an injected RNG to
+// span 10..30 inclusive.
+export function primeTnt(
+  source: PrimeSource,
+  inWater: boolean,
+  rng: () => number = Math.random,
+): TntEntity {
   let fuse = FUSE_TICKS;
   if (source === 'explosion') {
-    // Chained TNT has randomized shorter fuse (deterministic 10..30)
-    fuse = 10 + ((source.length * 7) % 21);
+    fuse = 10 + Math.floor(rng() * 21);
   }
   return { fuseTicks: fuse, inWater };
 }
