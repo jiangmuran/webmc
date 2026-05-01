@@ -5,6 +5,12 @@ export interface FoodValue {
   canAlwaysEat?: boolean;
 }
 
+// Wiki minecraft.wiki/w/Food#Hunger_restored — canonical Java table.
+// Sibling food_nutrition_table.ts ships a more complete list; this
+// module's TABLE was missing mutton/cooked_mutton, melon_slice,
+// enchanted_golden_apple, honey_bottle, spider_eye, chorus_fruit,
+// dried_kelp, poisonous_potato. Added to match the wiki canon and
+// keep the two sibling tables in sync.
 export const TABLE: Record<string, FoodValue> = {
   apple: { hunger: 4, saturation: 2.4, eatTimeTicks: 32 },
   baked_potato: { hunger: 5, saturation: 6, eatTimeTicks: 32 },
@@ -15,11 +21,19 @@ export const TABLE: Record<string, FoodValue> = {
   chicken: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
   cooked_chicken: { hunger: 6, saturation: 7.2, eatTimeTicks: 32 },
   cookie: { hunger: 2, saturation: 0.4, eatTimeTicks: 32 },
+  chorus_fruit: { hunger: 4, saturation: 2.4, eatTimeTicks: 32, canAlwaysEat: true },
+  dried_kelp: { hunger: 1, saturation: 0.6, eatTimeTicks: 16 },
+  enchanted_golden_apple: { hunger: 4, saturation: 9.6, eatTimeTicks: 32, canAlwaysEat: true },
   golden_apple: { hunger: 4, saturation: 9.6, eatTimeTicks: 32, canAlwaysEat: true },
   golden_carrot: { hunger: 6, saturation: 14.4, eatTimeTicks: 32 },
+  honey_bottle: { hunger: 6, saturation: 1.2, eatTimeTicks: 40 },
+  melon_slice: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
+  mutton: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
+  cooked_mutton: { hunger: 6, saturation: 9.6, eatTimeTicks: 32 },
   porkchop: { hunger: 3, saturation: 1.8, eatTimeTicks: 32 },
   cooked_porkchop: { hunger: 8, saturation: 12.8, eatTimeTicks: 32 },
   potato: { hunger: 1, saturation: 0.6, eatTimeTicks: 32 },
+  poisonous_potato: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
   pumpkin_pie: { hunger: 8, saturation: 4.8, eatTimeTicks: 32 },
   rabbit: { hunger: 3, saturation: 1.8, eatTimeTicks: 32 },
   cooked_rabbit: { hunger: 5, saturation: 6, eatTimeTicks: 32 },
@@ -29,6 +43,7 @@ export const TABLE: Record<string, FoodValue> = {
   cooked_salmon: { hunger: 6, saturation: 9.6, eatTimeTicks: 32 },
   cod: { hunger: 2, saturation: 0.4, eatTimeTicks: 32 },
   cooked_cod: { hunger: 5, saturation: 6, eatTimeTicks: 32 },
+  spider_eye: { hunger: 2, saturation: 3.2, eatTimeTicks: 32 },
   tropical_fish: { hunger: 1, saturation: 0.2, eatTimeTicks: 32 },
   pufferfish: { hunger: 1, saturation: 0.2, eatTimeTicks: 32 },
   beetroot: { hunger: 1, saturation: 1.2, eatTimeTicks: 32 },
