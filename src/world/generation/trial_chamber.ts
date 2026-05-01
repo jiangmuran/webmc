@@ -12,10 +12,12 @@ export interface Placement {
 // regular stone band rather than the deepslate band.
 //
 // Wiki: "The generation of trial chambers follows a grid of 34×34
-// chunk regions centered on the world origin." So the spacing
-// constant of 34 is canonical.
+// chunk regions with 12-chunk minimum separation between adjacent
+// trial chambers." Old SEPARATION = 10 was 2 chunks short of the
+// wiki value, allowing trial chambers to spawn slightly closer
+// together than canon.
 export const SPAWN_SPACING = 34;
-export const SEPARATION = 10;
+export const SEPARATION = 12;
 export const MIN_Y = -40;
 export const MAX_Y = -20;
 
