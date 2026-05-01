@@ -46,4 +46,23 @@ describe('amethyst geode', () => {
     const drops = clusterDrops({ stage: 'small_bud', silkTouch: false, fortune: 0 });
     expect(drops.length).toBe(0);
   });
+
+  it('Fortune III scales by 1..4× per wiki (4..16 shards)', () => {
+    // Wiki: discrete-ore Fortune formula, multiplier ∈ {1, 1, 2, 3, 4}
+    // at level III. Test the boundary multipliers.
+    const minDrop = clusterDrops({
+      stage: 'cluster',
+      silkTouch: false,
+      fortune: 3,
+      rand: () => 0,
+    });
+    expect(minDrop[0]?.count).toBe(4); // multiplier 1
+    const maxDrop = clusterDrops({
+      stage: 'cluster',
+      silkTouch: false,
+      fortune: 3,
+      rand: () => 0.999,
+    });
+    expect(maxDrop[0]?.count).toBe(16); // multiplier 4
+  });
 });

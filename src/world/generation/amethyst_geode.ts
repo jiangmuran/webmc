@@ -60,12 +60,22 @@ export function advanceCluster(cur: ClusterStage, roll: number): ClusterStage {
   return STAGES[idx + 1] ?? cur;
 }
 
-// Breaking a mature cluster drops 4 amethyst shards. Breaking with silk
-// touch drops the cluster item itself.
+// Wiki (minecraft.wiki/w/Amethyst_Cluster): "Mining a cluster drops
+// 4 amethyst shards. Fortune uses the standard discrete-ore formula:
+//   probability of no bonus: 2 / (level + 2)
+//   otherwise: equal chance for any multiplier from 2 to (level + 1).
+// Fortune III gives an average of 8.8 shards per cluster (~2.2× base
+// 4)."
+//
+// Old `bonus = floor(rand * (fortune + 1))` produced 0-3 bonus at
+// Fortune III (total 4-7), about 32% of the wiki's 4-16. Sibling
+// blocks/amethyst_crystal_growth.ts already uses the canonical
+// multiplier formula.
 export interface ClusterBreakQuery {
   stage: ClusterStage;
   silkTouch: boolean;
   fortune: number;
+  rand?: () => number;
 }
 
 export function clusterDrops(q: ClusterBreakQuery): { item: string; count: number }[] {
@@ -74,6 +84,9 @@ export function clusterDrops(q: ClusterBreakQuery): { item: string; count: numbe
   }
   if (q.stage !== 'cluster') return [];
   const base = 4;
-  const bonus = q.fortune > 0 ? Math.floor(Math.random() * (q.fortune + 1)) : 0;
-  return [{ item: 'webmc:amethyst_shard', count: base + bonus }];
+  if (q.fortune <= 0) return [{ item: 'webmc:amethyst_shard', count: base }];
+  const rand = q.rand ?? Math.random;
+  const roll = Math.floor(rand() * (q.fortune + 2)) - 1;
+  const multiplier = Math.max(1, roll + 1);
+  return [{ item: 'webmc:amethyst_shard', count: base * multiplier }];
 }
