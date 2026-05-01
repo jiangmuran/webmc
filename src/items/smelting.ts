@@ -45,7 +45,12 @@ export const SMELTING_RECIPES: readonly SmeltingRecipe[] = [
   { input: 'webmc:lapis_ore', output: 'webmc:lapis_lazuli', cookSec: 10, experience: 0.2 },
   { input: 'webmc:redstone_ore', output: 'webmc:redstone', cookSec: 10, experience: 0.7 },
   { input: 'webmc:nether_quartz_ore', output: 'webmc:nether_quartz', cookSec: 10, experience: 0.2 },
-  { input: 'webmc:nether_gold_ore', output: 'webmc:gold_nugget', cookSec: 10, experience: 1 },
+  // Wiki (minecraft.wiki/w/Nether_Gold_Ore): "Smelting ingredient:
+  // Nether Gold Ore → Gold Ingot, 1 XP." Old code output gold_nugget,
+  // matching the mining drop instead of the smelting recipe (the
+  // mining drop is 2-6 nuggets, the smelt yields 1 ingot — they're
+  // separate paths).
+  { input: 'webmc:nether_gold_ore', output: 'webmc:gold_ingot', cookSec: 10, experience: 1 },
   { input: 'webmc:ancient_debris', output: 'webmc:netherite_scrap', cookSec: 10, experience: 2 },
   // Stone family
   { input: 'webmc:cobblestone', output: 'webmc:stone', cookSec: 10, experience: 0.1 },
