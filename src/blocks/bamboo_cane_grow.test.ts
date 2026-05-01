@@ -7,6 +7,11 @@ describe('bamboo', () => {
     expect(canGrowOn('webmc:stone')).toBe(false);
   });
 
+  it('bamboo plants on bamboo (wiki: other bamboo shoots)', () => {
+    expect(canGrowOn('webmc:bamboo')).toBe(true);
+    expect(canGrowOn('webmc:bamboo_sapling')).toBe(true);
+  });
+
   it('young does not grow naturally', () => {
     expect(tryGrow({ currentHeight: 1, age: 0, rand: () => 0, boneMealed: false }).grew).toBe(
       false,

@@ -6,9 +6,11 @@
 // dirt, gravel, mycelium, podzol, sand, red sand, suspicious sand,
 // suspicious gravel, mud, muddy mangrove roots, or other bamboo
 // shoots." Old set was missing pale_moss_block, suspicious_sand,
-// suspicious_gravel, and muddy_mangrove_roots — bamboo planted on
-// any of those (very common in archaeology / mangrove biome
-// gameplay) was rejected.
+// suspicious_gravel, muddy_mangrove_roots, AND bamboo itself — the
+// last meant a player couldn't place a fresh bamboo item on top of
+// an existing stalk (a routine action when extending a farm), even
+// though the wiki explicitly lists "other bamboo shoots" as a valid
+// placement surface.
 
 export const MAX_HEIGHT = 16;
 export const MATURE_HEIGHT = 4;
@@ -29,6 +31,8 @@ const VALID_GROUND = new Set<string>([
   'webmc:pale_moss_block',
   'webmc:gravel',
   'webmc:coarse_dirt',
+  'webmc:bamboo',
+  'webmc:bamboo_sapling',
 ]);
 
 export function canGrowOn(blockId: string): boolean {

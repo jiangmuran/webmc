@@ -35,8 +35,6 @@ export interface CopperBlock {
 // distinct "isolated" vs "near higher" rates.
 export const TICK_CHANCE_ISOLATED = (64 / 1125) * 0.75; // ≈ 0.0427
 export const TICK_CHANCE_NEAR_HIGHER = 64 / 1125; // ≈ 0.0569
-/** @deprecated kept for back-compat; use the explicit constants. */
-export const TICK_CHANCE = TICK_CHANCE_ISOLATED;
 
 export interface TickQuery {
   rand: () => number;
