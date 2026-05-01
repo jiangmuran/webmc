@@ -16,7 +16,12 @@ export interface BeamState {
 
 export const CHARGE_TICKS = 80;
 export const FIRE_TICKS = 1;
-export const COOLDOWN_TICKS = 40; // 2s
+// Wiki (minecraft.wiki/w/Guardian): "Guardians swim around for 3
+// seconds before firing again." 3 s = 60 ticks. Old COOLDOWN_TICKS
+// = 40 (2 s) was 33% under wiki — guardians fired ~50% more often
+// than canon. Sibling guardian_laser.ts (COOLDOWN_SEC = 3) already
+// uses the correct value.
+export const COOLDOWN_TICKS = 60;
 export const TARGET_RANGE = 15;
 
 export function makeBeam(): BeamState {
