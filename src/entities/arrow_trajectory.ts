@@ -52,11 +52,14 @@ export function speed(a: Arrow): number {
 
 export function damageFor(a: Arrow, powerEnchantLevel: number): number {
   const base = Math.ceil(speed(a) * 2);
-  // Wiki (minecraft.wiki/w/Power): bonus = base * 0.25 * (level + 1).
-  // Old formula used 0.25 * level (off by one level), under-shooting
-  // bonus damage at every Power level (e.g. Power V gave +1.25 base
-  // instead of the wiki's +1.5).
+  // Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+  // 25% × (level + 1), rounded up to nearest half-heart." Damage in MC
+  // is in half-heart units (1 HP = 1 half-heart), so "rounded up to
+  // nearest half-heart" = Math.ceil. Old `Math.floor(x + 0.5)` is
+  // round-to-nearest, which under-shoots when the bonus has a non-.0
+  // / non-.5 fraction (e.g. base=5, Power IV → bonus 6.25: nearest=6,
+  // but wiki ceils to 7).
   const powered =
-    base + (powerEnchantLevel > 0 ? Math.floor(base * 0.25 * (powerEnchantLevel + 1) + 0.5) : 0);
+    base + (powerEnchantLevel > 0 ? Math.ceil(base * 0.25 * (powerEnchantLevel + 1)) : 0);
   return a.critical ? powered + 1 + Math.floor(Math.random() * Math.ceil(powered / 2)) : powered;
 }
