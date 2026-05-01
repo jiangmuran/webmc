@@ -1,5 +1,8 @@
 // Potion ingredient transforms (simplified brewing recipes).
 
+// Wiki (minecraft.wiki/w/Brewing): canonical potion list now includes
+// the four 1.21 Trial Chambers additions (wind_charged, weaving,
+// oozing, infested). Old union was missing all four.
 export type PotionKind =
   | 'awkward'
   | 'night_vision'
@@ -16,7 +19,11 @@ export type PotionKind =
   | 'strength'
   | 'weakness'
   | 'turtle_master'
-  | 'slow_falling';
+  | 'slow_falling'
+  | 'wind_charged'
+  | 'weaving'
+  | 'oozing'
+  | 'infested';
 
 export interface Brew {
   input: PotionKind | 'water' | 'awkward';
@@ -48,6 +55,11 @@ const TABLE: Record<string, PotionKind> = {
   'awkward+fermented_spider_eye': 'weakness',
   'awkward+turtle_shell': 'turtle_master',
   'awkward+phantom_membrane': 'slow_falling',
+  // 1.21 Trial Chambers potions (24w13a):
+  'awkward+breeze_rod': 'wind_charged',
+  'awkward+cobweb': 'weaving',
+  'awkward+slime_block': 'oozing',
+  'awkward+stone': 'infested',
 };
 
 export function apply(b: Brew): PotionKind | null {
