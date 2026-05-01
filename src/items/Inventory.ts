@@ -52,7 +52,7 @@ export class Inventory {
       const s = slots[i];
       // Inline canMerge — was building a fresh {itemId, count, damage}
       // literal per slot just to compare two scalars.
-      if (!s || s.itemId !== itemId || s.damage !== damage) continue;
+      if (s?.itemId !== itemId || s.damage !== damage) continue;
       const space = max - s.count;
       if (space <= 0) continue;
       const take = Math.min(space, remaining);
