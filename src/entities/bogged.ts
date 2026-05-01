@@ -17,7 +17,12 @@ export interface BoggedState {
 }
 
 export const BOGGED_MAX_HEALTH = 16;
-const DRAW_TICKS_REQUIRED = 30; // slower than skeleton's 20
+// Wiki (minecraft.wiki/w/Bogged): "The cooldown is 3.5 seconds on
+// Easy and Normal difficulties, or 2.5 seconds on Hard. This is 1.5
+// seconds slower than the skeleton's attack cooldown." Default to
+// Normal (70 ticks); a Hard-difficulty caller can override.
+// Old value 30 fired more than 2× the wiki rate (1.5s vs 3.5s).
+const DRAW_TICKS_REQUIRED = 70;
 
 export function makeBogged(id: number, at: Vec3): BoggedState {
   return { id, position: { ...at }, health: BOGGED_MAX_HEALTH, drawTicks: 0, targetId: null };
