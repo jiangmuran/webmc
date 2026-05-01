@@ -15,15 +15,19 @@ describe('honey bottle', () => {
     expect(c.hunger).toBe(16);
   });
 
-  it('refuses at full hunger', () => {
+  it('drinkable at full hunger to cure poison (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Honey_Bottle): "Honey bottles can be drunk
+    // even with a full hunger bar." Old code refused at full hunger,
+    // so a poisoned full-hunger player could not honey-cure.
     const c = {
       hunger: 20,
-      effects: new Map(),
+      effects: new Map<string, unknown>([['poison', { amplifier: 0, remainingSec: 30 }]]),
       eat(): void {
         /* noop */
       },
     };
-    expect(drinkHoneyBottle(c)).toBe(false);
+    expect(drinkHoneyBottle(c)).toBe(true);
+    expect(c.effects.has('poison')).toBe(false);
   });
 
   it('keeps non-poison effects', () => {
