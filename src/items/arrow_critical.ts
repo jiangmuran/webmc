@@ -38,20 +38,19 @@ export interface ArrowDamageQuery {
   rng: () => number;
 }
 
-// Wiki (minecraft.wiki/w/Power): "Each level of Power adds 25% of
-// the base bow damage rounded down, plus a base 25% of base damage."
-// Bonus = floor(base * (0.25 * level + 0.25)). At level 5 with
-// base=6 (full-draw no-power) the bonus is floor(6 * 1.5) = 9,
-// total 15 — matching the wiki Power-V table.
+// Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+// 25% × (level + 1), rounded up to nearest half-heart."
 //
-// Old `floor(0.25 * (level+1) + 0.5)` was a flat number (1 at level 1,
-// 2 at level 5) and did NOT scale with base damage — Power V on a
-// 6-hp shot gave +2, not +9. Sibling arrow_crit_damage.ts already
-// has the correct scaling formula.
+// Damage in MC is in half-heart units (1 HP = 1 half-heart), so
+// "rounded up to nearest half-heart" = Math.ceil. Old Math.floor
+// rounded DOWN, under-shooting whenever the bonus had a fractional
+// half-heart (e.g. base=5, Power IV → bonus 6.25: floor=6, ceil=7).
+// Sibling src/entities/arrow_trajectory.ts already uses Math.ceil
+// after a previous fix; this module now matches wiki canon.
 export function arrowDamage(q: ArrowDamageQuery): number {
   let base = Math.max(1, Math.ceil(q.arrowSpeed * 2));
   if (q.powerEnchantLevel > 0) {
-    base += Math.floor(base * (0.25 * q.powerEnchantLevel + 0.25));
+    base += Math.ceil(base * (0.25 * q.powerEnchantLevel + 0.25));
   }
   if (q.critical) base += Math.floor(q.rng() * (base / 2 + 1));
   return base;

@@ -75,4 +75,28 @@ describe('arrow critical', () => {
   it('air drag decelerates', () => {
     expect(arrowAirDrag(10)).toBeLessThan(10);
   });
+
+  it('Power V at full draw deals 15 (wiki: 6 + 150% = 15)', () => {
+    expect(
+      arrowDamage({
+        arrowSpeed: 3,
+        powerEnchantLevel: 5,
+        critical: false,
+        rng: () => 0,
+      }),
+    ).toBe(15);
+  });
+
+  it('Power bonus rounds UP per wiki', () => {
+    // arrowSpeed=2.5 → base=ceil(5)=5. Power IV: 5 × 0.25 × 5 = 6.25
+    // → ceil → 7 → total 12. Round-down would give 11.
+    expect(
+      arrowDamage({
+        arrowSpeed: 2.5,
+        powerEnchantLevel: 4,
+        critical: false,
+        rng: () => 0,
+      }),
+    ).toBe(12);
+  });
 });
