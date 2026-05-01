@@ -108,14 +108,16 @@ export function tickSnifferDig(
   }
 }
 
-// Sniffable surfaces: grass_block, podzol, dirt, coarse_dirt, mycelium,
-// rooted_dirt, moss_block.
+// Wiki (minecraft.wiki/w/Sniffer): the wiki's diggable list is
+//   grass_block, dirt, coarse_dirt, podzol, rooted_dirt, moss_block.
+// Mycelium is EXPLICITLY excluded — wiki: "Sniffers cannot dig on
+// mycelium" (MC-260259, marked WAI). Old set included mycelium,
+// allowing seed digs on a block the wiki rules out.
 const SNIFFABLE = new Set<string>([
   'webmc:grass_block',
   'webmc:podzol',
   'webmc:dirt',
   'webmc:coarse_dirt',
-  'webmc:mycelium',
   'webmc:rooted_dirt',
   'webmc:moss_block',
 ]);
