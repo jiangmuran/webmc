@@ -36,4 +36,9 @@ describe('biome mob spawns', () => {
   it('empty pool = null', () => {
     expect(pickSpawn('xyz', 'monster', 0.5)).toBeNull();
   });
+
+  it('deep_dark has no natural spawns (wiki: warden only via shrieker)', () => {
+    expect(poolOf('deep_dark', 'monster')).toEqual([]);
+    expect(pickSpawn('deep_dark', 'monster', 0.5)).toBeNull();
+  });
 });
