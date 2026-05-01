@@ -1,13 +1,32 @@
-// Warden sonic boom. Ranged attack (15-20 blocks), ~5s cooldown.
-// Ignores armor, affects any entity in the line path (1-block wide).
+// Warden sonic boom. Ranged attack used as a fallback when the
+// warden cannot reach its melee target.
+//
+// Wiki (minecraft.wiki/w/Warden#Sonic_boom): the sonic boom fires
+// when the target is "within a 14-block radius horizontally and 20
+// blocks vertically of the warden in an OVOID shape." Old SONIC_RANGE
+// = 20 used a flat sphere — over-reached horizontally (20 vs 14) and
+// the wrong shape. The ovoid check is (h/14)² + (v/20)² ≤ 1 where
+// h = horizontal distance, v = vertical offset.
+//
+// Damage 10 ✓ (wiki: ignores armor, shield, and Protection enchant;
+// only Resistance / wolf-armor / witch-magic-resist reduce it).
+// Cooldown: warden takes 1.7 s to charge + 1.3 s to cool down = 3 s
+// total before melee resumes. Old 5000 ms was 67% over wiki.
 
 export interface WardenSonic {
   hp: number;
   lastSonicMs: number;
 }
 
-export const SONIC_RANGE = 20;
-export const SONIC_COOLDOWN_MS = 5000;
+export const SONIC_RANGE_HORIZONTAL = 14;
+export const SONIC_RANGE_VERTICAL = 20;
+// Back-compat: the old single SONIC_RANGE constant remains; the
+// bounding box of the wiki ovoid extends 20 blocks vertically, so
+// callers comparing flat Euclidean distance get the wider 20-block
+// far-field bound (the new ovoid check is opt-in via
+// horizontalDistance/verticalDistance fields below).
+export const SONIC_RANGE = SONIC_RANGE_VERTICAL;
+export const SONIC_COOLDOWN_MS = 3000;
 export const SONIC_DAMAGE = 10;
 
 export function makeWarden(hp = 500): WardenSonic {
@@ -16,7 +35,12 @@ export function makeWarden(hp = 500): WardenSonic {
 
 export interface FireQuery {
   nowMs: number;
+  /** Flat (Euclidean) distance — used when the ovoid fields are absent. */
   targetDistance: number;
+  /** Horizontal-plane distance (xz). Pair with `verticalDistance` for the wiki ovoid check. */
+  horizontalDistance?: number;
+  /** Absolute vertical offset (y). Pair with `horizontalDistance`. */
+  verticalDistance?: number;
   hasLineOfSight: boolean;
 }
 
@@ -25,8 +49,18 @@ export interface FireResult {
   reason: 'ok' | 'cooldown' | 'out_of_range' | 'no_los';
 }
 
+function inOvoid(h: number, v: number): boolean {
+  const hRatio = h / SONIC_RANGE_HORIZONTAL;
+  const vRatio = v / SONIC_RANGE_VERTICAL;
+  return hRatio * hRatio + vRatio * vRatio <= 1;
+}
+
 export function tryFireSonic(w: WardenSonic, q: FireQuery): FireResult {
-  if (q.targetDistance > SONIC_RANGE) return { fired: false, reason: 'out_of_range' };
+  const ovoidProvided = q.horizontalDistance !== undefined && q.verticalDistance !== undefined;
+  const inRange = ovoidProvided
+    ? inOvoid(q.horizontalDistance ?? 0, q.verticalDistance ?? 0)
+    : q.targetDistance <= SONIC_RANGE;
+  if (!inRange) return { fired: false, reason: 'out_of_range' };
   if (!q.hasLineOfSight) return { fired: false, reason: 'no_los' };
   if (q.nowMs - w.lastSonicMs < SONIC_COOLDOWN_MS) return { fired: false, reason: 'cooldown' };
   w.lastSonicMs = q.nowMs;
