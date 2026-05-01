@@ -7,17 +7,26 @@ export interface SpawnQuery {
   rand: () => number;
 }
 
+// Wiki (minecraft.wiki/w/Rabbit#Type_of_Rabbit):
+//   Snowy biomes: 80% white, 20% black-and-white
+//   Desert: 100% gold
+//   Other biomes: 50% brown, 40% salt, 10% black
+//
+// Old non-snowy split was 50% brown / 25% salt / 12.5% black /
+// 12.5% black_white. That over-rated black_white (which wiki
+// confines to snowy biomes), under-rated salt (40% wiki vs 25%
+// code), and slightly bumped black (10% wiki vs 12.5% code). The
+// flower-forest special case (always salt) was also fabricated —
+// wiki uses the standard "other biomes" mix.
 export function rollRabbitType(q: SpawnQuery): RabbitType {
   if (q.biome === 'snowy_taiga' || q.biome === 'snowy_plains' || q.biome.startsWith('frozen_')) {
     return q.rand() < 0.8 ? 'white' : 'black_white';
   }
   if (q.biome === 'desert') return 'gold';
-  if (q.biome === 'flower_forest') return 'salt';
   const r = q.rand();
   if (r < 0.5) return 'brown';
-  if (r < 0.75) return 'salt';
-  if (r < 0.875) return 'black';
-  return 'black_white';
+  if (r < 0.9) return 'salt';
+  return 'black';
 }
 
 // Wiki (minecraft.wiki/w/Rabbit#The_Killer_Bunny): "The killer bunny
