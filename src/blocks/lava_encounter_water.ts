@@ -1,16 +1,26 @@
-// Wiki-spec result of lava meeting water (the lava is the one that
-// transforms; the water stays):
-//   lava SOURCE + any water → obsidian
-//   lava FLOW + water SOURCE → stone
-//   lava FLOW + water FLOW → cobblestone
-// Source: minecraft.wiki/w/Obsidian + minecraft.wiki/w/Cobblestone +
-// minecraft.wiki/w/Stone (Bedrock/Java parity post-1.18).
+// Wiki (minecraft.wiki/w/Cobblestone#Post-generation): "When water
+// and flowing lava come into contact, the flowing lava is replaced
+// by cobblestone. However, if the lava flows on top of the water
+// from above, stone is created instead. Non-flowing lava (a lava
+// source block) turns into obsidian upon contact with water."
+//
+// Rules (the lava is what transforms; the water stays):
+//   lava SOURCE + any water       → obsidian
+//   flowing lava FROM ABOVE water → stone
+//   flowing lava ANY OTHER side   → cobblestone
+//
+// Old code returned `stone` whenever the WATER was a source block,
+// regardless of whether the lava was flowing from above — wiki only
+// produces stone in the from-above case. Standard horizontal lava-
+// to-water-source contact (the classic cobblestone generator) was
+// silently producing stone instead of cobblestone.
 export function lavaMeetsWater(
   lavaIsSource: boolean,
-  waterIsSource: boolean,
+  _waterIsSource: boolean,
+  lavaFlowFromAbove = false,
 ): 'obsidian' | 'cobblestone' | 'stone' {
   if (lavaIsSource) return 'obsidian';
-  if (waterIsSource) return 'stone';
+  if (lavaFlowFromAbove) return 'stone';
   return 'cobblestone';
 }
 
