@@ -9,8 +9,6 @@ export interface Bee {
 // only, never producing the natural [400,780] range.
 export const ANGER_TICKS_MIN = 400;
 export const ANGER_TICKS_MAX = 780;
-/** @deprecated kept for back-compat in callers that don't pass `rand` */
-export const ANGER_AFTER_ATTACK = ANGER_TICKS_MIN;
 
 function rollAngerTicks(rand: () => number): number {
   const span = ANGER_TICKS_MAX - ANGER_TICKS_MIN + 1;
