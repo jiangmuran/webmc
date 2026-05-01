@@ -48,4 +48,42 @@ describe('furnace fuel', () => {
     tickBurn(s, 5);
     expect(s.burnSecondsRemaining).toBe(75);
   });
+
+  it('all wood types burn — not just oak (wiki #minecraft:logs)', () => {
+    // Wiki canon: every wood-family planks/log/wood/etc burns for
+    // 1.5 smelts = 15 s. Old table only had oak; spruce/birch/etc.
+    // were treated as non-fuel.
+    for (const id of [
+      'webmc:spruce_planks',
+      'webmc:birch_log',
+      'webmc:jungle_wood',
+      'webmc:acacia_stairs',
+      'webmc:dark_oak_fence',
+      'webmc:mangrove_pressure_plate',
+      'webmc:cherry_trapdoor',
+      'webmc:pale_oak_planks',
+      'webmc:crimson_stem',
+      'webmc:warped_hyphae',
+      'webmc:bamboo_block',
+    ]) {
+      expect(burnSecondsFor(id)).toBe(15);
+    }
+    // Slabs are half-thickness = 7.5 s
+    expect(burnSecondsFor('webmc:spruce_slab')).toBe(7.5);
+    // Doors = 10 s
+    expect(burnSecondsFor('webmc:cherry_door')).toBe(10);
+    // Buttons + saplings = 5 s
+    expect(burnSecondsFor('webmc:birch_button')).toBe(5);
+    expect(burnSecondsFor('webmc:spruce_sapling')).toBe(5);
+  });
+
+  it('scaffolding burns 2.5 s per wiki (was 2 — off by 0.5)', () => {
+    expect(burnSecondsFor('webmc:scaffolding')).toBe(2.5);
+  });
+
+  it('any colored wool burns 5 s per wiki', () => {
+    for (const id of ['webmc:white_wool', 'webmc:black_wool', 'webmc:wool_red', 'webmc:wool']) {
+      expect(burnSecondsFor(id)).toBe(5);
+    }
+  });
 });
