@@ -28,14 +28,20 @@ describe('farmland hydration', () => {
     expect(reverted).toBe(true);
   });
 
-  it('jump from 3+ blocks tramples', () => {
+  it('jump from > 0.5 blocks tramples (wiki: deterministic)', () => {
+    // Wiki (minecraft.wiki/w/Farmland): "Any entity that falls onto
+    // farmland from a height of more than half a block (0.5 blocks)
+    // turns it back into dirt." Old code required 3+ blocks — 6×
+    // too high.
     const f = makeFarmland(7);
-    expect(jumpTrample(f, 3)).toBe(true);
+    expect(jumpTrample(f, 0.6)).toBe(true);
     expect(f.isDry).toBe(true);
+    const f2 = makeFarmland(7);
+    expect(jumpTrample(f2, 3)).toBe(true);
   });
 
-  it('jump from 2 blocks does not trample', () => {
+  it('half-slab fall (== 0.5) does NOT trample', () => {
     const f = makeFarmland(7);
-    expect(jumpTrample(f, 2)).toBe(false);
+    expect(jumpTrample(f, 0.5)).toBe(false);
   });
 });

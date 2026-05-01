@@ -37,9 +37,15 @@ export function tickFarmland(state: FarmlandState, ctx: FarmlandCtx): FarmlandTi
   return { revertsToDirt: false };
 }
 
-// Jumping from ≥ 3 blocks onto unhydrated farmland reverts it.
+// Wiki (minecraft.wiki/w/Farmland): "Any entity that falls onto
+// farmland from a height of more than half a block (0.5 blocks)
+// turns it back into dirt." Old `fallBlocks < 3` raised the bar 6×
+// too high — players had to jump 3 blocks to trample crops, when
+// wiki canon trampling fires after a 0.5-block fall (anything
+// taller than a slab). Sibling farmland_trample.ts uses the
+// canonical 0.5 threshold.
 export function jumpTrample(state: FarmlandState, fallBlocks: number): boolean {
-  if (fallBlocks < 3) return false;
+  if (fallBlocks <= 0.5) return false;
   state.moistureLevel = 0;
   state.isDry = true;
   return true;
