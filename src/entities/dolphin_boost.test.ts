@@ -51,4 +51,16 @@ describe('dolphin', () => {
     };
     expect(feed(a, 'p1', 'webmc:bone')).toBe(false);
   });
+
+  it('feed with tropical_fish or pufferfish leads (wiki: any raw fish)', () => {
+    for (const fish of ['webmc:tropical_fish', 'webmc:pufferfish']) {
+      const a: DolphinAffinity = {
+        pettedByPlayer: false,
+        feedingPlayer: null,
+        leadingToStructure: null,
+      };
+      expect(feed(a, 'p1', fish)).toBe(true);
+      expect(a.leadingToStructure).toBe('shipwreck');
+    }
+  });
 });
