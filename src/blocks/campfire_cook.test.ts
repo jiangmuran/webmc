@@ -11,7 +11,14 @@ import {
 describe('campfire cook', () => {
   it('cookable list', () => {
     expect(isCookable('webmc:beef')).toBe(true);
+    expect(isCookable('webmc:raw_beef')).toBe(true);
     expect(isCookable('webmc:stone')).toBe(false);
+  });
+
+  it('accepts canonical webmc raw meat IDs (registry: raw_ prefix)', () => {
+    const c = makeCampfire();
+    expect(addItem(c, 'webmc:raw_beef', 0)).toBe(true);
+    expect(tickCampfire(c, COOK_TICKS).dropped).toEqual(['webmc:cooked_beef']);
   });
 
   it('adds and cooks', () => {
