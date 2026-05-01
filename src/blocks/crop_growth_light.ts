@@ -22,13 +22,19 @@ export function tickCrop(q: CropTickQuery): boolean {
   return q.rand() < growthChance(q.farmlandMoist);
 }
 
-// Bone meal on wheat: 2-5 stage skips. On carrot/potato: 2-5 stages.
-// On beetroot: 1-3 stages.
+// Wiki (minecraft.wiki/w/Beetroot): "Bone meal has a 75% chance to
+// advance growth by one stage" — 0 OR 1 stage per application, not
+// 1-3. Old `1 + floor(rand*3)` returned 1-3 always — over by ~2
+// stages on average and never giving the wiki's 25% no-op outcome.
+// Sibling crop_growth_random_tick.ts already uses the wiki rule.
+//
+// Wheat/carrot/potato: bone meal advances 2-5 stages per wiki
+// (uniform random).
 export function boneMealStages(
   crop: 'wheat' | 'carrot' | 'potato' | 'beetroot',
   rand: () => number,
 ): number {
-  if (crop === 'beetroot') return 1 + Math.floor(rand() * 3);
+  if (crop === 'beetroot') return rand() < 0.75 ? 1 : 0;
   return 2 + Math.floor(rand() * 4);
 }
 
