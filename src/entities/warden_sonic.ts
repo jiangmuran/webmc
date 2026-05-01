@@ -1,12 +1,13 @@
-// Warden sonic boom. Charges briefly when locked on a target, then emits
-// a long-range line attack that ignores armor and shields.
+// Warden sonic boom. Charges briefly when locked on a target, then
+// emits a long-range line attack that ignores armor and shields.
 //
-// Wiki (minecraft.wiki/w/Warden): "A warden takes 1.7 seconds to
-// charge and unleashes the attack … It has been 5 seconds since
-// the warden last used a melee or ranged attack" — i.e. a 1.7 s
-// charge with a 5 s post-attack cooldown. Old values (3 s charge,
-// 7 s cooldown) made wardens slower to fire and rest longer than
-// canon, halving sonic-boom uptime in extended fights.
+// Wiki (minecraft.wiki/w/Warden#Sonic_boom): "A warden takes 1.7
+// seconds to charge and unleashes the attack ... The attack takes
+// an additional 1.3 seconds to cool down before the warden can use
+// melee attacks again for a total of 3 seconds." So COOLDOWN_SEC
+// is the 1.3 s POST-attack rest, not 5 — the prior 5 s value misread
+// the 10-second target-detect precondition (a separate timer that
+// gates whether sonic is even available) as the post-attack cooldown.
 
 export interface Vec3 {
   x: number;
@@ -25,7 +26,7 @@ export function makeSonicBoom(): SonicBoomState {
 }
 
 const CHARGE_DURATION = 1.7;
-const COOLDOWN_SEC = 5;
+const COOLDOWN_SEC = 1.3;
 
 export interface SonicContext {
   hasTarget: boolean;
