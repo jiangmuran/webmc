@@ -61,13 +61,26 @@ export interface MineshaftLootEntry {
   max: number;
 }
 
+// Wiki (minecraft.wiki/w/Mineshaft) minecart chest table:
+//   diamond 3 (1-2), gold_ingot 5 (1-3), iron_ingot 10 (1-5),
+//   lapis_lazuli 5 (4-9), emerald 3 (1), name_tag 1 (1),
+//   rail 20 (4-8), activator/detector/powered_rail 5 each (1-4),
+//   redstone 5 (4-9).
+//
+// Old entries used:
+//   - `webmc:lapis` (the registry name is `webmc:lapis_lazuli`); the
+//     mismatched id meant lapis drops from mineshaft chests resolved
+//     to nothing in the item registry.
+//   - lapis count 1-10 (wiki: 4-9); old range under-floored at 1
+//     and over-ceilinged at 10.
+//   - name_tag weight 2 (wiki: 1); over-rolled name tags by 2×.
 export const MINECART_CHEST_LOOT: readonly MineshaftLootEntry[] = [
   { item: 'webmc:diamond', weight: 3, min: 1, max: 2 },
   { item: 'webmc:gold_ingot', weight: 5, min: 1, max: 3 },
   { item: 'webmc:iron_ingot', weight: 10, min: 1, max: 5 },
-  { item: 'webmc:lapis', weight: 5, min: 1, max: 10 },
+  { item: 'webmc:lapis_lazuli', weight: 5, min: 4, max: 9 },
   { item: 'webmc:emerald', weight: 3, min: 1, max: 1 },
-  { item: 'webmc:name_tag', weight: 2, min: 1, max: 1 },
+  { item: 'webmc:name_tag', weight: 1, min: 1, max: 1 },
   { item: 'webmc:rail', weight: 20, min: 4, max: 8 },
   { item: 'webmc:activator_rail', weight: 5, min: 1, max: 4 },
   { item: 'webmc:detector_rail', weight: 5, min: 1, max: 4 },
