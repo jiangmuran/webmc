@@ -28,9 +28,11 @@ describe('axolotl tropical food', () => {
     expect(clearsOnAttack()).toContain('mining_fatigue');
   });
 
-  it('play dead 200-300 ticks', () => {
-    const d = playDeadDuration(() => 0.5);
-    expect(d).toBeGreaterThanOrEqual(200);
-    expect(d).toBeLessThanOrEqual(300);
+  it('play dead exactly 200 ticks (wiki: flat 10s)', () => {
+    // Wiki (minecraft.wiki/w/Axolotl#Behavior): play-dead duration is
+    // a flat 10 seconds (200 ticks). Siblings axolotl_play_dead.ts
+    // and axolotl_revive.ts use the same fixed value.
+    expect(playDeadDuration(() => 0)).toBe(200);
+    expect(playDeadDuration(() => 0.999)).toBe(200);
   });
 });

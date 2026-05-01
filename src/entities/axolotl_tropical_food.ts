@@ -27,6 +27,15 @@ export function clearsOnAttack(): readonly string[] {
   return ['mining_fatigue'];
 }
 
-export function playDeadDuration(rng: () => number): number {
-  return 200 + Math.floor(rng() * 100);
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): play-dead duration is a
+// flat 10 seconds (200 ticks) — no randomness in vanilla. Sibling
+// modules axolotl_play_dead.ts (10_000 ms) and axolotl_revive.ts
+// (10 seconds) both use the fixed value. Old `200 + rand * 100`
+// returned 10..15s, ~25% over wiki on average. The rng parameter is
+// kept for API back-compat but ignored.
+export const PLAY_DEAD_TICKS = 200;
+
+export function playDeadDuration(_rng: () => number): number {
+  void _rng;
+  return PLAY_DEAD_TICKS;
 }
