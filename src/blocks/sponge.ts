@@ -1,6 +1,7 @@
-// Sponge. A dry sponge placed touching water soaks up every water block
-// in a 7×7×7 region (up to 65 blocks) then becomes a wet sponge.
-// Wet sponge dries in a furnace or in the Nether.
+// Sponge. A dry sponge placed touching water soaks up every contiguous
+// water source/flow within a taxicab radius of 6 (up to 118 blocks)
+// then becomes a wet sponge. Wet sponge dries in a furnace or in the
+// Nether. Wiki: minecraft.wiki/w/Sponge#Absorption.
 
 export interface Vec3 {
   x: number;
@@ -12,8 +13,8 @@ export interface SpongeLookup {
   isWaterSource(x: number, y: number, z: number): boolean;
 }
 
-const ABSORB_REACH = 7;
-const MAX_ABSORBED = 65;
+const ABSORB_REACH = 6;
+const MAX_ABSORBED = 118;
 
 // Returns the list of water positions to clear, BFS from the sponge.
 export function absorbWater(spongePos: Vec3, lookup: SpongeLookup): readonly Vec3[] {
