@@ -9,20 +9,20 @@ describe('ocelot trust', () => {
 
   it('fish accepted with progress', () => {
     const o = makeOcelot();
-    expect(feed(o, { item: 'webmc:raw_cod', nowMs: 1000, rand: () => 0 })).toBe('accepted');
+    expect(feed(o, { item: 'webmc:cod', nowMs: 1000, rand: () => 0 })).toBe('accepted');
     expect(o.trust).toBe(1);
   });
 
   it('cooldown', () => {
     const o = makeOcelot();
-    feed(o, { item: 'webmc:raw_cod', nowMs: 0, rand: () => 0 });
-    expect(feed(o, { item: 'webmc:raw_cod', nowMs: 100, rand: () => 0 })).toBe('cooldown');
+    feed(o, { item: 'webmc:cod', nowMs: 0, rand: () => 0 });
+    expect(feed(o, { item: 'webmc:cod', nowMs: 100, rand: () => 0 })).toBe('cooldown');
   });
 
   it('trust caps', () => {
     const o = { trust: MAX_TRUST, lastFedMs: -Infinity };
     expect(trusts(o)).toBe(true);
-    expect(feed(o, { item: 'webmc:raw_cod', nowMs: 1000, rand: () => 0 })).toBe('trusted');
+    expect(feed(o, { item: 'webmc:cod', nowMs: 1000, rand: () => 0 })).toBe('trusted');
   });
 
   it('scare radius', () => {
