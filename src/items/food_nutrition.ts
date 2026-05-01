@@ -26,7 +26,9 @@ export const TABLE: Record<string, FoodValue> = {
   enchanted_golden_apple: { hunger: 4, saturation: 9.6, eatTimeTicks: 32, canAlwaysEat: true },
   golden_apple: { hunger: 4, saturation: 9.6, eatTimeTicks: 32, canAlwaysEat: true },
   golden_carrot: { hunger: 6, saturation: 14.4, eatTimeTicks: 32 },
-  honey_bottle: { hunger: 6, saturation: 1.2, eatTimeTicks: 40 },
+  // Wiki (minecraft.wiki/w/Honey_Bottle): "alwaysconsumable = Yes" —
+  // can be drunk at full hunger to remove Poison.
+  honey_bottle: { hunger: 6, saturation: 1.2, eatTimeTicks: 40, canAlwaysEat: true },
   melon_slice: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
   mutton: { hunger: 2, saturation: 1.2, eatTimeTicks: 32 },
   cooked_mutton: { hunger: 6, saturation: 9.6, eatTimeTicks: 32 },
@@ -49,7 +51,8 @@ export const TABLE: Record<string, FoodValue> = {
   beetroot: { hunger: 1, saturation: 1.2, eatTimeTicks: 32 },
   beetroot_soup: { hunger: 6, saturation: 7.2, eatTimeTicks: 32 },
   mushroom_stew: { hunger: 6, saturation: 7.2, eatTimeTicks: 32 },
-  suspicious_stew: { hunger: 6, saturation: 7.2, eatTimeTicks: 32 },
+  // Wiki (minecraft.wiki/w/Suspicious_Stew): "alwaysconsumable = Yes".
+  suspicious_stew: { hunger: 6, saturation: 7.2, eatTimeTicks: 32, canAlwaysEat: true },
   sweet_berries: { hunger: 2, saturation: 0.4, eatTimeTicks: 32 },
   glow_berries: { hunger: 2, saturation: 0.4, eatTimeTicks: 32 },
 };
