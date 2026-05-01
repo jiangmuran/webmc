@@ -22,4 +22,20 @@ describe('buried treasure', () => {
     const e = rollTreasureLoot(0.01);
     expect(e?.item).toBe('webmc:iron_ingot');
   });
+
+  it('uses Java armor names + iron_sword (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Buried_Treasure) → Java loot table.
+    // Old table used Bedrock 'leather_cap' / 'leather_tunic' and lacked
+    // iron_sword.
+    const ids = new Set<string>();
+    for (let r = 0; r < 1; r += 0.001) {
+      const e = rollTreasureLoot(r);
+      if (e) ids.add(e.item);
+    }
+    expect(ids.has('webmc:leather_helmet')).toBe(true);
+    expect(ids.has('webmc:leather_chestplate')).toBe(true);
+    expect(ids.has('webmc:iron_sword')).toBe(true);
+    expect(ids.has('webmc:leather_cap')).toBe(false);
+    expect(ids.has('webmc:leather_tunic')).toBe(false);
+  });
 });
