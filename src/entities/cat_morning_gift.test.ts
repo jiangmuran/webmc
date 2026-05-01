@@ -22,4 +22,25 @@ describe('cat morning gift', () => {
     expect(canGift(false, true)).toBe(false);
     expect(canGift(true, false)).toBe(false);
   });
+
+  it('phantom_membrane is rare (~3.22% vs ~16% for others, wiki)', () => {
+    // Run many rolls with a deterministic-ish RNG; phantom membrane
+    // should be roughly 1/5 as common as any other item.
+    let phantomCount = 0;
+    let chickenCount = 0;
+    const N = 10_000;
+    for (let i = 0; i < N; i++) {
+      // First rand always passes the 0.7 gate; second rand picks the gift.
+      let calls = 0;
+      const r = (): number => (calls++ === 0 ? 0 : Math.random());
+      const gift = rollGift(r);
+      if (gift === 'phantom_membrane') phantomCount++;
+      else if (gift === 'raw_chicken') chickenCount++;
+    }
+    // Phantom membrane should be ~3-4% of total, raw_chicken ~16%.
+    // Allow generous tolerance for stochastic test.
+    expect(phantomCount / N).toBeLessThan(0.06);
+    expect(chickenCount / N).toBeGreaterThan(0.1);
+    expect(chickenCount).toBeGreaterThan(phantomCount * 2);
+  });
 });
