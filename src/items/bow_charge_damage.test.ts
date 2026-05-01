@@ -19,8 +19,11 @@ describe('bow charge damage', () => {
     expect(arrowDamage(20, 0)).toBe(6);
   });
 
-  it('power enchant boosts', () => {
-    expect(arrowDamage(20, 5)).toBeGreaterThan(arrowDamage(20, 0));
+  it('power enchant boosts via wiki ceil(0.25*(L+1)*base) formula', () => {
+    // Wiki: bonus = ceil(0.25 × (level + 1) × base).
+    // base=6: P1 → 6+ceil(3)=9, P5 → 6+ceil(9)=15.
+    expect(arrowDamage(20, 1)).toBe(9);
+    expect(arrowDamage(20, 5)).toBe(15);
   });
 
   it('crit only at full', () => {
