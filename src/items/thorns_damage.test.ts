@@ -21,6 +21,14 @@ describe('thorns damage', () => {
     }
   });
 
+  it('damage range is 1–5 inclusive (wiki)', () => {
+    expect(THORNS_MAX_DAMAGE).toBe(5);
+    // Two .999... rand calls: first passes triggerChance, second hits the upper roll.
+    let calls = 0;
+    const rand = (): number => (calls++ === 0 ? 0 : 0.9999);
+    expect(reflectedDamage(3, rand)).toBe(5);
+  });
+
   it('stack capped at 100%', () => {
     expect(stackChance(20)).toBe(1);
   });
