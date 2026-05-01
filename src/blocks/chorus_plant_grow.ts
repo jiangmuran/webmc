@@ -26,7 +26,10 @@ export function chorusGrow(q: ChorusGrowQuery): GrowResult {
   return { kind: 'grow_up' };
 }
 
-// Chorus fruit eating: teleport to random location in a 16x16x16 around.
+// Chorus fruit eating: teleport to random location within ±8 blocks
+// on each axis (a 17×17×17 cube). Wiki (minecraft.wiki/w/Chorus_Fruit):
+// "up to 16 attempts are made to choose a random destination within
+// ±8 on all three axes in the same manner as enderman teleportation."
 export interface TeleportQuery {
   from: { x: number; y: number; z: number };
   rand: () => number;
@@ -35,11 +38,18 @@ export interface TeleportQuery {
 
 export const CHORUS_TP_RADIUS = 8;
 
+// Old `floor((rand-0.5)*2*8)` gave [-8, +7] (16 distinct values) —
+// floor of an asymmetric pre-shifted range silently dropped +8.
+// Wiki canon is the symmetric 17-value range [-8..+8] inclusive.
+function offsetInclusive(rand: () => number): number {
+  return Math.floor(rand() * (2 * CHORUS_TP_RADIUS + 1)) - CHORUS_TP_RADIUS;
+}
+
 export function chorusTeleport(q: TeleportQuery): { x: number; y: number; z: number } | null {
   for (let i = 0; i < 16; i++) {
-    const dx = Math.floor((q.rand() - 0.5) * 2 * CHORUS_TP_RADIUS);
-    const dy = Math.floor((q.rand() - 0.5) * 2 * CHORUS_TP_RADIUS);
-    const dz = Math.floor((q.rand() - 0.5) * 2 * CHORUS_TP_RADIUS);
+    const dx = offsetInclusive(q.rand);
+    const dy = offsetInclusive(q.rand);
+    const dz = offsetInclusive(q.rand);
     const x = q.from.x + dx;
     const y = q.from.y + dy;
     const z = q.from.z + dz;
