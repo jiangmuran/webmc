@@ -10,8 +10,12 @@ describe('quick charge crossbow', () => {
     expect(drawTicks(3)).toBeLessThan(drawTicks(0));
   });
 
-  it('minimum 5 ticks', () => {
-    expect(drawTicks(100)).toBe(5);
+  it('Quick Charge V → 0 ticks (wiki: instant)', () => {
+    // Wiki (minecraft.wiki/w/Quick_Charge): at level V the crossbow
+    // charges instantly (25 - 5*5 = 0 ticks). Level capped at V so
+    // higher requests clamp to the same value.
+    expect(drawTicks(5)).toBe(0);
+    expect(drawTicks(100)).toBe(0);
   });
 
   it('seconds = ticks/20', () => {
