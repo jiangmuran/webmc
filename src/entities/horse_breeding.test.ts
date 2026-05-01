@@ -34,4 +34,22 @@ describe('horse breeding', () => {
     expect(canBreed('skeleton_horse', 'horse')).toBe(false);
     expect(canBreed('zombie_horse', 'horse')).toBe(false);
   });
+
+  it('foal regresses toward mean of natural-spawn range (wiki)', () => {
+    // Wiki minecraft.wiki/w/Horse#Breeding: (p1 + p2 + R) / 3.
+    // With two FAST parents (HP 30, jump 0.95) and rng=0 (R=15), the
+    // foal lands at (30 + 30 + 15)/3 = 25 — strictly below both
+    // parents. Old (a+b)/2+jitter model couldn't drop foals below
+    // their parents' average.
+    const c = breedHorses({ parentA: FAST, parentB: FAST, rng: () => 0 });
+    expect(c.maxHealth).toBeCloseTo(25, 1);
+    expect(c.maxHealth).toBeLessThan(30);
+  });
+
+  it('two min parents + rng=1 reach near top of range', () => {
+    // (15 + 15 + 30)/3 = 20 — pulls foal upward from the floor when
+    // R rolls high; old jitter model never moved beyond 15.075.
+    const c = breedHorses({ parentA: SLOW, parentB: SLOW, rng: () => 1 });
+    expect(c.maxHealth).toBeCloseTo(20, 1);
+  });
 });
