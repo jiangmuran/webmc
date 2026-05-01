@@ -15,6 +15,10 @@ describe('bow charge damage', () => {
     expect(arrowDamage(20, 0)).toBeGreaterThan(arrowDamage(2, 0));
   });
 
+  it('full-charge no-enchant base damage is 6 (wiki: ceil(velocity×2) = 6)', () => {
+    expect(arrowDamage(20, 0)).toBe(6);
+  });
+
   it('power enchant boosts', () => {
     expect(arrowDamage(20, 5)).toBeGreaterThan(arrowDamage(20, 0));
   });
