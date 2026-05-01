@@ -16,8 +16,16 @@ export function countEffectiveBookshelves(shelves: Placement[]): number {
   return Math.min(MAX_BOOKSHELVES, valid.length);
 }
 
+// Wiki (minecraft.wiki/w/Enchanting_table#Bookshelves): bookshelves
+// only count when they sit on the 5×5 perimeter (max(|dx|,|dz|) === 2)
+// on the table's level or one above. The inner 3×3 must be empty for
+// the line-of-sight to clear; bookshelves placed there are NOT
+// counted. Old check `|dx|≤2 && |dz|≤2` happily counted shelves
+// crammed into the inner ring (e.g. directly adjacent to the table)
+// — those are physically impossible-with-air placements but the
+// `hasAir` guard let through any caller that still flagged them.
 function isInRange(p: Placement): boolean {
-  return Math.abs(p.dx) <= 2 && Math.abs(p.dz) <= 2 && (p.dy === 0 || p.dy === 1);
+  return Math.max(Math.abs(p.dx), Math.abs(p.dz)) === 2 && (p.dy === 0 || p.dy === 1);
 }
 
 export function maxEnchantmentLevel(count: number): number {

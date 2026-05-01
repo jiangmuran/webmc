@@ -15,6 +15,20 @@ describe('enchanting bookshelf power', () => {
     expect(r).toBe(0);
   });
 
+  it('inner 3×3 ring does NOT count (wiki: perimeter only)', () => {
+    // Wiki: only the 5×5 perimeter (max(|dx|,|dz|) === 2) is valid;
+    // the inner 3×3 must be empty/walkable.
+    expect(countEffectiveBookshelves([{ dx: 1, dy: 0, dz: 0, hasAir: true }])).toBe(0);
+    expect(countEffectiveBookshelves([{ dx: 0, dy: 1, dz: 1, hasAir: true }])).toBe(0);
+    expect(countEffectiveBookshelves([{ dx: 1, dy: 0, dz: 1, hasAir: true }])).toBe(0);
+  });
+
+  it('5×5 perimeter corner + edge counts', () => {
+    expect(countEffectiveBookshelves([{ dx: 2, dy: 0, dz: 2, hasAir: true }])).toBe(1);
+    expect(countEffectiveBookshelves([{ dx: 2, dy: 1, dz: 0, hasAir: true }])).toBe(1);
+    expect(countEffectiveBookshelves([{ dx: -2, dy: 0, dz: 1, hasAir: true }])).toBe(1);
+  });
+
   it('blocked by obstruction', () => {
     const r = countEffectiveBookshelves([{ dx: 2, dy: 0, dz: 0, hasAir: false }]);
     expect(r).toBe(0);
