@@ -6,10 +6,17 @@ export const MAX_NOTE = 24;
 // MIDI-like semitone 0..24 → (octave, noteName)
 const NOTE_NAMES = ['F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F'] as const;
 
+// Wiki (minecraft.wiki/w/Note_Block): "Notes range from F#3 (semitone
+// 0) through F#5 (semitone 24)." The chromatic scale crosses an
+// octave boundary at B→C: F#3, G3, ..., B3, C4, ..., F4, F#4, ..., B4,
+// C5, ..., F5, F#5. Old `octave = n < 12 ? 3 : 4` ignored that the
+// B→C transition at semitone 6 also bumps the octave, so e.g.
+// semitone 6 ("C") was labeled "C3" instead of the wiki-canonical
+// "C4". Now uses `floor((n + 6) / 12)` to track each octave bump.
 export function noteLabel(n: number): string {
   const clamped = Math.max(0, Math.min(MAX_NOTE, n));
   const name = NOTE_NAMES[clamped % 12] ?? 'F#';
-  const octave = clamped < 12 ? 3 : 4;
+  const octave = 3 + Math.floor((clamped + 6) / 12);
   return `${name}${octave}`;
 }
 
