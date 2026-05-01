@@ -49,6 +49,14 @@ const RECIPES: Brew[] = [
   // Wiki: leaping + fermented_spider_eye → slowness IV (similar to
   // swiftness corruption). Was missing.
   { from: 'leaping', ingredient: 'fermented_spider_eye', to: 'slowness' },
+  // Wiki (minecraft.wiki/w/Brewing#Effect_potions): the four 1.21
+  // potions added in the Trial Chambers / Tricky Trials update.
+  // Added via 24w13a / 1.20.5+. Each is brewed by adding the
+  // ingredient to an awkward potion.
+  { from: 'awkward', ingredient: 'breeze_rod', to: 'wind_charged' },
+  { from: 'awkward', ingredient: 'cobweb', to: 'weaving' },
+  { from: 'awkward', ingredient: 'slime_block', to: 'oozing' },
+  { from: 'awkward', ingredient: 'stone', to: 'infested' },
 ];
 
 export function brewResult(base: string, ingredient: string): string | undefined {

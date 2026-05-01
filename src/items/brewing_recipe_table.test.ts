@@ -42,4 +42,13 @@ describe('brewing recipe table', () => {
   it('awkward not amplifiable', () => {
     expect(canAmplifyWithGlowstone('awkward')).toBe(false);
   });
+
+  it('1.21 trial chamber potions (wiki: 24w13a)', () => {
+    // Wiki adds wind_charged, weaving, oozing, infested as awkward
+    // recipes in the Tricky Trials update.
+    expect(brewResult('awkward', 'breeze_rod')).toBe('wind_charged');
+    expect(brewResult('awkward', 'cobweb')).toBe('weaving');
+    expect(brewResult('awkward', 'slime_block')).toBe('oozing');
+    expect(brewResult('awkward', 'stone')).toBe('infested');
+  });
 });
