@@ -37,8 +37,11 @@ export function makeVariantMinecart(
   return state;
 }
 
-// Furnace minecart: fuel lasts 4 minutes per coal, pushes itself forward.
-const FURNACE_FUEL_PER_COAL_SEC = 240;
+// Furnace minecart: per wiki (minecraft.wiki/w/Minecart_with_Furnace):
+// "Adding fuel increases the duration by an additional 3600 ticks
+// (equal to 180 seconds or 3 minutes)." Old value 240 sec (4 min) was
+// 33% over canon. Sibling furnace_minecart.ts already uses 3600 ticks.
+const FURNACE_FUEL_PER_COAL_SEC = 180;
 export function feedFurnaceMinecart(state: MinecartVariantState): boolean {
   if (state.variant !== 'furnace') return false;
   state.furnaceFuelSec += FURNACE_FUEL_PER_COAL_SEC;
