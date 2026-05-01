@@ -1,5 +1,14 @@
-// Ghast. Floats randomly; when seeing a player within 64 blocks fires
-// a fireball every ~3s. Fireball can be batted back with a melee hit.
+// Ghast. Floats randomly; when seeing a player within 64 blocks
+// horizontally and 4 blocks vertically (Java) fires a fireball every
+// 3 s. Fireball can be batted back with a melee hit.
+//
+// Wiki (minecraft.wiki/w/Ghast#Behavior, citing MC-49640 WAI):
+// "Java: they target players within 64 blocks horizontally and 4
+// blocks vertically." Old code only enforced a single euclidean
+// `distance` ≤ 64, so a ghast 60 blocks above (or below) a player
+// would still acquire targets — wiki-incorrect. `distance` is now
+// interpreted as the horizontal (XZ) distance; `distanceY` is the
+// signed vertical offset and must be |Δy| ≤ 4.
 
 export interface GhastState {
   targetId: string | null;
@@ -8,6 +17,7 @@ export interface GhastState {
 }
 
 export const DETECT_RANGE = 64;
+export const DETECT_RANGE_VERTICAL = 4;
 export const FIRE_INTERVAL_MS = 3000;
 
 export function makeGhast(): GhastState {
@@ -16,7 +26,8 @@ export function makeGhast(): GhastState {
 
 export interface TargetQuery {
   visiblePlayerId: string | null;
-  distance: number;
+  distance: number; // horizontal (XZ) distance
+  distanceY?: number; // signed vertical offset; default 0 (same height)
   hasLineOfSight: boolean;
 }
 
@@ -26,6 +37,10 @@ export interface FireQuery {
 
 export function acquire(s: GhastState, q: TargetQuery): void {
   if (!q.visiblePlayerId || q.distance > DETECT_RANGE || !q.hasLineOfSight) {
+    s.targetId = null;
+    return;
+  }
+  if (Math.abs(q.distanceY ?? 0) > DETECT_RANGE_VERTICAL) {
     s.targetId = null;
     return;
   }
