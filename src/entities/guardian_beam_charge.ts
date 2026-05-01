@@ -1,6 +1,10 @@
 // Guardian laser charge-up. Guardians and elders charge for 80 ticks
 // (4 s) before firing; the target-lock is broken if LOS is lost or the
-// target leaves a ~16 block range.
+// target leaves a 15 block range.
+//
+// Wiki (minecraft.wiki/w/Guardian): "The laser has a maximum range of
+// 15 blocks." Old TARGET_RANGE = 16 was a 7% over-reach — guardians
+// could lock on (and fire) at 16-block range, slightly past wiki canon.
 
 export type BeamPhase = 'idle' | 'charging' | 'firing' | 'cooldown';
 
@@ -13,7 +17,7 @@ export interface BeamState {
 export const CHARGE_TICKS = 80;
 export const FIRE_TICKS = 1;
 export const COOLDOWN_TICKS = 40; // 2s
-export const TARGET_RANGE = 16;
+export const TARGET_RANGE = 15;
 
 export function makeBeam(): BeamState {
   return { phase: 'idle', phaseTicks: 0, targetId: null };
