@@ -50,6 +50,21 @@ const SLOT_BY_ITEM: Record<string, ArmorSlot> = {
   turtle_helmet: 'helmet',
   // Elytra slots into chestplate
   elytra: 'chestplate',
+  // Wiki (minecraft.wiki/w/Dispenser): "Mob heads, skulls, and
+  // carved pumpkins / jack o'lanterns can be equipped in the
+  // helmet slot by a dispenser." Old table omitted these, so a
+  // dispenser firing a creeper head at a player ejected it as an
+  // item entity instead of putting it on the player's head — wiki
+  // canon says it equips. Same for the pumpkin "scarecrow" head.
+  zombie_head: 'helmet',
+  skeleton_skull: 'helmet',
+  wither_skeleton_skull: 'helmet',
+  creeper_head: 'helmet',
+  dragon_head: 'helmet',
+  piglin_head: 'helmet',
+  player_head: 'helmet',
+  carved_pumpkin: 'helmet',
+  jack_o_lantern: 'helmet',
 };
 
 export function slotOf(itemId: string): ArmorSlot | null {
