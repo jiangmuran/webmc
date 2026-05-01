@@ -2,15 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { froglightFor, magmaCubeEaten, FROGLIGHT_LIGHT_LEVEL } from './frog_light_produce';
 
 describe('frog light produce', () => {
-  it('temperate → pearlescent (wiki)', () => {
-    expect(froglightFor('temperate')).toBe('pearlescent');
+  it('warm → pearlescent (wiki Froglight#Acquisition)', () => {
+    expect(froglightFor('warm')).toBe('pearlescent');
   });
 
-  it('warm → ochre (wiki)', () => {
-    expect(froglightFor('warm')).toBe('ochre');
+  it('temperate → ochre (wiki Froglight#Acquisition)', () => {
+    expect(froglightFor('temperate')).toBe('ochre');
   });
 
-  it('cold → verdant', () => {
+  it('cold → verdant (wiki Froglight#Acquisition)', () => {
     expect(froglightFor('cold')).toBe('verdant');
   });
 
