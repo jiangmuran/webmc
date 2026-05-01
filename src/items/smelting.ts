@@ -20,12 +20,24 @@ export interface SmeltingRecipe {
 //    iron_ore drops raw_iron and that's what players smelt),
 //  - emerald_ore, lapis_ore, redstone_ore, nether_gold_ore,
 //    ancient_debris (all wiki-canonical smelting inputs).
+//
+// Wiki Java item IDs for raw meats are `beef`, `chicken`,
+// `porkchop`, `mutton`, `rabbit` (NO `raw_` prefix). Webmc registers
+// both the Java canonical names and the legacy `raw_*` aliases —
+// the recipe table now covers BOTH, since players holding a Java-
+// canonical `webmc:beef` would otherwise hit "no recipe" even
+// though the wiki recipe exists.
 export const SMELTING_RECIPES: readonly SmeltingRecipe[] = [
-  // Foods
+  // Foods (Java canonical IDs + legacy raw_* aliases for back-compat)
+  { input: 'webmc:beef', output: 'webmc:cooked_beef', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_beef', output: 'webmc:cooked_beef', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:chicken', output: 'webmc:cooked_chicken', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_chicken', output: 'webmc:cooked_chicken', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:porkchop', output: 'webmc:cooked_porkchop', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_porkchop', output: 'webmc:cooked_porkchop', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:mutton', output: 'webmc:cooked_mutton', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_mutton', output: 'webmc:cooked_mutton', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:rabbit', output: 'webmc:cooked_rabbit', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_rabbit', output: 'webmc:cooked_rabbit', cookSec: 10, experience: 0.35 },
   { input: 'webmc:cod', output: 'webmc:cooked_cod', cookSec: 10, experience: 0.35 },
   { input: 'webmc:salmon', output: 'webmc:cooked_salmon', cookSec: 10, experience: 0.35 },
