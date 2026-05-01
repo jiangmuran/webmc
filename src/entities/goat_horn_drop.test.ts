@@ -7,6 +7,32 @@ describe('goat horn', () => {
     expect(canRamDropHorn('webmc:wool')).toBe(false);
   });
 
+  it('rammable list matches wiki snaps_goat_horn tag', () => {
+    // Per wiki: stone, coal/copper/iron/emerald ore, packed_ice, all logs.
+    for (const id of [
+      'webmc:stone',
+      'webmc:coal_ore',
+      'webmc:copper_ore',
+      'webmc:iron_ore',
+      'webmc:emerald_ore',
+      'webmc:packed_ice',
+      'webmc:oak_log',
+      'webmc:cherry_log',
+    ]) {
+      expect(canRamDropHorn(id)).toBe(true);
+    }
+    // Wiki does NOT list these:
+    for (const id of [
+      'webmc:copper_block',
+      'webmc:iron_block',
+      'webmc:deepslate',
+      'webmc:wool',
+      'webmc:dirt',
+    ]) {
+      expect(canRamDropHorn(id)).toBe(false);
+    }
+  });
+
   it('drops up to max from normal pool (wiki: ponder/sing/seek/feel)', () => {
     const g = { hornsRemaining: MAX_HORNS, screaming: false };
     expect(ramDropHorn(g, () => 0)).toBe('ponder');

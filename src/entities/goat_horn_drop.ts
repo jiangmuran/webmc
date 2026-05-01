@@ -9,9 +9,24 @@ export interface Goat {
 
 export const MAX_HORNS = 2;
 
+// Wiki (minecraft.wiki/w/Goat#Goat_horns): "An adult goat ... will
+// lose one of [its horns] and drop a goat horn if it charges into any
+// of the following solid blocks: stone, coal ore, copper ore, iron
+// ore, emerald ore, logs, or packed ice. In Java, these blocks are
+// listed under the snaps_goat_horn block tag."
+//
+// Old list had the wrong category for two entries (copper_BLOCK and
+// iron_BLOCK instead of copper_ORE and iron_ORE) and was missing all
+// four ores the wiki names. It also included deepslate, which is
+// neither in the wiki text nor in the snaps_goat_horn tag.
 const RAMMABLE = new Set<string>([
   'webmc:stone',
-  'webmc:deepslate',
+  'webmc:coal_ore',
+  'webmc:copper_ore',
+  'webmc:iron_ore',
+  'webmc:emerald_ore',
+  'webmc:packed_ice',
+  // All log variants
   'webmc:oak_log',
   'webmc:spruce_log',
   'webmc:birch_log',
@@ -19,9 +34,10 @@ const RAMMABLE = new Set<string>([
   'webmc:acacia_log',
   'webmc:dark_oak_log',
   'webmc:mangrove_log',
-  'webmc:copper_block',
-  'webmc:iron_block',
-  'webmc:packed_ice',
+  'webmc:cherry_log',
+  'webmc:pale_oak_log',
+  'webmc:crimson_stem',
+  'webmc:warped_stem',
 ]);
 
 export function canRamDropHorn(blockId: string): boolean {

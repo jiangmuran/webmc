@@ -9,20 +9,19 @@ export interface Goat {
 }
 
 // Wiki (minecraft.wiki/w/Goat#Ramming):
-//   Normal goat:    ram every 30 s to 300 s (5 min)
-//   Screaming goat: ram every 1.5 s to 7.5 s
+//   Normal goat:    "Every 30 seconds to 5 minutes, a goat tries to ram"
+//   Screaming goat: "tries to ram a valid target every 5 to 15 seconds"
 //
-// Old code treated screaming as a multiplier (0.03) applied to the
-// normal 30-300 s range, yielding 0.9-9 s — close to but missing
-// the wiki 1.5-7.5 s bounds (lower bound 0.6 s shy of canon, upper
-// bound 1.5 s over). Sibling goat_ram.ts already uses the explicit
-// 1.5-7.5 s screaming bounds; this module now matches.
+// A prior commit recorded 1.5-7.5 s for screaming, ~3× too aggressive.
+// Wiki-canonical screaming bounds are 5-15 s. Sibling goat_ram.ts
+// carried the same wrong bounds; both now match wiki.
 export const RAM_COOLDOWN_MIN_MS = 30_000;
 export const RAM_COOLDOWN_MAX_MS = 300_000;
-export const SCREAMING_COOLDOWN_MIN_MS = 1_500;
-export const SCREAMING_COOLDOWN_MAX_MS = 7_500;
-// Legacy multiplier kept for callers that imported it.
-export const SCREAM_MULT = 0.03;
+export const SCREAMING_COOLDOWN_MIN_MS = 5_000;
+export const SCREAMING_COOLDOWN_MAX_MS = 15_000;
+// Legacy multiplier kept for callers that imported it. Wiki ratio is
+// approx 5/30..15/300 → 0.05..0.166; centered ≈ 0.1.
+export const SCREAM_MULT = 0.1;
 export const CHARGE_DURATION_MS = 1000;
 
 export function makeGoat(isScreaming = false): Goat {

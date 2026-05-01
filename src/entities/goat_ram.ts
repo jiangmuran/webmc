@@ -11,15 +11,18 @@ export function makeGoatRam(screaming = false): GoatRamState {
   return { isScreaming: screaming, ramCooldownSec: 0 };
 }
 
-// Wiki (minecraft.wiki/w/Goat): "Normal goats ram every 30 s to 5 min;
-// screaming goats ram every 1.5 s to 7.5 s." Old SCREAMING bounds
-// were 7-60 s, ~9× slower than the wiki's annoying-screaming-goat
-// rate. Sibling goat_ram_charge.ts already implements the 1.5-7.5 s
-// range via a 0.03× multiplier.
+// Wiki (minecraft.wiki/w/Goat#Ramming): "Every 30 seconds to 5 minutes,
+// a goat tries to ram a single unmoving target ... A screaming goat
+// tries to ram a valid target every 5 to 15 seconds."
+//
+// A previous "fix" recorded 1.5–7.5 s for screaming goats — that's
+// 3.3× too aggressive at the lower bound. Wiki-canonical screaming
+// rate is 5–15 s. Sibling goat_ram_charge.ts had the same wrong
+// bounds; both modules now match wiki.
 const NORMAL_COOLDOWN_MIN = 30;
 const NORMAL_COOLDOWN_MAX = 300;
-const SCREAMING_COOLDOWN_MIN = 1.5;
-const SCREAMING_COOLDOWN_MAX = 7.5;
+const SCREAMING_COOLDOWN_MIN = 5;
+const SCREAMING_COOLDOWN_MAX = 15;
 
 export interface RamTickCtx {
   dtSec: number;
