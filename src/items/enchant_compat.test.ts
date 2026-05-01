@@ -24,6 +24,32 @@ describe('enchant compatibility', () => {
     expect(CONFLICT_GROUPS.length).toBeGreaterThanOrEqual(7);
   });
 
+  it('density conflicts only with breach (wiki)', () => {
+    // Wiki minecraft.wiki/w/Density: "Density is mutually exclusive
+    // with Breach" — and only Breach. Should NOT conflict with
+    // sharpness/smite/bane/impaling.
+    expect(conflicts('density', 'breach')).toBe(true);
+    expect(conflicts('density', 'sharpness')).toBe(false);
+    expect(conflicts('density', 'smite')).toBe(false);
+    expect(conflicts('density', 'bane_of_arthropods')).toBe(false);
+    expect(conflicts('density', 'impaling')).toBe(false);
+  });
+
+  it('impaling conflicts only with breach (wiki)', () => {
+    expect(conflicts('impaling', 'breach')).toBe(true);
+    expect(conflicts('impaling', 'sharpness')).toBe(false);
+  });
+
+  it('breach asymmetric exclusion list per wiki', () => {
+    // Wiki minecraft.wiki/w/Breach: incompatible with Sharpness,
+    // Smite, Bane, Density, Impaling.
+    expect(conflicts('breach', 'sharpness')).toBe(true);
+    expect(conflicts('breach', 'smite')).toBe(true);
+    expect(conflicts('breach', 'bane_of_arthropods')).toBe(true);
+    expect(conflicts('breach', 'density')).toBe(true);
+    expect(conflicts('breach', 'impaling')).toBe(true);
+  });
+
   it('extra enchants covers mending, infinity, riptide, etc.', () => {
     expect(getExtraEnchant('mending')).not.toBeNull();
     expect(getExtraEnchant('riptide')?.maxLevel).toBe(3);

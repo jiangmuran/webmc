@@ -5,10 +5,27 @@
 import type { EnchantmentId } from './enchantment';
 
 // Pairs of enchants that conflict: applying one prevents the other.
+//
+// Wiki (minecraft.wiki/w/Breach + /w/Density + /w/Impaling): the 1.21
+// mace/trident damage modifiers do NOT all share one exclusion pool
+// with sword sharpness/smite/bane:
+//   - Sharpness ↔ Smite ↔ Bane of Arthropods (sword-damage trio)
+//   - Breach conflicts with: Sharpness, Smite, Bane, Density, Impaling
+//   - Density conflicts ONLY with Breach
+//   - Impaling conflicts ONLY with Breach
+//
+// Old single group `[sharpness, smite, bane, breach, density]` made
+// every pair conflict — e.g. blocked legitimate `density` builds
+// from coexisting on a separate sword build's sharpness, and even
+// blocked sharpness↔density on the same item which is fine since
+// sharpness is sword-only and density mace-only. Sibling
+// enchant_compat_matrix.ts already encodes the correct asymmetric
+// graph; this module's CONFLICT_GROUPS now matches by splitting the
+// breach pairings into an explicit edge list.
 export const CONFLICT_GROUPS: readonly (readonly string[])[] = [
   ['fortune', 'silk_touch'],
   ['protection', 'blast_protection', 'fire_protection', 'projectile_protection'],
-  ['sharpness', 'smite', 'bane_of_arthropods', 'breach', 'density'],
+  ['sharpness', 'smite', 'bane_of_arthropods'],
   ['infinity', 'mending'],
   ['piercing', 'multishot'],
   ['loyalty', 'riptide'],
@@ -16,10 +33,24 @@ export const CONFLICT_GROUPS: readonly (readonly string[])[] = [
   ['depth_strider', 'frost_walker'],
 ];
 
+// Asymmetric extras: pairs that conflict but aren't a clean group.
+// Breach's exclusion list spans the sword-damage trio + density +
+// impaling without making those mutually conflict.
+const EXTRA_PAIRS: readonly (readonly [string, string])[] = [
+  ['breach', 'sharpness'],
+  ['breach', 'smite'],
+  ['breach', 'bane_of_arthropods'],
+  ['breach', 'density'],
+  ['breach', 'impaling'],
+];
+
 export function conflicts(a: EnchantmentId, b: EnchantmentId): boolean {
   if (a === b) return false;
   for (const group of CONFLICT_GROUPS) {
     if (group.includes(a) && group.includes(b)) return true;
+  }
+  for (const [x, y] of EXTRA_PAIRS) {
+    if ((a === x && b === y) || (a === y && b === x)) return true;
   }
   return false;
 }
