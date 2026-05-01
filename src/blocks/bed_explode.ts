@@ -1,5 +1,8 @@
 // Beds are used for sleep in the overworld, but explode if used in the
-// Nether or the End (4.0 power TNT-like blast).
+// Nether or the End. Wiki (minecraft.wiki/w/Bed,
+// minecraft.wiki/w/Explosion#List_of_explosions): the bed explosion
+// has Power 5 — stronger than TNT's Power 4. Stale comment had said
+// "4.0 TNT-like" which understated the radius.
 
 export type Dim = 'overworld' | 'nether' | 'end';
 
