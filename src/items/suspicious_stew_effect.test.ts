@@ -13,4 +13,20 @@ describe('suspicious stew effect', () => {
   it('all effects have positive duration', () => {
     expect(effectFromSource('poppy').durationTicks).toBeGreaterThan(0);
   });
+
+  it('weakness duration is 140 ticks per wiki 24w45a', () => {
+    expect(effectFromSource('tulip').durationTicks).toBe(140);
+  });
+
+  it('blindness duration is 220 ticks per wiki 24w45a', () => {
+    expect(effectFromSource('azure_bluet').durationTicks).toBe(220);
+  });
+
+  it('poison duration is 220 ticks per wiki 24w45a', () => {
+    expect(effectFromSource('lily_of_the_valley').durationTicks).toBe(220);
+  });
+
+  it('fire_resistance is 60 ticks per wiki 24w45a', () => {
+    expect(effectFromSource('allium').durationTicks).toBe(60);
+  });
 });
