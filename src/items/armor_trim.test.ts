@@ -2,8 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { TRIM_MATERIAL_COLORS, applyTrim, trimsEqual } from './armor_trim';
 
 describe('armor trim', () => {
-  it('has 10 trim materials', () => {
-    expect(Object.keys(TRIM_MATERIAL_COLORS).length).toBe(10);
+  it('has 11 trim materials (wiki: 1.21+ adds resin)', () => {
+    // Wiki (minecraft.wiki/w/Armor_Trim#Materials): 11 trim materials
+    // total once resin (1.21.4) is included.
+    expect(Object.keys(TRIM_MATERIAL_COLORS).length).toBe(11);
+    expect(TRIM_MATERIAL_COLORS.resin).toBeDefined();
   });
 
   it('applyTrim pairs template + ingredient', () => {

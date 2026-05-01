@@ -2,6 +2,13 @@
 // ingredient. Purely cosmetic; no stat effect. Each trim has a material
 // color and a pattern name.
 
+// Wiki (minecraft.wiki/w/Armor_Trim#Materials): 11 materials in 1.21+:
+// iron, copper, gold, lapis, emerald, diamond, netherite, redstone,
+// amethyst, quartz, plus resin (1.21.4 pale-garden addition). Old
+// union dropped resin, so smithing tables refused resin-brick trim
+// applications even though pale-garden players have no other obvious
+// orange-tinted trim. Sibling smithing_template.ts already lists
+// resin in its TRIM_MATERIAL_OF map.
 export type TrimMaterial =
   | 'iron'
   | 'copper'
@@ -12,7 +19,8 @@ export type TrimMaterial =
   | 'netherite'
   | 'redstone'
   | 'amethyst'
-  | 'quartz';
+  | 'quartz'
+  | 'resin';
 
 export type TrimPattern =
   | 'sentry'
@@ -51,6 +59,9 @@ export const TRIM_MATERIAL_COLORS: Record<TrimMaterial, readonly [number, number
   redstone: [200, 60, 60],
   amethyst: [160, 95, 200],
   quartz: [230, 230, 215],
+  // Wiki (minecraft.wiki/w/Resin_Brick): resin trim is an orange-tinted
+  // material; data-pack color #FB6C00 ≈ rgb(251, 108, 0).
+  resin: [251, 108, 0],
 };
 
 export interface TrimApplicationQuery {
