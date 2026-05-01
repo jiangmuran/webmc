@@ -7,12 +7,15 @@ import {
 } from './glow_item_frame';
 
 describe('glow item frame', () => {
-  it('glow variant has light 14', () => {
-    expect(lightLevel(true)).toBe(GLOW_LIGHT_LEVEL);
-  });
-
-  it('regular has no light', () => {
+  it('glow + regular emit 0 light (wiki: "Light: 0")', () => {
+    // Wiki (minecraft.wiki/w/Glow_Item_Frame): "Light: 0 — the glow
+    // item frame's contents are rendered with full brightness, but
+    // the frame itself does not emit any block light." Old code
+    // reported 14 for the glow variant, which would let the frame
+    // satisfy crop-grow / mob-spawn light thresholds.
+    expect(lightLevel(true)).toBe(0);
     expect(lightLevel(false)).toBe(0);
+    expect(GLOW_LIGHT_LEVEL).toBe(0);
   });
 
   it('glow illuminates texture', () => {
