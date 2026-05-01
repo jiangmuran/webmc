@@ -10,11 +10,25 @@ const RECIPES: Brew[] = [
   { from: 'water', ingredient: 'nether_wart', to: 'awkward' },
   { from: 'water', ingredient: 'glowstone_dust', to: 'thick' },
   // Wiki: water + fermented_spider_eye → weakness (NOT mundane).
-  // Mundane comes from water + redstone_dust, glowstone_dust, sugar, etc.
-  // Was 'mundane' — non-vanilla.
   { from: 'water', ingredient: 'fermented_spider_eye', to: 'weakness' },
-  // Mundane potion path — water + redstone_dust is the canonical recipe.
+  // Wiki (minecraft.wiki/w/Mundane_Potion): "Redstone Dust; Breeze
+  // Rod; Stone; Slime Block; Cobweb; Magma Cream; Rabbit's Foot;
+  // Sugar; Glistering Melon Slice; Spider Eye; Ghast Tear; Blaze
+  // Powder" — all of these on water make a mundane (no-effect)
+  // potion. Old table had only redstone, leaving every other wiki
+  // mundane-recipe undefined.
   { from: 'water', ingredient: 'redstone', to: 'mundane' },
+  { from: 'water', ingredient: 'breeze_rod', to: 'mundane' },
+  { from: 'water', ingredient: 'stone', to: 'mundane' },
+  { from: 'water', ingredient: 'slime_block', to: 'mundane' },
+  { from: 'water', ingredient: 'cobweb', to: 'mundane' },
+  { from: 'water', ingredient: 'magma_cream', to: 'mundane' },
+  { from: 'water', ingredient: 'rabbit_foot', to: 'mundane' },
+  { from: 'water', ingredient: 'sugar', to: 'mundane' },
+  { from: 'water', ingredient: 'glistering_melon_slice', to: 'mundane' },
+  { from: 'water', ingredient: 'spider_eye', to: 'mundane' },
+  { from: 'water', ingredient: 'ghast_tear', to: 'mundane' },
+  { from: 'water', ingredient: 'blaze_powder', to: 'mundane' },
   { from: 'awkward', ingredient: 'sugar', to: 'swiftness' },
   { from: 'awkward', ingredient: 'rabbit_foot', to: 'leaping' },
   { from: 'awkward', ingredient: 'blaze_powder', to: 'strength' },
