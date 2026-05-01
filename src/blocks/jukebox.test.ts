@@ -48,4 +48,14 @@ describe('jukebox', () => {
     insertDisc(j, 'five');
     expect(comparatorOutput(j)).toBe(15);
   });
+
+  it('modern discs (creator/precipice/lava chicken/tears/and action)', () => {
+    // Wiki per-disc pages: comparator values reuse older disc values.
+    expect(MUSIC_DISCS.creator?.comparatorValue).toBe(12);
+    expect(MUSIC_DISCS.creator_music_box?.comparatorValue).toBe(11);
+    expect(MUSIC_DISCS.precipice?.comparatorValue).toBe(13);
+    expect(MUSIC_DISCS.lava_chicken?.comparatorValue).toBe(9);
+    expect(MUSIC_DISCS.tears?.comparatorValue).toBe(10);
+    expect(MUSIC_DISCS.and_action?.comparatorValue).toBe(15);
+  });
 });

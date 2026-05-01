@@ -17,7 +17,13 @@ export type MusicDiscId =
   | 'pigstep'
   | 'otherside'
   | 'five'
-  | 'relic';
+  | 'relic'
+  | 'creator'
+  | 'creator_music_box'
+  | 'precipice'
+  | 'lava_chicken'
+  | 'tears'
+  | 'and_action';
 
 export interface MusicDiscDef {
   id: MusicDiscId;
@@ -73,6 +79,45 @@ export const MUSIC_DISCS: Record<MusicDiscId, MusicDiscDef> = {
     displayName: 'Aaron Cherof - Relic',
     durationSec: 218,
     comparatorValue: 14,
+  },
+  // Wiki-confirmed comparator values for the modern discs (each
+  // collides with an older disc's value — comparator output is no
+  // longer unique). Durations from the per-disc wiki pages.
+  creator: {
+    id: 'creator',
+    displayName: 'Lena Raine - Creator',
+    durationSec: 177, // 02:57
+    comparatorValue: 12,
+  },
+  creator_music_box: {
+    id: 'creator_music_box',
+    displayName: 'Lena Raine - Creator (Music Box)',
+    durationSec: 74, // 01:14
+    comparatorValue: 11,
+  },
+  precipice: {
+    id: 'precipice',
+    displayName: 'Aaron Cherof - Precipice',
+    durationSec: 299, // 04:59
+    comparatorValue: 13,
+  },
+  lava_chicken: {
+    id: 'lava_chicken',
+    displayName: 'Hyper Potions - Lava Chicken',
+    durationSec: 135, // 02:15
+    comparatorValue: 9,
+  },
+  tears: {
+    id: 'tears',
+    displayName: 'Amos Roddy - Tears',
+    durationSec: 175, // 02:55
+    comparatorValue: 10,
+  },
+  and_action: {
+    id: 'and_action',
+    displayName: 'Manatee Mark - And Action!',
+    durationSec: 112, // 01:52
+    comparatorValue: 15,
   },
 };
 
