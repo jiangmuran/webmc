@@ -1,12 +1,20 @@
 // Minecart + rail speeds. Normal rail = 0.4 b/t max. Powered rail +
 // power = boost, no power = brake. Detector rail emits redstone when
 // minecart on top. Activator rail triggers TNT minecart / hopper.
-
+//
+// Wiki (minecraft.wiki/w/Powered_Rail):
+//   - Powered: +0.06 m/tick velocity boost.
+//   - Unpowered: multiplies cart velocity by 0.5 per tick (halves
+//     the cart's speed each tick).
+// Old POWERED_BRAKE = 0.9 was a 10% per-tick decay vs the wiki's
+// 50%. Unpowered powered rails barely slowed carts in webmc (took
+// ~7 ticks to halve speed instead of 1) — minecart brakes were
+// effectively non-functional.
 export type RailKind = 'normal' | 'powered' | 'detector' | 'activator';
 
 export const MINECART_MAX_SPEED = 0.4;
 export const POWERED_BOOST = 0.06;
-export const POWERED_BRAKE = 0.9;
+export const POWERED_BRAKE = 0.5;
 
 export interface RailSegment {
   kind: RailKind;

@@ -49,4 +49,16 @@ describe('minecart rails', () => {
     expect(activatorEffect('hopper_minecart')).toBe('disable_pickup');
     expect(activatorEffect('regular_minecart')).toBeNull();
   });
+
+  it('unpowered powered rail halves velocity per wiki (×0.5)', () => {
+    // Wiki minecraft.wiki/w/Powered_Rail: an unpowered powered rail
+    // multiplies cart velocity by 0.5 per tick. Old ×0.9 was a 10%
+    // decay vs wiki's 50%.
+    const v = stepVelocity({
+      velocity: 0.4,
+      railBelow: { kind: 'powered', powered: false },
+      occupied: true,
+    });
+    expect(v).toBeCloseTo(0.2, 5);
+  });
 });
