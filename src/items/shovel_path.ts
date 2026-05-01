@@ -1,11 +1,18 @@
 // Shovel path. Right-click grass → dirt path; right-click campfire →
-// extinguish (keep campfire placed); right-click rooted dirt → hanging
-// roots drop.
+// extinguish (keep campfire placed); right-click rooted dirt → drops
+// hanging_roots AND converts the block to dirt.
+//
+// Wiki (minecraft.wiki/w/Shovel): "Using a shovel on rooted dirt
+// converts it to dirt and drops 1 hanging roots." Old hanging_roots
+// action only carried the drop list, not the destination block — the
+// caller could not tell that the rooted_dirt should be replaced with
+// dirt, so the block stayed as rooted_dirt and the player kept
+// generating infinite hanging roots from a single shoveled block.
 
 export type ShovelAction =
   | { kind: 'place_path'; newBlock: 'webmc:dirt_path' }
   | { kind: 'extinguish_campfire' }
-  | { kind: 'hanging_roots'; drops: readonly string[] }
+  | { kind: 'hanging_roots'; newBlock: 'webmc:dirt'; drops: readonly string[] }
   | { kind: 'none' };
 
 export interface ShovelQuery {
@@ -34,7 +41,7 @@ export function useShovel(q: ShovelQuery): ShovelAction {
     return { kind: 'extinguish_campfire' };
   }
   if (q.targetBlockName === 'webmc:rooted_dirt' && q.airAbove) {
-    return { kind: 'hanging_roots', drops: ['webmc:hanging_roots'] };
+    return { kind: 'hanging_roots', newBlock: 'webmc:dirt', drops: ['webmc:hanging_roots'] };
   }
   return { kind: 'none' };
 }
