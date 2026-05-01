@@ -12,8 +12,12 @@ export function makeArmadilloRollState(): ArmadilloRollState {
   return { rolled: false, rollCooldownSec: 0, uncurlDelaySec: 0 };
 }
 
+// Wiki (minecraft.wiki/w/Armadillo): "It unrolls if it detects no
+// threats for 3 seconds (60 ticks)." Old UNCURL_DELAY_SEC = 2 was
+// 1 second under wiki canon — a curled armadillo would un-roll
+// before the wiki-stated 3-second safety window passed.
 const ROLL_COOLDOWN_SEC = 3;
-const UNCURL_DELAY_SEC = 2;
+const UNCURL_DELAY_SEC = 3;
 
 export interface ThreatContext {
   nearbyHostile: boolean;

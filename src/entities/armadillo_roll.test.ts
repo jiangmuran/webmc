@@ -14,7 +14,7 @@ describe('armadillo roll', () => {
     expect(s.rolled).toBe(true);
   });
 
-  it('unrolls after threat leaves + delay', () => {
+  it('unrolls after 3 seconds of no threat (wiki)', () => {
     const s = makeArmadilloRollState();
     tickArmadilloRoll(s, {
       nearbyHostile: true,
@@ -22,12 +22,20 @@ describe('armadillo roll', () => {
       playerSprintingNearby: false,
       dtSec: 0.1,
     });
-    // wait cooldown + unroll
+    // 2.9 seconds — still rolled per wiki's 3-second threshold
     tickArmadilloRoll(s, {
       nearbyHostile: false,
       recentlyDamaged: false,
       playerSprintingNearby: false,
-      dtSec: 3,
+      dtSec: 2.9,
+    });
+    expect(s.rolled).toBe(true);
+    // Crossing the 3-second mark unrolls.
+    tickArmadilloRoll(s, {
+      nearbyHostile: false,
+      recentlyDamaged: false,
+      playerSprintingNearby: false,
+      dtSec: 0.2,
     });
     expect(s.rolled).toBe(false);
   });
