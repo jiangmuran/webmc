@@ -40,4 +40,24 @@ describe('enderman teleport', () => {
     expect(triggersTeleport(false, false, true)).toBe(true);
     expect(triggersTeleport(false, false, false)).toBe(false);
   });
+
+  it('teleport range hits +TP_RADIUS inclusive (wiki: ±32 each axis)', () => {
+    let sawPos = false;
+    let sawNeg = false;
+    // Two attempts: low (rand=0 → -32), high (rand=0.999 → +32).
+    const seq = [0, 0.5, 0.5, 0.999999, 0.5, 0.5];
+    let i = 0;
+    tryTeleport({
+      from: { x: 0, y: 64, z: 0 },
+      rand: () => seq[i++ % seq.length] ?? 0,
+      validLanding: (x) => {
+        if (x === TP_RADIUS) sawPos = true;
+        if (x === -TP_RADIUS) sawNeg = true;
+        return false;
+      },
+      maxAttempts: 2,
+    });
+    expect(sawNeg).toBe(true);
+    expect(sawPos).toBe(true);
+  });
 });
