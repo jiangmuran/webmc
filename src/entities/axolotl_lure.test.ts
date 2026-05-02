@@ -8,8 +8,12 @@ import {
 } from './axolotl_lure';
 
 describe('axolotl', () => {
-  it('blue rare', () => {
-    expect(naturalColor(() => 0.005)).toBe('blue');
+  it('natural spawn never blue (wiki)', () => {
+    for (let i = 0; i < 100; i++) {
+      const c = naturalColor(() => i / 100);
+      expect(c).not.toBe('blue');
+      expect(['pink', 'brown', 'gold', 'cyan']).toContain(c);
+    }
   });
 
   it('common colors', () => {

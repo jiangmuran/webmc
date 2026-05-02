@@ -12,8 +12,13 @@ export interface WrittenBook {
   generation: BookGeneration;
 }
 
+// Wiki (minecraft.wiki/w/Book_and_Quill): JE allows "up to 100
+// pages, with up to 1023 characters per page, and up to 102,300
+// characters inside the entire book." Old constant was 1024 — off
+// by 1 from the canonical Java Edition limit. Sibling
+// book_and_quill.ts and written_book_sign.ts now match.
 export const MAX_PAGES = 100;
-export const MAX_CHARS_PER_PAGE = 1024;
+export const MAX_CHARS_PER_PAGE = 1023;
 export const MAX_TITLE_CHARS = 32;
 
 export interface SignBookQuery {

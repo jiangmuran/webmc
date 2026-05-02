@@ -25,7 +25,11 @@ export function applyBoneMeal(
       if (target.currentStage >= target.maxStage) {
         return { consumed: false };
       }
-      const bump = 1 + Math.floor(rng() * 5);
+      // Wiki (minecraft.wiki/w/Bone_Meal#Fertilizer): wheat/carrots/
+      // potatoes/melon-stem/pumpkin-stem mature 2-5 growth stages
+      // (not 1-5). Old `1 + Math.floor(rng() * 5)` underran the
+      // average by ~0.5 stages per use.
+      const bump = 2 + Math.floor(rng() * 4);
       const newStage = Math.min(target.maxStage, target.currentStage + bump);
       return { consumed: true, newStage };
     }
@@ -33,9 +37,11 @@ export function applyBoneMeal(
       if (target.growthStage >= target.maxGrowth) {
         return { consumed: false };
       }
-      // MC: 50% chance to advance; bone meal still consumed.
+      // Wiki: saplings/azalea/flowering azalea/mangrove propagule
+      // have a 45% chance of growing to the next growth stage
+      // (not 50%). Bone meal is consumed regardless.
       const newStage =
-        rng() < 0.5 ? Math.min(target.maxGrowth, target.growthStage + 1) : target.growthStage;
+        rng() < 0.45 ? Math.min(target.maxGrowth, target.growthStage + 1) : target.growthStage;
       return { consumed: true, newStage };
     }
     case 'grass_block': {

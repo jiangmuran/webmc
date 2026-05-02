@@ -21,6 +21,10 @@ export class RainParticles {
   private active = false;
   private readonly opts: RainOptions;
   private readonly positions: Float32Array;
+  // Cached BufferAttribute ref. update() called geometry.getAttribute
+  // + instanceof per frame; attribute is set once at construction and
+  // never replaced.
+  private readonly positionAttr: THREE.BufferAttribute;
 
   constructor(opts: Partial<RainOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
@@ -28,7 +32,8 @@ export class RainParticles {
     this.positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) this.respawn(i, Math.random() * this.opts.height);
     const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.positionAttr = new THREE.BufferAttribute(this.positions, 3);
+    geom.setAttribute('position', this.positionAttr);
     const mat = new THREE.PointsMaterial({
       color: this.opts.color,
       size: 0.25,
@@ -70,17 +75,25 @@ export class RainParticles {
     const count = this.opts.maxParticles;
     const step = this.opts.fallSpeed * dtSec;
     const y0 = centerY + this.opts.height;
+    // Hoist loop-invariants out of the per-particle inner loop.
+    // spawnRadius * 2 was computed twice per respawn × ~10 respawns
+    // per frame; floorY (centerY - 2) was the per-particle threshold
+    // compare. Single y read per particle (cache the decremented
+    // value) instead of two typed-array reads of the same cell.
+    const floorY = centerY - 2;
+    const radiusX2 = this.opts.spawnRadius * 2;
     for (let i = 0; i < count; i++) {
       const base = i * 3;
-      this.positions[base + 1]! -= step;
-      if (this.positions[base + 1]! < centerY - 2) {
-        this.positions[base] = centerX + (Math.random() - 0.5) * this.opts.spawnRadius * 2;
-        this.positions[base + 1] = y0;
-        this.positions[base + 2] = centerZ + (Math.random() - 0.5) * this.opts.spawnRadius * 2;
+      const yIdx = base + 1;
+      const y = this.positions[yIdx]! - step;
+      this.positions[yIdx] = y;
+      if (y < floorY) {
+        this.positions[base] = centerX + (Math.random() - 0.5) * radiusX2;
+        this.positions[yIdx] = y0;
+        this.positions[base + 2] = centerZ + (Math.random() - 0.5) * radiusX2;
       }
     }
-    const attr = this.group.geometry.getAttribute('position');
-    if (attr instanceof THREE.BufferAttribute) attr.needsUpdate = true;
+    this.positionAttr.needsUpdate = true;
   }
 
   private respawn(i: number, existingY: number): void {

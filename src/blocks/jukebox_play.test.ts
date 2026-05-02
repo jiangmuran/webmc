@@ -21,10 +21,14 @@ describe('jukebox', () => {
     expect(j.disc).toBeNull();
   });
 
-  it('comparator 15 while playing', () => {
-    const j = makeJukebox();
-    insert(j, 'webmc:music_disc_13', 0);
-    expect(comparatorOutput(j, 100)).toBe(15);
+  it('comparator reads per-disc value while playing (wiki)', () => {
+    // Wiki: "13" → 1, "5" → 15. Disc-specific signal, not flat 15.
+    const j13 = makeJukebox();
+    insert(j13, 'webmc:music_disc_13', 0);
+    expect(comparatorOutput(j13, 100)).toBe(1);
+    const j5 = makeJukebox();
+    insert(j5, 'webmc:music_disc_5', 0);
+    expect(comparatorOutput(j5, 100)).toBe(15);
   });
 
   it('playback expires', () => {

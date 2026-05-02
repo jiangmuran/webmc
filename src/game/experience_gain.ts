@@ -18,7 +18,9 @@ const MOB_XP: Record<string, [number, number]> = {
   enderman: [5, 5],
   witch: [5, 5],
   piglin: [5, 5],
-  hoglin: [5, 5],
+  // Wiki: adult hoglins drop 1-3 XP (baby hoglins drop nothing). Was
+  // flat 5 — over-rewarding the kill.
+  hoglin: [1, 3],
   ghast: [5, 5],
   blaze: [10, 10],
   wither_skeleton: [10, 10],
@@ -33,6 +35,24 @@ const MOB_XP: Record<string, [number, number]> = {
   pillager: [5, 5],
   shulker: [5, 5],
   breeze: [10, 10],
+  // Vanilla XP for hostiles that webmc spawns but the table missed —
+  // husk / stray / drowned / bogged / zombie_villager / cave_spider /
+  // silverfish / phantom / magma_cube / slime / piglin_brute /
+  // zombified_piglin / vex / zoglin all drop XP per vanilla.
+  husk: [5, 5],
+  stray: [5, 5],
+  drowned: [5, 5],
+  bogged: [5, 5],
+  zombie_villager: [5, 5],
+  cave_spider: [5, 5],
+  silverfish: [5, 5],
+  phantom: [5, 5],
+  magma_cube: [4, 4],
+  slime: [4, 4],
+  piglin_brute: [20, 20],
+  zombified_piglin: [5, 5],
+  vex: [3, 3],
+  zoglin: [5, 5],
 };
 
 const ORE_XP: Record<string, [number, number]> = {
@@ -96,6 +116,15 @@ export function rollXp(q: XpRollQuery): number {
     case 'fish':
       return 1 + Math.floor(q.rng() * 6); // 1..6
   }
+}
+
+// Allocation-free variant for the dominant mob-kill case. Skips the
+// {source: {kind: 'mob', mob}, rng} literals that rollXp's callers
+// were building per kill (chained sweeping-edge attacks fire many
+// rollMobXp's per tick).
+export function rollMobXpFor(mob: string, rng: () => number): number {
+  const range = MOB_XP[mob] ?? [0, 0];
+  return range[0] + Math.floor(rng() * (range[1] - range[0] + 1));
 }
 
 export function mobXpRange(mob: string): [number, number] {

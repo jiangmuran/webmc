@@ -5,6 +5,11 @@ interface DamageNumber {
   worldZ: number;
   ageSec: number;
   lifeSec: number;
+  // Diff cache for the el.style.display transition. Most damage numbers
+  // stay visible (or stay hidden behind walls) for their entire life;
+  // writing display='' or display='none' every frame triggers style
+  // invalidation cumulatively even when the value is identical.
+  visible: boolean;
 }
 
 export class DamageNumbers {
@@ -33,7 +38,7 @@ export class DamageNumbers {
       'will-change:transform,opacity',
     ].join(';');
     this.layer.appendChild(el);
-    this.active.push({ el, worldX, worldY, worldZ, ageSec: 0, lifeSec: 1.0 });
+    this.active.push({ el, worldX, worldY, worldZ, ageSec: 0, lifeSec: 1.0, visible: true });
   }
 
   tick(
@@ -44,21 +49,33 @@ export class DamageNumbers {
       z: number,
     ) => { sx: number; sy: number; visible: boolean } | null,
   ): void {
+    // Skip the loop entirely when nothing's active. Most frames have
+    // no damage numbers floating; this avoids the function-call setup
+    // and the project-callback parameter pass.
+    if (this.active.length === 0) return;
     for (let i = this.active.length - 1; i >= 0; i--) {
       const n = this.active[i]!;
       n.ageSec += dtSec;
       if (n.ageSec >= n.lifeSec) {
         n.el.remove();
-        this.active.splice(i, 1);
+        const last = this.active.length - 1;
+        if (i !== last) this.active[i] = this.active[last]!;
+        this.active.pop();
         continue;
       }
       const t = n.ageSec / n.lifeSec;
       const p = project(n.worldX, n.worldY + t * 1.4, n.worldZ);
       if (!p?.visible) {
-        n.el.style.display = 'none';
+        if (n.visible) {
+          n.el.style.display = 'none';
+          n.visible = false;
+        }
         continue;
       }
-      n.el.style.display = '';
+      if (!n.visible) {
+        n.el.style.display = '';
+        n.visible = true;
+      }
       n.el.style.left = `${p.sx.toFixed(1)}px`;
       n.el.style.top = `${p.sy.toFixed(1)}px`;
       n.el.style.opacity = String(1 - t);

@@ -14,15 +14,15 @@ describe('frog variant by biome', () => {
     expect(frogVariantForTemperature(0.8)).toBe('temperate');
   });
 
-  it('warm → pearlescent', () => {
+  it('warm → pearlescent (wiki Froglight#Acquisition)', () => {
     expect(froglightColorFor('warm', 'small_magma_cube')).toBe('pearlescent_froglight');
   });
 
-  it('cold → verdant', () => {
+  it('cold → verdant (wiki Froglight#Acquisition)', () => {
     expect(froglightColorFor('cold', 'small_magma_cube')).toBe('verdant_froglight');
   });
 
-  it('temperate → ochre', () => {
+  it('temperate → ochre (wiki Froglight#Acquisition)', () => {
     expect(froglightColorFor('temperate', 'small_magma_cube')).toBe('ochre_froglight');
   });
 });

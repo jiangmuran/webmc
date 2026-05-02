@@ -28,8 +28,20 @@ export function enqueue(
   while (q.entries.length > MAX_SUBTITLES) q.entries.shift();
 }
 
+// In-place compaction. Was `q.entries = q.entries.filter(...)` —
+// allocated a new array AND a fresh closure per call. SubtitleView
+// .tick fires this per frame whenever there are queued entries.
 export function prune(q: SubtitleQueue, nowMs: number): void {
-  q.entries = q.entries.filter((e) => e.expireAtMs > nowMs);
+  let writeIdx = 0;
+  const arr = q.entries;
+  for (let readIdx = 0; readIdx < arr.length; readIdx++) {
+    const e = arr[readIdx]!;
+    if (e.expireAtMs > nowMs) {
+      if (writeIdx !== readIdx) arr[writeIdx] = e;
+      writeIdx++;
+    }
+  }
+  arr.length = writeIdx;
 }
 
 export function opacityFor(e: SubtitleEntry, nowMs: number): number {

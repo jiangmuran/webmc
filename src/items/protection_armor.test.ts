@@ -16,8 +16,11 @@ describe('protection armor', () => {
     expect(appliesTo('projectile_protection', 'fireball')).toBe(true);
   });
 
-  it('epf scales', () => {
-    expect(epf('blast_protection', 4)).toBe(6);
+  it('epf scales (wiki: blast_protection 2 EPF/level)', () => {
+    expect(epf('blast_protection', 4)).toBe(8);
+    expect(epf('fire_protection', 4)).toBe(8);
+    expect(epf('projectile_protection', 4)).toBe(8);
+    expect(epf('protection', 4)).toBe(4);
   });
 
   it('damage capped at MAX_EPF', () => {

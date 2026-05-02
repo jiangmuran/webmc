@@ -25,6 +25,11 @@ export function extinguishInRain(inRain: boolean, onInfiniteFuel: boolean): bool
   return inRain;
 }
 
+// Wiki (minecraft.wiki/w/Fire): "Fire on netherrack and soul soil burns
+// forever; on every other block it ages out normally." Old code also
+// listed magma_block as infinite fuel — magma blocks damage entities
+// standing on top but do NOT preserve fire (fire on magma extinguishes
+// at FIRE_MAX_AGE like any normal block).
 export function infiniteFuelBlock(blockId: string): boolean {
-  return blockId === 'netherrack' || blockId === 'soul_soil' || blockId === 'magma_block';
+  return blockId === 'netherrack' || blockId === 'soul_soil';
 }

@@ -1,5 +1,5 @@
 import type { ItemRegistry, ItemStack } from './item';
-import { canMerge, isEmpty, stack } from './item';
+import { isEmpty, stack } from './item';
 
 export const HOTBAR_SIZE = 9;
 export const MAIN_SIZE = 27;
@@ -50,7 +50,9 @@ export class Inventory {
     let remaining = count;
     for (let i = 0; i < slots.length && remaining > 0; i++) {
       const s = slots[i];
-      if (!s || !canMerge(s, { itemId, count: 1, damage })) continue;
+      // Inline canMerge — was building a fresh {itemId, count, damage}
+      // literal per slot just to compare two scalars.
+      if (s?.itemId !== itemId || s.damage !== damage) continue;
       const space = max - s.count;
       if (space <= 0) continue;
       const take = Math.min(space, remaining);
@@ -78,27 +80,37 @@ export class Inventory {
   }
 
   // Remove `count` of itemId from the inventory (hotbar first, then main).
-  // Returns the number actually removed.
+  // Returns the number actually removed. Inlined per-pool walks so we
+  // don't rebuild a [hotbar, main] iteration array on every call.
   remove(itemId: number, count: number): number {
     let removed = 0;
-    for (const slots of [this.hotbar, this.main]) {
-      for (let i = 0; i < slots.length && removed < count; i++) {
-        const s = slots[i];
-        if (s?.itemId !== itemId) continue;
-        const take = Math.min(s.count, count - removed);
-        const next = s.count - take;
-        slots[i] = next > 0 ? stack(s.itemId, next, s.damage) : null;
-        removed += take;
-      }
+    for (let i = 0; i < this.hotbar.length && removed < count; i++) {
+      const s = this.hotbar[i];
+      if (s?.itemId !== itemId) continue;
+      const take = Math.min(s.count, count - removed);
+      const next = s.count - take;
+      this.hotbar[i] = next > 0 ? stack(s.itemId, next, s.damage) : null;
+      removed += take;
+    }
+    for (let i = 0; i < this.main.length && removed < count; i++) {
+      const s = this.main[i];
+      if (s?.itemId !== itemId) continue;
+      const take = Math.min(s.count, count - removed);
+      const next = s.count - take;
+      this.main[i] = next > 0 ? stack(s.itemId, next, s.damage) : null;
+      removed += take;
     }
     return removed;
   }
 
   count(itemId: number): number {
+    // Negative sentinel (e.g. callers passing `byName(...) ?? -1` for a
+    // missing registry entry) can never match a real stack — skip the
+    // 36-slot scan entirely.
+    if (itemId < 0) return 0;
     let total = 0;
-    for (const slots of [this.hotbar, this.main]) {
-      for (const s of slots) if (s?.itemId === itemId) total += s.count;
-    }
+    for (const s of this.hotbar) if (s?.itemId === itemId) total += s.count;
+    for (const s of this.main) if (s?.itemId === itemId) total += s.count;
     return total;
   }
 

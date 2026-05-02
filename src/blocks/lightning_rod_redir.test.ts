@@ -22,11 +22,21 @@ describe('lightning rod', () => {
     ).toBe(false);
   });
 
-  it('no divert beyond radius', () => {
+  it('diverts at 100-block range (wiki: 128 sphere, Java)', () => {
     expect(
       divertsStrike({
         rodPos: { x: 0, y: 100, z: 0 },
         strikePos: { x: 100, y: 100, z: 0 },
+        dim: 'overworld',
+      }),
+    ).toBe(true);
+  });
+
+  it('no divert beyond 128-block sphere (wiki Java)', () => {
+    expect(
+      divertsStrike({
+        rodPos: { x: 0, y: 100, z: 0 },
+        strikePos: { x: 200, y: 100, z: 0 },
         dim: 'overworld',
       }),
     ).toBe(false);

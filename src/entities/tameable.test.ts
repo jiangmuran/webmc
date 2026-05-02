@@ -36,7 +36,9 @@ describe('tameable', () => {
   });
 
   it('cat needs raw fish', () => {
+    // 1.13+ name. raw_fish was renamed to cod (and not registered in
+    // this project), so the cat tame food list now references cod.
     const c = makeTameable('cat');
-    expect(tryTame(c, 1, 'webmc:raw_fish', () => 0.01).tamed).toBe(true);
+    expect(tryTame(c, 1, 'webmc:cod', () => 0.01).tamed).toBe(true);
   });
 });

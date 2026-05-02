@@ -76,13 +76,24 @@ export interface TickResult {
   saturationDelta: number;
 }
 
+// Wiki:
+//   minecraft.wiki/w/Instant_Health — heals 2 × 2^level
+//   minecraft.wiki/w/Instant_Damage — damages 3 × 2^level
+// Where wiki "level" = amplifier + 1, so:
+//   heal   = 2 * 2^(amplifier+1) = 4 << amplifier
+//   damage = 3 * 2^(amplifier+1) = 6 << amplifier
+// Old formulas were linear `(amplifier+1) * 4` / `(amplifier+1) * 3`,
+// matching wiki only at amp 0/1 for health (4, 8) and never for
+// damage (code: 3 vs wiki 6 at level I, off by 2× from the start).
+// At amp 2 the divergence is large: health code=12 wiki=16,
+// damage code=9 wiki=24.
 export function tickEffects(pe: PlayerEffects): TickResult {
   let instantHp = 0;
   let sat = 0;
   for (const [id, e] of pe.active) {
     if (isInstant(id)) {
-      if (id === 'instant_health') instantHp += (e.amplifier + 1) * 4;
-      else if (id === 'instant_damage') instantHp -= (e.amplifier + 1) * 3;
+      if (id === 'instant_health') instantHp += 2 * Math.pow(2, e.amplifier + 1);
+      else if (id === 'instant_damage') instantHp -= 3 * Math.pow(2, e.amplifier + 1);
       else if (id === 'saturation') sat += e.amplifier + 1;
       pe.active.delete(id);
       continue;

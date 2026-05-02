@@ -10,14 +10,29 @@ describe('frost walker', () => {
     expect(out.length).toBe(0);
   });
 
-  it('level 1 freezes within radius 2', () => {
+  it('level 1 freezes within radius 3 (wiki: 2 + level)', () => {
     const boots = applyEnchant(plainBoots, 'frost_walker', 1);
     const out = frostWalkerStep(boots, { x: 0, y: 64, z: 0 }, { isWaterSource: () => true });
-    // Radius-2 circle → 13 cells inside (including center).
-    expect(out.length).toBeGreaterThan(4);
+    // Radius-3 circle has more cells than radius-2.
+    expect(out.length).toBeGreaterThan(20);
     for (const p of out) {
-      expect(Math.hypot(p.x, p.z)).toBeLessThanOrEqual(2.5);
+      expect(Math.hypot(p.x, p.z)).toBeLessThanOrEqual(3.5);
     }
+  });
+
+  it('level 2 freezes within radius 4 (wiki: 2 + level)', () => {
+    const boots = applyEnchant(plainBoots, 'frost_walker', 2);
+    const out = frostWalkerStep(boots, { x: 0, y: 64, z: 0 }, { isWaterSource: () => true });
+    for (const p of out) {
+      expect(Math.hypot(p.x, p.z)).toBeLessThanOrEqual(4.5);
+    }
+    // The radius-4 circle has more cells than the radius-3 circle.
+    const r3 = frostWalkerStep(
+      applyEnchant(plainBoots, 'frost_walker', 1),
+      { x: 0, y: 64, z: 0 },
+      { isWaterSource: () => true },
+    );
+    expect(out.length).toBeGreaterThan(r3.length);
   });
 
   it('only freezes water sources', () => {

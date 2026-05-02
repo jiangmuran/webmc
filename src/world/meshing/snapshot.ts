@@ -33,6 +33,13 @@ export const TILE_OFFSET_TOP = 0;
 export const TILE_OFFSET_SIDE = 1;
 export const TILE_OFFSET_BOTTOM = 2;
 
+// Shared "fully sky-lit" / "no block light" defaults for snapshots that
+// don't carry computed light yet (cold meshing, tests, perf bench). The
+// greedy mesher only READS these arrays, so sharing one immutable copy
+// across the whole process avoids a 4 KB allocation per call.
+const DEFAULT_FLAT_SKY_LIGHT = new Uint8Array(SUBCHUNK_VOLUME).fill(15);
+const DEFAULT_FLAT_BLOCK_LIGHT = new Uint8Array(SUBCHUNK_VOLUME);
+
 export interface PaletteBlob {
   readonly paletteStates: Uint32Array;
   readonly paletteOpaque: Uint8Array;
@@ -83,11 +90,24 @@ export function snapshotSubChunk(
     }
   }
 
-  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
-  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
+  const flatSkyLight = light?.sky ?? DEFAULT_FLAT_SKY_LIGHT;
+  const flatBlockLight = light?.block ?? DEFAULT_FLAT_BLOCK_LIGHT;
 
   return { flatIdx, paletteOpaque, paletteColor, paletteSize: n, flatSkyLight, flatBlockLight };
 }
+
+// Reused PaletteBlob wrapper. The typed-array fields inside MUST be
+// fresh per call because they're transferred to the mesher worker
+// (and detach on the main thread); the wrapper itself is just a
+// disposable shell read synchronously by buildMesherRequest.
+type MutablePaletteBlob = { -readonly [K in keyof PaletteBlob]: PaletteBlob[K] };
+const SERIALIZE_PALETTE_BLOB: MutablePaletteBlob = {
+  paletteStates: new Uint32Array(0),
+  paletteOpaque: new Uint8Array(0),
+  paletteColor: new Uint8Array(0),
+  bitsPerIndex: 0,
+  indices: null,
+};
 
 export function serializePalette(
   self: SubChunk,
@@ -107,13 +127,12 @@ export function serializePalette(
   }
   const indicesSrc = self.indices;
   const indices = indicesSrc ? new Uint32Array(indicesSrc) : null;
-  return {
-    paletteStates,
-    paletteOpaque,
-    paletteColor,
-    bitsPerIndex: self.bitsPerIndex,
-    indices,
-  };
+  SERIALIZE_PALETTE_BLOB.paletteStates = paletteStates;
+  SERIALIZE_PALETTE_BLOB.paletteOpaque = paletteOpaque;
+  SERIALIZE_PALETTE_BLOB.paletteColor = paletteColor;
+  SERIALIZE_PALETTE_BLOB.bitsPerIndex = self.bitsPerIndex;
+  SERIALIZE_PALETTE_BLOB.indices = indices;
+  return SERIALIZE_PALETTE_BLOB;
 }
 
 export function snapshotFromBlob(
@@ -129,8 +148,8 @@ export function snapshotFromBlob(
     }
     flatIdx[i] = idx;
   }
-  const flatSkyLight = light?.sky ?? new Uint8Array(SUBCHUNK_VOLUME).fill(15);
-  const flatBlockLight = light?.block ?? new Uint8Array(SUBCHUNK_VOLUME);
+  const flatSkyLight = light?.sky ?? DEFAULT_FLAT_SKY_LIGHT;
+  const flatBlockLight = light?.block ?? DEFAULT_FLAT_BLOCK_LIGHT;
   return {
     flatIdx,
     paletteOpaque: blob.paletteOpaque,

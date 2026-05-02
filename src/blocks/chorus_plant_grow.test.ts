@@ -43,4 +43,23 @@ describe('chorus teleport', () => {
     });
     expect(r).toBeNull();
   });
+
+  it('range is ±8 inclusive on each axis (wiki: 17-value cube)', () => {
+    // The teleport offset must be able to hit -8 AND +8 on each axis.
+    let sawNeg8 = false;
+    let sawPos8 = false;
+    let i = 0;
+    const seq = [0, 0.999999, 0.5, 0, 0, 0, 0, 0, 0, 0.999999, 0.5, 0.5, 0, 0, 0, 0, 0, 0];
+    chorusTeleport({
+      from: { x: 0, y: 64, z: 0 },
+      rand: () => seq[i++ % seq.length] ?? 0,
+      validLanding: (x) => {
+        if (x === -8) sawNeg8 = true;
+        if (x === 8) sawPos8 = true;
+        return false;
+      },
+    });
+    expect(sawNeg8).toBe(true);
+    expect(sawPos8).toBe(true);
+  });
 });

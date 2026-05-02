@@ -1,5 +1,11 @@
-export const HATCH_TICKS_NORMAL = 24000 * 10;
-export const HATCH_TICKS_MOSS = 24000 * 5;
+// Wiki (minecraft.wiki/w/Sniffer_Egg): "Sniffer eggs ... hatch in 10
+// minutes when placed on moss blocks or 20 minutes when placed on any
+// other block." 20 minutes = 24000 ticks (1 game-day), 10 minutes =
+// 12000 ticks. Old constants were 10× too long (240000 / 120000)
+// — players who placed an egg and waited a full game-day saw it
+// still uncracked, when the wiki says it should already be hatched.
+export const HATCH_TICKS_NORMAL = 24000;
+export const HATCH_TICKS_MOSS = 12000;
 
 export interface SnifferEgg {
   onMoss: boolean;

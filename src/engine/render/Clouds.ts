@@ -83,6 +83,12 @@ export class Clouds {
   private readonly opts: CloudOptions;
   private scrollX = 0;
   private scrollZ = 0;
+  // Diff caches. mesh.position only steps on 16-block boundaries, so
+  // most frames the value is identical. color/opacity only change at
+  // weather transitions (rare).
+  private lastCellX = Number.NaN;
+  private lastCellZ = Number.NaN;
+  private lastWeather: 'clear' | 'rain' | 'thunder' | '' = '';
 
   constructor(opts: Partial<CloudOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
@@ -104,14 +110,33 @@ export class Clouds {
   }
 
   update(dtSec: number, camX: number, camZ: number, weather: 'clear' | 'rain' | 'thunder'): void {
-    const speed = cloudScrollSpeed() * 50;
-    this.scrollX += dtSec * speed * 0.1;
-    this.scrollZ += dtSec * speed * 0.035;
+    // Skip per-frame texture/material/position writes when the
+    // cloud layer is hidden (low-tier potato preset). Each three.js
+    // setter fires GPU-side invalidation; cumulative on already-
+    // strained hardware. Scroll continues to advance though, so
+    // clouds resume mid-flow when toggled back on.
+    // Single cloudScrollSpeed() call per tick (was 2; the helper is a
+    // constant return).
+    const scroll = cloudScrollSpeed();
+    this.scrollX += dtSec * scroll * 50 * 0.1;
+    this.scrollZ += dtSec * scroll * 50 * 0.035;
+    if (!this.mesh.visible) return;
     this.texture.offset.set(this.scrollX * 0.01, this.scrollZ * 0.01);
-    this.mesh.position.x = Math.floor(camX / 16) * 16;
-    this.mesh.position.z = Math.floor(camZ / 16) * 16;
-    const c = cloudColor(weather);
-    this.material.color.setRGB(c[0], c[1], c[2]);
-    this.material.opacity = weather === 'clear' ? 0.82 : weather === 'rain' ? 0.93 : 0.98;
+    const cellX = Math.floor(camX / 16) * 16;
+    const cellZ = Math.floor(camZ / 16) * 16;
+    if (cellX !== this.lastCellX) {
+      this.mesh.position.x = cellX;
+      this.lastCellX = cellX;
+    }
+    if (cellZ !== this.lastCellZ) {
+      this.mesh.position.z = cellZ;
+      this.lastCellZ = cellZ;
+    }
+    if (weather !== this.lastWeather) {
+      const c = cloudColor(weather);
+      this.material.color.setRGB(c[0], c[1], c[2]);
+      this.material.opacity = weather === 'clear' ? 0.82 : weather === 'rain' ? 0.93 : 0.98;
+      this.lastWeather = weather;
+    }
   }
 }

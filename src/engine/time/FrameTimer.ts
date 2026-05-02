@@ -15,6 +15,8 @@ export class FrameTimer {
   private frames = 0;
   private fps = 0;
   private frameMs = 0;
+  // Reused result object — was a fresh literal per per-frame call.
+  private readonly statsObj: FrameStats = { fps: 0, frameMs: 0 };
 
   tick(): FrameStats {
     const now = performance.now();
@@ -29,7 +31,9 @@ export class FrameTimer {
       this.frames = 0;
       this.acc = 0;
     }
-    return { fps: this.fps, frameMs: this.frameMs };
+    this.statsObj.fps = this.fps;
+    this.statsObj.frameMs = this.frameMs;
+    return this.statsObj;
   }
 
   reset(): void {

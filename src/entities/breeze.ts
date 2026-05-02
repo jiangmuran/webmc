@@ -23,9 +23,14 @@ export interface BreezeState {
 
 export const BREEZE_MAX_HEALTH = 30;
 const JUMP_INTERVAL_SEC = 4;
-const SHOOT_INTERVAL_SEC = 1.5;
+// Wiki (minecraft.wiki/w/Breeze#Wind_charge): "cooldown of 32 game
+// ticks (1.6 seconds) between attempts." Old SHOOT_INTERVAL_SEC=1.5
+// was 0.1s under wiki canon (30 ticks vs 32). SHOOT_RANGE was 20
+// (vs wiki 16), letting breezes engage at 25% farther range than
+// canon — meaningful in a 16-block-wide trial chamber.
+const SHOOT_INTERVAL_SEC = 1.6;
 const JUMP_IMPULSE_Y = 9;
-const SHOOT_RANGE = 20;
+const SHOOT_RANGE = 16;
 
 export function makeBreeze(id: number, at: Vec3): BreezeState {
   return {
@@ -89,8 +94,18 @@ export interface BreezeDrop {
   count: number;
 }
 
-export function breezeDrops(lootingLevel: number): BreezeDrop[] {
-  const base = 1;
-  const bonus = lootingLevel > 0 ? Math.floor(Math.random() * (lootingLevel + 1)) : 0;
-  return [{ item: 'webmc:breeze_rod', count: base + bonus }];
+// Wiki (minecraft.wiki/w/Breeze#Drops): "Breeze Rod (quantity=1-2,
+// lootingquantity=1-2, only when killed by player or pet)." Old
+// formula gave base 1 + floor(rand × (looting+1)), yielding 1 at
+// Looting 0 (vs wiki 1-2) and 1-4 at Looting III (vs wiki 4-8).
+// Now base rolls 1-2 and each Looting level adds an independent
+// 1-2 roll, matching the wiki's lootingquantity notation. Caller
+// supplies the killed-by-player check; this just computes the
+// stack size when the drop fires.
+export function breezeDrops(lootingLevel: number, rand: () => number = Math.random): BreezeDrop[] {
+  let count = 1 + Math.floor(rand() * 2); // 1-2 base
+  for (let i = 0; i < Math.max(0, lootingLevel); i++) {
+    count += 1 + Math.floor(rand() * 2); // +1-2 per level
+  }
+  return [{ item: 'webmc:breeze_rod', count }];
 }

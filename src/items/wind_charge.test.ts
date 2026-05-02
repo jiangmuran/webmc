@@ -43,4 +43,21 @@ describe('mace smash', () => {
     const r = maceSmash({ fallDistance: 5, densityLevel: 0, base: 6 });
     expect(r.burst.radius).toBeGreaterThan(2);
   });
+
+  it('8-block fall: 12 (tier 1) + 10 (tier 2) = 22 bonus (wiki)', () => {
+    const r = maceSmash({ fallDistance: 8, densityLevel: 0, base: 0 });
+    expect(r.damage).toBe(22);
+  });
+
+  it('20-block fall: tier1+tier2+tier3 = 12+10+12 = 34 (wiki, unlimited)', () => {
+    const r = maceSmash({ fallDistance: 20, densityLevel: 0, base: 0 });
+    // 3 × 4 = 12 (tier1), 5 × 2 = 10 (tier2), (20 − 8) × 1 = 12 (tier3) = 34
+    expect(r.damage).toBe(34);
+  });
+
+  it('density applies to the full fall distance, not capped', () => {
+    const r = maceSmash({ fallDistance: 20, densityLevel: 5, base: 0 });
+    // Base bonus (above) = 34. Density: 5 × 0.5 × 20 = 50. Total = 84.
+    expect(r.damage).toBe(84);
+  });
 });

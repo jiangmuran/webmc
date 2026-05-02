@@ -29,11 +29,17 @@ describe('squid ink', () => {
     expect(r.radius).toBe(4);
   });
 
-  it('drops 1..3', () => {
+  it('drops 1..3 (no looting)', () => {
     for (let r = 0; r < 10; r++) {
       const d = inkSacDrops(() => r / 10);
       expect(d).toBeGreaterThanOrEqual(1);
       expect(d).toBeLessThanOrEqual(3);
     }
+  });
+
+  it('Looting III bonus 0..3 added per wiki (1..6 total)', () => {
+    // Wiki: lootingquantity=0-1 per level. Looting III = 0..3 bonus.
+    expect(inkSacDrops(() => 0, 3)).toBe(1); // base 1 + bonus 0
+    expect(inkSacDrops(() => 0.999, 3)).toBe(6); // base 3 + bonus 3
   });
 });

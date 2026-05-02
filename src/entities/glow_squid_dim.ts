@@ -27,15 +27,24 @@ export function inkSacDrops(rand: () => number): number {
   return 1 + Math.floor(rand() * 3);
 }
 
-// Glow squids only spawn in dark water below y=30.
+// Wiki (minecraft.wiki/w/Glow_Squid): "Schools of 4 to 6 glow squid
+// spawn in water (source block or flowing) in complete darkness in
+// the Overworld below layer 30, except for deep dark and sulfur cave
+// biomes." Old query lacked the biome exclusion — glow squid would
+// spawn in deep dark / sulfur caves even though the wiki forbids it.
+const FORBIDDEN_BIOMES = new Set<string>(['deep_dark', 'sulfur_caves']);
+
 export interface SpawnQuery {
   y: number;
   lightLevel: number;
   underwater: boolean;
+  biome?: string;
 }
 
 export function canSpawnGlowSquid(q: SpawnQuery): boolean {
   if (!q.underwater) return false;
   if (q.y > 30) return false;
-  return q.lightLevel === 0;
+  if (q.lightLevel !== 0) return false;
+  if (q.biome !== undefined && FORBIDDEN_BIOMES.has(q.biome)) return false;
+  return true;
 }

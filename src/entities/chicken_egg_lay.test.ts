@@ -3,7 +3,7 @@ import {
   rollNextEggDelay,
   tick,
   thrownEggHatchesChickenChance,
-  rareTripleHatch,
+  rareQuadHatch,
   EGG_LAY_MIN_TICKS,
   EGG_LAY_MAX_TICKS,
 } from './chicken_egg_lay';
@@ -27,8 +27,10 @@ describe('chicken egg lay', () => {
     expect(r.laidEgg).toBe(true);
   });
 
-  it('hatch chances', () => {
-    expect(thrownEggHatchesChickenChance()).toBeLessThan(1);
-    expect(rareTripleHatch()).toBeLessThan(thrownEggHatchesChickenChance());
+  it('hatch chances match wiki', () => {
+    // minecraft.wiki/w/Egg: 1/8 chance for 1 chick, 1/256 chance for 4 chicks.
+    expect(thrownEggHatchesChickenChance()).toBeCloseTo(1 / 8, 6);
+    expect(rareQuadHatch()).toBeCloseTo(1 / 256, 6);
+    expect(rareQuadHatch()).toBeLessThan(thrownEggHatchesChickenChance());
   });
 });

@@ -31,6 +31,23 @@ describe('rocket flight', () => {
     expect(rocketDamageAt(r, 100)).toBe(0);
   });
 
+  it('starless rocket deals 0 damage per wiki', () => {
+    // Wiki minecraft.wiki/w/Firework_Rocket: a starless firework
+    // explosion deals NO damage. Old formula gave 5.
+    const r = launchRocket(1, () => 0, 0);
+    expect(rocketDamageAt(r, 0)).toBe(0);
+  });
+
+  it('1-star center = 7 damage per wiki', () => {
+    const r = launchRocket(1, () => 0, 1);
+    expect(rocketDamageAt(r, 0)).toBe(7);
+  });
+
+  it('damage radius is 5 blocks per wiki (not 6)', () => {
+    const r = launchRocket(1, () => 0, 1);
+    expect(rocketDamageAt(r, 5.5)).toBe(0);
+  });
+
   it('elytra boost constant', () => {
     expect(ELYTRA_BOOST_FORWARD).toBeGreaterThan(1);
   });

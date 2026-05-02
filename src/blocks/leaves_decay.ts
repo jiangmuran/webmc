@@ -27,18 +27,37 @@ export function computeDistance(q: ComputeQuery): number {
   return Math.min(MAX_DISTANCE, min + 1);
 }
 
-// Drop table on decay: sapling(~5%), apple(if oak/dark_oak, 1/200),
-// sticks(2%).
+// Wiki (minecraft.wiki/w/Sapling#Obtaining, /w/Oak_Leaves#Drops):
+// sapling drop chance per fortune level — L0:1/20, L1:1/16, L2:1/12,
+// L3:1/10, L4:1/8, L5:1/6 (oak/birch/spruce/acacia/cherry/mangrove/
+// pale_oak). Jungle leaves are half that. Apple: 1/200 from oak and
+// dark_oak. Old formula was a flat 5% + 0.5%/level, which under-shot
+// every fortune level (Fortune III = 6.5% vs wiki 10%).
+const SAPLING_CHANCE_BY_FORTUNE: Record<number, number> = {
+  0: 1 / 20,
+  1: 1 / 16,
+  2: 1 / 12,
+  3: 1 / 10,
+  4: 1 / 8,
+  5: 1 / 6,
+};
+const JUNGLE_DIVISOR = 2;
+
 export interface DropRoll {
   leafId: string;
   fortuneLevel: number;
   rand: () => number;
 }
 
+function saplingChance(leafId: string, fortuneLevel: number): number {
+  const base = SAPLING_CHANCE_BY_FORTUNE[Math.max(0, Math.min(5, fortuneLevel))] ?? 1 / 20;
+  return leafId === 'webmc:jungle_leaves' ? base / JUNGLE_DIVISOR : base;
+}
+
 export function decayDrops(q: DropRoll): { id: string; count: number }[] {
   const out: { id: string; count: number }[] = [];
-  const sapPer = 0.05 + q.fortuneLevel * 0.005;
-  if (q.rand() < sapPer) out.push({ id: saplingFor(q.leafId), count: 1 });
+  if (q.rand() < saplingChance(q.leafId, q.fortuneLevel))
+    out.push({ id: saplingFor(q.leafId), count: 1 });
   if (
     (q.leafId === 'webmc:oak_leaves' || q.leafId === 'webmc:dark_oak_leaves') &&
     q.rand() < 1 / 200

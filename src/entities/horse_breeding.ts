@@ -1,6 +1,15 @@
-// Horse attribute breeding. Offspring inherit health/speed/jump
-// as the average of the parents' stats plus a small random jitter,
-// then clamped to natural ranges.
+// Wiki (minecraft.wiki/w/Horse#Breeding): foal stats follow
+// (parent1 + parent2 + R) / 3 where R is uniform-random in:
+//   Health 15..30, Speed 0.1125..0.3375, Jump 0.4..1.0.
+//
+// Old code used `(p1 + p2)/2 + (rng-0.5) × range × 0.1`, which:
+//   - lacks the regression-toward-mean property the wiki formula has
+//     (two top-tier parents always produced top-tier foals);
+//   - applied a tiny ±5% jitter instead of the wiki's full-range R
+//     term — natural-spawn statistical spread was effectively
+//     impossible for foals to reach.
+// Sibling horse_breed_traits.ts and horse_breed_inheritance.ts use
+// the wiki formula; this module now matches.
 
 export interface HorseStats {
   maxHealth: number; // 15..30 in MC
@@ -19,9 +28,9 @@ function clamp(v: number, lo: number, hi: number): number {
 }
 
 function breedOne(a: number, b: number, rng: () => number, lo: number, hi: number): number {
-  const avg = (a + b) / 2;
-  const jitter = (rng() - 0.5) * (hi - lo) * 0.1;
-  return clamp(avg + jitter, lo, hi);
+  // Wiki R is uniform in [lo, hi]; foal = (a + b + R) / 3.
+  const r = lo + rng() * (hi - lo);
+  return clamp((a + b + r) / 3, lo, hi);
 }
 
 export function breedHorses(q: BreedQuery): HorseStats {

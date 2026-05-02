@@ -22,9 +22,22 @@ export function makeBee(homeNest?: { x: number; y: number; z: number }): BeeStat
   };
 }
 
-export function beeAngered(state: BeeState, playerId: number): void {
+// Wiki (minecraft.wiki/w/Bee): "Anger duration is randomly selected
+// between 20 and 39 seconds, inclusive." Old constant 25s was within
+// the range but never varied. Callers can pass an `rand` (in [0,1))
+// to roll a wiki-canonical duration; default keeps the old 25s for
+// backwards compat with callers that don't supply an RNG.
+export const ANGER_MIN_SEC = 20;
+export const ANGER_MAX_SEC = 39;
+
+export function rollAngerSec(rand: () => number): number {
+  const span = ANGER_MAX_SEC - ANGER_MIN_SEC + 1;
+  return ANGER_MIN_SEC + Math.floor(rand() * span);
+}
+
+export function beeAngered(state: BeeState, playerId: number, rand?: () => number): void {
   state.mood = 'angry';
-  state.angerSec = 25;
+  state.angerSec = rand ? rollAngerSec(rand) : 25;
   state.recentStingPlayerId = playerId;
 }
 

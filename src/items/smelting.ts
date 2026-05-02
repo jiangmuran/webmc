@@ -12,24 +12,64 @@ export interface SmeltingRecipe {
   experience: number; // XP reward when output collected
 }
 
+// Wiki (minecraft.wiki/w/Smelting): canonical furnace recipes with
+// XP rewards. Earlier table missed:
+//  - cod/salmon (used legacy 'raw_fish'/'cooked_fish' which aren't
+//    registered in webmc — the recipe was dead),
+//  - raw_iron / raw_gold / raw_copper (standard ore-mining path —
+//    iron_ore drops raw_iron and that's what players smelt),
+//  - emerald_ore, lapis_ore, redstone_ore, nether_gold_ore,
+//    ancient_debris (all wiki-canonical smelting inputs).
+//
+// Wiki Java item IDs for raw meats are `beef`, `chicken`,
+// `porkchop`, `mutton`, `rabbit` (NO `raw_` prefix). Webmc registers
+// both the Java canonical names and the legacy `raw_*` aliases —
+// the recipe table now covers BOTH, since players holding a Java-
+// canonical `webmc:beef` would otherwise hit "no recipe" even
+// though the wiki recipe exists.
 export const SMELTING_RECIPES: readonly SmeltingRecipe[] = [
+  // Foods (Java canonical IDs + legacy raw_* aliases for back-compat)
+  { input: 'webmc:beef', output: 'webmc:cooked_beef', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_beef', output: 'webmc:cooked_beef', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:chicken', output: 'webmc:cooked_chicken', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_chicken', output: 'webmc:cooked_chicken', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:porkchop', output: 'webmc:cooked_porkchop', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_porkchop', output: 'webmc:cooked_porkchop', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:mutton', output: 'webmc:cooked_mutton', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_mutton', output: 'webmc:cooked_mutton', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:rabbit', output: 'webmc:cooked_rabbit', cookSec: 10, experience: 0.35 },
   { input: 'webmc:raw_rabbit', output: 'webmc:cooked_rabbit', cookSec: 10, experience: 0.35 },
-  { input: 'webmc:raw_fish', output: 'webmc:cooked_fish', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:cod', output: 'webmc:cooked_cod', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:salmon', output: 'webmc:cooked_salmon', cookSec: 10, experience: 0.35 },
+  { input: 'webmc:potato', output: 'webmc:baked_potato', cookSec: 10, experience: 0.35 },
+  // Raw metals (mining drop is raw, smelt to ingot).
+  { input: 'webmc:raw_iron', output: 'webmc:iron_ingot', cookSec: 10, experience: 0.7 },
+  { input: 'webmc:raw_gold', output: 'webmc:gold_ingot', cookSec: 10, experience: 1 },
+  { input: 'webmc:raw_copper', output: 'webmc:copper_ingot', cookSec: 10, experience: 0.7 },
+  // Ore blocks (silk-touch drop path).
   { input: 'webmc:iron_ore', output: 'webmc:iron_ingot', cookSec: 10, experience: 0.7 },
   { input: 'webmc:gold_ore', output: 'webmc:gold_ingot', cookSec: 10, experience: 1 },
   { input: 'webmc:copper_ore', output: 'webmc:copper_ingot', cookSec: 10, experience: 0.7 },
-  { input: 'webmc:diamond_ore', output: 'webmc:diamond', cookSec: 10, experience: 1.3 },
-  { input: 'webmc:potato', output: 'webmc:baked_potato', cookSec: 10, experience: 0.35 },
+  // Wiki (minecraft.wiki/w/Smelting): diamond_ore → diamond gives 1.0
+  // XP, the same as gold_ore → ingot. Old 1.3 was non-canonical.
+  { input: 'webmc:diamond_ore', output: 'webmc:diamond', cookSec: 10, experience: 1 },
+  { input: 'webmc:emerald_ore', output: 'webmc:emerald', cookSec: 10, experience: 1 },
+  { input: 'webmc:lapis_ore', output: 'webmc:lapis_lazuli', cookSec: 10, experience: 0.2 },
+  { input: 'webmc:redstone_ore', output: 'webmc:redstone', cookSec: 10, experience: 0.7 },
+  { input: 'webmc:nether_quartz_ore', output: 'webmc:nether_quartz', cookSec: 10, experience: 0.2 },
+  // Wiki (minecraft.wiki/w/Nether_Gold_Ore): "Smelting ingredient:
+  // Nether Gold Ore → Gold Ingot, 1 XP." Old code output gold_nugget,
+  // matching the mining drop instead of the smelting recipe (the
+  // mining drop is 2-6 nuggets, the smelt yields 1 ingot — they're
+  // separate paths).
+  { input: 'webmc:nether_gold_ore', output: 'webmc:gold_ingot', cookSec: 10, experience: 1 },
+  { input: 'webmc:ancient_debris', output: 'webmc:netherite_scrap', cookSec: 10, experience: 2 },
+  // Stone family
   { input: 'webmc:cobblestone', output: 'webmc:stone', cookSec: 10, experience: 0.1 },
   { input: 'webmc:stone', output: 'webmc:smooth_stone', cookSec: 10, experience: 0.1 },
   { input: 'webmc:sand', output: 'webmc:glass', cookSec: 10, experience: 0.1 },
   { input: 'webmc:clay', output: 'webmc:terracotta', cookSec: 10, experience: 0.35 },
   { input: 'webmc:netherrack', output: 'webmc:nether_brick', cookSec: 10, experience: 0.1 },
-  { input: 'webmc:nether_quartz_ore', output: 'webmc:nether_quartz', cookSec: 10, experience: 0.2 },
 ];
 
 export function findRecipe(inputName: string): SmeltingRecipe | null {

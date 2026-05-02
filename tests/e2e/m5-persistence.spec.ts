@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('M5 persistence', () => {
   test('player position and world state persist across reload', async ({ page, context }) => {
     await context.clearCookies();
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     await page.evaluate(async () => {
       // Clear IDB so each run starts fresh.
       const dbs = await indexedDB.databases();
@@ -30,7 +30,7 @@ test.describe('M5 persistence', () => {
       );
     });
 
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     await page.waitForFunction(
       () => {
         const hud = document.querySelector('#hud')?.textContent ?? '';
@@ -72,7 +72,7 @@ test.describe('M5 persistence', () => {
   });
 
   test('HUD exposes a save counter', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?autoplay=1');
     const hud = page.getByTestId('hud');
     await expect(hud).toContainText(/save\d+/);
   });

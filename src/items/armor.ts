@@ -1,9 +1,17 @@
 // Armor defense model. Given a set of 4 armor slots and the enchants on
-// each piece, compute the damage the player actually takes from an incoming
-// hit. Matches MC's "armor points + toughness + protection enchant" formula:
+// each piece, compute the damage the player actually takes from an
+// incoming hit. Matches MC's "armor points + toughness + protection
+// enchant" formula:
 //
-//   mitigatedPercent = clamp(armor - damage/2/(toughness/4+2), armor*0.2) / 25
-//   finalDamage = damage * (1 - mitigatedPercent) * (1 - protectionMitigation)
+//   mitigationPoints = min(20, max(armor/5, armor - damage/(2 + toughness/4)))
+//   finalDamage      = damage * (1 - mitigationPoints/25) * (1 - protFactor)
+//
+// The MAX inside `mitigationPoints` is the canonical wiki formula: armor
+// always provides AT LEAST `armor/5` mitigation (the floor), and CAN
+// provide more when the incoming damage is small. Old code used `min`
+// here, inverting the floor — armor became LESS effective at low damage
+// and ineffective (clamped to 0) at high damage. Sibling
+// armor_set_bonus.ts already uses MAX.
 
 import { hasEnchant, type Enchanted } from './enchantment';
 
@@ -102,12 +110,96 @@ export const ARMOR_DEFS: Record<string, ArmorDef> = {
     toughness: 2,
     durability: 429,
   },
+  // Gold (golden) armor — was missing entirely; players smelting gold
+  // ingots had no way to actually wear them. Vanilla stats: helmet 2,
+  // chestplate 5, leggings 3, boots 1, all at toughness 0, low durability.
+  gold_helmet: {
+    name: 'webmc:gold_helmet',
+    slot: 'helmet',
+    defense: 2,
+    toughness: 0,
+    durability: 77,
+  },
+  gold_chestplate: {
+    name: 'webmc:gold_chestplate',
+    slot: 'chestplate',
+    defense: 5,
+    toughness: 0,
+    durability: 112,
+  },
+  gold_leggings: {
+    name: 'webmc:gold_leggings',
+    slot: 'leggings',
+    defense: 3,
+    toughness: 0,
+    durability: 105,
+  },
+  gold_boots: {
+    name: 'webmc:gold_boots',
+    slot: 'boots',
+    defense: 1,
+    toughness: 0,
+    durability: 91,
+  },
+  // Chainmail — also missing, available via /give in vanilla. Same
+  // defense as iron but no crafting recipe (vanilla parity).
+  chainmail_helmet: {
+    name: 'webmc:chainmail_helmet',
+    slot: 'helmet',
+    defense: 2,
+    toughness: 0,
+    durability: 165,
+  },
+  chainmail_chestplate: {
+    name: 'webmc:chainmail_chestplate',
+    slot: 'chestplate',
+    defense: 5,
+    toughness: 0,
+    durability: 240,
+  },
+  chainmail_leggings: {
+    name: 'webmc:chainmail_leggings',
+    slot: 'leggings',
+    defense: 4,
+    toughness: 0,
+    durability: 225,
+  },
+  chainmail_boots: {
+    name: 'webmc:chainmail_boots',
+    slot: 'boots',
+    defense: 1,
+    toughness: 0,
+    durability: 195,
+  },
+  netherite_helmet: {
+    name: 'webmc:netherite_helmet',
+    slot: 'helmet',
+    defense: 3,
+    toughness: 3,
+    durability: 407,
+  },
   netherite_chestplate: {
     name: 'webmc:netherite_chestplate',
     slot: 'chestplate',
     defense: 8,
     toughness: 3,
     durability: 592,
+  },
+  // Was missing the rest of the netherite set — players upgrading from
+  // diamond had only a chestplate option. Now the full set.
+  netherite_leggings: {
+    name: 'webmc:netherite_leggings',
+    slot: 'leggings',
+    defense: 6,
+    toughness: 3,
+    durability: 555,
+  },
+  netherite_boots: {
+    name: 'webmc:netherite_boots',
+    slot: 'boots',
+    defense: 3,
+    toughness: 3,
+    durability: 481,
   },
   turtle_shell: {
     name: 'webmc:turtle_shell',
@@ -173,7 +265,8 @@ export function incomingDamage(rawDamage: number, set: ArmorSet): number {
   const toughness = totalToughness(set);
   const protection = protectionLevel(set);
   if (armor === 0 && protection === 0) return rawDamage;
-  const armorMitigation = Math.min(armor - rawDamage / (2 + toughness / 4), armor * 0.2) / 25;
+  const armorMitigation =
+    Math.min(20, Math.max(armor * 0.2, armor - rawDamage / (2 + toughness / 4))) / 25;
   const armorFactor = Math.max(0, Math.min(0.8, armorMitigation));
   const afterArmor = rawDamage * (1 - armorFactor);
   const protFactor = Math.min(0.8, protection * 0.04); // clamp at 80%

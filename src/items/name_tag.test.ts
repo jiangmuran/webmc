@@ -21,13 +21,13 @@ describe('name tag', () => {
     expect(renameViaTag(mob, null)).toBe(false);
   });
 
-  it('clips at 40 chars', () => {
+  it('clips at 50 chars (wiki anvil limit)', () => {
     const mob: { customName: string | null; customNameVisible: boolean } = {
       customName: null,
       customNameVisible: false,
     };
     renameViaTag(mob, 'a'.repeat(100));
-    expect(mob.customName?.length).toBe(40);
+    expect(mob.customName?.length).toBe(50);
   });
 
   it('Dinnerbone is upside-down', () => {

@@ -1,3 +1,7 @@
+// Wiki (minecraft.wiki/w/Breach, /w/Density): the 1.21 mace
+// enchantments add new conflict pairs. Old list omitted Breach
+// entirely, so Density+Breach and Breach+Sharpness/Smite/Bane/
+// Impaling were all silently allowed.
 export const INCOMPATIBLE_PAIRS: [string, string][] = [
   ['sharpness', 'smite'],
   ['sharpness', 'bane_of_arthropods'],
@@ -14,6 +18,12 @@ export const INCOMPATIBLE_PAIRS: [string, string][] = [
   ['multishot', 'piercing'],
   ['loyalty', 'riptide'],
   ['channeling', 'riptide'],
+  // 1.21 Mace (minecraft.wiki/w/Breach, /w/Density):
+  ['breach', 'density'],
+  ['breach', 'sharpness'],
+  ['breach', 'smite'],
+  ['breach', 'bane_of_arthropods'],
+  ['breach', 'impaling'],
 ];
 
 function pairKey(a: string, b: string): string {

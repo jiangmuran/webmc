@@ -23,7 +23,9 @@ describe('warden anger', () => {
     expect(a.byEntity.get('Steve')).toBe(MAX_ANGER);
   });
 
-  it('attack thresholds', () => {
+  it('attack thresholds (wiki: suspect 35, target 80)', () => {
+    expect(MELEE_THRESHOLD).toBe(35);
+    expect(SONIC_THRESHOLD).toBe(80);
     const a = { byEntity: new Map<string, number>() };
     bumpAnger(a, 'Steve', MELEE_THRESHOLD - 1);
     expect(currentAttack(a).attack).toBe('idle');

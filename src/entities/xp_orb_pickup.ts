@@ -11,7 +11,13 @@ export interface XpOrb {
   lifetimeTicks: number;
 }
 
-export const GRAVITATE_RADIUS = 8;
+// Wiki (minecraft.wiki/w/Experience): "Experience orbs ... float or
+// glide toward the player up to a distance of 7.25 blocks." Old
+// GRAVITATE_RADIUS = 8 was 0.75 blocks over wiki canon, so orbs in
+// the 7.25-8 shell would attract players that wiki canon leaves
+// untouched. Sibling xp_orb.ts MAGNET_RADIUS now uses 7.25; this
+// module matches.
+export const GRAVITATE_RADIUS = 7.25;
 export const PICKUP_RADIUS = 1.1;
 export const LIFETIME_TICKS = 6000; // 5 min
 

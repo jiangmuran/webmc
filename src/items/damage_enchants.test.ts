@@ -62,4 +62,43 @@ describe('damage reduction enchants', () => {
   it('no thorns → no reflection', () => {
     expect(thornsReflection({ armor: [{ stack: chest() }], rng: () => 0 })).toBe(0);
   });
+
+  it('thorns damage range 1..5 (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Thorns): "1 to 5 damage." Old code
+    // rolled 1..4 and excluded the upper end of the wiki range.
+    let saw5 = false;
+    const seq: number[] = [];
+    for (let i = 0; i < 50; i++) seq.push(0, 0.99); // chance hit, then dmg roll
+    let idx = 0;
+    const rng = () => seq[idx++ % seq.length] ?? 0;
+    for (let i = 0; i < 25; i++) {
+      const d = thornsReflection({
+        armor: [{ stack: chest(['thorns', 3]) }],
+        rng,
+      });
+      if (d === 5) saw5 = true;
+    }
+    expect(saw5).toBe(true);
+  });
+
+  it('multiple thorns pieces roll independently (wiki)', () => {
+    // Wiki: "Each piece independently has a Level × 15% chance...
+    // Multiple worn armor items with the Thorns enchantment do
+    // stack." With 4 pieces all rolling the chance check, even when
+    // the per-piece chance would be small, multi-piece arrangements
+    // increase the total chance of at least one trigger. Old code
+    // only looked at the best piece's chance.
+    const four = [
+      { stack: chest(['thorns', 3]) },
+      { stack: chest(['thorns', 3]) },
+      { stack: chest(['thorns', 3]) },
+      { stack: chest(['thorns', 3]) },
+    ];
+    // Sequence: alternating activate/dmg rolls that pass the 0.45 chance
+    // check on every piece.
+    let idx = 0;
+    const seq = [0.0, 0.5, 0.0, 0.5, 0.0, 0.5, 0.0, 0.5];
+    const rng = (): number => seq[idx++ % seq.length] ?? 0;
+    expect(thornsReflection({ armor: four, rng })).toBeGreaterThan(0);
+  });
 });

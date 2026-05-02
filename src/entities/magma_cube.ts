@@ -45,9 +45,16 @@ export function onDeath(size: MagmaCubeSize, rng: () => number): MagmaSplitResul
   return { children, droppedMagmaCream: cream };
 }
 
-// Attack damage by size: small=2, medium=4, large=6.
+// Wiki (minecraft.wiki/w/Magma_Cube): "The attack strength is its
+// size + 2." Plus per-difficulty multipliers; Normal-difficulty
+// values are 3 / 4 / 6 for sizes 1 / 2 / 4.
+//
+// Old small-cube damage was 2 (off-by-one from the wiki's "size+2"
+// rule). The "tiny magma cubes can deal damage to the player" wiki
+// note made the bug visible — players hit by a small magma cube
+// took 2 HP instead of the canonical 3.
 export function attackDamageBySize(size: MagmaCubeSize): number {
-  return size === 1 ? 2 : size === 2 ? 4 : 6;
+  return size + 2;
 }
 
 // Magma cubes are fire-immune AND take no fall damage.

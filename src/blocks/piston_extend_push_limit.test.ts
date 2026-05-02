@@ -6,8 +6,10 @@ describe('piston push limit', () => {
     expect(isImmovable('obsidian')).toBe(true);
   });
 
-  it('furnace immovable', () => {
-    expect(isImmovable('blast_furnace')).toBe(true);
+  it('furnace family is MOVABLE in Java 1.13+ (wiki)', () => {
+    expect(isImmovable('blast_furnace')).toBe(false);
+    expect(isImmovable('furnace')).toBe(false);
+    expect(isImmovable('smoker')).toBe(false);
   });
 
   it('stone push ok', () => {

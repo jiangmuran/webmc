@@ -31,8 +31,21 @@ export function onInfestedBlockBroken(
   return { silverfishSpawned: true, dropsBlockVariant: null };
 }
 
-// When hurt, call nearby silverfish within 21 blocks + infested blocks
-// within 3 to release their silverfish.
+// When hurt by player or Poison damage and survives, call nearby
+// silverfish + release infested blocks within a 21×11×21 box.
+//
+// Wiki (minecraft.wiki/w/Silverfish#Behavior): "When they suffer
+// Poison damage or damage inflicted by the player and survive, they
+// cause other silverfish within a 21×11×21 area to break out of
+// their infested blocks." → ±10 blocks horizontal, ±5 vertical from
+// the hurt silverfish.
+//
+// Old infested-block radius was 3 (Euclidean), so an infested block
+// even 5 blocks away would silently fail to break — most stronghold
+// "wall of silverfish" experiences couldn't trigger from a single
+// hit. Now uses the wiki's canonical 21×11×21 box for both alerted
+// silverfish and released infested blocks.
+
 export interface SwarmCallCtx {
   silverfish: readonly { id: number; pos: Vec3 }[];
   infestedBlocks: readonly { pos: Vec3 }[];
@@ -44,20 +57,25 @@ export interface SwarmResult {
   releaseInfested: readonly Vec3[];
 }
 
+const SWARM_HALF_HORIZONTAL = 10; // 21 wide → ±10
+const SWARM_HALF_VERTICAL = 5; // 11 tall → ±5
+
+function inSwarmBox(here: Vec3, there: Vec3): boolean {
+  return (
+    Math.abs(there.x - here.x) <= SWARM_HALF_HORIZONTAL &&
+    Math.abs(there.y - here.y) <= SWARM_HALF_VERTICAL &&
+    Math.abs(there.z - here.z) <= SWARM_HALF_HORIZONTAL
+  );
+}
+
 export function callSwarm(ctx: SwarmCallCtx): SwarmResult {
   const alerted: number[] = [];
   for (const s of ctx.silverfish) {
-    const dx = s.pos.x - ctx.hurtPos.x;
-    const dy = s.pos.y - ctx.hurtPos.y;
-    const dz = s.pos.z - ctx.hurtPos.z;
-    if (Math.hypot(dx, dy, dz) <= 21) alerted.push(s.id);
+    if (inSwarmBox(ctx.hurtPos, s.pos)) alerted.push(s.id);
   }
   const released: Vec3[] = [];
   for (const b of ctx.infestedBlocks) {
-    const dx = b.pos.x - ctx.hurtPos.x;
-    const dy = b.pos.y - ctx.hurtPos.y;
-    const dz = b.pos.z - ctx.hurtPos.z;
-    if (Math.hypot(dx, dy, dz) <= 3) released.push(b.pos);
+    if (inSwarmBox(ctx.hurtPos, b.pos)) released.push(b.pos);
   }
   return { alertedSilverfishIds: alerted, releaseInfested: released };
 }

@@ -26,14 +26,21 @@ export interface CampfireRecipe {
 }
 
 // A subset of the smelting table — cooked meats + baked potato.
+//
+// Wiki / webmc registry: fish use the modern Java IDs `webmc:cod` and
+// `webmc:salmon` (no `raw_` prefix; the prefix was retired around
+// 1.13). Old recipes named `raw_fish` / `raw_salmon` would never
+// match the actual webmc raw fish items the player picks up. Meats
+// (raw_beef / raw_porkchop / raw_chicken / raw_mutton / raw_rabbit)
+// keep webmc's `raw_` prefix per the registry convention.
 export const CAMPFIRE_RECIPES: readonly CampfireRecipe[] = [
   { input: 'webmc:raw_beef', output: 'webmc:cooked_beef' },
   { input: 'webmc:raw_porkchop', output: 'webmc:cooked_porkchop' },
   { input: 'webmc:raw_chicken', output: 'webmc:cooked_chicken' },
   { input: 'webmc:raw_mutton', output: 'webmc:cooked_mutton' },
   { input: 'webmc:raw_rabbit', output: 'webmc:cooked_rabbit' },
-  { input: 'webmc:raw_fish', output: 'webmc:cooked_fish' },
-  { input: 'webmc:raw_salmon', output: 'webmc:cooked_salmon' },
+  { input: 'webmc:cod', output: 'webmc:cooked_cod' },
+  { input: 'webmc:salmon', output: 'webmc:cooked_salmon' },
   { input: 'webmc:potato', output: 'webmc:baked_potato' },
   { input: 'webmc:kelp', output: 'webmc:dried_kelp' },
 ];

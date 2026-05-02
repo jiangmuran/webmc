@@ -9,9 +9,14 @@ export interface AxolotlState {
   lastPlayDeadMs: number;
 }
 
+// Wiki (minecraft.wiki/w/Axolotl#Playing_dead): "After they play
+// dead and revive, axolotls cannot play dead again for 5 minutes."
+// Sibling axolotl.ts uses PLAY_DEAD_COOLDOWN = 5 * 60. Old 2-minute
+// cooldown allowed the axolotl to spam play-dead 2.5× more often
+// than wiki canon.
 export const PLAY_DEAD_DURATION_MS = 10_000;
 export const PLAY_DEAD_CHANCE = 0.333;
-export const PLAY_DEAD_COOLDOWN_MS = 2 * 60_000;
+export const PLAY_DEAD_COOLDOWN_MS = 5 * 60_000;
 
 export function makeAxolotl(maxHp = 14): AxolotlState {
   return {

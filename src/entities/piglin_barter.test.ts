@@ -29,7 +29,21 @@ describe('piglin barter', () => {
     }
   });
 
-  it('cooldown 2s', () => {
-    expect(PIGLIN_BARTER_COOLDOWN_TICKS).toBe(40);
+  it('cooldown 6s = 120 ticks (wiki)', () => {
+    expect(PIGLIN_BARTER_COOLDOWN_TICKS).toBe(120);
+  });
+
+  it('total weight 469 per wiki', () => {
+    expect(totalWeight()).toBe(469);
+  });
+
+  it('dried_ghast in barter table (wiki: 1.21.6 addition)', () => {
+    expect(PIGLIN_BARTER_TABLE.some((e) => e.item === 'dried_ghast')).toBe(true);
+  });
+
+  it('iron_nugget count 10-36 (wiki)', () => {
+    const e = PIGLIN_BARTER_TABLE.find((x) => x.item === 'iron_nugget');
+    expect(e?.minCount).toBe(10);
+    expect(e?.maxCount).toBe(36);
   });
 });

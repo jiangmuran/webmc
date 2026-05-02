@@ -1,5 +1,9 @@
-// Vex. Flying summon from an Evoker; passes through blocks; stops
-// existing when its summoner dies, or 30-120 seconds after spawn.
+// Vex. Flying summon from an Evoker; passes through blocks. Per wiki
+// (minecraft.wiki/w/Vex), vexes are NOT bound to their evoker — they
+// continue living the full 30-119 seconds even if the summoner is
+// killed. Old check `!ctx.summonerAlive → expired` made vexes vanish
+// the moment their evoker fell, but the wiki's whole point of
+// summoning vexes is that they outlast the caster.
 
 export interface Vex {
   position: { x: number; y: number; z: number };
@@ -35,14 +39,17 @@ export interface VexTickResult {
 
 export function tickVex(state: Vex, ctx: VexTickCtx): VexTickResult {
   state.ageSec += ctx.dtSec;
-  if (!ctx.summonerAlive) return { expired: true };
+  // Wiki: vex lives full lifetime regardless of summoner's status.
+  void ctx.summonerAlive;
   if (state.ageSec >= state.lifetimeSec) return { expired: true };
   if (ctx.targetPos) {
     const dx = ctx.targetPos.x - state.position.x;
     const dy = ctx.targetPos.y - state.position.y;
     const dz = ctx.targetPos.z - state.position.z;
     const dist = Math.hypot(dx, dy, dz) || 1;
-    const speed = 2;
+    // Wiki (minecraft.wiki/w/Vex): movement speed 0.7 b/tick = 14 b/s.
+    // Old constant of 2 b/s left vex chasing molasses-slow.
+    const speed = 14;
     state.velocity.x = (dx / dist) * speed;
     state.velocity.y = (dy / dist) * speed;
     state.velocity.z = (dz / dist) * speed;

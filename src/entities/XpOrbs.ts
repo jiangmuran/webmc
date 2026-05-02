@@ -16,6 +16,10 @@ interface XpOrb {
 const GRAVITY = 16;
 const MAX_LIFETIME_SEC = 300;
 const ORB_SIZE = 0.18;
+// Wiki: XP orbs gravitate to player within 7 blocks (Java Edition).
+// Was 3 blocks — players had to walk almost on top of orbs to collect.
+const GRAVITATE_RADIUS = 7;
+const GRAVITATE_RADIUS_SQ = GRAVITATE_RADIUS * GRAVITATE_RADIUS;
 
 export class XpOrbWorld {
   readonly group: THREE.Group;
@@ -24,9 +28,15 @@ export class XpOrbWorld {
   private readonly sharedGeom: THREE.SphereGeometry;
   private readonly sharedMat: THREE.MeshBasicMaterial;
   private nextId = 1;
+  // Reused per-tick scratch list — was allocated fresh each call.
+  private readonly toRemoveScratch: number[] = [];
 
   constructor() {
     this.group = new THREE.Group();
+    // Group sits at world origin; per-orb meshes carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
     this.sharedGeom = new THREE.SphereGeometry(ORB_SIZE, 8, 6);
     this.sharedMat = new THREE.MeshBasicMaterial({
       color: 0xbfff50,
@@ -36,6 +46,19 @@ export class XpOrbWorld {
   }
 
   spawn(x: number, y: number, z: number, xp: number): void {
+    // Merge with a nearby fresh orb of similar value to keep entity
+    // counts low at busy XP farms (each kill spawns ~5 chunks; chained
+    // kills can leave hundreds of identical-value orbs cluttering
+    // memory + scene-graph). Vanilla MC merges within ~1 block.
+    for (const existing of this.orbs.values()) {
+      if (existing.ageSec > 1.5) continue;
+      const dx = existing.x - x;
+      const dy = existing.y - (y + 0.25);
+      const dz = existing.z - z;
+      if (dx * dx + dy * dy + dz * dz > 1.0 * 1.0) continue;
+      existing.xp += xp;
+      return;
+    }
     const orb: XpOrb = {
       id: this.nextId++,
       x,
@@ -60,10 +83,24 @@ export class XpOrbWorld {
     playerPos: { x: number; y: number; z: number },
     onPickup: (xp: number) => void,
   ): void {
-    const toRemove: number[] = [];
+    // Skip the tick entirely when no orbs exist. The inner loops
+    // already short-circuit on the empty Map, but the early return
+    // also skips the toRemove scratch reset.
+    if (this.orbs.size === 0) return;
+    const toRemove = this.toRemoveScratch;
+    toRemove.length = 0;
     for (const orb of this.orbs.values()) {
       orb.ageSec += dtSec;
       if (orb.ageSec > MAX_LIFETIME_SEC) {
+        toRemove.push(orb.id);
+        continue;
+      }
+      // Void cleanup. XP orbs that fell off the world (player kills mob
+      // over a 1-block hole, orbs fall through, etc.) used to live to
+      // age-out at 5 minutes — meanwhile gravity-ticking forever at
+      // y=-Infinity. Drop them at the same threshold as void player
+      // damage.
+      if (orb.y < -64) {
         toRemove.push(orb.id);
         continue;
       }
@@ -86,12 +123,15 @@ export class XpOrbWorld {
       const dy = playerPos.y - orb.y;
       const dz = playerPos.z - orb.z;
       const distSq = dx * dx + dy * dy + dz * dz;
-      if (distSq < 3 * 3) {
+      if (distSq < GRAVITATE_RADIUS_SQ) {
+        // Hoist (pullSpeed * dtSec) / len so the three position writes
+        // do one division then three multiplies (vs. three divisions
+        // in the prior `(d / len) * pullSpeed * dtSec` form).
         const len = Math.sqrt(distSq) || 1;
-        const pullSpeed = 8;
-        orb.x += (dx / len) * pullSpeed * dtSec;
-        orb.y += (dy / len) * pullSpeed * dtSec;
-        orb.z += (dz / len) * pullSpeed * dtSec;
+        const pullStep = (8 * dtSec) / len;
+        orb.x += dx * pullStep;
+        orb.y += dy * pullStep;
+        orb.z += dz * pullStep;
         if (distSq < 0.5 * 0.5) {
           onPickup(orb.xp);
           toRemove.push(orb.id);
@@ -108,19 +148,42 @@ export class XpOrbWorld {
     }
   }
 
+  // Reused iterator + value scratches for the minimap. Same pattern
+  // as DroppedItems.positions — was allocating wrapper, iterator,
+  // result, AND value object per iteration.
+  private readonly positionsIterValue = { x: 0, z: 0 };
+  private readonly positionsIterResult: IteratorResult<{ x: number; z: number }> = {
+    done: false,
+    value: this.positionsIterValue,
+  };
+  private positionsIterMapIter: IterableIterator<XpOrb> | null = null;
+  private readonly positionsIter: Iterator<{ x: number; z: number }> = {
+    next: (): IteratorResult<{ x: number; z: number }> => {
+      const it = this.positionsIterMapIter;
+      if (!it) {
+        return { done: true, value: undefined };
+      }
+      const n = it.next();
+      if (n.done) {
+        this.positionsIterMapIter = null;
+        return { done: true, value: undefined };
+      }
+      this.positionsIterValue.x = n.value.x;
+      this.positionsIterValue.z = n.value.z;
+      this.positionsIterResult.done = false;
+      this.positionsIterResult.value = this.positionsIterValue;
+      return this.positionsIterResult;
+    },
+  };
+  private readonly positionsIterable: Iterable<{ x: number; z: number }> = {
+    [Symbol.iterator]: (): Iterator<{ x: number; z: number }> => {
+      this.positionsIterMapIter = this.orbs.values();
+      return this.positionsIter;
+    },
+  };
+
   positions(): Iterable<{ x: number; z: number }> {
-    const vals = this.orbs.values();
-    return {
-      [Symbol.iterator](): Iterator<{ x: number; z: number }> {
-        return {
-          next(): IteratorResult<{ x: number; z: number }> {
-            const n = vals.next();
-            if (n.done) return { done: true, value: undefined };
-            return { done: false, value: { x: n.value.x, z: n.value.z } };
-          },
-        };
-      },
-    };
+    return this.positionsIterable;
   }
 
   get size(): number {

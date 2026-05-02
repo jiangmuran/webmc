@@ -28,4 +28,18 @@ describe('mineshaft', () => {
   it('loot at high roll still returns something', () => {
     expect(rollMinecartLoot(0.99)).not.toBeNull();
   });
+
+  it('lapis entry uses canonical webmc:lapis_lazuli id (not legacy lapis)', () => {
+    // Wiki minecraft.wiki/w/Mineshaft: lapis_lazuli is the dropped
+    // item. The item registry keys it as `webmc:lapis_lazuli`. Old
+    // table id `webmc:lapis` resolved to nothing.
+    const all: { item: string }[] = [];
+    for (let i = 0; i < 200; i++) {
+      const e = rollMinecartLoot(i / 200);
+      if (e) all.push(e);
+    }
+    const ids = new Set(all.map((e) => e.item));
+    expect(ids.has('webmc:lapis_lazuli')).toBe(true);
+    expect(ids.has('webmc:lapis')).toBe(false);
+  });
 });

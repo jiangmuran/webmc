@@ -12,8 +12,10 @@ describe('shroomlight place', () => {
     expect(SHROOMLIGHT_LIGHT_LEVEL).toBe(15);
   });
 
-  it('silk touch only for self-drop', () => {
-    expect(droppedBySilkTouchOnly()).toBe(true);
+  it('drops with any tool, no silk-touch needed (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Shroomlight): "Shroomlight blocks can
+    // be broken with any tool, and always drop as an item."
+    expect(droppedBySilkTouchOnly()).toBe(false);
   });
 
   it('hoe preferred', () => {

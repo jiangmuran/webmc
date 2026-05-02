@@ -21,4 +21,11 @@ describe('respawn anchor charge crafting', () => {
       3,
     );
   });
+
+  it('charges in any dimension (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Respawn_Anchor): "A respawn anchor can be
+    // charged with glowstone in any dimension." Only using as a
+    // spawn point is dimension-restricted.
+    expect(canCharge({ charges: 0, dimensionAllowed: false, itemGlowstone: true })).toBe(true);
+  });
 });

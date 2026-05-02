@@ -1,6 +1,12 @@
-// Ocelot trust. Unlike cats, ocelots aren't tameable. Feeding raw fish
-// builds trust: enough trust = ocelots stop fleeing the player (they
-// stay trusting but don't become pets).
+// Ocelot trust. Unlike cats, ocelots aren't tameable. Feeding raw cod
+// or salmon builds trust: enough trust = ocelots stop fleeing the
+// player (they stay trusting but don't become pets).
+//
+// Wiki (minecraft.wiki/w/Ocelot): 'Ocelots can be tempted with raw
+// cod or raw salmon. Each feeding has a 1/3 chance of trusting
+// the player.' Item IDs are `cod` and `salmon` in modern MC; the
+// legacy `raw_fish` / `raw_salmon` naming was retired around 1.13.
+// Sibling ocelot_breed_fish.ts already uses `cod` / `salmon`.
 
 export interface OcelotState {
   trustLevel: number; // 0..100
@@ -22,7 +28,7 @@ export interface FeedResult {
   trusted: boolean;
 }
 
-const TRUST_ITEMS = new Set(['webmc:raw_fish', 'webmc:raw_salmon']);
+const TRUST_ITEMS = new Set(['webmc:cod', 'webmc:salmon']);
 const TRUST_GAIN_CHANCE = 1 / 3;
 
 export function feedOcelot(state: OcelotState, q: FeedQuery): FeedResult {

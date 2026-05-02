@@ -13,10 +13,16 @@ export function releasesAsEntity(b: Bucket): { entity: string; variantTag?: numb
   };
 }
 
+// Wiki (minecraft.wiki/w/Bucket_of_Cod and siblings): "Pressing use
+// with a bucket of cod places a water source block, and spawns the
+// cod back into the world, leaving an empty bucket in the player's
+// inventory." So release: water source block placed IN THE WORLD,
+// EMPTY bucket left in inventory. Old code had the booleans
+// inverted (claimed a water bucket was returned, no empty bucket).
 export function returnsEmptyBucketAfterRelease(): boolean {
-  return false;
+  return true;
 }
 
 export function returnsWaterBucketAfterRelease(): boolean {
-  return true;
+  return false;
 }

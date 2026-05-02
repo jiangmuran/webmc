@@ -17,12 +17,17 @@ const base: RavagerState = {
 };
 
 describe('ravager stun/shield', () => {
-  it('shield block applies stun cooldown', () => {
-    expect(onShieldBlocked(base).attackCooldown).toBe(STUN_DURATION_TICKS);
+  it('shield block applies stun cooldown when stun rolls (wiki: 50% chance)', () => {
+    expect(onShieldBlocked(base, () => 0).attackCooldown).toBe(STUN_DURATION_TICKS);
+  });
+
+  it('shield block has no effect when stun roll fails (wiki: 50% no-op)', () => {
+    const s = onShieldBlocked(base, () => 0.99);
+    expect(s.attackCooldown).toBe(0);
   });
 
   it('tick drains cooldown', () => {
-    const s = onShieldBlocked(base);
+    const s = onShieldBlocked(base, () => 0);
     expect(tick(s).attackCooldown).toBe(STUN_DURATION_TICKS - 1);
   });
 

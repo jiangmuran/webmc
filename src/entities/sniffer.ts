@@ -1,11 +1,15 @@
 // Sniffer + ancient seeds. Sniffer mobs periodically dig up "ancient
 // seeds" (torchflower / pitcher pod), which can be planted + grown.
+//
+// Wiki (minecraft.wiki/w/Sniffer): "with an equal chance of digging
+// up either one" — torchflower seeds and pitcher pod are 50/50.
+// Old 60/40 split favored torchflower, contrary to wiki.
 
 export type AncientSeed = 'torchflower_seeds' | 'pitcher_pod';
 
 const SEED_WEIGHTS: Record<AncientSeed, number> = {
-  torchflower_seeds: 60,
-  pitcher_pod: 40,
+  torchflower_seeds: 50,
+  pitcher_pod: 50,
 };
 
 export function rollAncientSeed(rng: () => number = Math.random): AncientSeed {
@@ -20,6 +24,11 @@ export function rollAncientSeed(rng: () => number = Math.random): AncientSeed {
 
 // Sniffer behaviour: sniffs for ~10s, digs for ~6s, then produces a seed
 // on suitable ground (grass / dirt / podzol / coarse_dirt).
+//
+// Wiki (minecraft.wiki/w/Sniffer): "After sniffing out seeds, an
+// eight-minute cooldown is activated before it can search again."
+// 8 min = 480 s. Old cooldown was 30 s, so a single sniffer would
+// produce ~16× more seeds than wiki.
 export interface SnifferState {
   phase: 'idle' | 'sniffing' | 'digging' | 'cooldown';
   phaseSec: number;
@@ -38,7 +47,7 @@ const PHASE_TIMES: Record<SnifferState['phase'], number> = {
   idle: 10,
   sniffing: 10,
   digging: 6,
-  cooldown: 30,
+  cooldown: 480,
 };
 
 export interface SnifferStepResult {

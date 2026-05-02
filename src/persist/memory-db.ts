@@ -82,6 +82,11 @@ export class InMemoryPersistDB implements PersistDB {
     return Promise.resolve();
   }
 
+  setMetas(entries: readonly { key: string; value: unknown }[]): Promise<void> {
+    for (const e of entries) this.meta.set(e.key, e.value);
+    return Promise.resolve();
+  }
+
   close(): void {
     // no-op
   }

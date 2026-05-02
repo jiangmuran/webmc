@@ -29,9 +29,11 @@ describe('honey block', () => {
     expect(applyHoneyFallDamage(10)).toBeLessThan(10);
   });
 
-  it('sticks to slime and honey only', () => {
-    expect(stickyConnection('webmc:slime_block')).toBe(true);
+  it('sticks to honey only, NOT slime (wiki: honey/slime non-stick trick)', () => {
     expect(stickyConnection('webmc:honey_block')).toBe(true);
+    // Wiki: slime + honey do NOT stick to each other — that's the
+    // famous selective piston design pattern.
+    expect(stickyConnection('webmc:slime_block')).toBe(false);
     expect(stickyConnection('webmc:stone')).toBe(false);
   });
 });

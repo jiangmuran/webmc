@@ -1,6 +1,13 @@
+// Wiki (minecraft.wiki/w/Note_Block): note 0 = F#3 (~185 Hz), note 12
+// = F#4 (~370 Hz), note 24 = F#5 (~740 Hz). Old formula used 440 Hz
+// (A4) as the reference at note 12, which made every emitted
+// frequency a perfect-third (4 semitones) above the wiki value: a
+// note block tuned to "F#4" actually played A4. The label table
+// always pointed at F# tones, so frequency↔label disagreed.
+const FSHARP3_HZ = 185;
+
 export function noteIndexToFrequency(note: number): number {
-  const a4 = 440;
-  return a4 * Math.pow(2, (note - 12) / 12);
+  return FSHARP3_HZ * Math.pow(2, note / 12);
 }
 
 export function noteIndexToSemitones(note: number): number {

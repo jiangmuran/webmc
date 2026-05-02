@@ -1,8 +1,15 @@
 // Village bell. Rings when right-clicked or powered with redstone.
-// Ringing has three effects:
-//   (1) Applies "Glowing" to all raiders within 32 blocks for 3 seconds.
-//   (2) Sends villagers to work/home (their schedules react to the bell).
-//   (3) Plays the chime sound in a 24-block radius.
+//
+// Wiki (minecraft.wiki/w/Bell#Glowing_effect): "If a bell is rung
+// and there is a raid mob within a 32 block spherical range, the
+// Glowing effect is applied to all raid mobs within 48 blocks for
+// 3 seconds." Two distinct radii — TRIGGER 32 (any raider in range
+// to fire the effect) and APPLY 48 (the actual glow reach once
+// triggered).
+//
+// Old code applied glow only within 32 blocks, missing raiders in
+// the 32-48 shell that wiki canon highlights. Sibling
+// bell_ring_damage_raiders.ts already implements this distinction.
 
 export interface Vec3 {
   x: number;
@@ -20,7 +27,8 @@ export function makeBell(): BellState {
   return { ringing: false, secondsSinceRing: 0, swingAngle: 0 };
 }
 
-export const BELL_RAIDER_RADIUS = 32;
+export const BELL_RAIDER_TRIGGER_RADIUS = 32;
+export const BELL_RAIDER_GLOW_RADIUS = 48;
 export const BELL_GLOWING_SEC = 3;
 export const BELL_SOUND_RADIUS = 24;
 export const BELL_RING_DURATION_SEC = 1;
@@ -53,15 +61,29 @@ export interface RingEffect {
 }
 
 export function computeRingEffect(ctx: RingContext): RingEffect {
-  const glowing: number[] = [];
   const sounds: number[] = [];
+  // Pass 1: detect any raider within trigger radius — required to fire.
+  let triggered = false;
   for (const r of ctx.raiders) {
     const dx = r.position.x - ctx.bellPos.x;
     const dy = r.position.y - ctx.bellPos.y;
     const dz = r.position.z - ctx.bellPos.z;
     const dist = Math.hypot(dx, dy, dz);
-    if (r.isRaider && dist <= BELL_RAIDER_RADIUS) glowing.push(r.id);
+    if (r.isRaider && dist <= BELL_RAIDER_TRIGGER_RADIUS) {
+      triggered = true;
+    }
     if (dist <= BELL_SOUND_RADIUS) sounds.push(r.id);
+  }
+  // Pass 2: if triggered, glow ALL raiders within the wider apply radius.
+  const glowing: number[] = [];
+  if (triggered) {
+    for (const r of ctx.raiders) {
+      if (!r.isRaider) continue;
+      const dx = r.position.x - ctx.bellPos.x;
+      const dy = r.position.y - ctx.bellPos.y;
+      const dz = r.position.z - ctx.bellPos.z;
+      if (Math.hypot(dx, dy, dz) <= BELL_RAIDER_GLOW_RADIUS) glowing.push(r.id);
+    }
   }
   return { glowingRaiderIds: glowing, soundsTo: sounds };
 }

@@ -30,7 +30,10 @@ export function makeSnifferDig(): SnifferDigState {
 const SNIFF_SEC = 3;
 const DIG_SEC = 6;
 const RISE_SEC = 1;
-const COOLDOWN_SEC = 120;
+// Wiki (minecraft.wiki/w/Sniffer): "After sniffing out seeds, an
+// eight-minute cooldown is activated before it can search again."
+// Old constant 120 s (2 min) was 4× too short.
+const COOLDOWN_SEC = 480;
 
 export interface SnifferTickCtx {
   onDiggableBlock: boolean;
@@ -83,7 +86,10 @@ export function tickSnifferDig(
       if (state.phaseElapsedSec >= DIG_SEC) {
         state.phase = 'rising';
         state.phaseElapsedSec = 0;
-        const seed = rng() < 0.15 ? 'webmc:pitcher_pod' : 'webmc:torchflower_seeds';
+        // Wiki: "with an equal chance of digging up either one"
+        // (torchflower seeds vs pitcher pod). Old code used 15/85
+        // pitcher-rare split, but the wiki says 50/50.
+        const seed = rng() < 0.5 ? 'webmc:pitcher_pod' : 'webmc:torchflower_seeds';
         const pos = state.digCenter;
         state.digCenter = null;
         return { phaseChanged: true, seedPlaced: seed, seedPos: pos };
@@ -102,14 +108,16 @@ export function tickSnifferDig(
   }
 }
 
-// Sniffable surfaces: grass_block, podzol, dirt, coarse_dirt, mycelium,
-// rooted_dirt, moss_block.
+// Wiki (minecraft.wiki/w/Sniffer): the wiki's diggable list is
+//   grass_block, dirt, coarse_dirt, podzol, rooted_dirt, moss_block.
+// Mycelium is EXPLICITLY excluded — wiki: "Sniffers cannot dig on
+// mycelium" (MC-260259, marked WAI). Old set included mycelium,
+// allowing seed digs on a block the wiki rules out.
 const SNIFFABLE = new Set<string>([
   'webmc:grass_block',
   'webmc:podzol',
   'webmc:dirt',
   'webmc:coarse_dirt',
-  'webmc:mycelium',
   'webmc:rooted_dirt',
   'webmc:moss_block',
 ]);

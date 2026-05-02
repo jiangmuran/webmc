@@ -1,6 +1,8 @@
 // Magma block. Standing on top deals 1 HP per 10 ticks. Sneaking or
-// wearing Frost Walker / Leather boots prevents. Also creates bubble
-// columns when underwater.
+// Frost Walker prevents the damage; Fire Resistance also bypasses it
+// (handled at the damage-pipeline level). Wiki: leather boots do
+// NOT protect against magma damage. Also creates downward bubble
+// columns when submerged.
 
 export interface ContactQuery {
   standingOnMagma: boolean;

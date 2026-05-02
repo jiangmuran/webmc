@@ -14,10 +14,14 @@ describe('conduit structure', () => {
     expect(isActive({ prismarineBlockCount: 16, inWaterOrWaterlogged: true })).toBe(true);
   });
 
-  it('range scales', () => {
-    expect(
-      conduitPowerRange({ prismarineBlockCount: POWER_FULL, inWaterOrWaterlogged: true }),
-    ).toBeGreaterThan(conduitPowerRange({ prismarineBlockCount: 16, inWaterOrWaterlogged: true }));
+  it('range scales (wiki: 16→32, 21→48, 28→64, 35→80, 42→96)', () => {
+    const at = (b: number) =>
+      conduitPowerRange({ prismarineBlockCount: b, inWaterOrWaterlogged: true });
+    expect(at(16)).toBe(32);
+    expect(at(21)).toBe(48);
+    expect(at(28)).toBe(64);
+    expect(at(35)).toBe(80);
+    expect(at(POWER_FULL)).toBe(96);
   });
 
   it('full ring attacks', () => {

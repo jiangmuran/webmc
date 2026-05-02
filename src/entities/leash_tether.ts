@@ -14,18 +14,35 @@ export interface LeashResult {
   pullVec: { x: number; y: number; z: number };
 }
 
+// Shared mutable result. Caller iterates leashed mobs each frame and
+// reads broken/pullVec.x/y/z synchronously before the next call, so
+// reusing one object cuts a fresh result + nested pullVec literal per
+// leashed mob per frame.
+const SHARED_RESULT: LeashResult = {
+  broken: false,
+  pullVec: { x: 0, y: 0, z: 0 },
+};
+
 export function tensionStep(c: LeashCtx): LeashResult {
   const dx = c.anchorPos.x - c.mobPos.x;
   const dy = c.anchorPos.y - c.mobPos.y;
   const dz = c.anchorPos.z - c.mobPos.z;
   const dist = Math.hypot(dx, dy, dz);
-  if (dist > LEASH_BREAK) return { broken: true, pullVec: { x: 0, y: 0, z: 0 } };
-  if (dist <= LEASH_MAX_PULL) return { broken: false, pullVec: { x: 0, y: 0, z: 0 } };
+  const out = SHARED_RESULT;
+  out.pullVec.x = 0;
+  out.pullVec.y = 0;
+  out.pullVec.z = 0;
+  if (dist > LEASH_BREAK) {
+    out.broken = true;
+    return out;
+  }
+  out.broken = false;
+  if (dist <= LEASH_MAX_PULL) return out;
   const scale = (dist - LEASH_MAX_PULL) / dist;
-  return {
-    broken: false,
-    pullVec: { x: dx * scale * 0.1, y: dy * scale * 0.1, z: dz * scale * 0.1 },
-  };
+  out.pullVec.x = dx * scale * 0.1;
+  out.pullVec.y = dy * scale * 0.1;
+  out.pullVec.z = dz * scale * 0.1;
+  return out;
 }
 
 // Ordinarily leashes are only valid for small/tame mobs.

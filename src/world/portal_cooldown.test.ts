@@ -53,6 +53,19 @@ describe('portal cooldown', () => {
     expect(r.cooldownTicksRemaining).toBeGreaterThan(0);
   });
 
+  it('player cooldown is 200 ticks (wiki: 10 seconds)', () => {
+    // Wiki (minecraft.wiki/w/Nether_Portal): "10 seconds (200 ticks)"
+    // for players. Old constant 10 was 20× too short — bouncing back
+    // through the destination portal at the next tick.
+    const r = afterTeleport({
+      entityType: 'player',
+      cooldownTicksRemaining: 0,
+      insidePortal: true,
+      ticksInsidePortal: 80,
+    });
+    expect(r.cooldownTicksRemaining).toBe(200);
+  });
+
   it('tick decrements cooldown', () => {
     const r = tick({
       entityType: 'player',

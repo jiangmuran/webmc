@@ -11,11 +11,10 @@ describe('soul speed', () => {
     expect(speedMultiplier({ onSoulBlock: false, level: 3 })).toBe(1);
   });
 
-  it('speed up on soul block', () => {
-    expect(speedMultiplier({ onSoulBlock: true, level: 1 })).toBeGreaterThan(1);
-    expect(speedMultiplier({ onSoulBlock: true, level: 3 })).toBeGreaterThan(
-      speedMultiplier({ onSoulBlock: true, level: 1 }),
-    );
+  it('speed up on soul block (wiki: L × 0.105 + 1.3)', () => {
+    expect(speedMultiplier({ onSoulBlock: true, level: 1 })).toBeCloseTo(1.405);
+    expect(speedMultiplier({ onSoulBlock: true, level: 2 })).toBeCloseTo(1.51);
+    expect(speedMultiplier({ onSoulBlock: true, level: 3 })).toBeCloseTo(1.615);
   });
 
   it('no level no speed', () => {

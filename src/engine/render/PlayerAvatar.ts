@@ -48,6 +48,7 @@ export class PlayerAvatar {
   }
 
   setVisible(v: boolean): void {
+    if (this.group.visible === v) return;
     this.group.visible = v;
   }
 
@@ -87,9 +88,27 @@ export class PlayerAvatar {
   }
 
   setPose(x: number, y: number, z: number, yaw: number): void {
-    this.group.position.set(x, y, z);
-    this.group.rotation.y = yaw;
+    // Diff-cache the position write — Vector3.set fires the
+    // _onChangeCallback (matrixWorldNeedsUpdate) every call. Standing
+    // still in third-person was repainting the same x/y/z each frame.
+    if (x !== this.lastPosX || y !== this.lastPosY || z !== this.lastPosZ) {
+      this.group.position.set(x, y, z);
+      this.lastPosX = x;
+      this.lastPosY = y;
+      this.lastPosZ = z;
+    }
+    // Euler rotation.y= fires _onChangeCallback (quaternion.setFromEuler:
+    // 6 trig + multiple muls). Skip when yaw is unchanged — common in
+    // third-person view while standing still.
+    if (yaw !== this.lastYaw) {
+      this.group.rotation.y = yaw;
+      this.lastYaw = yaw;
+    }
   }
+  private lastYaw = NaN;
+  private lastPosX = NaN;
+  private lastPosY = NaN;
+  private lastPosZ = NaN;
 
   animate(dtSec: number, walkSpeed: number): void {
     if (walkSpeed > 0.4) {
@@ -99,12 +118,20 @@ export class PlayerAvatar {
       this.rightArm.rotation.x = -swing * 0.8;
       this.leftLeg.rotation.x = -swing * 0.9;
       this.rightLeg.rotation.x = swing * 0.9;
-    } else {
+      this.idleWritten = false;
+    } else if (!this.idleWritten) {
+      // Edge-trigger the idle pose: writing rotation.x = 0 on each
+      // limb fires Euler._onChangeCallback (quaternion.setFromEuler —
+      // 6 trig + multiple muls per axis). Once we've written the
+      // zero pose once, subsequent idle frames skip the 4 callbacks.
       this.walkPhase = 0;
       this.leftArm.rotation.x = 0;
       this.rightArm.rotation.x = 0;
       this.leftLeg.rotation.x = 0;
       this.rightLeg.rotation.x = 0;
+      this.idleWritten = true;
     }
   }
+
+  private idleWritten = false;
 }

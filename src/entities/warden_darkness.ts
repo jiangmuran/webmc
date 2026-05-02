@@ -1,6 +1,12 @@
-// Warden darkness effect. Emitted in a 20-block radius around a Warden
-// (or sculk shrieker warning); inflicts a pulsing Blindness-like effect
-// on players.
+// Warden darkness effect. Emitted in a 20-block radius around a Warden;
+// inflicts a pulsing Blindness-like effect on players.
+//
+// Wiki (minecraft.wiki/w/Warden#Inflicting_Darkness): "A warden,
+// whether angered or not, gives 13 seconds of Darkness to all
+// players within a 20 block ovoid radius of it every 6 seconds."
+// Old EFFECT_DURATION_SEC = 12 was 1 s short of the wiki value
+// (12 s is the SCULK SHRIEKER post-shriek darkness duration —
+// different source). webmc files-warden uses 13 s.
 
 export interface Vec3 {
   x: number;
@@ -14,7 +20,7 @@ export interface DarknessTarget {
 }
 
 const EFFECT_RADIUS = 20;
-const EFFECT_DURATION_SEC = 12;
+const EFFECT_DURATION_SEC = 13;
 
 export interface DarknessApply {
   entityId: number;

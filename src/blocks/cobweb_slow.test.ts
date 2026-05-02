@@ -18,8 +18,9 @@ describe('cobweb', () => {
     expect(fallDamageInCobweb({ inCobweb: false }, 10)).toBe(10);
   });
 
-  it('drop tool', () => {
-    expect(cobwebDrop('shears')).toBe('webmc:string');
+  it('drop tool (wiki: shears→cobweb, sword→string, hand→nothing)', () => {
+    expect(cobwebDrop('shears')).toBe('webmc:cobweb');
+    expect(cobwebDrop('sword')).toBe('webmc:string');
     expect(cobwebDrop('hand')).toBeNull();
   });
 });

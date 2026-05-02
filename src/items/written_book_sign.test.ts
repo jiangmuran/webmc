@@ -7,8 +7,8 @@ describe('written book sign', () => {
     expect(b.pages[0]).toBe('hello');
   });
 
-  it('truncates too-long', () => {
-    const long = 'x'.repeat(500);
+  it('truncates over JE 1023-char per-page limit (wiki)', () => {
+    const long = 'x'.repeat(MAX_CHARS_PER_PAGE + 100);
     const b = setPage({ title: null, author: null, pages: [], signed: false }, 0, long);
     expect(b.pages[0]?.length).toBe(MAX_CHARS_PER_PAGE);
   });

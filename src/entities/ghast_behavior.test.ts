@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { makeGhast, acquire, tryFire, deflect, FIRE_INTERVAL_MS } from './ghast_behavior';
+import {
+  makeGhast,
+  acquire,
+  tryFire,
+  deflect,
+  FIRE_INTERVAL_MS,
+  DETECT_RANGE_VERTICAL,
+} from './ghast_behavior';
 
 describe('ghast', () => {
   it('acquires visible target', () => {
@@ -37,5 +44,25 @@ describe('ghast', () => {
   it('deflect hits ghast if attacker is ghast', () => {
     const r = deflect({ hitByMelee: true, attackerId: 'g', ghastId: 'g' });
     expect(r.damagedGhastId).toBe('g');
+  });
+
+  it('rejects target outside vertical 4-block range per wiki', () => {
+    // minecraft.wiki/w/Ghast — Java targets within 64 horizontal
+    // and 4 vertical blocks (MC-49640 WAI).
+    expect(DETECT_RANGE_VERTICAL).toBe(4);
+    const s = makeGhast();
+    acquire(s, {
+      visiblePlayerId: 'p',
+      distance: 20,
+      distanceY: DETECT_RANGE_VERTICAL + 0.1,
+      hasLineOfSight: true,
+    });
+    expect(s.targetId).toBeNull();
+  });
+
+  it('accepts target inside vertical 4-block range', () => {
+    const s = makeGhast();
+    acquire(s, { visiblePlayerId: 'p', distance: 20, distanceY: -3, hasLineOfSight: true });
+    expect(s.targetId).toBe('p');
   });
 });

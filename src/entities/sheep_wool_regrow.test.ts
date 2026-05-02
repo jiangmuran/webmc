@@ -28,4 +28,18 @@ describe('sheep wool regrow', () => {
   it('dye bald has no effect', () => {
     expect(applyDye({ ...white, hasWool: false }, 'red').color).toBe('white');
   });
+
+  it('shearing drops 1-3 wool (wiki: variable, not fixed 2)', () => {
+    expect(onShear(white, () => 0).drops.length).toBe(1);
+    expect(onShear(white, () => 0.999).drops.length).toBe(3);
+    const seen = new Set<number>();
+    for (let i = 0; i < 200; i++) {
+      seen.add(onShear(white, Math.random).drops.length);
+    }
+    expect(seen.has(1) || seen.has(2) || seen.has(3)).toBe(true);
+    for (const c of seen) {
+      expect(c).toBeGreaterThanOrEqual(1);
+      expect(c).toBeLessThanOrEqual(3);
+    }
+  });
 });

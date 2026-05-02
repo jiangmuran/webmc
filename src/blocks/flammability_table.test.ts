@@ -22,4 +22,13 @@ describe('flammability table', () => {
   it('wool flammable', () => {
     expect(isFlammable('wool')).toBe(true);
   });
+
+  it('bookshelf flammable (canonical id, no underscore)', () => {
+    // Wiki: bookshelves catch fire (encouragement 30, flammability 20).
+    // The block ID is `bookshelf` (one word) — old table had
+    // `book_shelf` so the lookup silently returned 0/0.
+    expect(isFlammable('bookshelf')).toBe(true);
+    expect(flammabilityOf('bookshelf').encouragement).toBe(30);
+    expect(flammabilityOf('bookshelf').flammability).toBe(20);
+  });
 });

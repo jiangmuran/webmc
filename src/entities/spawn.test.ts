@@ -42,19 +42,11 @@ describe('SpawnSystem', () => {
     expect(mobs.size).toBeLessThanOrEqual(2);
   });
 
-  it('despawns mobs far from the player', () => {
-    const mobs = new MobWorld();
-    const s = new SpawnSystem({ checkIntervalSec: 0.05 });
-    const far = mobs.spawn('pig', { x: 500, y: 64, z: 500 });
-    s.tick(1, mobs, {
-      playerPos: { x: 0, y: 64, z: 0 },
-      isDay: true,
-      surfaceAt: () => 63,
-      isSolid: () => true, // can't spawn new mobs so the test only measures despawn
-    });
-    expect(mobs.size).toBe(0);
-    void far;
-  });
+  // (Despawn-far is no longer SpawnSystem's responsibility — the host
+  // handles it with tame/leash/baby exemptions that the spawn system
+  // doesn't know about. Was silently deleting the player's wolf when
+  // the wolf wandered between SpawnSystem's 34-block cutoff and main's
+  // 128-block exemption radius.)
 
   it('does nothing if checkIntervalSec has not elapsed', () => {
     const mobs = new MobWorld();

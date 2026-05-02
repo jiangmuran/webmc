@@ -2,10 +2,14 @@
 
 export type BastionKind = 'hoglin_stable' | 'housing_units' | 'treasure' | 'bridge';
 
+// Wiki (minecraft.wiki/w/Bastion_Remnant): "Each of the four variants
+// of bastion remnants has an equal chance of generating." Old weights
+// 25/30/20/25 favored housing_units over treasure; fixed to a uniform
+// 25/25/25/25 distribution per wiki.
 export const BASTION_WEIGHTS: Record<BastionKind, number> = {
   hoglin_stable: 25,
-  housing_units: 30,
-  treasure: 20,
+  housing_units: 25,
+  treasure: 25,
   bridge: 25,
 };
 

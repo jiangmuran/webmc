@@ -1,6 +1,16 @@
 // Axe "strip" interaction: right-click a log with an axe strips it.
 // Works for wood and hyphae. Copper + axe: de-oxidize / de-wax.
+//
+// Wiki (minecraft.wiki/w/Axe#Stripping): every wood/log/stem has a
+// stripped variant. Old table was missing pale_oak_log (added in
+// 1.21) which is a registered block in this project — players
+// stripping a pale oak log got null and the action no-op'd.
 
+// Wiki (minecraft.wiki/w/Axe#Stripping): every wood/log/stem/hyphae
+// variant has a stripped form. Old table only had oak_wood among the
+// 9 strippable _wood variants and was missing crimson_hyphae +
+// warped_hyphae entirely — siblings blocks/log_strip.ts and
+// items/axe_strip.ts already list them.
 const STRIP_TABLE: Record<string, string> = {
   'webmc:oak_log': 'webmc:stripped_oak_log',
   'webmc:spruce_log': 'webmc:stripped_spruce_log',
@@ -10,9 +20,20 @@ const STRIP_TABLE: Record<string, string> = {
   'webmc:dark_oak_log': 'webmc:stripped_dark_oak_log',
   'webmc:mangrove_log': 'webmc:stripped_mangrove_log',
   'webmc:cherry_log': 'webmc:stripped_cherry_log',
+  'webmc:pale_oak_log': 'webmc:stripped_pale_oak_log',
   'webmc:oak_wood': 'webmc:stripped_oak_wood',
+  'webmc:spruce_wood': 'webmc:stripped_spruce_wood',
+  'webmc:birch_wood': 'webmc:stripped_birch_wood',
+  'webmc:jungle_wood': 'webmc:stripped_jungle_wood',
+  'webmc:acacia_wood': 'webmc:stripped_acacia_wood',
+  'webmc:dark_oak_wood': 'webmc:stripped_dark_oak_wood',
+  'webmc:mangrove_wood': 'webmc:stripped_mangrove_wood',
+  'webmc:cherry_wood': 'webmc:stripped_cherry_wood',
+  'webmc:pale_oak_wood': 'webmc:stripped_pale_oak_wood',
   'webmc:crimson_stem': 'webmc:stripped_crimson_stem',
   'webmc:warped_stem': 'webmc:stripped_warped_stem',
+  'webmc:crimson_hyphae': 'webmc:stripped_crimson_hyphae',
+  'webmc:warped_hyphae': 'webmc:stripped_warped_hyphae',
   'webmc:bamboo_block': 'webmc:stripped_bamboo_block',
 };
 

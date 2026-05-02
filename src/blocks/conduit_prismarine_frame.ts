@@ -16,6 +16,12 @@ export function activationRadius(frameBlocks: number): number {
   return Math.min(96, 16 * Math.floor(frameBlocks / 7));
 }
 
-export function dolphinsGraceProvided(activated: boolean, frameBlocks: number): boolean {
+// Wiki (minecraft.wiki/w/Conduit): "When activated, conduits give
+// the 'Conduit Power' effect to all players in contact with rain or
+// water." Conduit does NOT grant Dolphin's Grace — that effect comes
+// from swimming near a live dolphin entity, a wholly separate
+// mechanic. The old `dolphinsGraceProvided` name was a misnomer that
+// would have misled callers wiring up effect flags.
+export function conduitPowerProvided(activated: boolean, frameBlocks: number): boolean {
   return activated && frameBlocks >= 16;
 }

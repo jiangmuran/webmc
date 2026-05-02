@@ -15,15 +15,26 @@ export function makeCopper(): CopperState {
   return { stage: 'regular', waxed: false };
 }
 
+// Wiki (minecraft.wiki/w/Oxidation): per-random-tick advance chance
+// for an unwaxed copper block is `64/1125 × 0.75 ≈ 4.27%` when the
+// block has no neighbours at a higher oxidation stage, or `64/1125
+// ≈ 5.69%` when it does. Sibling copper_waxing.ts uses the isolated
+// 0.0427 baseline. Old `1/64 ≈ 1.56%` was ~3× too slow — a copper
+// block took ~3× longer to oxidize than wiki canon. Without
+// neighbour info we use the isolated baseline.
+export const TICK_CHANCE_ISOLATED = (64 / 1125) * 0.75;
+export const TICK_CHANCE_NEAR_HIGHER = 64 / 1125;
+
 // Returns true if the stage advanced. Waxed copper and fully oxidized
-// copper never advance. In MC each block has ~1/64 chance per random tick;
-// we accept a pre-rolled probability.
-export function tickOxidation(state: CopperState, roll: number): boolean {
+// copper never advance. We accept a pre-rolled probability and use
+// the wiki-isolated baseline by default; pass `nearHigher = true`
+// for the higher-stage-adjacent rate.
+export function tickOxidation(state: CopperState, roll: number, nearHigher = false): boolean {
   if (state.waxed) return false;
   const idx = STAGE_ORDER.indexOf(state.stage);
   if (idx < 0 || idx >= STAGE_ORDER.length - 1) return false;
-  const CHANCE_PER_TICK = 1 / 64;
-  if (roll >= CHANCE_PER_TICK) return false;
+  const chance = nearHigher ? TICK_CHANCE_NEAR_HIGHER : TICK_CHANCE_ISOLATED;
+  if (roll >= chance) return false;
   const next = STAGE_ORDER[idx + 1];
   if (!next) return false;
   state.stage = next;
@@ -52,15 +63,20 @@ export function wax(state: CopperState): boolean {
   return true;
 }
 
-// Lightning striking a waxed block strips the wax AND advances one stage
-// (lightning accelerates oxidation in MC, but only unwaxed; here we model
-// the whole step deterministically).
+// Wiki (minecraft.wiki/w/Oxidation): "A lightning bolt striking a
+// non-waxed copper block removes all oxidation from the block, and
+// may also deoxidize randomly selected copper blocks nearby."
+//
+// Lightning DEOXIDIZES (resets stage to 'regular'), it does NOT
+// advance. And it has no effect on WAXED copper blocks. Old code:
+//   - Unwaxed waxed blocks (wiki: lightning doesn't touch waxed)
+//   - Advanced one stage (wiki: removes ALL oxidation, all the way
+//     back to 'regular')
+// Both behaviours were inverse of canon. Now matches wiki:
+// non-waxed → reset to 'regular'; waxed → no-op.
 export function lightningStrike(state: CopperState): void {
-  state.waxed = false;
-  const idx = STAGE_ORDER.indexOf(state.stage);
-  if (idx < 0 || idx >= STAGE_ORDER.length - 1) return;
-  const next = STAGE_ORDER[idx + 1];
-  if (next) state.stage = next;
+  if (state.waxed) return;
+  state.stage = 'regular';
 }
 
 export function asBlockId(base: string, state: CopperState): string {

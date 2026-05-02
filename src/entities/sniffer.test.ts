@@ -2,12 +2,16 @@ import { describe, it, expect } from 'vitest';
 import { makeSnifferState, plantGrowthTick, rollAncientSeed, tickSniffer } from './sniffer';
 
 describe('sniffer', () => {
-  it('rolls torchflower seeds more often than pitcher pods', () => {
+  it('rolls torchflower vs pitcher pod ~50/50 (wiki: equal chance)', () => {
     let torch = 0;
-    for (let i = 0; i < 500; i++) {
+    const N = 4000;
+    for (let i = 0; i < N; i++) {
       if (rollAncientSeed() === 'torchflower_seeds') torch++;
     }
-    expect(torch).toBeGreaterThan(250);
+    // Each one centered ~50% ± stochastic slack
+    const ratio = torch / N;
+    expect(ratio).toBeGreaterThan(0.45);
+    expect(ratio).toBeLessThan(0.55);
   });
 
   it('phase progression: idle → sniffing → digging → cooldown → idle', () => {
@@ -19,7 +23,11 @@ describe('sniffer', () => {
     const r = tickSniffer(s, 7, { diggableBelow: true, rng: () => 0.1 });
     expect(s.phase).toBe('cooldown');
     expect(r.producedSeed).toBe('torchflower_seeds');
+    // Wiki: 8-minute cooldown after seed (480s); waiting 31s isn't enough.
     tickSniffer(s, 31, { diggableBelow: true, rng: () => 0.1 });
+    expect(s.phase).toBe('cooldown');
+    // Wait the full 480s + some extra → returns to idle.
+    tickSniffer(s, 460, { diggableBelow: true, rng: () => 0.1 });
     expect(s.phase).toBe('idle');
   });
 

@@ -16,8 +16,10 @@ describe('aqua affinity', () => {
     expect(speedMultiplier({ underwater: true, onGround: false, aquaAffinity: true })).toBe(1);
   });
 
-  it('on ground underwater still 1', () => {
-    expect(speedMultiplier({ underwater: true, onGround: true, aquaAffinity: false })).toBe(1);
+  it('on ground underwater still penalised (wiki: ground does not bypass)', () => {
+    expect(speedMultiplier({ underwater: true, onGround: true, aquaAffinity: false })).toBe(
+      UNDERWATER_MINE_PENALTY,
+    );
   });
 
   it('helmet slot', () => {

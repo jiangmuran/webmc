@@ -27,10 +27,16 @@ export function randomTick(c: Cocoa, q: TickQuery): 'grew' | 'stays' | 'fell_off
   return 'stays';
 }
 
-export function beansOnBreak(c: Cocoa, fortuneLevel: number, rand: () => number): number {
+export function beansOnBreak(c: Cocoa, _fortuneLevel: number, _rand: () => number): number {
+  // Wiki (minecraft.wiki/w/Cocoa_Beans): "Fully grown cocoa pods drop
+  // 3 cocoa beans. Using a tool enchanted with Fortune does not
+  // increase the amount of cocoa beans dropped."
+  //
+  // Old code rolled 2-3 base + Fortune bonus (capped at 6). Wiki:
+  // mature = exactly 3, Fortune ineffective. Sibling cocoa_grow.ts
+  // already corrected; this module now matches.
   if (c.stage < 2) return 1;
-  const base = 2 + Math.floor(rand() * 2); // 2..3
-  return Math.min(6, base + fortuneLevel);
+  return 3;
 }
 
 // Bone meal: advances one stage.

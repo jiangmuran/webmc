@@ -9,15 +9,25 @@ describe('book tooltip', () => {
     expect(romanNumeral(11)).toBe('11');
   });
 
-  it('level 1 has no numeral', () => {
-    expect(displayEnchantLine({ id: 'sharpness', level: 1 })).toBe('Sharpness');
+  it('multi-level enchant at level 1 shows I (wiki)', () => {
+    // Wiki: tooltip shows Roman numeral whenever max level > 1.
+    // Sharpness max level is 5, so Sharpness I displays as
+    // "Sharpness I", not "Sharpness".
+    expect(displayEnchantLine({ id: 'sharpness', level: 1 })).toBe('Sharpness I');
+  });
+
+  it('single-level enchant has no numeral (wiki)', () => {
+    // Mending max=1, Aqua Affinity max=1, Silk Touch max=1.
+    expect(displayEnchantLine({ id: 'mending', level: 1 })).toBe('Mending');
+    expect(displayEnchantLine({ id: 'silk_touch', level: 1 })).toBe('Silk Touch');
+    expect(displayEnchantLine({ id: 'aqua_affinity', level: 1 })).toBe('Aqua Affinity');
   });
 
   it('level 4 shows IV', () => {
     expect(displayEnchantLine({ id: 'protection', level: 4 })).toBe('Protection IV');
   });
 
-  it('unknown id passes through', () => {
+  it('unknown id passes through (no max in table → max=1, no numeral)', () => {
     expect(displayEnchantLine({ id: 'xyz', level: 1 })).toBe('xyz');
   });
 
@@ -35,6 +45,7 @@ describe('book tooltip', () => {
       { id: 'protection', level: 1 },
       { id: 'feather_falling', level: 1 },
     ]);
-    expect(lines[0]?.line).toBe('Feather Falling');
+    // With wiki-correct numerals: "Feather Falling I" < "Protection I".
+    expect(lines[0]?.line).toBe('Feather Falling I');
   });
 });

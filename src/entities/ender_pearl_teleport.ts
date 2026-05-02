@@ -1,5 +1,13 @@
 // Ender pearl. Thrown like snowball; on hit teleports the thrower to
-// the landing position. Costs 5 HP (unmitigatable). Cooldown 1s.
+// the landing position. Costs 5 HP fall damage (reducible by Protection
+// and Feather Falling, but applies in all dimensions). Cooldown 1s.
+//
+// Wiki (minecraft.wiki/w/Ender_Pearl): "After it is thrown, the ender
+// pearl is consumed, and the player teleports to where it lands,
+// taking 5 hp fall damage. This will work even if the ender pearl
+// lands in another dimension."
+// Old onPearlLand exempted End-dimension landings from damage; that's
+// nowhere in the wiki. Damage applies uniformly across dimensions.
 
 export interface PearlState {
   lastUsedMs: number;
@@ -45,6 +53,6 @@ export function onPearlLand(q: LandQuery): LandResult {
   if (!q.hitValid) return { teleport: false, damageToThrower: 0 };
   return {
     teleport: true,
-    damageToThrower: q.inEnd ? 0 : TELEPORT_DAMAGE,
+    damageToThrower: TELEPORT_DAMAGE,
   };
 }

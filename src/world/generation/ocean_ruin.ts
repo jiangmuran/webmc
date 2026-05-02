@@ -49,14 +49,19 @@ export interface OceanRuinLootEntry {
   max: number;
 }
 
+// Wiki (minecraft.wiki/w/Ocean_Ruins): Java loot table includes
+// leather_helmet + leather_chestplate (not Bedrock 'leather_cap' /
+// 'leather_tunic'). AGENT_CHARTER targets Java; same naming fix
+// applied to world/generation/buried_treasure.ts in an earlier
+// audit pass.
 export const OCEAN_RUIN_LOOT: readonly OceanRuinLootEntry[] = [
   { item: 'webmc:map_buried_treasure', weight: 10, min: 1, max: 1 },
   { item: 'webmc:emerald', weight: 5, min: 1, max: 1 },
   { item: 'webmc:wheat', weight: 10, min: 1, max: 2 },
   { item: 'webmc:coal', weight: 15, min: 1, max: 4 },
   { item: 'webmc:rotten_flesh', weight: 25, min: 1, max: 3 },
-  { item: 'webmc:leather_cap', weight: 5, min: 1, max: 1 },
-  { item: 'webmc:leather_tunic', weight: 5, min: 1, max: 1 },
+  { item: 'webmc:leather_helmet', weight: 5, min: 1, max: 1 },
+  { item: 'webmc:leather_chestplate', weight: 5, min: 1, max: 1 },
   { item: 'webmc:fishing_rod', weight: 5, min: 1, max: 1 },
   { item: 'webmc:enchanted_book', weight: 5, min: 1, max: 1 },
   { item: 'webmc:gold_nugget', weight: 10, min: 1, max: 3 },

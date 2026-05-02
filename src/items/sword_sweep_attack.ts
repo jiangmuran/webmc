@@ -8,7 +8,11 @@ export interface SweepInput {
 
 export function sweepDamage(i: SweepInput): number {
   if (!i.onGround || i.sprinting) return 0;
-  const factor = 1 / (i.sweepingEdgeLevel + 1);
+  // Wiki: sweep deals 1 damage flat without sweeping_edge, plus
+  // (level / (level+1)) × base damage with the enchant. Was inverted
+  // (1/(level+1)), which gave MORE damage at no-enchant and LESS at
+  // higher levels — exact opposite of wiki.
+  const factor = i.sweepingEdgeLevel === 0 ? 0 : i.sweepingEdgeLevel / (i.sweepingEdgeLevel + 1);
   return 1 + i.baseDamage * factor;
 }
 

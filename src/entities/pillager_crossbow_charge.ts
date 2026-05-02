@@ -4,7 +4,12 @@ export interface PillagerState {
   cooldownTicks: number;
 }
 
-export const CHARGE_REQUIRED_TICKS = 20;
+// Wiki (minecraft.wiki/w/Crossbow): "A crossbow takes 25 ticks (1.25
+// seconds) to fully charge for a normal arrow, regardless of who is
+// using it." Old 20 ticks (1 sec) was 20% under wiki canon; sibling
+// pillager_crossbow_reload.ts already uses 25 ticks for the same
+// charge phase.
+export const CHARGE_REQUIRED_TICKS = 25;
 export const ATTACK_RANGE = 8;
 
 export function inRange(s: PillagerState): boolean {

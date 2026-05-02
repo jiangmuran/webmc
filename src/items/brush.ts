@@ -13,7 +13,11 @@ export function makeBrushState(): BrushState {
   return { ticksBrushed: 0, done: false };
 }
 
-const TICKS_TO_REVEAL = 4; // MC: ~10 ticks (0.5s), scaled here for test clarity
+// Wiki (minecraft.wiki/w/Brush): "It takes 96 game ticks (4.8
+// seconds) to brush a single suspicious block." Old comment claimed
+// "~10 ticks (0.5s)" — wrong reference value; old constant 4 was
+// 24× too fast. Sibling brush_dig.ts uses 96.
+const TICKS_TO_REVEAL = 96;
 
 export interface BrushStep {
   revealed: boolean;

@@ -4,10 +4,14 @@
 
 export type Difficulty = 'peaceful' | 'easy' | 'normal' | 'hard';
 
+// Wiki (minecraft.wiki/w/Raid): base waves are 3 (Easy), 5 (Normal),
+// 7 (Hard). Bad Omen levels above 1 each contribute 1 BONUS wave —
+// so BadOmen V on Hard yields 7 + 4 = 11 waves. Old formula used
+// floor(omen/2) which under-counts bonuses for odd omen levels.
 export function wavesForOmenLevel(omen: number, diff: Difficulty): number {
   if (diff === 'peaceful') return 0;
   const base = diff === 'easy' ? 3 : diff === 'normal' ? 5 : 7;
-  return base + Math.max(0, Math.floor(omen / 2));
+  return base + Math.max(0, omen - 1);
 }
 
 export interface WaveComposition {

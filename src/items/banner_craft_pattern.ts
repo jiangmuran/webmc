@@ -22,10 +22,17 @@ export type BannerPattern =
   | 'flower'
   | 'mojang'
   | 'globe'
-  | 'piglin';
+  | 'piglin'
+  | 'flow'
+  | 'guster';
 
 export const MAX_BANNER_PATTERNS = 6;
 
+// Wiki (minecraft.wiki/w/Banner_Pattern): the special-ingredient
+// patterns now include flow_banner_pattern and guster_banner_pattern
+// (1.21 Trial Chambers). Old table was missing both — players in
+// 1.21+ couldn't craft banners with the new patterns. Sibling
+// items/banner_patterns.ts already has both.
 export const SPECIAL_INGREDIENT: Partial<Record<BannerPattern, string>> = {
   creeper: 'creeper_head',
   skull: 'wither_skeleton_skull',
@@ -33,6 +40,8 @@ export const SPECIAL_INGREDIENT: Partial<Record<BannerPattern, string>> = {
   mojang: 'enchanted_golden_apple',
   globe: 'globe_banner_pattern',
   piglin: 'piglin_banner_pattern',
+  flow: 'flow_banner_pattern',
+  guster: 'guster_banner_pattern',
 };
 
 export function canApplyPattern(

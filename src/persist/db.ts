@@ -16,6 +16,7 @@ export interface PersistDB {
 
   getMeta(key: string): Promise<unknown>;
   setMeta(key: string, value: unknown): Promise<void>;
+  setMetas(entries: readonly { key: string; value: unknown }[]): Promise<void>;
 
   close(): void;
 }
@@ -195,6 +196,17 @@ export class IndexedDBPersistDB implements PersistDB {
   async setMeta(key: string, value: unknown): Promise<void> {
     const tx = this.db.transaction(META_STORE, 'readwrite');
     tx.objectStore(META_STORE).put({ k: key, v: value });
+    await txDone(tx);
+  }
+
+  // Batched meta write — single IDB transaction for N entries. Useful
+  // for save-on-close where 5+ separate setMeta calls each opened
+  // their own transaction (slow + raced under tab teardown).
+  async setMetas(entries: readonly { key: string; value: unknown }[]): Promise<void> {
+    if (entries.length === 0) return;
+    const tx = this.db.transaction(META_STORE, 'readwrite');
+    const store = tx.objectStore(META_STORE);
+    for (const e of entries) store.put({ k: e.key, v: e.value });
     await txDone(tx);
   }
 

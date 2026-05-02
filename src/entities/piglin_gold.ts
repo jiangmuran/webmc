@@ -12,13 +12,16 @@ export function makePiglinGoldState(): PiglinGoldState {
 }
 
 // Tracks what items piglins treat as "gold": bartering input, gold items
-// for calm-down, wearing-gold-armor for neutrality.
+// for calm-down, wearing-gold-armor for neutrality. webmc names the
+// armor pieces with the `gold_` prefix (matching ARMOR_DEFS in
+// items/armor.ts) — this previously checked `golden_*` which never
+// matched anything, so piglins always aggroed.
 export function isGoldArmor(itemName: string): boolean {
   return (
-    itemName === 'webmc:golden_helmet' ||
-    itemName === 'webmc:golden_chestplate' ||
-    itemName === 'webmc:golden_leggings' ||
-    itemName === 'webmc:golden_boots'
+    itemName === 'webmc:gold_helmet' ||
+    itemName === 'webmc:gold_chestplate' ||
+    itemName === 'webmc:gold_leggings' ||
+    itemName === 'webmc:gold_boots'
   );
 }
 

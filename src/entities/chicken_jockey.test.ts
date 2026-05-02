@@ -11,11 +11,12 @@ describe('chicken jockey', () => {
     expect(shouldBeJockey({ babyZombieSpawning: false, rand: () => 0 })).toBe(false);
   });
 
-  it('baby chance', () => {
-    expect(shouldBeJockey({ babyZombieSpawning: true, rand: () => 0 })).toBe(true);
-    expect(shouldBeJockey({ babyZombieSpawning: true, rand: () => JOCKEY_CHANCE + 0.01 })).toBe(
-      false,
-    );
+  it('baby chance is 4.75% (wiki)', () => {
+    expect(JOCKEY_CHANCE).toBe(0.0475);
+    // rng below 4.75% → jockey
+    expect(shouldBeJockey({ babyZombieSpawning: true, rand: () => 0.04 })).toBe(true);
+    // rng above 4.75% → no jockey (catches the old 5% off-by-rounding)
+    expect(shouldBeJockey({ babyZombieSpawning: true, rand: () => 0.048 })).toBe(false);
   });
 
   it('hatch gated by depth', () => {

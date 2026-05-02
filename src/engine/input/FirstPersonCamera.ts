@@ -32,6 +32,12 @@ export const JUMP_BUFFER_SEC = 0.12;
 const UP = new THREE.Vector3(0, 1, 0);
 const PITCH_MAX = Math.PI / 2 - 0.0001;
 
+// Reused per-frame movement-delta scratch for sweepMove. sweepMove
+// mutates dv.x/y/z to zero on hit, but the caller doesn't read those
+// fields again — safe to share across the two sweepMove call sites
+// (fly + walk are mutually exclusive per frame).
+const MOVE_DV: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
+
 export type FluidKind = 'water' | 'lava';
 export type FluidSampler = (x: number, y: number, z: number) => FluidKind | null;
 
@@ -57,7 +63,13 @@ export class FirstPersonCamera {
   yaw = 0;
   pitch = 0;
   onGround = false;
+  // Whichever fluid (if any) the player's body center is in. Used for
+  // physics drag, swim mechanics, particles.
   inFluid: FluidKind | null = null;
+  // Same but sampled at eye level — used for drowning, vision overlay.
+  // A player walking through 1-deep water has feet in water but head in
+  // air, and shouldn't drown.
+  inFluidEyes: FluidKind | null = null;
   inputBlocked = false;
   passThroughBlocks = false;
   private coyoteTimer = 0;
@@ -80,6 +92,15 @@ export class FirstPersonCamera {
   private opts: FirstPersonCameraOptions;
   private canvas: HTMLCanvasElement | null = null;
   private locked = false;
+  // Diff caches for the per-frame camera position + rotation writes.
+  // Standing still wrote the same x/eyeY/z + pitch/yaw every frame,
+  // firing Vector3 + Euler onChange callbacks for nothing.
+  private lastCamPosX = NaN;
+  private lastCamPosY = NaN;
+  private lastCamPosZ = NaN;
+  private lastCamRotX = NaN;
+  private lastCamRotY = NaN;
+  private lastCamRotZ = NaN;
   private readonly keyDown: (e: KeyboardEvent) => void;
   private readonly keyUp: (e: KeyboardEvent) => void;
   private readonly mouseMove: (e: MouseEvent) => void;
@@ -89,6 +110,12 @@ export class FirstPersonCamera {
   constructor(camera: THREE.PerspectiveCamera, opts: Partial<FirstPersonCameraOptions> = {}) {
     this.camera = camera;
     this.opts = { ...DEFAULTS, ...opts };
+    // Initialize stable camera state once. update() was writing
+    // camera.up.copy(UP) and camera.rotation.order='YXZ' every frame —
+    // both are constant, but Vector3.copy fires _onChangeCallback
+    // and Euler.order has its own setter that flags the quaternion.
+    this.camera.up.copy(UP);
+    this.camera.rotation.order = 'YXZ';
 
     this.keyDown = (e) => {
       if (this.inputBlocked) return;
@@ -181,7 +208,11 @@ export class FirstPersonCamera {
         }
         break;
       case 'KeyR':
-        if (down) this.toggleFly();
+        // Was an unconditional toggleFly() — let survival players turn on
+        // creative-mode flight by tapping R. Gate on canFly to match the
+        // double-tap-space path (and vanilla, which has no key for fly
+        // toggle outside creative).
+        if (down && this.canFly) this.toggleFly();
         break;
       case 'ControlLeft':
       case 'ControlRight':
@@ -196,9 +227,34 @@ export class FirstPersonCamera {
     }
   }
 
+  // Cached yaw/pitch trig — both lookVector and update() consume
+  // sin/cos of yaw and pitch every frame. yaw/pitch only change on
+  // mousemove events, so the cache is hit for most frames in 60Hz
+  // play (mouse doesn't move every frame).
+  private cachedYaw = Number.NaN;
+  private cachedPitch = Number.NaN;
+  private cachedSinYaw = 0;
+  private cachedCosYaw = 0;
+  private cachedSinPitch = 0;
+  private cachedCosPitch = 0;
+
+  private refreshTrigCache(): void {
+    if (this.yaw !== this.cachedYaw) {
+      this.cachedSinYaw = Math.sin(this.yaw);
+      this.cachedCosYaw = Math.cos(this.yaw);
+      this.cachedYaw = this.yaw;
+    }
+    if (this.pitch !== this.cachedPitch) {
+      this.cachedSinPitch = Math.sin(this.pitch);
+      this.cachedCosPitch = Math.cos(this.pitch);
+      this.cachedPitch = this.pitch;
+    }
+  }
+
   lookVector(out: THREE.Vector3 = new THREE.Vector3()): THREE.Vector3 {
-    const cp = Math.cos(this.pitch);
-    out.set(Math.sin(this.yaw) * cp * -1, Math.sin(this.pitch), Math.cos(this.yaw) * cp * -1);
+    this.refreshTrigCache();
+    const cp = this.cachedCosPitch;
+    out.set(-this.cachedSinYaw * cp, this.cachedSinPitch, -this.cachedCosYaw * cp);
     return out;
   }
 
@@ -208,8 +264,9 @@ export class FirstPersonCamera {
     const speed =
       baseSpeed * (this.input.sprint ? this.opts.sprintMultiplier : 1) * this.speedMultiplier;
 
-    const sinY = Math.sin(this.yaw);
-    const cosY = Math.cos(this.yaw);
+    this.refreshTrigCache();
+    const sinY = this.cachedSinYaw;
+    const cosY = this.cachedCosYaw;
     const fwdX = -sinY;
     const fwdZ = -cosY;
     const rightX = cosY;
@@ -217,34 +274,59 @@ export class FirstPersonCamera {
 
     const mx = fwdX * this.input.forward + rightX * this.input.strafe;
     const mz = fwdZ * this.input.forward + rightZ * this.input.strafe;
-    const len = Math.hypot(mx, mz);
-    const hx = len > 0 ? (mx / len) * speed : 0;
-    const hz = len > 0 ? (mz / len) * speed : 0;
+    // sqrt(x²+z²) over Math.hypot — game-coord velocities are always
+    // in normal range; hypot's overflow safety is wasted CPU per
+    // frame.
+    const len = Math.sqrt(mx * mx + mz * mz);
+    // One division + two multiplies (vs. two divisions in the prior
+    // ternaries) and a single len>0 check (vs. two). The fast-path
+    // for moving players is the common case at 60Hz.
+    let hx = 0;
+    let hz = 0;
+    if (len > 0) {
+      const invLenSpeed = speed / len;
+      hx = mx * invLenSpeed;
+      hz = mz * invLenSpeed;
+    }
 
-    this.inFluid =
-      opts.isFluid?.(
-        Math.floor(this.position.x),
-        Math.floor(this.position.y),
-        Math.floor(this.position.z),
-      ) ?? null;
+    // Hoist Math.floor of position once — was being recomputed 8+ times
+    // across inFluid + inFluidEyes + climbing(2) sampling. Each call to
+    // a probe function passed three Math.floor() expressions, which the
+    // JIT can't fold across function calls.
+    const blockX = Math.floor(this.position.x);
+    const blockY = Math.floor(this.position.y);
+    const blockZ = Math.floor(this.position.z);
+    const eyeBlockY = Math.floor(this.position.y + 0.72);
+    const climbHeadBlockY = Math.floor(this.position.y + 0.5);
+    this.inFluid = opts.isFluid?.(blockX, blockY, blockZ) ?? null;
+    // Eye sampling: position.y is body center (halfY=0.9), eyes sit
+    // ~0.72 above (eyeHeight 1.62 from feet, feet = position.y - 0.9).
+    this.inFluidEyes = opts.isFluid?.(blockX, eyeBlockY, blockZ) ?? null;
     const climbing = opts.isClimbable
-      ? opts.isClimbable(
-          Math.floor(this.position.x),
-          Math.floor(this.position.y),
-          Math.floor(this.position.z),
-        ) ||
-        opts.isClimbable(
-          Math.floor(this.position.x),
-          Math.floor(this.position.y + 0.5),
-          Math.floor(this.position.z),
-        )
+      ? opts.isClimbable(blockX, blockY, blockZ) ||
+        opts.isClimbable(blockX, climbHeadBlockY, blockZ)
       : false;
 
-    if (fly || !opts.isSolid) {
+    if (this.passThroughBlocks || !opts.isSolid) {
+      // True noclip — only spectator (passThroughBlocks=true). Creative
+      // flyers in vanilla still collide with blocks; the previous
+      // implementation noclipped on `fly || !isSolid`, letting creative
+      // mode phase straight through walls.
       this.position.x += hx * dtSec;
       this.position.z += hz * dtSec;
       this.position.y += this.input.vertical * speed * dtSec;
       this.velocity.set(0, 0, 0);
+      this.onGround = false;
+    } else if (fly) {
+      // Creative-mode fly: no gravity, vertical input drives Y, but
+      // collision still applies — sweepMove blocks against walls.
+      MOVE_DV.x = hx * dtSec;
+      MOVE_DV.y = this.input.vertical * speed * dtSec;
+      MOVE_DV.z = hz * dtSec;
+      const result = sweepMove(this.position, this.opts.box, MOVE_DV, opts.isSolid, 0);
+      if (result.hitX) this.velocity.x = 0;
+      if (result.hitY) this.velocity.y = 0;
+      if (result.hitZ) this.velocity.z = 0;
       this.onGround = false;
     } else {
       const submerged = this.inFluid !== null;
@@ -288,12 +370,11 @@ export class FirstPersonCamera {
 
         if (this.jumpBufferTimer > 0 && this.coyoteTimer > 0) {
           this.velocity.y = this.opts.jumpVelocity * this.jumpVelocityMultiplier;
-          // Sprint-jump forward boost — small fwd kick in look direction
+          // Sprint-jump forward boost — small fwd kick in look direction.
+          // Reuse refreshTrigCache() values from the top of update().
           if (this.input.sprint) {
-            const sinY2 = Math.sin(this.yaw);
-            const cosY2 = Math.cos(this.yaw);
-            this.velocity.x += -sinY2 * 2.2;
-            this.velocity.z += -cosY2 * 2.2;
+            this.velocity.x += -this.cachedSinYaw * 2.2;
+            this.velocity.z += -this.cachedCosYaw * 2.2;
           }
           this.onGround = false;
           this.coyoteTimer = 0;
@@ -319,49 +400,35 @@ export class FirstPersonCamera {
       const dvy = this.velocity.y * dtSec;
       let dvz = this.velocity.z * dtSec;
 
-      // Sneak edge cling: prevent walking off ledges per axis
+      // Sneak edge cling: prevent walking off ledges per axis. Inner
+      // ground probe was a fresh arrow closure allocated every frame the
+      // player was sneaking on ground (capturing opts/box/probeY/this) —
+      // a player sneaking around their base for minutes pays for one
+      // closure per frame for nothing. Hoisted to a private method.
       if (this.input.sneak && this.onGround) {
         const box = this.opts.box;
         const probeY = this.position.y - box.halfY - 0.05;
-        const hasGroundAt = (cx: number, cz: number): boolean => {
-          return (
-            opts.isSolid!(
-              Math.floor(cx - box.halfX + 0.01),
-              Math.floor(probeY),
-              Math.floor(cz - box.halfZ + 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx + box.halfX - 0.01),
-              Math.floor(probeY),
-              Math.floor(cz - box.halfZ + 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx - box.halfX + 0.01),
-              Math.floor(probeY),
-              Math.floor(cz + box.halfZ - 0.01),
-            ) ||
-            opts.isSolid!(
-              Math.floor(cx + box.halfX - 0.01),
-              Math.floor(probeY),
-              Math.floor(cz + box.halfZ - 0.01),
-            )
-          );
-        };
-        if (dvx !== 0 && !hasGroundAt(this.position.x + dvx, this.position.z)) dvx = 0;
-        if (dvz !== 0 && !hasGroundAt(this.position.x, this.position.z + dvz)) dvz = 0;
+        const isSolid = opts.isSolid;
+        if (
+          dvx !== 0 &&
+          !this.hasGroundAtSneak(this.position.x + dvx, this.position.z, probeY, isSolid, box)
+        )
+          dvx = 0;
+        if (
+          dvz !== 0 &&
+          !this.hasGroundAtSneak(this.position.x, this.position.z + dvz, probeY, isSolid, box)
+        )
+          dvz = 0;
         this.velocity.x = dvx / Math.max(dtSec, 0.0001);
         this.velocity.z = dvz / Math.max(dtSec, 0.0001);
       }
 
       const wasOnGround = this.onGround;
       const stepH = this.input.sneak ? 0 : 0.6;
-      const result = sweepMove(
-        this.position,
-        this.opts.box,
-        { x: dvx, y: dvy, z: dvz },
-        opts.isSolid,
-        stepH,
-      );
+      MOVE_DV.x = dvx;
+      MOVE_DV.y = dvy;
+      MOVE_DV.z = dvz;
+      const result = sweepMove(this.position, this.opts.box, MOVE_DV, opts.isSolid, stepH);
       if (result.hitX) this.velocity.x = 0;
       if (result.hitY) this.velocity.y = 0;
       if (result.hitZ) this.velocity.z = 0;
@@ -383,7 +450,12 @@ export class FirstPersonCamera {
 
     const sneakDrop = this.input.sneak && this.onGround ? 0.3 : 0;
 
-    const horizSpeed = Math.hypot(this.velocity.x, this.velocity.z);
+    // sqrt(x²+z²) over Math.hypot for the bob speed gate — game-coord
+    // velocities are always in normal range, hypot's overflow safety is
+    // wasted CPU per frame.
+    const vx = this.velocity.x;
+    const vz = this.velocity.z;
+    const horizSpeed = Math.sqrt(vx * vx + vz * vz);
     const bobActive = this.bobEnabled && this.onGround && !this.input.fly && horizSpeed > 0.5;
     if (bobActive) {
       this.bobPhase += dtSec * (8 + horizSpeed * 0.8);
@@ -393,20 +465,38 @@ export class FirstPersonCamera {
     const normalizedSpeed = Math.min(1, horizSpeed / this.opts.walkSpeed);
     const bobOffset = bobActive ? bobY(this.bobPhase, normalizedSpeed, true) : 0;
 
-    this.camera.position.set(
-      this.position.x,
-      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset,
-      this.position.z,
-    );
-    this.camera.up.copy(UP);
-    this.camera.rotation.order = 'YXZ';
+    // Diff-cache the camera position write — Vector3.set fires the
+    // onChange callback (matrixWorldNeedsUpdate); standing still
+    // (no bob, no sneak transition) writes the same eye-y every frame.
+    const camY =
+      this.position.y + this.opts.eyeHeight - this.opts.box.halfY - sneakDrop + bobOffset;
+    if (
+      this.position.x !== this.lastCamPosX ||
+      camY !== this.lastCamPosY ||
+      this.position.z !== this.lastCamPosZ
+    ) {
+      this.camera.position.set(this.position.x, camY, this.position.z);
+      this.lastCamPosX = this.position.x;
+      this.lastCamPosY = camY;
+      this.lastCamPosZ = this.position.z;
+    }
     if (this.damageTiltSec > 0) {
       this.damageTiltSec = Math.max(0, this.damageTiltSec - dtSec);
       const k = this.damageTiltSec / 0.4;
       const roll = Math.sin(k * Math.PI) * 0.35 * this.damageTiltSign;
       this.camera.rotation.set(this.pitch, this.yaw, roll, 'YXZ');
-    } else {
+      this.lastCamRotX = this.pitch;
+      this.lastCamRotY = this.yaw;
+      this.lastCamRotZ = roll;
+    } else if (
+      this.pitch !== this.lastCamRotX ||
+      this.yaw !== this.lastCamRotY ||
+      this.lastCamRotZ !== 0
+    ) {
       this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
+      this.lastCamRotX = this.pitch;
+      this.lastCamRotY = this.yaw;
+      this.lastCamRotZ = 0;
     }
 
     // Sprint FOV kick — eased
@@ -417,8 +507,15 @@ export class FirstPersonCamera {
     this.sprintFovBoost += (targetBoost - this.sprintFovBoost) * fovAlpha;
     const baseFov = this.camera.userData['baseFov'] as number | undefined;
     if (baseFov !== undefined) {
-      this.camera.fov = baseFov + this.sprintFovBoost + this.effectFovBoost;
-      this.camera.updateProjectionMatrix();
+      const targetFov = baseFov + this.sprintFovBoost + this.effectFovBoost;
+      // Diff-cache fov + projectionMatrix recompute. After sprint
+      // boost has settled (~0.5s), targetFov is stable to many decimal
+      // places, but the per-frame write still fired updateProjectionMatrix
+      // (matrix recomputation is non-trivial). Skip when delta < 0.001 deg.
+      if (Math.abs(targetFov - this.camera.fov) > 0.001) {
+        this.camera.fov = targetFov;
+        this.camera.updateProjectionMatrix();
+      }
     }
   }
 
@@ -438,5 +535,25 @@ export class FirstPersonCamera {
   pulseDamageTilt(angleRad: number): void {
     this.damageTiltSec = 0.4;
     this.damageTiltSign = angleRad > 0 ? 1 : -1;
+  }
+
+  private hasGroundAtSneak(
+    cx: number,
+    cz: number,
+    probeY: number,
+    isSolid: SolidSampler,
+    box: AABB,
+  ): boolean {
+    const flooredY = Math.floor(probeY);
+    const minX = Math.floor(cx - box.halfX + 0.01);
+    const maxX = Math.floor(cx + box.halfX - 0.01);
+    const minZ = Math.floor(cz - box.halfZ + 0.01);
+    const maxZ = Math.floor(cz + box.halfZ - 0.01);
+    return (
+      isSolid(minX, flooredY, minZ) ||
+      isSolid(maxX, flooredY, minZ) ||
+      isSolid(minX, flooredY, maxZ) ||
+      isSolid(maxX, flooredY, maxZ)
+    );
   }
 }

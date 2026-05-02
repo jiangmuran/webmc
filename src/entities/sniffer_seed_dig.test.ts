@@ -14,20 +14,22 @@ describe('sniffer seed dig', () => {
     expect(canDig({ onValidSoil: false, cooldownRemaining: 0, rand: Math.random })).toBe(false);
   });
 
-  it('roll rare pitcher', () => {
-    expect(rollFind(() => 0)).toBe('pitcher_pod');
+  it('roll torchflower below 0.5 (wiki: 50/50)', () => {
+    expect(rollFind(() => 0)).toBe('torchflower_seeds');
+    expect(rollFind(() => 0.4)).toBe('torchflower_seeds');
   });
 
-  it('roll common torchflower', () => {
-    expect(rollFind(() => 0.2)).toBe('torchflower_seeds');
+  it('roll pitcher above 0.5 (wiki: 50/50)', () => {
+    expect(rollFind(() => 0.6)).toBe('pitcher_pod');
+    expect(rollFind(() => 0.99)).toBe('pitcher_pod');
   });
 
-  it('roll null', () => {
-    expect(rollFind(() => 0.9)).toBeNull();
-  });
-
-  it('validSoil list', () => {
+  it('validSoil list (wiki: includes mud, moss, mycelium)', () => {
     expect(validSoil('grass_block')).toBe(true);
+    expect(validSoil('mud')).toBe(true);
+    expect(validSoil('moss_block')).toBe(true);
+    expect(validSoil('muddy_mangrove_roots')).toBe(true);
+    expect(validSoil('mycelium')).toBe(true);
     expect(validSoil('stone')).toBe(false);
   });
 });

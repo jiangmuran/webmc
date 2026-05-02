@@ -64,6 +64,33 @@ export function isPlaying(j: Jukebox, nowMs: number): boolean {
   return j.disc !== null && nowMs < j.playingUntilMs;
 }
 
+// Wiki (minecraft.wiki/w/Jukebox + per-disc pages): the comparator
+// reads a disc-specific value, not a flat 15. Canonical values:
+//   "13" → 1, cat → 2, blocks → 3, chirp → 4, far → 5,
+//   mall → 6, mellohi → 7, stal → 8, strad → 9, ward → 10,
+//   "11" → 11, wait → 12, pigstep → 13, otherside → 14, "5" → 15.
+// Old `15 if playing else 0` made every disc indistinguishable to
+// redstone — circuits gating off `disc == "13"` couldn't work.
+// Sibling jukebox.ts already had per-disc comparator values.
+const COMPARATOR_VALUES: Record<MusicDisc, number> = {
+  'webmc:music_disc_13': 1,
+  'webmc:music_disc_cat': 2,
+  'webmc:music_disc_blocks': 3,
+  'webmc:music_disc_chirp': 4,
+  'webmc:music_disc_far': 5,
+  'webmc:music_disc_mall': 6,
+  'webmc:music_disc_mellohi': 7,
+  'webmc:music_disc_stal': 8,
+  'webmc:music_disc_strad': 9,
+  'webmc:music_disc_ward': 10,
+  'webmc:music_disc_11': 11,
+  'webmc:music_disc_wait': 12,
+  'webmc:music_disc_pigstep': 13,
+  'webmc:music_disc_otherside': 14,
+  'webmc:music_disc_5': 15,
+};
+
 export function comparatorOutput(j: Jukebox, nowMs: number): number {
-  return isPlaying(j, nowMs) ? 15 : 0;
+  if (!isPlaying(j, nowMs) || j.disc === null) return 0;
+  return COMPARATOR_VALUES[j.disc];
 }

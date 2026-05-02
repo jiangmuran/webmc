@@ -50,7 +50,10 @@ export function groupFor(blockId: string): BlockSoundGroup {
     return 'dirt';
   if (blockId === 'sand' || blockId === 'red_sand') return 'sand';
   if (blockId === 'gravel') return 'gravel';
-  if (blockId.endsWith('_wool')) return 'wool';
+  // Project registry uses `wool_<color>` (see blocks/registry.ts);
+  // also accept Java-style `<color>_wool` for forward compat with
+  // imported saves that use vanilla item IDs.
+  if (blockId.startsWith('wool_') || blockId.endsWith('_wool')) return 'wool';
   if (blockId === 'iron_block' || blockId === 'gold_block' || blockId === 'netherite_block')
     return 'metal';
   if (blockId === 'glass' || blockId.endsWith('_glass')) return 'glass';

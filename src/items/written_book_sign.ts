@@ -1,8 +1,12 @@
-// Book & Quill → signed Book. Signed books cannot be edited. Maximum
-// pages: 100 per book; max 256 chars per page.
+// Book & Quill → signed Book. Signed books cannot be edited.
+//
+// Wiki (minecraft.wiki/w/Book_and_Quill): JE allows "up to 100
+// pages, with up to 1023 characters per page, and up to 102,300
+// characters inside the entire book." Old constant was 256 (BE's
+// per-page limit). Sibling book_and_quill.ts now matches.
 
 export const MAX_PAGES = 100;
-export const MAX_CHARS_PER_PAGE = 256;
+export const MAX_CHARS_PER_PAGE = 1023;
 
 export interface BookDraft {
   title: string | null;

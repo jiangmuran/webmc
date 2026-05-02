@@ -45,17 +45,19 @@ describe('totem of undying', () => {
     expect(r.setHealthTo).toBe(0);
   });
 
-  it('applies regen + fire_res + absorption', () => {
+  it('applies regen II 45s, fire I 40s, abs II 5s (wiki)', () => {
     const r = applyTotem({
       heldMainhand: 'webmc:totem_of_undying',
       heldOffhand: 'webmc:air',
       damageAboutToTake: 100,
       currentHealth: 5,
     });
-    const ids = r.appliedEffects.map((e) => e.id);
-    expect(ids).toContain('regeneration');
-    expect(ids).toContain('fire_resistance');
-    expect(ids).toContain('absorption');
+    const regen = r.appliedEffects.find((e) => e.id === 'regeneration');
+    const fire = r.appliedEffects.find((e) => e.id === 'fire_resistance');
+    const abs = r.appliedEffects.find((e) => e.id === 'absorption');
+    expect(regen?.durationSec).toBe(45);
+    expect(fire?.durationSec).toBe(40);
+    expect(abs?.durationSec).toBe(5);
   });
 
   it('advancement id exported', () => {

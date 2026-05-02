@@ -75,4 +75,15 @@ describe('smelting', () => {
     for (let i = 0; i < 300; i++) tickFurnace(f, 0.1, c);
     expect(f.input).not.toBeNull();
   });
+
+  it('Java canonical raw meat IDs (no raw_ prefix) also smelt (wiki)', () => {
+    // Wiki minecraft.wiki/w/Smelting: Java item IDs are `beef`,
+    // `chicken`, etc. — no `raw_` prefix. Registry has both spellings;
+    // smelting must accept both.
+    expect(findRecipe('webmc:beef')?.output).toBe('webmc:cooked_beef');
+    expect(findRecipe('webmc:chicken')?.output).toBe('webmc:cooked_chicken');
+    expect(findRecipe('webmc:porkchop')?.output).toBe('webmc:cooked_porkchop');
+    expect(findRecipe('webmc:mutton')?.output).toBe('webmc:cooked_mutton');
+    expect(findRecipe('webmc:rabbit')?.output).toBe('webmc:cooked_rabbit');
+  });
 });

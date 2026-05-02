@@ -27,4 +27,17 @@ describe('moon phase', () => {
   it('slime zero at new', () => {
     expect(slimeSpawnMultiplier(4)).toBe(0);
   });
+
+  it('slime spawn brightness curve matches wiki 8 phases', () => {
+    // Phases 0-7 = full, waning gibbous, last quarter, waning crescent,
+    // new, waxing crescent, first quarter, waxing gibbous.
+    expect(slimeSpawnMultiplier(0)).toBe(1.0);
+    expect(slimeSpawnMultiplier(1)).toBe(0.75);
+    expect(slimeSpawnMultiplier(2)).toBe(0.5);
+    expect(slimeSpawnMultiplier(3)).toBe(0.25);
+    expect(slimeSpawnMultiplier(4)).toBe(0.0);
+    expect(slimeSpawnMultiplier(5)).toBe(0.25);
+    expect(slimeSpawnMultiplier(6)).toBe(0.5);
+    expect(slimeSpawnMultiplier(7)).toBe(0.75);
+  });
 });

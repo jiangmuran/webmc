@@ -114,6 +114,13 @@ export interface TickResult {
 export class ProjectileWorld {
   private readonly items = new Map<number, Projectile>();
   private nextId = 1;
+  // Reused per-tick scratches. Were allocated fresh on every tick:
+  // results[] returned to caller (kept length=0 between ticks), the
+  // per-tick toDelete list, and the per-projectile dv literal that
+  // sweepMove mutates.
+  private readonly resultsScratch: TickResult[] = [];
+  private readonly deleteScratch: number[] = [];
+  private readonly dvScratch: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
 
   spawn(kind: ProjectileKind, from: Vec3, vel: Vec3, ownerId: number | null): Projectile {
     const def = PROJECTILE_DEFS[kind];
@@ -144,8 +151,10 @@ export class ProjectileWorld {
   }
 
   tick(dtSec: number, ctx: ProjectileTickContext): readonly TickResult[] {
-    const results: TickResult[] = [];
-    const toDelete: number[] = [];
+    const results = this.resultsScratch;
+    results.length = 0;
+    const toDelete = this.deleteScratch;
+    toDelete.length = 0;
     for (const p of this.items.values()) {
       if (p.stuck) {
         p.ageSec += dtSec;
@@ -161,8 +170,10 @@ export class ProjectileWorld {
       p.velocity.y *= p.def.drag;
       p.velocity.z *= p.def.drag;
 
-      const dv = { x: p.velocity.x * dtSec, y: p.velocity.y * dtSec, z: p.velocity.z * dtSec };
-      const move = sweepMove(p.position, p.def.aabb, dv, ctx.isSolid);
+      this.dvScratch.x = p.velocity.x * dtSec;
+      this.dvScratch.y = p.velocity.y * dtSec;
+      this.dvScratch.z = p.velocity.z * dtSec;
+      const move = sweepMove(p.position, p.def.aabb, this.dvScratch, ctx.isSolid);
       const hitBlock = move.hitX || move.hitY || move.hitZ;
 
       let hitEntityId: number | null = null;

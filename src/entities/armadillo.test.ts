@@ -9,10 +9,18 @@ import {
 } from './armadillo';
 
 describe('armadillo', () => {
-  it('rolls up when a scary source is within 3 blocks', () => {
+  it('rolls up when a scary source is within 7 blocks (wiki)', () => {
     const s = makeArmadilloState();
-    tickArmadillo(s, { nearbyScarySources: [{ distanceSq: 4 }], dtSec: 0.1 });
+    // distance 6 → distSq 36 → within 49 → curl.
+    tickArmadillo(s, { nearbyScarySources: [{ distanceSq: 36 }], dtSec: 0.1 });
     expect(s.rolled).toBe(true);
+  });
+
+  it('does not roll up beyond 7 blocks', () => {
+    const s = makeArmadilloState();
+    // distance 8 → distSq 64 → outside 49 → no curl.
+    tickArmadillo(s, { nearbyScarySources: [{ distanceSq: 64 }], dtSec: 0.1 });
+    expect(s.rolled).toBe(false);
   });
 
   it('drops a scute periodically when not rolled', () => {
@@ -32,6 +40,7 @@ describe('armadillo', () => {
       dtSec: 0.1,
     });
     expect(r.droppedScute).toBe(false);
+    expect(s.rolled).toBe(true);
   });
 });
 

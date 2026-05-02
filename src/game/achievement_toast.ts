@@ -44,13 +44,20 @@ export interface TickResult {
   justHidden: string | null;
 }
 
+// Reused per-call result. tickToasts fires every frame; was building
+// a fresh {justShown, justHidden} literal each call. Caller reads
+// fields synchronously and doesn't retain the reference (the toast
+// view applies DOM writes immediately).
+const SHARED_TICK_RESULT: TickResult = { justShown: null, justHidden: null };
+
 export function tickToasts(state: ToastState, ctx: TickCtx): TickResult {
-  let justShown: Toast | null = null;
-  let justHidden: string | null = null;
+  const out = SHARED_TICK_RESULT;
+  out.justShown = null;
+  out.justHidden = null;
 
   if (state.visibleId !== null) {
     if (ctx.nowSec - state.visibleShownAtSec >= VISIBLE_DURATION_SEC + ANIMATION_DURATION_SEC) {
-      justHidden = state.visibleId;
+      out.justHidden = state.visibleId;
       state.visibleId = null;
     }
   }
@@ -60,11 +67,11 @@ export function tickToasts(state: ToastState, ctx: TickCtx): TickResult {
     if (next) {
       state.visibleId = next.id;
       state.visibleShownAtSec = ctx.nowSec;
-      justShown = next;
+      out.justShown = next;
     }
   }
 
-  return { justShown, justHidden };
+  return out;
 }
 
 // Priority: challenge > goal > task > recipe > system. When the queue is

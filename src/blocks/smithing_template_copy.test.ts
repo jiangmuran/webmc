@@ -39,4 +39,38 @@ describe('smithing template copy', () => {
   it('netherite template known', () => {
     expect(MATCHING_BLOCK['netherite_upgrade']).toBe('netherite_ingot');
   });
+
+  it('all 19 wiki trim templates present', () => {
+    const all = [
+      'netherite_upgrade',
+      'sentry',
+      'dune',
+      'coast',
+      'wild',
+      'ward',
+      'silence',
+      'eye',
+      'vex',
+      'tide',
+      'snout',
+      'rib',
+      'spire',
+      'flow',
+      'bolt',
+      'host',
+      'raiser',
+      'shaper',
+      'wayfinder',
+    ];
+    for (const t of all) {
+      expect(MATCHING_BLOCK[t]).toBeDefined();
+    }
+  });
+
+  it('trail ruins terracotta-themed trims duplicate with terracotta (wiki)', () => {
+    expect(MATCHING_BLOCK['host']).toBe('terracotta');
+    expect(MATCHING_BLOCK['raiser']).toBe('terracotta');
+    expect(MATCHING_BLOCK['shaper']).toBe('terracotta');
+    expect(MATCHING_BLOCK['wayfinder']).toBe('terracotta');
+  });
 });

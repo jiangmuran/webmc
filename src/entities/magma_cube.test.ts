@@ -29,8 +29,11 @@ describe('magma cube', () => {
     expect(r.droppedMagmaCream).toBeGreaterThanOrEqual(0);
   });
 
-  it('damage scales with size', () => {
-    expect(attackDamageBySize(1)).toBe(2);
+  it('damage = size + 2 (wiki: 3 / 4 / 6 for small / medium / large)', () => {
+    // Wiki (minecraft.wiki/w/Magma_Cube): "the attack strength is
+    // its size + 2." Old small-cube damage was 2, off by one.
+    expect(attackDamageBySize(1)).toBe(3);
+    expect(attackDamageBySize(2)).toBe(4);
     expect(attackDamageBySize(4)).toBe(6);
   });
 

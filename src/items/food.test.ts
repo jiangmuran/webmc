@@ -53,10 +53,12 @@ describe('food', () => {
     expect(p.effects[0]?.id).toBe('regeneration');
   });
 
-  it('spider eye applies poison 100% of the time', () => {
+  it('spider eye applies poison for 5 seconds (wiki)', () => {
     const p = new StubPlayer();
     applyFood('spider_eye', p, () => 0.5);
-    expect(p.effects.some((e) => e.id === 'poison')).toBe(true);
+    const poison = p.effects.find((e) => e.id === 'poison');
+    expect(poison).toBeDefined();
+    expect(poison?.dur).toBe(5);
   });
 
   it('raw chicken sometimes applies hunger', () => {
@@ -71,5 +73,23 @@ describe('food', () => {
   it('isFood distinguishes food from non-food', () => {
     expect(isFood('webmc:bread')).toBe(true);
     expect(isFood('webmc:stone')).toBe(false);
+  });
+
+  it('chorus_fruit + suspicious_stew + honey_bottle bypass full-hunger (wiki)', () => {
+    // Wiki: always-edible foods include golden apples + chorus fruit
+    // + suspicious stew + honey bottle.
+    for (const id of ['chorus_fruit', 'suspicious_stew', 'honey_bottle']) {
+      const p = new StubPlayer();
+      p.hunger = 20;
+      expect(applyFood(id, p)).toBe(true);
+    }
+  });
+
+  it('regular foods still rejected at full hunger', () => {
+    const p = new StubPlayer();
+    p.hunger = 20;
+    for (const id of ['bread', 'apple', 'cooked_beef']) {
+      expect(applyFood(id, p)).toBe(false);
+    }
   });
 });

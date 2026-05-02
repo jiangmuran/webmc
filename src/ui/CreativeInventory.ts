@@ -12,6 +12,9 @@ export interface CreativeEntry {
 
 export interface CreativeInventoryCallbacks {
   onPick: (entry: CreativeEntry) => void;
+  // Fired whenever the panel becomes hidden (Close button, click-outside,
+  // programmatic hide). Lets callers re-grab pointer lock + unblock input.
+  onClose?: () => void;
 }
 
 const CATEGORY_RULES: readonly { match: RegExp; category: string }[] = [
@@ -265,6 +268,7 @@ export class CreativeInventory {
     if (!this.visible) return;
     this.visible = false;
     this.root.style.display = 'none';
+    this.cb.onClose?.();
   }
 
   toggle(): void {

@@ -51,7 +51,7 @@ describe('ender pearl', () => {
     expect(r.damageToThrower).toBe(TELEPORT_DAMAGE);
   });
 
-  it('end no damage', () => {
-    expect(onPearlLand({ inEnd: true, hitValid: true }).damageToThrower).toBe(0);
+  it('end still takes damage (wiki: damage applies in all dimensions)', () => {
+    expect(onPearlLand({ inEnd: true, hitValid: true }).damageToThrower).toBe(TELEPORT_DAMAGE);
   });
 });

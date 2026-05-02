@@ -20,27 +20,36 @@ export function merge(a: PotionEffect, b: PotionEffect): PotionEffect {
   return a;
 }
 
+// Module-scope Set lookup. Was a fresh 19-element array literal +
+// O(N) .includes() scan per call — even with low call frequency
+// (ActiveEffectsHud render gated by sig-cache), the per-call array
+// alloc is pure waste.
+// Wiki (minecraft.wiki/w/Effect): canonical beneficial-effect list.
+// Added `haste` (mining/attack speed) which was missing — beacons can
+// grant it as a primary, so its category matters for HUD coloring.
+const BENEFICIAL_EFFECTS: ReadonlySet<string> = new Set([
+  'regeneration',
+  'speed',
+  'haste',
+  'strength',
+  'jump_boost',
+  'resistance',
+  'fire_resistance',
+  'water_breathing',
+  'invisibility',
+  'night_vision',
+  'health_boost',
+  'absorption',
+  'saturation',
+  'glowing',
+  'luck',
+  'slow_falling',
+  'conduit_power',
+  'dolphins_grace',
+  'hero_of_the_village',
+  'instant_health',
+]);
+
 export function isBeneficial(id: string): boolean {
-  const BENEFICIAL = [
-    'regeneration',
-    'speed',
-    'strength',
-    'jump_boost',
-    'resistance',
-    'fire_resistance',
-    'water_breathing',
-    'invisibility',
-    'night_vision',
-    'health_boost',
-    'absorption',
-    'saturation',
-    'glowing',
-    'luck',
-    'slow_falling',
-    'conduit_power',
-    'dolphins_grace',
-    'hero_of_the_village',
-    'instant_health',
-  ];
-  return BENEFICIAL.includes(id);
+  return BENEFICIAL_EFFECTS.has(id);
 }

@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { signalStrength, boostsArrow, signalFades } from './target_block_hit';
+import {
+  signalStrength,
+  boostsArrow,
+  signalFades,
+  SIGNAL_DURATION_TICKS_ARROW,
+  SIGNAL_DURATION_TICKS_THROWABLE,
+} from './target_block_hit';
 
 describe('target block hit', () => {
   it('bullseye 15', () => {
@@ -20,8 +26,17 @@ describe('target block hit', () => {
     expect(boostsArrow()).toBe(true);
   });
 
-  it('signal fades', () => {
-    expect(signalFades(10, 0)).toBe(true);
-    expect(signalFades(3, 0)).toBe(false);
+  it('arrow signal lasts 20 ticks (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Target): arrows + tridents → 20 gt.
+    expect(SIGNAL_DURATION_TICKS_ARROW).toBe(20);
+    expect(signalFades(19, 0, 'arrow')).toBe(false);
+    expect(signalFades(20, 0, 'arrow')).toBe(true);
+  });
+
+  it('throwable signal lasts 8 ticks (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Target): "most projectiles" → 8 gt.
+    expect(SIGNAL_DURATION_TICKS_THROWABLE).toBe(8);
+    expect(signalFades(7, 0, 'throwable')).toBe(false);
+    expect(signalFades(8, 0, 'throwable')).toBe(true);
   });
 });

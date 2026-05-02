@@ -38,14 +38,15 @@ export class SpawnSystem {
     this.sinceCheck += dtSec;
     if (this.sinceCheck < this.opts.checkIntervalSec) return;
     this.sinceCheck = 0;
-    this.despawnFar(mobs, ctx);
+    // Despawn-far is handled by the host (main.ts) which knows about
+    // tame / leash / saddled / baby exemptions. Doing it here would
+    // bypass those exemptions and silently delete the player's wolf.
     if (ctx.isDay) this.spawnPassive(mobs, ctx);
     else this.spawnHostile(mobs, ctx);
   }
 
   private spawnHostile(mobs: MobWorld, ctx: SpawnContext): void {
-    const current = this.countHostile(mobs);
-    if (current >= this.opts.maxHostile) return;
+    if (mobs.hostileCount >= this.opts.maxHostile) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
     const rng = ctx.rng ?? Math.random;
@@ -57,8 +58,7 @@ export class SpawnSystem {
   }
 
   private spawnPassive(mobs: MobWorld, ctx: SpawnContext): void {
-    const current = this.countPassive(mobs);
-    if (current >= this.opts.maxPassive) return;
+    if (mobs.passiveCount >= this.opts.maxPassive) return;
     const slot = this.findSpawnSlot(ctx);
     if (!slot) return;
     const rng = ctx.rng ?? Math.random;
@@ -103,32 +103,5 @@ export class SpawnSystem {
       return { x: x + 0.5, y, z: z + 0.5 };
     }
     return null;
-  }
-
-  private despawnFar(mobs: MobWorld, ctx: SpawnContext): void {
-    const max = this.opts.maxDistanceSq * 2;
-    const toDrop: number[] = [];
-    for (const mob of mobs.all()) {
-      const dx = mob.position.x - ctx.playerPos.x;
-      const dz = mob.position.z - ctx.playerPos.z;
-      if (dx * dx + dz * dz > max) toDrop.push(mob.id);
-    }
-    for (const id of toDrop) mobs.remove(id);
-  }
-
-  private countHostile(mobs: MobWorld): number {
-    let n = 0;
-    for (const mob of mobs.all()) {
-      if (mob.def.behavior === 'hostile' || mob.def.behavior === 'creeper') n++;
-    }
-    return n;
-  }
-
-  private countPassive(mobs: MobWorld): number {
-    let n = 0;
-    for (const mob of mobs.all()) {
-      if (mob.def.behavior === 'passive') n++;
-    }
-    return n;
   }
 }

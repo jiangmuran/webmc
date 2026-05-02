@@ -1,6 +1,6 @@
-import type { BlockState } from '@/blocks/state';
-import { SUBCHUNK_DIM, SUBCHUNK_VOLUME, localIndex } from './SubChunk';
-import { CHUNK_DIM, CHUNK_HEIGHT, type Chunk } from './Chunk';
+import { type BlockState, AIR } from '@/blocks/state';
+import { SUBCHUNK_DIM, SUBCHUNK_VOLUME, type SubChunk, localIndex } from './SubChunk';
+import { CHUNK_DIM, CHUNK_HEIGHT, CHUNK_SECTIONS, type Chunk } from './Chunk';
 
 export const MAX_LIGHT = 15;
 
@@ -35,7 +35,10 @@ export function getLightByte(light: ChunkLight, lx: number, y: number, lz: numbe
   const cy = y >> 4;
   const sec = light.sections[cy];
   if (!sec) return y >= 0 && y < CHUNK_HEIGHT ? packLight(MAX_LIGHT, 0) : 0;
-  return sec[localIndex(lx, y & 0xf, lz)] ?? 0;
+  // Uint8Array indexed in [0, SUBCHUNK_VOLUME) — `!` skips per-call
+  // nullish coalesce. Hot path: light reads in random tick (crops,
+  // saplings, ice) + mob sunlit checks + minimap render.
+  return sec[localIndex(lx, y & 0xf, lz)]!;
 }
 
 function ensureSection(light: ChunkLight, cy: number, skyInit: number): Uint8Array {
@@ -51,85 +54,279 @@ function ensureSection(light: ChunkLight, cy: number, skyInit: number): Uint8Arr
 // Above that, skyLight = MAX_LIGHT. At and below, 0 (no horizontal bleed in
 // M3; diagonal/under-overhang darkening is a post-M3 upgrade).
 export function computeSkyLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
-  for (let lx = 0; lx < CHUNK_DIM; lx++) {
-    for (let lz = 0; lz < CHUNK_DIM; lz++) {
-      let topOpaque = -1;
-      for (let y = CHUNK_HEIGHT - 1; y >= 0; y--) {
-        const state = chunk.get(lx, y, lz);
-        if (oracle.isOpaque(state)) {
-          topOpaque = y;
+  // Find the highest section that contains any opaque blocks. Above it
+  // every column is fully sky-lit (skip the top-search for those
+  // columns entirely). Was scanning from y=383 down through 300+ air
+  // cells per column for typical surface-altitude chunks — 16x16x300
+  // = 76K wasted chunk.get calls per column-search pass.
+  let highestNonEmptySection = -1;
+  for (let cy = CHUNK_SECTIONS - 1; cy >= 0; cy--) {
+    const sec = chunk.section(cy);
+    if (sec && sec.nonAirCount > 0) {
+      // Also check palette has at least one opaque block — sections of
+      // pure non-opaque (water-only, leaves-only) don't block sky.
+      let anyOpaque = false;
+      const pal = sec.palette;
+      for (let i = 0; i < pal.size; i++) {
+        if (oracle.isOpaque(pal.get(i))) {
+          anyOpaque = true;
           break;
         }
       }
-      for (let y = 0; y < CHUNK_HEIGHT; y++) {
-        const cy = y >> 4;
-        const sec = ensureSection(light, cy, 0);
-        const skyVal = y > topOpaque ? MAX_LIGHT : 0;
-        const prev = sec[localIndex(lx, y & 0xf, lz)] ?? 0;
-        sec[localIndex(lx, y & 0xf, lz)] = packLight(skyVal, unpackBlock(prev));
+      if (anyOpaque) {
+        highestNonEmptySection = cy;
+        break;
+      }
+    }
+  }
+  // Top of the world for the search start. Below this is where we
+  // scan; everything above is fully lit.
+  const searchTopY =
+    highestNonEmptySection < 0 ? -1 : (highestNonEmptySection + 1) * SUBCHUNK_DIM - 1;
+
+  // First pass: compute topOpaque per column + track the global max so
+  // we can wholesale-fill sections that are entirely above max with
+  // skyLight=15. Use the module scratch — caller iterates synchronously
+  // and never retains the reference.
+  const topByCol = TOP_BY_COL_SCRATCH;
+  let maxTopOpaque = -1;
+  // Pre-cache per-cy chunk section refs + per-cy "any opaque" flag.
+  // Was paying chunk.get's section deref + null check on every cell of
+  // the per-column top-down scan (256 columns × ~80 y = ~20K reads
+  // per chunk-light rebuild). Sections without any opaque palette
+  // entry can be skipped wholesale, jumping to the next-lower section.
+  const chunkSecsByCy: (SubChunk | null)[] = [];
+  const cySectionHasOpaque: boolean[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    const sec = chunk.section(cy);
+    chunkSecsByCy.push(sec);
+    let hasOpaque = false;
+    if (sec) {
+      const pal = sec.palette;
+      for (let i = 0; i < pal.size; i++) {
+        if (oracle.isOpaque(pal.get(i))) {
+          hasOpaque = true;
+          break;
+        }
+      }
+    }
+    cySectionHasOpaque.push(hasOpaque);
+  }
+  for (let lx = 0; lx < CHUNK_DIM; lx++) {
+    for (let lz = 0; lz < CHUNK_DIM; lz++) {
+      let topOpaque = -1;
+      // Walk sections top-down; for each section with any opaque
+      // palette entry, scan its cells for the first opaque hit.
+      for (let cy = searchTopY >> 4; cy >= 0; cy--) {
+        if (!cySectionHasOpaque[cy]) continue;
+        const sc = chunkSecsByCy[cy];
+        if (!sc) continue;
+        const yMin = cy << 4;
+        const yMax = Math.min(searchTopY, yMin + 15);
+        // Uniform-section fast path: if the entire section is one
+        // state (bits=0) and that state is opaque (the per-cy flag
+        // already confirmed at least one opaque palette entry), the
+        // topmost opaque is yMax — skip the cell-by-cell scan.
+        if (sc.isUniform) {
+          topOpaque = yMax;
+          break;
+        }
+        for (let y = yMax; y >= yMin; y--) {
+          if (oracle.isOpaque(sc.get(lx, y & 0xf, lz))) {
+            topOpaque = y;
+            break;
+          }
+        }
+        if (topOpaque >= 0) break;
+      }
+      topByCol[lx * CHUNK_DIM + lz] = topOpaque;
+      if (topOpaque > maxTopOpaque) maxTopOpaque = topOpaque;
+    }
+  }
+  // Sections wholly above maxTopOpaque (section min y > max) get filled
+  // with the all-lit byte (skyLight=15 << 4 | 0). The straddling section
+  // (containing maxTopOpaque) needs per-column handling.
+  const ALL_LIT = packLight(MAX_LIGHT, 0);
+  // maxTopOpaque is in [-1, CHUNK_HEIGHT-1]; for that range `>> 4`
+  // matches Math.floor(_ / 16) and skips the divide. For -1, both
+  // give -1 → firstFullyLitCy=0 → the entire chunk is fully lit
+  // (matches the all-air fast path).
+  const firstFullyLitCy = (maxTopOpaque >> 4) + 1;
+  for (let cy = firstFullyLitCy; cy < CHUNK_SECTIONS; cy++) {
+    const sec = ensureSection(light, cy, 0);
+    sec.fill(ALL_LIT);
+  }
+  // Per-column write for the remaining cells (≤ end of straddling
+  // section). computeBlockLight runs after, so unpackBlock is always
+  // 0 here — write the packed byte directly.
+  const writeUntilY = Math.min(CHUNK_HEIGHT - 1, (firstFullyLitCy << 4) - 1);
+  // Pre-resolve each section once instead of calling ensureSection per
+  // (lx, lz, y) cell — was 256 columns × 80 y = ~20K calls vs ~5
+  // calls (one per straddling section).
+  const sectionsByCy: Uint8Array[] = [];
+  if (writeUntilY >= 0) {
+    const lastCy = writeUntilY >> 4;
+    for (let cy = 0; cy <= lastCy; cy++) sectionsByCy.push(ensureSection(light, cy, 0));
+  }
+  // packLight(MAX_LIGHT, 0) is constant when block-light is 0 — and
+  // computeBlockLight runs AFTER us, so block is always 0 here. Skip
+  // per-cell packLight and use the precomputed `ALL_LIT` (or literal
+  // 0 for under-surface cells).
+  for (let lx = 0; lx < CHUNK_DIM; lx++) {
+    for (let lz = 0; lz < CHUNK_DIM; lz++) {
+      // topByCol is Int16Array(CHUNK_DIM*CHUNK_DIM), index always in
+      // range — `!` skips per-column nullish-coalesce.
+      const topOpaque = topByCol[lx * CHUNK_DIM + lz]!;
+      for (let y = 0; y <= writeUntilY; y++) {
+        const sec = sectionsByCy[y >> 4]!;
+        sec[localIndex(lx, y & 0xf, lz)] = y > topOpaque ? ALL_LIT : 0;
       }
     }
   }
 }
 
-interface LightNode {
-  x: number;
-  y: number;
-  z: number;
-  value: number;
-}
+// Parallel neighbor-offset arrays. Was a tuple-of-tuples; each BFS
+// step pulled the inner tuple then read off[0]/off[1]/off[2]. Index
+// access on three flat readonly number[]s skips the tuple deref.
+const NEIGHBOR_DX_6: readonly number[] = [-1, 1, 0, 0, 0, 0];
+const NEIGHBOR_DY_6: readonly number[] = [0, 0, -1, 1, 0, 0];
+const NEIGHBOR_DZ_6: readonly number[] = [0, 0, 0, 0, -1, 1];
+
+// Shared per-column top-opaque scratch. computeSkyLight was allocating
+// a fresh Int16Array(16*16) per call — buildLight runs hundreds of
+// times during chunk streaming, so a module-scope scratch saves the
+// allocation churn. Reads + writes are synchronous, never recursive.
+const TOP_BY_COL_SCRATCH = new Int16Array(CHUNK_DIM * CHUNK_DIM);
+// Parallel arrays for the BFS queue. Was an Array<LightNode> with a
+// fresh {x,y,z,value} literal per emissive source AND per propagation
+// step (chunks with many torches/glowstone hit thousands per chunk
+// load). buildLight is called serially on the main thread, so per-
+// module reuse is safe.
+const BFS_QUEUE_X: number[] = [];
+const BFS_QUEUE_Y: number[] = [];
+const BFS_QUEUE_Z: number[] = [];
+const BFS_QUEUE_VALUE: number[] = [];
 
 // BFS block-light propagation from emissive voxels. Attenuates by 1 per step.
 // Scoped to a single chunk for M3 — cross-chunk bleed is an upgrade.
 export function computeBlockLight(chunk: Chunk, oracle: LightOracle, light: ChunkLight): void {
-  const queue: LightNode[] = [];
-  for (let y = 0; y < CHUNK_HEIGHT; y++) {
-    const cy = y >> 4;
+  const qx = BFS_QUEUE_X;
+  const qy = BFS_QUEUE_Y;
+  const qz = BFS_QUEUE_Z;
+  const qv = BFS_QUEUE_VALUE;
+  qx.length = 0;
+  qy.length = 0;
+  qz.length = 0;
+  qv.length = 0;
+  // Scan section-by-section. Skip whole sections that can't contain any
+  // emissive voxel — uniform sections with non-emissive palette[0] (most
+  // sky/stone/grass sections), and palette-mixed sections where every
+  // palette entry has emission 0. Saves ~98K chunk.get + lightEmission
+  // calls per chunk for the common no-light-block case.
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     const sec = chunk.section(cy);
     if (!sec) continue;
-    for (let lx = 0; lx < CHUNK_DIM; lx++) {
-      for (let lz = 0; lz < CHUNK_DIM; lz++) {
-        const state = chunk.get(lx, y, lz);
-        const e = oracle.lightEmission(state);
-        if (e > 0) {
-          const lightSec = ensureSection(light, cy, 0);
-          const prev = lightSec[localIndex(lx, y & 0xf, lz)] ?? 0;
-          lightSec[localIndex(lx, y & 0xf, lz)] = packLight(unpackSky(prev), e);
-          queue.push({ x: lx, y, z: lz, value: e });
+    let sectionHasEmissive = false;
+    const palette = sec.palette;
+    for (let i = 0; i < palette.size; i++) {
+      if (oracle.lightEmission(palette.get(i)) > 0) {
+        sectionHasEmissive = true;
+        break;
+      }
+    }
+    if (!sectionHasEmissive) continue;
+    // cy is in [0, CHUNK_SECTIONS-1] so `<< 4` matches `* SUBCHUNK_DIM`
+    // without the multiply.
+    const yBase = cy << 4;
+    // Hoist ensureSection outside the per-cell loop — was called per
+    // emissive voxel found. Section is constant across the 4096-cell
+    // scan of one emissive section.
+    const lightSec = ensureSection(light, cy, 0);
+    // Use the SubChunk ref directly instead of going through
+    // chunk.get(...) per cell — saves the assertLocal + sectionOf
+    // shift + array deref + null check on each of the 4096 reads.
+    for (let dy = 0; dy < SUBCHUNK_DIM; dy++) {
+      const y = yBase + dy;
+      for (let lx = 0; lx < CHUNK_DIM; lx++) {
+        for (let lz = 0; lz < CHUNK_DIM; lz++) {
+          const state = sec.get(lx, dy, lz);
+          const e = oracle.lightEmission(state);
+          if (e > 0) {
+            // Cache the localIndex result — was computed twice (read +
+            // write) per emissive voxel.
+            const idx = localIndex(lx, dy, lz);
+            const prev = lightSec[idx]!;
+            lightSec[idx] = packLight(unpackSky(prev), e);
+            qx.push(lx);
+            qy.push(y);
+            qz.push(lz);
+            qv.push(e);
+          }
         }
       }
     }
   }
-  const neighbors: [number, number, number][] = [
-    [-1, 0, 0],
-    [1, 0, 0],
-    [0, -1, 0],
-    [0, 1, 0],
-    [0, 0, -1],
-    [0, 0, 1],
-  ];
-  while (queue.length > 0) {
-    const node = queue.shift();
-    if (!node) break;
-    const next = node.value - 1;
+  // Pre-resolve all 24 light sections once. The BFS-step path called
+  // ensureSection per neighbor visit (~60K calls per chunk-light
+  // rebuild on torch-rich worlds). Each call is a function dispatch +
+  // array deref; precaching turns every visit into a direct array
+  // lookup against `sectionsByCy[ncy]`.
+  const sectionsByCy: Uint8Array[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    sectionsByCy.push(ensureSection(light, cy, 0));
+  }
+  // Same idea for the chunk's own section refs — chunk.get(nx, ny, nz)
+  // does sectionOf shift + array deref + null check + sec.get on each
+  // visit. With sections precached, the BFS visit becomes one array
+  // lookup + (optional null guard) + sc.get.
+  const chunkSecsByCy: (SubChunk | null)[] = [];
+  for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
+    chunkSecsByCy.push(chunk.section(cy));
+  }
+  // Head-pointer dequeue (FIFO without shift). The original
+  // queue.shift() is O(N) per pop, so a chunk with N emissive sources
+  // and ~10K total propagation nodes ran O(N^2) ≈ 100M ops. With the
+  // head pointer, dequeue is O(1) and the whole BFS is linear in the
+  // number of voxels lit.
+  let head = 0;
+  while (head < qx.length) {
+    const cx2 = qx[head]!;
+    const cy2 = qy[head]!;
+    const cz2 = qz[head]!;
+    const cv2 = qv[head]!;
+    head++;
+    const next = cv2 - 1;
     if (next <= 0) continue;
-    for (const [dx, dy, dz] of neighbors) {
-      const nx = node.x + dx;
-      const ny = node.y + dy;
-      const nz = node.z + dz;
+    // Iterate the 6 neighbors via parallel readonly number[]s; was a
+    // tuple-of-tuples (one inner tuple deref + 3 indexed reads per
+    // step) — three flat indexed reads instead.
+    for (let ni = 0; ni < 6; ni++) {
+      const nx = cx2 + NEIGHBOR_DX_6[ni]!;
+      const ny = cy2 + NEIGHBOR_DY_6[ni]!;
+      const nz = cz2 + NEIGHBOR_DZ_6[ni]!;
       if (nx < 0 || nx >= CHUNK_DIM || ny < 0 || ny >= CHUNK_HEIGHT || nz < 0 || nz >= CHUNK_DIM) {
         continue;
       }
-      const state = chunk.get(nx, ny, nz);
-      if (oracle.isOpaque(state)) continue;
       const ncy = ny >> 4;
-      const sec = ensureSection(light, ncy, 0);
-      const idx = localIndex(nx, ny & 0xf, nz);
-      const prev = sec[idx] ?? 0;
+      const localNy = ny & 0xf;
+      // Cached SubChunk ref — was chunk.get(nx, ny, nz) which paid
+      // assertLocal + sectionOf + array deref + null check on every
+      // visit. Air-section short-circuit: if the chunk section is
+      // missing the cell is air, never opaque, never a propagation
+      // blocker, so skip the read.
+      const cs = chunkSecsByCy[ncy];
+      const state = cs ? cs.get(nx, localNy, nz) : AIR;
+      if (oracle.isOpaque(state)) continue;
+      const sec = sectionsByCy[ncy]!;
+      const idx = localIndex(nx, localNy, nz);
+      const prev = sec[idx]!;
       const prevBlock = unpackBlock(prev);
       if (next <= prevBlock) continue;
       sec[idx] = packLight(unpackSky(prev), next);
-      queue.push({ x: nx, y: ny, z: nz, value: next });
+      qx.push(nx);
+      qy.push(ny);
+      qz.push(nz);
+      qv.push(next);
     }
   }
 }
@@ -141,6 +338,17 @@ export function buildLight(chunk: Chunk, oracle: LightOracle): ChunkLight {
   return light;
 }
 
+// Shared mutable result wrapper. The Uint8Arrays themselves are
+// allocated fresh per call because they're transferred to the mesher
+// worker (and become detached on the main thread after postMessage),
+// but the wrapping {sky, block} object is just a temp shell — the
+// caller reads it synchronously and copies the typed-array refs into
+// its own dispatch options. Avoids a per-mesh-dispatch object literal.
+const flatLightSliceScratch: { sky: Uint8Array; block: Uint8Array } = {
+  sky: new Uint8Array(0),
+  block: new Uint8Array(0),
+};
+
 export function flatLightForSection(
   light: ChunkLight,
   cy: number,
@@ -150,13 +358,17 @@ export function flatLightForSection(
   const block = new Uint8Array(SUBCHUNK_VOLUME);
   if (!sec) {
     sky.fill(MAX_LIGHT);
-    return { sky, block };
+    flatLightSliceScratch.sky = sky;
+    flatLightSliceScratch.block = block;
+    return flatLightSliceScratch;
   }
   for (let i = 0; i < SUBCHUNK_VOLUME; i++) {
-    const b = sec[i] ?? 0;
+    const b = sec[i]!;
     sky[i] = unpackSky(b);
     block[i] = unpackBlock(b);
   }
-  return { sky, block };
+  flatLightSliceScratch.sky = sky;
+  flatLightSliceScratch.block = block;
+  return flatLightSliceScratch;
 }
 void SUBCHUNK_DIM;

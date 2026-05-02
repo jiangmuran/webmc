@@ -7,8 +7,11 @@ export interface TraderLlama {
   lastSpitMs: number;
 }
 
+// Wiki (minecraft.wiki/w/Trader_Llama): "A trader llama's spit
+// inflicts 1 damage." Old SPIT_DAMAGE=2 was 2× the wiki value;
+// sibling llama_spit_attack.ts already uses 1.
 export const SPIT_COOLDOWN_MS = 1500;
-export const SPIT_DAMAGE = 2;
+export const SPIT_DAMAGE = 1;
 export const DEFEND_RANGE = 16;
 
 export function makeTraderLlama(traderId: string): TraderLlama {

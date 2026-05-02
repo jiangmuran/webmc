@@ -41,9 +41,13 @@ describe('World coordinate math', () => {
   });
 
   it('chunkKey is deterministic and unique per (cx, cz)', () => {
-    expect(chunkKey(0, 0)).toBe('0,0');
-    expect(chunkKey(-3, 5)).toBe('-3,5');
+    // Numeric pack — was a string `cx,cz` before; now a 32-bit unsigned
+    // for allocation-free Map keys. Determinism + uniqueness preserved.
+    expect(chunkKey(0, 0)).toBe(chunkKey(0, 0));
+    expect(chunkKey(-3, 5)).toBe(chunkKey(-3, 5));
     expect(chunkKey(1, 2)).not.toBe(chunkKey(2, 1));
+    expect(chunkKey(0, 0)).not.toBe(chunkKey(1, 0));
+    expect(chunkKey(0, 0)).not.toBe(chunkKey(0, 1));
   });
 });
 
@@ -106,6 +110,27 @@ describe('World', () => {
     w.set(16, 0, 0, STONE);
     w.set(-1, 0, -1, STONE);
     const keys = new Set(Array.from(w.chunks()).map((c) => chunkKey(c.cx, c.cz)));
-    expect(keys).toEqual(new Set(['0,0', '1,0', '-1,-1']));
+    expect(keys).toEqual(new Set([chunkKey(0, 0), chunkKey(1, 0), chunkKey(-1, -1)]));
+  });
+
+  it('dirtyChunks() yields chunks whose mesh was edited', () => {
+    const w = new World();
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
+    w.set(0, 0, 0, STONE);
+    const dirty = Array.from(w.dirtyChunks());
+    expect(dirty).toHaveLength(1);
+    expect(dirty[0]?.cx).toBe(0);
+    expect(dirty[0]?.cz).toBe(0);
+    // clearDirty removes from set; subsequent iterations skip the chunk.
+    w.clearDirty(dirty[0]!);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
+  });
+
+  it('dirtyChunks() drops removed chunks', () => {
+    const w = new World();
+    w.set(0, 0, 0, STONE);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(1);
+    w.removeChunk(0, 0);
+    expect(Array.from(w.dirtyChunks())).toHaveLength(0);
   });
 });

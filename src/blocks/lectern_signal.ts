@@ -6,9 +6,19 @@ export interface LecternState {
   pageCount: number;
 }
 
+// Wiki (minecraft.wiki/w/Lectern): "The comparator output is
+// determined by the current page of the book: from 1 (first page)
+// to 15 (last page), in equal steps." Formula:
+//   output = 1 + floor(pageIndex / (pageCount - 1) * 14)
+//
+// Old formula used `* 15` instead of `* 14`, then clamped the
+// resulting 16 down to 15 only on the LAST page. Intermediate pages
+// were off-by-one (e.g. with 4 pages, page 1 returned 6 instead of
+// the wiki's 5; page 2 returned 11 instead of 10).
 export function comparatorSignal(s: LecternState): number {
   if (!s.bookPresent || s.pageCount <= 0) return 0;
-  return Math.min(15, Math.floor((s.pageIndex / Math.max(1, s.pageCount - 1)) * 15) + 1);
+  if (s.pageCount === 1) return 1;
+  return 1 + Math.floor((s.pageIndex / (s.pageCount - 1)) * 14);
 }
 
 export function turnPage(s: LecternState, forward: boolean): LecternState {

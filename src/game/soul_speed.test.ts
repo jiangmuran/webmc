@@ -10,12 +10,10 @@ describe('soul speed', () => {
     expect(soulSpeedMultiplier({ soulSpeedLevel: 3, onSoulBlock: false })).toBe(1);
   });
 
-  it('level 1 gives +50%', () => {
-    expect(soulSpeedMultiplier({ soulSpeedLevel: 1, onSoulBlock: true })).toBeCloseTo(1.5);
-  });
-
-  it('level 3 gives +70%', () => {
-    expect(soulSpeedMultiplier({ soulSpeedLevel: 3, onSoulBlock: true })).toBeCloseTo(1.7);
+  it('multiplier matches wiki (L × 0.105 + 1.3)', () => {
+    expect(soulSpeedMultiplier({ soulSpeedLevel: 1, onSoulBlock: true })).toBeCloseTo(1.405);
+    expect(soulSpeedMultiplier({ soulSpeedLevel: 2, onSoulBlock: true })).toBeCloseTo(1.51);
+    expect(soulSpeedMultiplier({ soulSpeedLevel: 3, onSoulBlock: true })).toBeCloseTo(1.615);
   });
 
   it('boots take durability once per second', () => {

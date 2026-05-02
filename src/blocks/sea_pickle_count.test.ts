@@ -10,12 +10,12 @@ describe('sea pickle count', () => {
     expect(lightLevel(4, false)).toBe(0);
   });
 
-  it('1 waterlogged pickle → 3 light', () => {
-    expect(lightLevel(1, true)).toBe(3);
+  it('1 waterlogged pickle → 6 light (wiki)', () => {
+    expect(lightLevel(1, true)).toBe(6);
   });
 
-  it('4 waterlogged pickles → 12 light', () => {
-    expect(lightLevel(4, true)).toBe(12);
+  it('4 waterlogged pickles → 15 light (wiki)', () => {
+    expect(lightLevel(4, true)).toBe(15);
   });
 
   it('bonemeal on coral grows to max', () => {

@@ -18,6 +18,14 @@ describe('end stone brick variants', () => {
     expect(stonecutterProduces('end_stone_bricks', 'end_stone_brick_stairs')).toBe(true);
   });
 
+  it('stonecutter end stone → all brick variants in one step (wiki)', () => {
+    // Wiki: end stone can be stonecut directly to bricks, brick
+    // stairs, brick slabs, or brick walls — no intermediate cut.
+    expect(stonecutterProduces('end_stone', 'end_stone_brick_stairs')).toBe(true);
+    expect(stonecutterProduces('end_stone', 'end_stone_brick_slab')).toBe(true);
+    expect(stonecutterProduces('end_stone', 'end_stone_brick_wall')).toBe(true);
+  });
+
   it('no reverse', () => {
     expect(stonecutterProduces('end_stone_bricks', 'end_stone')).toBe(false);
   });

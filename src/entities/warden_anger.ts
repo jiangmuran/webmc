@@ -2,6 +2,14 @@
 // in the range 0..150. 35+ means the warden considers the entity "suspected",
 // 80+ means "primary target", 150 triggers a sonic boom windup.
 // Anger decays by 1 per second outside combat; adds on stimuli.
+//
+// Wiki (minecraft.wiki/w/Warden): "It adds 10 anger if the vibration
+// was from a projectile or 35 anger for other vibrations." All
+// non-projectile vibrations add the full 35 — the wiki does not
+// describe a close-vs-far falloff. Old vibration_close = 15 and
+// vibration_far = 5 invented a distance ramp that isn't in canon,
+// undershooting wiki anger gain by 57% (close) and 86% (far) per
+// vibration.
 
 export const WARDEN_ANGER_MAX = 150;
 export const WARDEN_ANGER_SUSPECT = 35;
@@ -15,11 +23,11 @@ export type AngerStimulus =
   | 'vibration_far';
 
 const STIMULUS_GAIN: Record<AngerStimulus, number> = {
-  projectile_hit: 20,
+  projectile_hit: 10,
   melee_hit: 35,
   shrieker_witness: 35,
-  vibration_close: 15,
-  vibration_far: 5,
+  vibration_close: 35,
+  vibration_far: 35,
 };
 
 const DECAY_PER_SEC = 1;

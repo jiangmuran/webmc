@@ -30,4 +30,16 @@ describe('glow squid', () => {
     expect(canSpawnGlowSquid({ y: 60, lightLevel: 0, underwater: true })).toBe(false);
     expect(canSpawnGlowSquid({ y: 20, lightLevel: 0, underwater: false })).toBe(false);
   });
+
+  it('forbidden biomes (wiki: not in deep_dark or sulfur_caves)', () => {
+    expect(canSpawnGlowSquid({ y: 20, lightLevel: 0, underwater: true, biome: 'deep_dark' })).toBe(
+      false,
+    );
+    expect(
+      canSpawnGlowSquid({ y: 20, lightLevel: 0, underwater: true, biome: 'sulfur_caves' }),
+    ).toBe(false);
+    expect(canSpawnGlowSquid({ y: 20, lightLevel: 0, underwater: true, biome: 'lush_caves' })).toBe(
+      true,
+    );
+  });
 });

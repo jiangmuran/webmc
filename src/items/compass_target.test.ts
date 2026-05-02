@@ -52,4 +52,31 @@ describe('compass', () => {
     );
     expect(b).toBeCloseTo(Math.PI / 2);
   });
+
+  it('regular spins in nether/end (wiki: no world spawn there)', () => {
+    // Wiki (minecraft.wiki/w/Compass): "In the Nether and the End it
+    // spins randomly because there is no world spawn." Old behavior
+    // pointed at overworld-mapped coords from any dimension.
+    const inNether = bearing(
+      { kind: 'regular', target: null },
+      {
+        playerPos: { x: 0, y: 64, z: 0 },
+        playerDim: 'nether',
+        worldSpawn: { x: 0, y: 64, z: 0 },
+        lastDeathPos: null,
+      },
+    );
+    expect(inNether).toBeNull();
+
+    const inEnd = bearing(
+      { kind: 'regular', target: null },
+      {
+        playerPos: { x: 0, y: 64, z: 0 },
+        playerDim: 'the_end',
+        worldSpawn: { x: 0, y: 64, z: 0 },
+        lastDeathPos: null,
+      },
+    );
+    expect(inEnd).toBeNull();
+  });
 });

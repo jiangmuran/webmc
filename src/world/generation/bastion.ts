@@ -1,8 +1,12 @@
-// Nether bastion remnant. Four variants: Housing Units, Stables, Hoglin
-// Stables, and Treasure. Each variant has piglins/piglin brutes and
-// unique loot tables. Treasure variant has a magma cube spawner room.
+// Nether bastion remnant. Wiki (minecraft.wiki/w/Bastion_Remnant):
+// "bastion remnants generate as 4 types of structures: bridges,
+// hoglin stables, housing units, and treasure rooms."
+// Old set used 'stables' as a 4th variant — there's no plain
+// "stables" bastion in vanilla; the canonical 4th variant is
+// 'bridge', which is the only other type that spawns hoglins.
+// Sibling bastion_remnant_type.ts already uses 'bridge'.
 
-export type BastionVariant = 'housing_units' | 'stables' | 'hoglin_stables' | 'treasure';
+export type BastionVariant = 'housing_units' | 'bridge' | 'hoglin_stables' | 'treasure';
 
 export interface BastionLayout {
   variant: BastionVariant;
@@ -24,7 +28,9 @@ export function planBastion(variant: BastionVariant): BastionLayout {
         gildedBlackstoneBlocks: 8,
         chests: 3,
       };
-    case 'stables':
+    case 'bridge':
+      // Wiki: bridge bastion is one of the two variants that can spawn
+      // hoglins on generation (the other being hoglin_stables).
       return {
         variant,
         brutes: 1,

@@ -6,8 +6,13 @@ describe('spider daylight passive', () => {
     expect(isHostile({ lightLevel: 0, isAttacking: false, wasHitRecently: false })).toBe(true);
   });
 
-  it('light = passive', () => {
+  it('light 12+ = passive (wiki)', () => {
+    expect(isHostile({ lightLevel: 12, isAttacking: false, wasHitRecently: false })).toBe(false);
     expect(isHostile({ lightLevel: 15, isAttacking: false, wasHitRecently: false })).toBe(false);
+  });
+
+  it('light 11 = still hostile (wiki: hostile at ≤ 11)', () => {
+    expect(isHostile({ lightLevel: 11, isAttacking: false, wasHitRecently: false })).toBe(true);
   });
 
   it('hit makes hostile', () => {

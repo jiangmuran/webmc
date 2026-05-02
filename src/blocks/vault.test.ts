@@ -51,4 +51,24 @@ describe('vault', () => {
     }
     expect(true).toBe(true);
   });
+
+  it('flow_armor_trim is ominous-only (wiki); bolt_armor_trim is regular', () => {
+    // Wiki: flow drops only from ominous vaults; bolt drops from
+    // standard vaults (and trial chamber chests).
+    let sawBolt = false;
+    let sawFlow = false;
+    for (let r = 0; r < 1; r += 0.001) {
+      const entry = rollVaultLoot(false, r);
+      if (entry?.item === 'webmc:flow_armor_trim') {
+        throw new Error('flow trim should not drop from regular vault');
+      }
+      if (entry?.item === 'webmc:bolt_armor_trim') sawBolt = true;
+    }
+    for (let r = 0; r < 1; r += 0.001) {
+      const entry = rollVaultLoot(true, r);
+      if (entry?.item === 'webmc:flow_armor_trim') sawFlow = true;
+    }
+    expect(sawBolt).toBe(true);
+    expect(sawFlow).toBe(true);
+  });
 });

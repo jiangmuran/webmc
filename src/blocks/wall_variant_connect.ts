@@ -21,14 +21,21 @@ export function wallShape(q: WallQuery): WallShape {
     east: q.adjacent.east.wall || q.adjacent.east.full || q.adjacent.east.fenceGate,
     west: q.adjacent.west.wall || q.adjacent.west.full || q.adjacent.west.fenceGate,
   };
-  const sidesConnected = Object.values(connect).filter(Boolean).length;
 
   const tallPreferred = q.hasFullAbove;
   const straightNS = connect.north && connect.south && !connect.east && !connect.west;
   const straightEW = connect.east && connect.west && !connect.north && !connect.south;
   const isStraight = straightNS || straightEW;
 
-  const post = tallPreferred || (!isStraight && sidesConnected >= 2) || sidesConnected === 0;
+  // Wiki (minecraft.wiki/w/Wall block-states): "up — when set to false,
+  // the post column is replaced by an upper portion of the wall,
+  // leveling out walls that connect on opposite sides only (north and
+  // south, or east and west). Otherwise, walls have a vertical post
+  // column." So up=false ONLY for straight pairs; every other config —
+  // including a single-side connection — keeps the post. Old condition
+  // omitted the 1-connection case, so a wall with only one neighbor
+  // rendered without its post.
+  const post = tallPreferred || !isStraight;
   const up: Record<Side, 'none' | 'low' | 'tall'> = {
     north: 'none',
     south: 'none',

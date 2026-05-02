@@ -20,7 +20,9 @@ describe('zombified piglin anger', () => {
     expect(isHostile(z, 'p', 100)).toBe(true);
   });
 
-  it('anger cools down', () => {
+  it('anger cools down (wiki: 20-40s base window)', () => {
+    expect(ANGER_MIN_MS).toBe(20_000);
+    expect(ANGER_MAX_MS).toBe(40_000);
     const z = makeAnger();
     provoke(z, 'p', 0, () => 1);
     expect(isHostile(z, 'p', ANGER_MAX_MS - 1)).toBe(true);

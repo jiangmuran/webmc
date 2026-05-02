@@ -17,8 +17,13 @@ export function onRedstonePower(d: DoorState, powered: boolean): DoorState {
   return { ...d, powered, open: powered };
 }
 
-export const IRON_DOOR_IDS = new Set(['iron_door', 'copper_door']);
+// Wiki (minecraft.wiki/w/Copper_Door, /w/Iron_Door): only iron doors
+// reject hand interaction. Copper doors (and their oxidation
+// variants) accept right-click toggling AND redstone — see
+// copper_door.ts. Old set lumped copper with iron, blocking hand-open
+// for every copper door.
+export const NEEDS_POWER_DOORS = new Set(['iron_door']);
 
 export function canHandOpen(doorId: string): boolean {
-  return !IRON_DOOR_IDS.has(doorId);
+  return !NEEDS_POWER_DOORS.has(doorId);
 }

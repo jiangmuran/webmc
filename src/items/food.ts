@@ -10,6 +10,11 @@ export interface FoodDef {
   eatSec: number;
   // Effect applied on eat, if any.
   effect?: { id: string; amplifier: number; durationSec: number; chance?: number };
+  // Wiki (minecraft.wiki/w/Hunger): always-edible foods are eaten
+  // even at 20/20 hunger. Canonical list: golden_apple,
+  // enchanted_golden_apple, chorus_fruit, suspicious_stew,
+  // honey_bottle (drink-to-cure mechanic), and a few special items.
+  alwaysEdible?: boolean;
 }
 
 export const FOODS: Record<string, FoodDef> = {
@@ -45,13 +50,23 @@ export const FOODS: Record<string, FoodDef> = {
     saturation: 9.6,
     eatSec: 1.6,
     effect: { id: 'regeneration', amplifier: 1, durationSec: 5 },
+    alwaysEdible: true,
   },
   enchanted_golden_apple: {
     name: 'webmc:enchanted_golden_apple',
     hunger: 4,
     saturation: 9.6,
     eatSec: 1.6,
-    effect: { id: 'regeneration', amplifier: 4, durationSec: 30 },
+    // Wiki (minecraft.wiki/w/Enchanted_Golden_Apple): "Regeneration II
+    // for 20 seconds, Absorption IV for 2 minutes, Resistance I for
+    // 5 minutes, Fire Resistance I for 5 minutes." This single-effect
+    // record can only carry one entry — model it as the canonical
+    // primary (Regeneration II / 20s); sibling
+    // src/items/enchanted_golden_apple_buffs.ts already returns the
+    // full 4-effect list. Old amplifier=4 (Regen V) / 30s was wrong
+    // on both axes. Full multi-effect support pending an API change.
+    effect: { id: 'regeneration', amplifier: 1, durationSec: 20 },
+    alwaysEdible: true,
   },
   golden_carrot: { name: 'webmc:golden_carrot', hunger: 6, saturation: 14.4, eatSec: 1.6 },
   beetroot: { name: 'webmc:beetroot', hunger: 1, saturation: 1.2, eatSec: 1.6 },
@@ -67,7 +82,41 @@ export const FOODS: Record<string, FoodDef> = {
     hunger: 2,
     saturation: 3.2,
     eatSec: 1.6,
-    effect: { id: 'poison', amplifier: 0, durationSec: 4, chance: 1 },
+    // Wiki (minecraft.wiki/w/Spider_Eye): "It also applies a Poison
+    // effect lasting 5 seconds to the player, causing 4 damage."
+    // Old durationSec: 4 was 1 second under wiki canon — sibling
+    // src/entities/spider_eye_food.ts already uses 5s (100 ticks).
+    effect: { id: 'poison', amplifier: 0, durationSec: 5, chance: 1 },
+  },
+  // Wiki (minecraft.wiki/w/Chorus_Fruit): always edible. Eating it
+  // teleports the player ±8 blocks (handled elsewhere); this entry
+  // models the hunger restore + the always-edible flag.
+  chorus_fruit: {
+    name: 'webmc:chorus_fruit',
+    hunger: 4,
+    saturation: 2.4,
+    eatSec: 1.6,
+    alwaysEdible: true,
+  },
+  // Wiki (minecraft.wiki/w/Suspicious_Stew): always edible (since
+  // 1.20.60 / 1.21 parity); the per-flower effect is in
+  // suspicious_stew_effect.ts.
+  suspicious_stew: {
+    name: 'webmc:suspicious_stew',
+    hunger: 6,
+    saturation: 7.2,
+    eatSec: 1.6,
+    alwaysEdible: true,
+  },
+  // Wiki (minecraft.wiki/w/Honey_Bottle): drinkable at full hunger
+  // (the wiki carve-out for "drink to remove poison"). 40-tick eat
+  // duration matches food_nutrition_table.ts.
+  honey_bottle: {
+    name: 'webmc:honey_bottle',
+    hunger: 6,
+    saturation: 1.2,
+    eatSec: 2.0,
+    alwaysEdible: true,
   },
 };
 
@@ -78,8 +127,11 @@ export interface EdiblePlayer {
   applyEffect?(id: string, amplifier: number, durationSec: number): void;
 }
 
-// Apply a food item to the player. Returns true on success; false if the
-// player is already full (MC refuses to eat at 20/20 hunger).
+// Apply a food item to the player. Returns true on success; false if
+// the player is already full (MC refuses to eat at 20/20 hunger),
+// unless the food is always-edible per wiki (golden_apple,
+// enchanted_golden_apple, chorus_fruit, suspicious_stew,
+// honey_bottle).
 export function applyFood(
   key: string,
   player: EdiblePlayer,
@@ -87,11 +139,7 @@ export function applyFood(
 ): boolean {
   const food = FOODS[key];
   if (!food) return false;
-  if (
-    player.hunger >= 20 &&
-    food.name !== 'webmc:golden_apple' &&
-    food.name !== 'webmc:enchanted_golden_apple'
-  ) {
+  if (player.hunger >= 20 && food.alwaysEdible !== true) {
     return false;
   }
   player.eat(food.hunger, food.saturation);

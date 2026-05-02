@@ -1,7 +1,16 @@
 // Portal cooldown. After traveling, entities have a cooldown during
 // which they don't re-trigger the portal. Prevents ping-pong.
+//
+// Wiki (minecraft.wiki/w/Nether_Portal): "After being teleported by
+// a portal, the entity is given an immunity period during which they
+// don't trigger the portal again. For players, this is 10 seconds
+// (200 ticks). For mobs, it's 15 seconds (300 ticks)."
+//
+// Old PLAYER_PORTAL_COOLDOWN_TICKS = 10 (0.5s) was 20× too short —
+// players would get bounced back through the portal almost
+// immediately if they stayed within the destination portal's bounds.
 
-export const PLAYER_PORTAL_COOLDOWN_TICKS = 10;
+export const PLAYER_PORTAL_COOLDOWN_TICKS = 200;
 export const MOB_PORTAL_COOLDOWN_TICKS = 300;
 
 export interface PortalTraveler {

@@ -26,11 +26,17 @@ export function tickRocket(r: Rocket): TickResult {
   return { exploded: r.ageTicks >= r.maxAgeTicks };
 }
 
-// Explosion damage at distance. Scales with stars; falls off to 5.
+// Wiki (minecraft.wiki/w/Firework_Rocket): a starless firework deals
+// 0 damage. With n ≥ 1 stars the center damage is 7 + 2 × (n - 1)
+// and the radius is 5 blocks. Old `5 + stars*2` with radius 6 gave
+// 5 damage at 0 stars (wiki: 0) and over-reached by 1 block.
+// Sibling firework_damage.ts and firework_crafting.ts both use the
+// wiki formula.
 export function rocketDamageAt(r: Rocket, distance: number): number {
-  if (distance > 6) return 0;
-  const base = 5 + r.starsCount * 2;
-  return Math.max(0, Math.floor(base * (1 - distance / 6)));
+  if (distance > 5) return 0;
+  if (r.starsCount <= 0) return 0;
+  const base = 7 + (r.starsCount - 1) * 2;
+  return Math.max(0, Math.floor(base * (1 - distance / 5)));
 }
 
 // Elytra forward boost from rocket: +1.5 blocks/tick toward look dir.

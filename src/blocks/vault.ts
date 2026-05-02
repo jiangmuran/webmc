@@ -82,15 +82,23 @@ export interface VaultLootEntry {
   ominousOnly: boolean;
 }
 
+// Wiki:
+//   - minecraft.wiki/w/Bolt_Armor_Trim: "Bolt armor trims are found in
+//     standard vaults and chests in trial chambers." → regular vault.
+//   - minecraft.wiki/w/Flow_Armor_Trim: "Flow armor trims are found in
+//     ominous vaults in trial chambers." → ominous-only.
+//   - minecraft.wiki/w/Heavy_Core: ominous-only.
+// Old table had bolt_armor_trim flagged ominousOnly — wiki swaps the
+// two trims (bolt = regular, flow = ominous). Heavy core stays ominous.
 export const VAULT_LOOT: readonly VaultLootEntry[] = [
   { item: 'webmc:emerald', weight: 30, ominousOnly: false },
   { item: 'webmc:diamond', weight: 10, ominousOnly: false },
   { item: 'webmc:iron_ingot', weight: 20, ominousOnly: false },
   { item: 'webmc:golden_apple', weight: 10, ominousOnly: false },
   { item: 'webmc:crossbow', weight: 5, ominousOnly: false },
+  { item: 'webmc:bolt_armor_trim', weight: 3, ominousOnly: false },
   { item: 'webmc:heavy_core', weight: 2, ominousOnly: true },
   { item: 'webmc:flow_armor_trim', weight: 3, ominousOnly: true },
-  { item: 'webmc:bolt_armor_trim', weight: 3, ominousOnly: true },
 ];
 
 export function rollVaultLoot(ominous: boolean, roll: number): VaultLootEntry | null {

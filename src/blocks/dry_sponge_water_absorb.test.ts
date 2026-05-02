@@ -17,8 +17,8 @@ describe('dry sponge water absorb', () => {
     expect(becomesWet(0)).toBe(false);
   });
 
-  it('cap at 65', () => {
-    expect(cappedAbsorption(100)).toBe(MAX_BLOCKS_ABSORBED);
+  it('caps at MAX_BLOCKS_ABSORBED', () => {
+    expect(cappedAbsorption(MAX_BLOCKS_ABSORBED * 2)).toBe(MAX_BLOCKS_ABSORBED);
   });
 
   it('negative floors 0', () => {

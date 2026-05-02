@@ -4,7 +4,10 @@ export const MAX_HEALTH = 20;
 export const MAX_HUNGER = 20;
 export const HUNGER_DECAY_PER_SEC = 20 / (20 * 60); // ≈ 20 shanks over 20 minutes baseline
 export const STARVE_HUNGER_THRESHOLD = 0;
-export const STARVE_DAMAGE_PER_SEC = 0.5;
+// Wiki: starvation damage is 1 HP every 4 seconds (= 0.25 HP/sec).
+// Was 0.5 HP/sec — twice as fast as vanilla, killing a starving player
+// in 40 seconds instead of 80.
+export const STARVE_DAMAGE_PER_SEC = 0.25;
 export const HUNGER_HEAL_MIN = 18; // above this, slow HP regen
 export const HP_REGEN_PER_SEC = 1;
 export const LAVA_DAMAGE_PER_SEC = 4;
@@ -57,6 +60,15 @@ export class PlayerState {
   lastDamageSource: string | undefined;
   exhaustion = 0;
   absorption = 0; // bonus HP buffer; depletes first
+  // Reused per-internal-takeDamage event scratch. PlayerState.tick can
+  // call takeDamage 3-5 times per frame (lava + fire + drown + poison
+  // + wither + starvation), each previously allocating a fresh
+  // {amount, source} literal. takeDamage reads ev.amount + ev.source
+  // synchronously and never re-enters with a different ev, so a
+  // single class-scoped scratch is safe for INTERNAL ticks. External
+  // callers (main.ts attack handlers etc.) keep building fresh
+  // literals to avoid cross-call clobbering of the scratch.
+  private readonly tickDamageEv: DamageEvent = { amount: 0, source: '' };
 
   takeDamage(ev: DamageEvent): void {
     if (this.invulnerable) return;
@@ -69,7 +81,12 @@ export class PlayerState {
       ev.source !== 'void' &&
       ev.source !== 'lava' &&
       ev.source !== 'fire' &&
-      ev.source !== 'poison'
+      ev.source !== 'poison' &&
+      // Wither effect (and magic damage) ticks past i-frames in vanilla —
+      // listing wither alongside poison so a wither II potion + a hit
+      // doesn't silently skip every wither tick during the 0.5s window.
+      ev.source !== 'wither' &&
+      ev.source !== 'magic'
     )
       return;
     // Resistance reduces damage by 0.2 * (amplifier+1), clamped to 80% reduction.
@@ -94,7 +111,10 @@ export class PlayerState {
     if (this.health === 0) {
       this.justDied = true;
       this.lastDeathCause = ev.source ?? this.lastDamageSource;
-      this.respawn();
+      // Don't auto-respawn here. Caller handles death sequence
+      // (totem of undying check, item drops, death screen) and decides
+      // whether to call respawn(). Old behavior wiped inventory before
+      // anyone got a chance to read it, breaking totems entirely.
     }
   }
 
@@ -134,20 +154,43 @@ export class PlayerState {
   applyEffect(id: string, amplifier: number, durationSec: number): void {
     const cur = this.effects.get(id);
     if (cur && cur.amplifier >= amplifier && cur.remainingSec > durationSec) return;
+    if (cur) {
+      // Mutate the existing entry instead of allocating a fresh one —
+      // the Map holds it by reference and re-application is the
+      // common case (drinking same potion again, periodic re-apply).
+      cur.amplifier = amplifier;
+      cur.remainingSec = durationSec;
+      return;
+    }
     this.effects.set(id, { amplifier, remainingSec: durationSec });
   }
 
-  tick(dtSec: number, env: { inFluid?: 'water' | 'lava' | null } = {}): void {
+  tick(
+    dtSec: number,
+    env: {
+      inFluid?: 'water' | 'lava' | null;
+      // Creative + spectator skip hunger / breath drain. Without this,
+      // creative still ticks hunger to 0 (silently, since invulnerable
+      // blocks the starve damage), and switching back to survival left
+      // the player at empty hunger immediately.
+      drainHunger?: boolean;
+    } = {},
+  ): void {
     if (this.hitImmuneSec > 0) this.hitImmuneSec = Math.max(0, this.hitImmuneSec - dtSec);
     if (this.health <= 0) return;
-    let decay = HUNGER_DECAY_PER_SEC;
-    if (this.sprinting) decay *= 4;
-    if (this.saturation > 0) {
-      this.saturation = Math.max(0, this.saturation - decay);
-    } else if (this.hunger > 0) {
-      this.hunger = Math.max(0, this.hunger - decay);
-    } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
-      this.takeDamage({ amount: STARVE_DAMAGE_PER_SEC * dtSec, source: 'starvation' });
+    const drainHunger = env.drainHunger ?? true;
+    if (drainHunger) {
+      let decay = HUNGER_DECAY_PER_SEC;
+      if (this.sprinting) decay *= 4;
+      if (this.saturation > 0) {
+        this.saturation = Math.max(0, this.saturation - decay);
+      } else if (this.hunger > 0) {
+        this.hunger = Math.max(0, this.hunger - decay);
+      } else if (this.hunger === STARVE_HUNGER_THRESHOLD) {
+        this.tickDamageEv.amount = STARVE_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'starvation';
+        this.takeDamage(this.tickDamageEv);
+      }
     }
     if (this.hunger >= HUNGER_HEAL_MIN && this.health < MAX_HEALTH) {
       this.regenAccumSec += dtSec;
@@ -162,25 +205,44 @@ export class PlayerState {
     } else {
       this.regenAccumSec = 0;
     }
-    const fireImmune = this.effects.has('fire_resistance');
+    // Skip the Map.has hash entirely when no effects are active (the
+    // dominant case — most frames the player is potion-free). Cache the
+    // size check once for both fire_immune and water_breathing gates.
+    const hasAnyEffect = this.effects.size > 0;
+    const fireImmune = hasAnyEffect && this.effects.has('fire_resistance');
     if (env.inFluid === 'lava') {
-      if (!fireImmune) this.takeDamage({ amount: LAVA_DAMAGE_PER_SEC * dtSec, source: 'lava' });
+      if (!fireImmune) {
+        this.tickDamageEv.amount = LAVA_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'lava';
+        this.takeDamage(this.tickDamageEv);
+      }
       if (!fireImmune) this.fireRemainingSec = 5;
     } else if (env.inFluid === 'water') {
       this.fireRemainingSec = 0;
     } else if (this.fireRemainingSec > 0) {
       this.fireRemainingSec = Math.max(0, this.fireRemainingSec - dtSec);
-      if (!fireImmune) this.takeDamage({ amount: 1 * dtSec, source: 'fire' });
+      if (!fireImmune) {
+        this.tickDamageEv.amount = 1 * dtSec;
+        this.tickDamageEv.source = 'fire';
+        this.takeDamage(this.tickDamageEv);
+      }
     }
-    const waterBreathing = this.effects.has('water_breathing');
-    if (env.inFluid === 'water' && !waterBreathing) {
+    const waterBreathing = hasAnyEffect && this.effects.has('water_breathing');
+    // drainHunger doubles as the "vital drains apply" gate: creative /
+    // spectator should neither lose air nor drown.
+    if (drainHunger && env.inFluid === 'water' && !waterBreathing) {
       this.breath = Math.max(0, this.breath - dtSec);
       if (this.breath <= 0) {
-        this.takeDamage({ amount: DROWN_DAMAGE_PER_SEC * dtSec, source: 'drown' });
+        this.tickDamageEv.amount = DROWN_DAMAGE_PER_SEC * dtSec;
+        this.tickDamageEv.source = 'drown';
+        this.takeDamage(this.tickDamageEv);
       }
     } else {
       this.breath = Math.min(BREATH_MAX_SEC, this.breath + dtSec * 3);
     }
+    // Effects loop is gated — common case is no active potions, so skip
+    // the Map iteration + string-equality dispatch cascade entirely.
+    if (this.effects.size === 0) return;
     let absorptionTarget = 0;
     for (const [id, eff] of this.effects) {
       eff.remainingSec -= dtSec;
@@ -191,17 +253,23 @@ export class PlayerState {
       if (id === 'regeneration') {
         this.heal(0.5 * (eff.amplifier + 1) * dtSec);
       } else if (id === 'poison' && this.health > 1) {
-        this.takeDamage({ amount: 0.5 * (eff.amplifier + 1) * dtSec, source: 'poison' });
+        this.tickDamageEv.amount = 0.5 * (eff.amplifier + 1) * dtSec;
+        this.tickDamageEv.source = 'poison';
+        this.takeDamage(this.tickDamageEv);
       } else if (id === 'instant_health') {
         this.heal(4 * (eff.amplifier + 1));
         this.effects.delete(id);
       } else if (id === 'instant_damage') {
-        this.takeDamage({ amount: 3 * (eff.amplifier + 1), source: 'harming' });
+        this.tickDamageEv.amount = 3 * (eff.amplifier + 1);
+        this.tickDamageEv.source = 'harming';
+        this.takeDamage(this.tickDamageEv);
         this.effects.delete(id);
       } else if (id === 'absorption') {
         absorptionTarget = Math.max(absorptionTarget, 4 * (eff.amplifier + 1));
       } else if (id === 'wither' && this.health > 0) {
-        this.takeDamage({ amount: 1 * (eff.amplifier + 1) * dtSec, source: 'wither' });
+        this.tickDamageEv.amount = 1 * (eff.amplifier + 1) * dtSec;
+        this.tickDamageEv.source = 'wither';
+        this.takeDamage(this.tickDamageEv);
       } else if (id === 'hunger') {
         this.exhaustion += 0.1 * (eff.amplifier + 1) * dtSec;
       }
@@ -218,6 +286,14 @@ export class PlayerState {
     this.breath = BREATH_MAX_SEC;
     this.xpLevel = 0;
     this.xpProgress = 0;
+    // Clear residual statuses too — fire damage carrying over a respawn
+    // would kill the player again instantly; absorption hearts shouldn't
+    // persist; hit-immune frame and exhaustion accumulator both belong
+    // to the previous life.
+    this.exhaustion = 0;
+    this.absorption = 0;
+    this.fireRemainingSec = 0;
+    this.hitImmuneSec = 0;
     this.effects.clear();
     this.inventory.clear();
     this.onRespawn();

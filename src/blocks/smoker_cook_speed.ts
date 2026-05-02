@@ -16,7 +16,19 @@ export function smeltTicksFor(q: SmeltQuery): number {
   return q.kind === 'furnace' ? NORMAL_SMELT_TICKS : FAST_SMELT_TICKS;
 }
 
+// webmc registry uses `raw_*` prefix for raw meats/fish (per
+// src/items/smelting.ts and sibling smoker_speed.ts). Old set used
+// non-prefixed `webmc:beef` etc. — never matching the registered raw
+// meat IDs and so silently rejecting all food in a smoker. Aligned to
+// the registry with both spellings accepted for compatibility.
 const SMOKER_ALLOWED = new Set<string>([
+  'webmc:raw_beef',
+  'webmc:raw_porkchop',
+  'webmc:raw_chicken',
+  'webmc:raw_cod',
+  'webmc:raw_salmon',
+  'webmc:raw_mutton',
+  'webmc:raw_rabbit',
   'webmc:beef',
   'webmc:porkchop',
   'webmc:chicken',

@@ -10,15 +10,30 @@ export const REPUTATION_ANGER_THRESHOLD = -100;
 export const ANGER_DURATION_TICKS = 600;
 export const PLAYER_AGGRESSION_DELAY_TICKS = 100;
 
+// Wiki (minecraft.wiki/w/Iron_Golem#Behavior): iron golems attack any
+// nearby hostile mob (zombies/skeletons/spiders/illagers/witches/
+// ravagers/zoglins/etc.) but explicitly AVOID creepers (the explosion
+// would hurt nearby villagers). Bogged (1.21 skeleton variant) and
+// zoglin (overworld-converted hoglin) were missing.
 export function onHostileNearby(mobType: string): boolean {
   const hostiles = new Set([
     'zombie',
+    'zombie_villager',
     'husk',
+    'drowned',
     'skeleton',
-    'creeper',
+    'stray',
+    'wither_skeleton',
+    'bogged',
+    'spider',
+    'cave_spider',
     'pillager',
     'vindicator',
+    'evoker',
+    'illusioner',
+    'witch',
     'ravager',
+    'zoglin',
   ]);
   return hostiles.has(mobType);
 }

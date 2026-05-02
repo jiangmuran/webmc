@@ -20,7 +20,14 @@ export function makeEndCrystal(id: number, at: Vec3): EndCrystalState {
   return { id, position: { ...at }, alive: true, beamTarget: null };
 }
 
-export const CRYSTAL_HEAL_PER_TICK = 1;
+// Wiki (minecraft.wiki/w/End_Crystal#Healing_the_ender_dragon): "The
+// dragon is healed 1 HP each half-second" from the nearest active
+// crystal within a 32-block cuboid. 1 HP per 0.5s = 2 HP/sec = 0.1
+// HP per 20-Hz tick. Old `CRYSTAL_HEAL_PER_TICK = 1` was 10× too
+// aggressive — boss fight was effectively unwinnable. Sibling
+// ender_crystal_beam_link.ts also fixed.
+export const CRYSTAL_HEAL_PER_TICK = 0.1;
+export const CRYSTAL_HEAL_PER_SECOND = 2;
 const HEAL_RADIUS_SQ = 32 * 32;
 
 export interface BeamContext {

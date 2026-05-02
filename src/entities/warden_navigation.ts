@@ -11,7 +11,13 @@ export interface Suspicion {
   anger: number;
 }
 
-export const INVESTIGATE_THRESHOLD = 40;
+// Wiki (minecraft.wiki/w/Warden) anger thresholds:
+//   ≥ 35: "suspect" — warden becomes aware of the target.
+//   ≥ 80: "target"  — warden actively pursues.
+// Old INVESTIGATE_THRESHOLD = 40 was 5 points over the wiki suspect
+// threshold. Siblings warden_anger.ts and warden_anger_decay.ts both
+// already use 35 for the suspect tier; this module now agrees.
+export const INVESTIGATE_THRESHOLD = 35;
 export const ATTACK_THRESHOLD = 80;
 export const EMERGES_RADIUS = 1.5;
 

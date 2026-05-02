@@ -52,9 +52,12 @@ export function findWardenSpawn(q: WardenSpawnQuery): WardenSpawnResult {
   return { pos: null, rejectReason: 'no_dark_ground' };
 }
 
-// Emergence animation: the warden rises from the ground over ~5 seconds,
-// invincible and with a "digging" sound effect.
-export const EMERGENCE_DURATION_SEC = 5;
+// Wiki (minecraft.wiki/w/Warden): the emergence animation runs 225
+// ticks (~11.25 seconds), during which the warden is invincible and
+// plays the digging/emerging sound. Sibling warden_dig_spawn.ts
+// already uses 225 ticks (DIG_EMERGE_TICKS); this module previously
+// used 5 seconds (100 ticks), 56% short of canon.
+export const EMERGENCE_DURATION_SEC = 11.25;
 
 export interface EmergenceState {
   elapsedSec: number;

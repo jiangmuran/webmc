@@ -27,11 +27,14 @@ describe('chiseled bookshelf', () => {
     expect(comparatorSignal(b)).toBe(4);
   });
 
-  it('enchantment power = filled slots', () => {
+  it('chiseled bookshelf gives 0 enchant power (wiki)', () => {
+    // Wiki: "Chiseled bookshelves do not increase the power of
+    // enchanting tables." 0 regardless of how many books fill it.
     const b = makeBookshelf();
+    expect(enchantmentPower(b)).toBe(0);
     interactSlot(b, { slot: 0, holdingBook: 'webmc:book' });
     interactSlot(b, { slot: 1, holdingBook: 'webmc:book' });
-    expect(enchantmentPower(b)).toBe(2);
+    expect(enchantmentPower(b)).toBe(0);
   });
 
   it('out-of-range slot = no change', () => {

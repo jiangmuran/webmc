@@ -46,4 +46,33 @@ describe('mooshroom', () => {
     feedFlowerToBrown(m, 'webmc:poppy');
     expect(feedFlowerToBrown(m, 'webmc:allium').reason).toBe('already_loaded');
   });
+
+  it('weakness duration is 7s per wiki 24w45a', () => {
+    const m = makeMooshroom('brown');
+    feedFlowerToBrown(m, 'webmc:red_tulip');
+    const stew = bowlInteract(m);
+    expect(stew.stew?.effect?.id).toBe('weakness');
+    expect(stew.stew?.effect?.durationSec).toBe(7);
+  });
+
+  it('blindness duration is 11s per wiki 24w45a', () => {
+    const m = makeMooshroom('brown');
+    feedFlowerToBrown(m, 'webmc:azure_bluet');
+    const stew = bowlInteract(m);
+    expect(stew.stew?.effect?.durationSec).toBe(11);
+  });
+
+  it('poison duration is 11s per wiki 24w45a', () => {
+    const m = makeMooshroom('brown');
+    feedFlowerToBrown(m, 'webmc:lily_of_the_valley');
+    const stew = bowlInteract(m);
+    expect(stew.stew?.effect?.durationSec).toBe(11);
+  });
+
+  it('fire_resistance duration is 3s per wiki 24w45a', () => {
+    const m = makeMooshroom('brown');
+    feedFlowerToBrown(m, 'webmc:allium');
+    const stew = bowlInteract(m);
+    expect(stew.stew?.effect?.durationSec).toBe(3);
+  });
 });

@@ -60,9 +60,13 @@ export const REGISTRY: Record<string, BiomeDef> = {
     isHostileSpawn: true,
     dimension: 'overworld',
   },
+  // Wiki (minecraft.wiki/w/Snowy_Plains): "temperature 0.0, downfall
+  // 0.5." Old value -0.5 was below the freeze threshold but didn't
+  // match the wiki — code-paths gating on `temperature < 0`
+  // (e.g. powder snow generation) over-fired in snowy plains.
   snowy_plains: {
     id: 'snowy_plains',
-    temperature: -0.5,
+    temperature: 0.0,
     downfall: 0.5,
     isHostileSpawn: true,
     dimension: 'overworld',

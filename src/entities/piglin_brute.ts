@@ -21,7 +21,13 @@ export function bruteShouldAggro(_q: BruteAggroQuery): boolean {
   return true;
 }
 
-// Brutes can still zombify after 300s in the overworld.
+// Wiki (minecraft.wiki/w/Piglin_Brute#Zombification): "When in the
+// Overworld or the End, piglin brutes transform into zombified
+// piglins after 15 seconds." Old constant was 300 s — 20× the
+// wiki value, so a brute that escaped the Nether stayed a brute
+// for 5 minutes instead of 15 s.
+export const BRUTE_ZOMBIFY_SEC = 15;
+
 export interface ZombifyCtx {
   inNether: boolean;
   dtSec: number;
@@ -43,7 +49,7 @@ export function tickBruteZombify(state: BruteZombifyState, ctx: ZombifyCtx): boo
     return false;
   }
   state.conversionTimerSec += ctx.dtSec;
-  if (state.conversionTimerSec >= 300) {
+  if (state.conversionTimerSec >= BRUTE_ZOMBIFY_SEC) {
     state.converted = true;
     return true;
   }

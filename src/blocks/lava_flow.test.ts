@@ -16,7 +16,11 @@ describe('lava flow', () => {
     expect(r.kind).toBe('obsidian');
   });
 
-  it('lava flow + water = cobble', () => {
+  it('lava flow + water source (horizontal) = cobblestone (wiki)', () => {
+    // Wiki minecraft.wiki/w/Cobblestone: "When water and flowing
+    // lava come into contact, the flowing lava is replaced by
+    // cobblestone." Default horizontal contact, regardless of
+    // whether the water is a source.
     expect(
       interact({
         source: 'lava',
@@ -25,6 +29,31 @@ describe('lava flow', () => {
         otherIsStill: true,
       }).kind,
     ).toBe('cobblestone');
+  });
+
+  it('lava flow + flowing water = cobblestone', () => {
+    expect(
+      interact({
+        source: 'lava',
+        sourceIsStill: false,
+        other: 'water',
+        otherIsStill: false,
+      }).kind,
+    ).toBe('cobblestone');
+  });
+
+  it('flowing lava FROM ABOVE + water = stone (wiki)', () => {
+    // Wiki: "if the lava flows on top of the water from above, stone
+    // is created instead." Vertical-flow case only.
+    expect(
+      interact({
+        source: 'lava',
+        sourceIsStill: false,
+        other: 'water',
+        otherIsStill: true,
+        lavaFlowFromAbove: true,
+      }).kind,
+    ).toBe('stone');
   });
 
   it('water + lava source = obsidian', () => {

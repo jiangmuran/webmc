@@ -24,6 +24,7 @@ export function baneBonus(level: number, targetType: string): number {
 function isUndead(t: string): boolean {
   return (
     t === 'zombie' ||
+    t === 'zombie_villager' ||
     t === 'skeleton' ||
     t === 'husk' ||
     t === 'drowned' ||
@@ -32,7 +33,13 @@ function isUndead(t: string): boolean {
     t === 'phantom' ||
     t === 'zoglin' ||
     t === 'stray' ||
-    t === 'bogged'
+    t === 'bogged' ||
+    // Wither itself is undead per wiki — Smite damages it.
+    t === 'wither' ||
+    // Wiki (Undead, history 1.9/15w38b): skeleton/zombie horses
+    // were also marked undead in 1.9; both were missing here.
+    t === 'skeleton_horse' ||
+    t === 'zombie_horse'
   );
 }
 

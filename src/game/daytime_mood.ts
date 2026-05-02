@@ -18,6 +18,9 @@ export interface MoodTick {
   dtMs: number;
 }
 
+// Reused result object — was a fresh literal per per-frame call.
+const tickMoodResult = { triggered: false };
+
 // Mood builds when a nearby eligible block is dark (light < 8) and not
 // in direct skylight.
 export function tickMood(state: MoodState, q: MoodTick): { triggered: boolean } {
@@ -29,7 +32,9 @@ export function tickMood(state: MoodState, q: MoodTick): { triggered: boolean } 
   }
   if (state.moodMs >= MOOD_THRESHOLD_MS) {
     state.moodMs = 0;
-    return { triggered: true };
+    tickMoodResult.triggered = true;
+  } else {
+    tickMoodResult.triggered = false;
   }
-  return { triggered: false };
+  return tickMoodResult;
 }

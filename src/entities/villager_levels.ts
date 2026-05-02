@@ -32,13 +32,22 @@ export function tierIndex(tier: VillagerTier): number {
   return TIER_ORDER.indexOf(tier);
 }
 
-// Offers unlocked per tier (integer count — e.g. novice shows 2, ... master 6).
+// Wiki (minecraft.wiki/w/Trading): "Java: villagers have a maximum
+// of 10 trades. Each level unlocks a maximum of two new trades. ...
+// A villager levels up when its experience bar becomes full and
+// gains up to two (Java) or three (Bedrock) new trades and retains
+// its existing trades."
+//
+// AGENT_CHARTER targets Java, so the cumulative offer count is
+// 2 / 4 / 6 / 8 / 10 (novice → master). Old table was 2/3/4/5/6 —
+// adding 1 per level instead of 2 — capping master villagers at 6
+// trades when wiki canon allows 10.
 const OFFERS_UNLOCKED: Record<VillagerTier, number> = {
   novice: 2,
-  apprentice: 3,
-  journeyman: 4,
-  expert: 5,
-  master: 6,
+  apprentice: 4,
+  journeyman: 6,
+  expert: 8,
+  master: 10,
 };
 
 export function offersUnlocked(tier: VillagerTier): number {

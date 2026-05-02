@@ -26,7 +26,7 @@ describe('mob spawn light', () => {
     ).toBe(false);
   });
 
-  it('day skylight blocks', () => {
+  it('day skylight blocks (wiki: > 7)', () => {
     expect(
       canSpawnByLight({
         dimension: 'overworld',
@@ -36,6 +36,26 @@ describe('mob spawn light', () => {
         monsterCategory: 'overworld_hostile',
       }),
     ).toBe(false);
+    // sky light 8 also blocks (wiki cap is 7)
+    expect(
+      canSpawnByLight({
+        dimension: 'overworld',
+        blockLight: 0,
+        skyLight: 8,
+        isDay: true,
+        monsterCategory: 'overworld_hostile',
+      }),
+    ).toBe(false);
+    // sky light 7 allows during day (wiki: ≤ 7 spawns)
+    expect(
+      canSpawnByLight({
+        dimension: 'overworld',
+        blockLight: 0,
+        skyLight: 7,
+        isDay: true,
+        monsterCategory: 'overworld_hostile',
+      }),
+    ).toBe(true);
   });
 
   it('nether ignores light', () => {

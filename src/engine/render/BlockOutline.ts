@@ -6,6 +6,24 @@ export class BlockOutline {
   private readonly lines: THREE.LineSegments;
   private readonly crack: THREE.Mesh;
   private readonly crackMat: THREE.MeshBasicMaterial;
+  // Diff-caches. setHit/hide fire every frame; group.visible and
+  // crackMat.opacity often hold the same value across frames. Skipping
+  // the writes avoids three.js Object3D + Material setter overhead.
+  private lastVisible = false;
+  private lastCrackOpacity = -1;
+  // Position diff-cache. Aiming at the same block while mining writes
+  // the same x/y/z every frame, firing matrixWorldNeedsUpdate for
+  // nothing.
+  private lastBx = NaN;
+  private lastBy = NaN;
+  private lastBz = NaN;
+  // Quantized breathing-scale cache. The raw scalar changes every
+  // frame (sin of performance.now), but visually anything finer than
+  // ~1e-3 is imperceptible. Quantize so setScalar fires only when the
+  // visible value actually changes (~6×/sec at 60Hz instead of 60).
+  // Each setScalar fires Vector3._onChangeCallback + flags
+  // matrixWorldNeedsUpdate.
+  private lastScaleQuantum = NaN;
 
   constructor() {
     this.group = new THREE.Group();
@@ -35,17 +53,38 @@ export class BlockOutline {
   }
 
   setHit(bx: number, by: number, bz: number, breakProgress01 = 0): void {
-    this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
-    this.group.visible = true;
+    if (bx !== this.lastBx || by !== this.lastBy || bz !== this.lastBz) {
+      this.group.position.set(bx + 0.5, by + 0.5, bz + 0.5);
+      this.lastBx = bx;
+      this.lastBy = by;
+      this.lastBz = bz;
+    }
+    if (!this.lastVisible) {
+      this.group.visible = true;
+      this.lastVisible = true;
+    }
     // Snap to 10 MC-style crack stages so the visual ticks visibly forward.
     const stage = crackStage(breakProgress01);
-    this.crackMat.opacity = stage > 0 ? Math.min(0.65, (stage / 9) * 0.7) : 0;
-    // Subtle breathing scale so the outline feels alive.
-    const s = 1 + Math.sin(performance.now() * 0.005) * 0.003;
-    this.group.scale.setScalar(s);
+    const targetOpacity = stage > 0 ? Math.min(0.65, (stage / 9) * 0.7) : 0;
+    if (targetOpacity !== this.lastCrackOpacity) {
+      this.crackMat.opacity = targetOpacity;
+      this.lastCrackOpacity = targetOpacity;
+    }
+    // Subtle breathing scale so the outline feels alive. Quantize to
+    // 1e-3 so setScalar only fires when the visible value changes —
+    // raw sin output produces a unique float every frame, dirtying
+    // matrixWorldNeedsUpdate 60×/sec for nothing.
+    const sQuantum = Math.round(Math.sin(performance.now() * 0.005) * 3) / 1000;
+    if (sQuantum !== this.lastScaleQuantum) {
+      this.group.scale.setScalar(1 + sQuantum);
+      this.lastScaleQuantum = sQuantum;
+    }
   }
 
   hide(): void {
-    this.group.visible = false;
+    if (this.lastVisible) {
+      this.group.visible = false;
+      this.lastVisible = false;
+    }
   }
 }

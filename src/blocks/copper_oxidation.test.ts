@@ -59,12 +59,21 @@ describe('copper oxidation', () => {
     expect(c.stage).toBe('regular');
   });
 
-  it('lightning advances stage and strips wax', () => {
+  it('lightning deoxidizes non-waxed copper to regular (wiki)', () => {
     const c = makeCopper();
+    c.stage = 'oxidized';
+    lightningStrike(c);
+    expect(c.stage).toBe('regular');
+    expect(c.waxed).toBe(false);
+  });
+
+  it('lightning has no effect on waxed copper (wiki: only non-waxed)', () => {
+    const c = makeCopper();
+    c.stage = 'weathered';
     wax(c);
     lightningStrike(c);
-    expect(c.waxed).toBe(false);
-    expect(c.stage).toBe('exposed');
+    expect(c.waxed).toBe(true);
+    expect(c.stage).toBe('weathered');
   });
 
   it('blockId composes prefix + stage', () => {

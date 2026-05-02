@@ -18,8 +18,8 @@ const SMOKER_INPUTS = new Set<string>([
   'webmc:raw_porkchop',
   'webmc:raw_mutton',
   'webmc:raw_rabbit',
-  'webmc:raw_cod',
-  'webmc:raw_salmon',
+  'webmc:cod',
+  'webmc:salmon',
   'webmc:potato',
   'webmc:kelp',
 ]);
@@ -63,14 +63,20 @@ export function canAccept(kind: SmelterKind, input: string): boolean {
   return BLAST_INPUTS.has(input);
 }
 
-// Smelt result table (subset) — all three smelters share outputs when
-// they accept the input; speed differs only by kind.
+// Smelt result table — all three smelters share outputs when they
+// accept the input; speed differs only by kind. Old table omitted
+// raw_mutton + raw_rabbit, so a player smoking lamb/rabbit got
+// `smeltOutput()` returning null and no cooked food. Wiki
+// (minecraft.wiki/w/Smelting#Inputs) lists both as canonical
+// smelter+furnace inputs.
 const SMELT_OUTPUTS: Record<string, string> = {
   'webmc:raw_beef': 'webmc:cooked_beef',
   'webmc:raw_chicken': 'webmc:cooked_chicken',
   'webmc:raw_porkchop': 'webmc:cooked_porkchop',
-  'webmc:raw_cod': 'webmc:cooked_cod',
-  'webmc:raw_salmon': 'webmc:cooked_salmon',
+  'webmc:raw_mutton': 'webmc:cooked_mutton',
+  'webmc:raw_rabbit': 'webmc:cooked_rabbit',
+  'webmc:cod': 'webmc:cooked_cod',
+  'webmc:salmon': 'webmc:cooked_salmon',
   'webmc:potato': 'webmc:baked_potato',
   'webmc:kelp': 'webmc:dried_kelp',
   'webmc:iron_ore': 'webmc:iron_ingot',
@@ -79,6 +85,7 @@ const SMELT_OUTPUTS: Record<string, string> = {
   'webmc:raw_iron': 'webmc:iron_ingot',
   'webmc:raw_gold': 'webmc:gold_ingot',
   'webmc:raw_copper': 'webmc:copper_ingot',
+  'webmc:nether_gold_ore': 'webmc:gold_ingot',
   'webmc:ancient_debris': 'webmc:netherite_scrap',
   'webmc:sand': 'webmc:glass',
   'webmc:cobblestone': 'webmc:stone',

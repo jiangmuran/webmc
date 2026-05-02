@@ -7,7 +7,10 @@ export interface KelpColumn {
 }
 
 const MAX_LENGTH = 26;
-const GROWTH_CHANCE = 0.07;
+// Wiki (minecraft.wiki/w/Kelp): kelp grows with a 14% probability per
+// random tick when its age < 25. Old constant was 0.07, half the wiki
+// rate.
+const GROWTH_CHANCE = 0.14;
 
 export function makeKelp(baseY: number): KelpColumn {
   return { baseY, length: 1 };

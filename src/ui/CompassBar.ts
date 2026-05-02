@@ -6,6 +6,25 @@ export class CompassBar {
   private readonly deathMarker: HTMLDivElement;
   private readonly WIDTH = 260;
   private readonly TICKS = 16;
+  // Pre-computed per-frame constants. Was recomputing
+  // segmentWidth = WIDTH * 4 / TICKS, fullLoop = segmentWidth * 8,
+  // center = WIDTH/2 - segmentWidth/2 inside setYaw on every call.
+  // These derive from compile-time constants (WIDTH, TICKS), so
+  // hoisting them to instance fields makes setYaw pure arithmetic
+  // over the input.
+  private readonly segmentWidth = (this.WIDTH * 4) / this.TICKS;
+  private readonly fullLoop = this.segmentWidth * 8;
+  private readonly halfFullLoop = this.fullLoop / 2;
+  private readonly center = this.WIDTH / 2 - this.segmentWidth / 2;
+  private readonly halfW = this.WIDTH / 2;
+  // Diff caches to skip transform / left writes when the rounded
+  // value hasn't changed. setYaw fires every frame and most frames
+  // the player isn't turning fast enough to move a tenth of a pixel.
+  private lastStripPx: number | null = null;
+  private lastSpawnPx: number | null = null;
+  private lastDeathPx: number | null = null;
+  private lastSpawnVisible = false;
+  private lastDeathVisible = false;
 
   constructor(parent: HTMLElement) {
     this.root = document.createElement('div');
@@ -116,25 +135,39 @@ export class CompassBar {
 
   setDeathDir(angleToDeath: number | null, playerYaw: number): void {
     if (angleToDeath === null) {
-      this.deathMarker.style.display = 'none';
+      if (this.lastDeathVisible) {
+        this.deathMarker.style.display = 'none';
+        this.lastDeathVisible = false;
+      }
       return;
     }
     let rel = angleToDeath - playerYaw;
     while (rel > Math.PI) rel -= 2 * Math.PI;
     while (rel < -Math.PI) rel += 2 * Math.PI;
     if (rel < -Math.PI / 2 || rel > Math.PI / 2) {
-      this.deathMarker.style.display = 'none';
+      if (this.lastDeathVisible) {
+        this.deathMarker.style.display = 'none';
+        this.lastDeathVisible = false;
+      }
       return;
     }
-    this.deathMarker.style.display = 'block';
-    const halfW = this.WIDTH / 2;
-    const px = halfW + (rel / (Math.PI / 2)) * halfW;
-    this.deathMarker.style.left = `${px.toFixed(1)}px`;
+    if (!this.lastDeathVisible) {
+      this.deathMarker.style.display = 'block';
+      this.lastDeathVisible = true;
+    }
+    const px = this.halfW + (rel / (Math.PI / 2)) * this.halfW;
+    const rounded = Math.round(px * 10) / 10;
+    if (rounded === this.lastDeathPx) return;
+    this.lastDeathPx = rounded;
+    this.deathMarker.style.left = `${rounded.toFixed(1)}px`;
   }
 
   setSpawnDir(angleToSpawn: number | null, playerYaw: number): void {
     if (angleToSpawn === null) {
-      this.spawnMarker.style.display = 'none';
+      if (this.lastSpawnVisible) {
+        this.spawnMarker.style.display = 'none';
+        this.lastSpawnVisible = false;
+      }
       return;
     }
     // Compute relative angle in [-PI, PI].
@@ -143,25 +176,35 @@ export class CompassBar {
     while (rel < -Math.PI) rel += 2 * Math.PI;
     // Visible range: ±90° (-π/2 to π/2). Beyond: hide.
     if (rel < -Math.PI / 2 || rel > Math.PI / 2) {
-      this.spawnMarker.style.display = 'none';
+      if (this.lastSpawnVisible) {
+        this.spawnMarker.style.display = 'none';
+        this.lastSpawnVisible = false;
+      }
       return;
     }
-    this.spawnMarker.style.display = 'block';
-    const halfW = this.WIDTH / 2;
-    const px = halfW + (rel / (Math.PI / 2)) * halfW;
-    this.spawnMarker.style.left = `${px.toFixed(1)}px`;
+    if (!this.lastSpawnVisible) {
+      this.spawnMarker.style.display = 'block';
+      this.lastSpawnVisible = true;
+    }
+    const px = this.halfW + (rel / (Math.PI / 2)) * this.halfW;
+    const rounded = Math.round(px * 10) / 10;
+    if (rounded === this.lastSpawnPx) return;
+    this.lastSpawnPx = rounded;
+    this.spawnMarker.style.left = `${rounded.toFixed(1)}px`;
   }
 
   setYaw(yaw: number): void {
     const twoPi = Math.PI * 2;
     const normalized = ((yaw % twoPi) + twoPi) % twoPi;
-    const segmentWidth = (this.WIDTH * 4) / this.TICKS;
-    const fullLoop = segmentWidth * 8;
-    const center = this.WIDTH / 2 - segmentWidth / 2;
-    const offset = (normalized / twoPi) * fullLoop;
-    let px = (center + offset) % fullLoop;
-    if (px > fullLoop / 2) px -= fullLoop;
-    this.strip.style.transform = `translateX(${px.toFixed(1)}px)`;
+    const offset = (normalized / twoPi) * this.fullLoop;
+    let px = (this.center + offset) % this.fullLoop;
+    if (px > this.halfFullLoop) px -= this.fullLoop;
+    // Round to one-decimal pixel grid; skip the transform write
+    // when the rounded value hasn't moved.
+    const rounded = Math.round(px * 10) / 10;
+    if (rounded === this.lastStripPx) return;
+    this.lastStripPx = rounded;
+    this.strip.style.transform = `translateX(${rounded.toFixed(1)}px)`;
   }
 
   show(): void {

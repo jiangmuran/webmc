@@ -10,6 +10,25 @@ describe('enderman held block', () => {
     expect(canPickUp('stone')).toBe(false);
   });
 
+  it('wiki holdables: mud, moss, fungi, nyliums, carved pumpkin', () => {
+    // 1.19+ additions
+    expect(canPickUp('mud')).toBe(true);
+    expect(canPickUp('muddy_mangrove_roots')).toBe(true);
+    expect(canPickUp('moss_block')).toBe(true);
+    // 1.21.5 pale moss + cactus_flower
+    expect(canPickUp('pale_moss_block')).toBe(true);
+    expect(canPickUp('cactus_flower')).toBe(true);
+    // Nether update
+    expect(canPickUp('crimson_nylium')).toBe(true);
+    expect(canPickUp('warped_nylium')).toBe(true);
+    expect(canPickUp('crimson_fungus')).toBe(true);
+    expect(canPickUp('warped_fungus')).toBe(true);
+    expect(canPickUp('crimson_roots')).toBe(true);
+    expect(canPickUp('warped_roots')).toBe(true);
+    // Carved pumpkin (long-canonical companion to plain pumpkin)
+    expect(canPickUp('carved_pumpkin')).toBe(true);
+  });
+
   it('drops on death', () => {
     expect(onDeath('sand')).toBe('sand');
     expect(onDeath(null)).toBeNull();

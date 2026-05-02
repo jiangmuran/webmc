@@ -54,6 +54,10 @@ export function isTreasure(id: string): boolean {
     id === 'curse_of_vanishing' ||
     id === 'frost_walker' ||
     id === 'soul_speed' ||
-    id === 'swift_sneak'
+    id === 'swift_sneak' ||
+    // Wiki: wind_burst (1.21 mace enchant) is treasure-only — only
+    // available via trial chamber loot, not from enchanting table.
+    // Was missing from the treasure list.
+    id === 'wind_burst'
   );
 }

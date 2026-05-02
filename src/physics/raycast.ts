@@ -17,11 +17,19 @@ export interface RayHit {
   distance: number;
 }
 
-const FACE_FROM_AXIS_AND_STEP: Record<number, Record<number, BlockFace>> = {
-  0: { 1: FACE_NX, [-1]: FACE_PX },
-  1: { 1: FACE_NY, [-1]: FACE_PY },
-  2: { 1: FACE_NZ, [-1]: FACE_PZ },
-};
+// Face encoding is laid out so the entered face is recoverable by
+// arithmetic: axis * 2 + (step > 0 ? 0 : 1) — see the assertions in
+// raycast.test.ts. Replacing the previous Record-of-Record lookup
+// (two hashed property accesses + an optional-chain check per voxel
+// step) with a single arithmetic expression. Per-frame block-outline
+// raycast walks up to ~5 voxels so the inner loop runs millions of
+// times per minute on a busy session.
+
+// Shared mutable hit. Block-outline cast runs every frame and act()
+// runs on every place/break. All callers consume the result fields
+// synchronously without keeping the reference, so reusing one object
+// avoids ~60 throwaway hit objects/sec.
+const SHARED_HIT: RayHit = { bx: 0, by: 0, bz: 0, face: FACE_PY, distance: 0 };
 
 // Amanatides–Woo voxel ray traversal. Walks voxels in order along a ray
 // until maxDistance, stopping at the first solid cell. Face is the one the
@@ -59,7 +67,12 @@ export function raycastVoxels(
   // face=FACE_PY as a sentinel in that case and distance=0. Most callers
   // should check distance > 0 before using face.
   if (isSolid(vx, vy, vz)) {
-    return { bx: vx, by: vy, bz: vz, face: FACE_PY, distance: 0 };
+    SHARED_HIT.bx = vx;
+    SHARED_HIT.by = vy;
+    SHARED_HIT.bz = vz;
+    SHARED_HIT.face = FACE_PY;
+    SHARED_HIT.distance = 0;
+    return SHARED_HIT;
   }
 
   let distance = 0;
@@ -98,8 +111,12 @@ export function raycastVoxels(
     }
     if (distance > maxDistance) return null;
     if (isSolid(vx, vy, vz)) {
-      const face = FACE_FROM_AXIS_AND_STEP[enteredAxis]?.[enteredStep] ?? FACE_PY;
-      return { bx: vx, by: vy, bz: vz, face, distance };
+      SHARED_HIT.bx = vx;
+      SHARED_HIT.by = vy;
+      SHARED_HIT.bz = vz;
+      SHARED_HIT.face = (enteredAxis * 2 + (enteredStep > 0 ? 0 : 1)) as BlockFace;
+      SHARED_HIT.distance = distance;
+      return SHARED_HIT;
     }
   }
   return null;

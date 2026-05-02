@@ -9,6 +9,16 @@ export interface Enchantment {
 
 export type EnchantMaxes = Record<string, number>;
 
+// Wiki (minecraft.wiki/w/Enchanting): canonical max levels per
+// enchantment. Old table only listed sword/bow/tool/armor enchants;
+// crossbow (piercing/multishot/quick_charge), trident
+// (loyalty/riptide/channeling/impaling), mace
+// (density/breach/wind_burst), boot (depth_strider/frost_walker/
+// soul_speed/swift_sneak), helmet (aqua_affinity/respiration),
+// armor (thorns), fishing rod (luck_of_the_sea/lure), and the two
+// curses were missing — anvil-combining a Multishot II book on a
+// crossbow silently produced level II (the book's value) instead of
+// capping at I per wiki. Aligned with enchant_max_level_table.ts.
 export const ENCHANT_MAX: EnchantMaxes = {
   sharpness: 5,
   smite: 5,
@@ -31,6 +41,27 @@ export const ENCHANT_MAX: EnchantMaxes = {
   punch: 2,
   flame: 1,
   infinity: 1,
+  multishot: 1,
+  piercing: 4,
+  quick_charge: 3,
+  loyalty: 3,
+  riptide: 3,
+  channeling: 1,
+  impaling: 5,
+  density: 5,
+  breach: 4,
+  wind_burst: 3,
+  thorns: 3,
+  respiration: 3,
+  aqua_affinity: 1,
+  depth_strider: 3,
+  frost_walker: 2,
+  soul_speed: 3,
+  swift_sneak: 3,
+  curse_of_binding: 1,
+  curse_of_vanishing: 1,
+  luck_of_the_sea: 3,
+  lure: 3,
 };
 
 export interface CombineQuery {

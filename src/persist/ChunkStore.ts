@@ -22,9 +22,24 @@ interface DirtyEntry {
 
 export class ChunkStore {
   private readonly opts: ChunkStoreOptions;
-  private readonly dirty = new Map<string, DirtyEntry>();
+  // Numeric packed key (same as lightCache) — was a template-literal
+  // string per markDirty + per flush iteration. Heavy edits churn
+  // hundreds of these per second.
+  private readonly dirty = new Map<number, DirtyEntry>();
   private flushTimer: ReturnType<typeof setInterval> | null = null;
   private inFlight = false;
+  // Reused per-flush blobs scratch — was a fresh array allocated every
+  // 1Hz flush (and on every flushAll attempt). The array gets handed
+  // off to db.putChunks but isn't held after that resolves (inFlight
+  // guards against parallel flushes), so a single shared scratch is
+  // safe.
+  private readonly flushBlobsScratch: ChunkBlob[] = [];
+  // Pool of ChunkBlob wrappers — was a fresh literal per dirty chunk
+  // per flush. After db.putChunks resolves, IDB has structured-cloned
+  // the data and the original wrappers are no longer needed; recycle
+  // them through this pool. inFlight prevents parallel flushes so
+  // wrapper lifetimes don't overlap.
+  private readonly flushBlobPool: ChunkBlob[] = [];
 
   constructor(
     private readonly db: PersistDB,
@@ -33,35 +48,106 @@ export class ChunkStore {
     this.opts = { ...DEFAULTS, ...opts };
   }
 
-  key(cx: number, cz: number): string {
-    return `${cx.toString()},${cz.toString()}`;
+  // Public for tests; numeric so Map.get is fast and the key isn't
+  // allocated as a string each call.
+  key(cx: number, cz: number): number {
+    return ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
   }
 
   markDirty(chunk: Chunk, light: ChunkLight | null): void {
-    this.dirty.set(this.key(chunk.cx, chunk.cz), { chunk, light });
+    // Re-marking an already-dirty chunk should mutate the existing
+    // entry, not allocate a fresh {chunk, light} literal. Fluid spread,
+    // tnt cascades, and structure pastes all re-mark the same chunk
+    // many times per second; pooling the entry shape avoids ~hundreds
+    // of throwaway literals during heavy edit bursts.
+    const k = this.key(chunk.cx, chunk.cz);
+    const existing = this.dirty.get(k);
+    if (existing) {
+      existing.chunk = chunk;
+      existing.light = light;
+      return;
+    }
+    this.dirty.set(k, { chunk, light });
   }
 
   async load(cx: number, cz: number): Promise<{ chunk: Chunk; light: ChunkLight | null } | null> {
     const blob = await this.db.getChunk(this.opts.worldId, cx, cz);
     if (!blob) return null;
-    const decoded = decodeChunk(blob.payload);
-    return { chunk: decoded.chunk, light: decoded.light };
+    // Corrupt or future-version blob → return null so the loader
+    // regenerates the chunk fresh, instead of crashing the world load.
+    try {
+      const decoded = decodeChunk(blob.payload);
+      return { chunk: decoded.chunk, light: decoded.light };
+    } catch (err) {
+      console.warn(`[ChunkStore] failed to decode chunk (${cx}, ${cz}) — regenerating:`, err);
+      return null;
+    }
   }
 
   async flush(): Promise<number> {
+    return this.flushInternal(this.opts.flushBatch);
+  }
+
+  // Drain the entire dirty queue regardless of batch cap. Used on
+  // tab close where flushBatch=32 would silently drop the rest of
+  // a 100+ dirty queue.
+  //
+  // If a regular flush is currently in flight, wait for it to settle
+  // first and then drain — without this, flushAll could race the
+  // 1Hz auto-flush and skip half the queue.
+  async flushAll(): Promise<number> {
+    let total = 0;
+    // Loop in case multiple drains are needed (would happen if dirty
+    // grows during the await — unlikely in close handlers but safe).
+    for (let attempt = 0; attempt < 8; attempt++) {
+      while (this.inFlight) {
+        await Promise.resolve();
+      }
+      if (this.dirty.size === 0) break;
+      total += await this.flushInternal(Infinity);
+    }
+    return total;
+  }
+
+  private async flushInternal(cap: number): Promise<number> {
     if (this.dirty.size === 0 || this.inFlight) return 0;
     this.inFlight = true;
     try {
-      const toWrite = Array.from(this.dirty.values()).slice(0, this.opts.flushBatch);
-      const blobs: ChunkBlob[] = toWrite.map((d) => ({
-        worldId: this.opts.worldId,
-        cx: d.chunk.cx,
-        cz: d.chunk.cz,
-        payload: encodeChunk(d.chunk, d.light ?? undefined),
-        version: d.chunk.version,
-      }));
+      // Walk the dirty Map directly with a manual cap — Array.from + slice
+      // allocated the full dirty list every flush even when only 32
+      // would be written. With 500+ dirty chunks during heavy edits
+      // (terraforming, explosions), that's a 500-entry array trashed
+      // every second. Recycle the blobs array across calls.
+      const blobs = this.flushBlobsScratch;
+      // Recycle previous-flush wrappers into the pool.
+      for (let i = 0; i < blobs.length; i++) this.flushBlobPool.push(blobs[i]!);
+      blobs.length = 0;
+      for (const d of this.dirty.values()) {
+        if (blobs.length >= cap) break;
+        const blob = this.flushBlobPool.pop() ?? {
+          worldId: this.opts.worldId,
+          cx: 0,
+          cz: 0,
+          payload: new Uint8Array(0),
+          version: 0,
+        };
+        blob.worldId = this.opts.worldId;
+        blob.cx = d.chunk.cx;
+        blob.cz = d.chunk.cz;
+        blob.payload = encodeChunk(d.chunk, d.light ?? undefined);
+        blob.version = d.chunk.version;
+        blobs.push(blob);
+      }
       await this.db.putChunks(blobs);
-      for (const b of blobs) this.dirty.delete(this.key(b.cx, b.cz));
+      // Only delete the dirty entry if the chunk's version hasn't moved
+      // forward during the async putChunks. Otherwise edits made during
+      // the await would be silently dropped — chunk would appear "clean"
+      // until the next edit re-marks it. Vanilla doesn't have this race
+      // because it serializes inside the world tick, but we await IDB.
+      for (const b of blobs) {
+        const k = this.key(b.cx, b.cz);
+        if (this.dirty.get(k)?.chunk.version === b.version) this.dirty.delete(k);
+      }
       return blobs.length;
     } finally {
       this.inFlight = false;

@@ -14,6 +14,10 @@ const faceColorsByState = (s: BlockState) => {
   const c = colorByState(s);
   return { top: c, bottom: c, side: c };
 };
+// MesherNeighbors used to take an OpaqueSampler closure per face;
+// it now takes the raw border slice (Uint8Array of D*D bytes, 1 =
+// opaque). Tests build alwaysOpaque from a filled scratch.
+const ALWAYS_OPAQUE = new Uint8Array(SUBCHUNK_DIM * SUBCHUNK_DIM).fill(1);
 
 describe('greedy mesher', () => {
   it('empty subchunk produces 0 quads', () => {
@@ -44,16 +48,15 @@ describe('greedy mesher', () => {
 
   it('full subchunk with all neighbors opaque emits no quads', () => {
     const sc = new SubChunk(STONE);
-    const alwaysOpaque = () => true;
     const out = meshSubChunk({
       self: sc,
       neighbors: {
-        nx: alwaysOpaque,
-        px: alwaysOpaque,
-        ny: alwaysOpaque,
-        py: alwaysOpaque,
-        nz: alwaysOpaque,
-        pz: alwaysOpaque,
+        nx: ALWAYS_OPAQUE,
+        px: ALWAYS_OPAQUE,
+        ny: ALWAYS_OPAQUE,
+        py: ALWAYS_OPAQUE,
+        nz: ALWAYS_OPAQUE,
+        pz: ALWAYS_OPAQUE,
       },
       isOpaque: opaqueByState,
       faceColorsOf: faceColorsByState,
@@ -175,10 +178,9 @@ describe('greedy mesher', () => {
 
   it('neighbor-opaque on one side removes that whole face', () => {
     const sc = new SubChunk(STONE);
-    const alwaysOpaque = () => true;
     const out = meshSubChunk({
       self: sc,
-      neighbors: { ...EMPTY_NEIGHBORS, px: alwaysOpaque },
+      neighbors: { ...EMPTY_NEIGHBORS, px: ALWAYS_OPAQUE },
       isOpaque: opaqueByState,
       faceColorsOf: faceColorsByState,
     });

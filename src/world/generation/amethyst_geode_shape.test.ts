@@ -10,12 +10,12 @@ describe('amethyst geode shape', () => {
     expect(blockAt(DEFAULT_RADII.innerEnd, DEFAULT_RADII)).toBe('amethyst_block');
   });
 
-  it('smooth basalt middle', () => {
-    expect(blockAt(DEFAULT_RADII.middle, DEFAULT_RADII)).toBe('smooth_basalt');
+  it('calcite middle (wiki: inner shell)', () => {
+    expect(blockAt(DEFAULT_RADII.middle, DEFAULT_RADII)).toBe('calcite');
   });
 
-  it('calcite outer', () => {
-    expect(blockAt(DEFAULT_RADII.outer, DEFAULT_RADII)).toBe('calcite');
+  it('smooth basalt outer (wiki: outermost shell)', () => {
+    expect(blockAt(DEFAULT_RADII.outer, DEFAULT_RADII)).toBe('smooth_basalt');
   });
 
   it('far outside netherrack label', () => {

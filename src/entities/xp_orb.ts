@@ -18,7 +18,12 @@ export interface XpOrb {
 }
 
 const DESPAWN_SEC = 300;
-const MAGNET_RADIUS_SQ = 6 * 6;
+// Wiki (minecraft.wiki/w/Experience): "Experience orbs ... float or
+// glide toward the player up to a distance of 7.25 blocks." Old
+// magnet radius of 6 was ~17% under wiki canon — orbs in the
+// 6-7.25 block shell wouldn't begin gliding toward the player even
+// though wiki canon attracts them. 7.25² ≈ 52.5625.
+const MAGNET_RADIUS_SQ = 7.25 * 7.25;
 const PICKUP_RADIUS_SQ = 1.2 * 1.2;
 const MAGNET_SPEED = 3;
 

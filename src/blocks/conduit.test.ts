@@ -40,9 +40,15 @@ describe('conduit', () => {
     expect(power).toBeGreaterThan(20);
   });
 
-  it('range scales with power and caps at 96', () => {
+  it('range scales with power and caps at 96 (wiki: 16 blocks/7 frame)', () => {
+    // Wiki: 16→32, 21→48, 28→64, 35→80, 42→96.
     expect(conduitRange(0)).toBe(0);
-    expect(conduitRange(16)).toBe(16);
+    expect(conduitRange(15)).toBe(0); // below activation threshold
+    expect(conduitRange(16)).toBe(32);
+    expect(conduitRange(21)).toBe(48);
+    expect(conduitRange(28)).toBe(64);
+    expect(conduitRange(35)).toBe(80);
+    expect(conduitRange(42)).toBe(96);
     expect(conduitRange(200)).toBe(96);
   });
 

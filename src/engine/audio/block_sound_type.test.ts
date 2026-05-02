@@ -23,4 +23,12 @@ describe('block sound type', () => {
     expect(s.place).toContain('wood');
     expect(s.step).toContain('wood');
   });
+
+  it('wool blocks (webmc + Java naming) are wool sound group', () => {
+    // Project blocks/registry.ts uses `wool_<color>`; also accept
+    // the Java-edition `<color>_wool` for save-import compatibility.
+    expect(groupFor('wool_red')).toBe('wool');
+    expect(groupFor('wool_white')).toBe('wool');
+    expect(groupFor('white_wool')).toBe('wool');
+  });
 });

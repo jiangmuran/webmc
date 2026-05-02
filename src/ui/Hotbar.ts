@@ -16,6 +16,13 @@ export class Hotbar {
   private readonly label: HTMLElement;
   private labelHideAt = 0;
   private _selected = 0;
+  private lastCounts: number[] = [];
+  private lastEmptyBehavior: 'dim' | 'infinite' | null = null;
+  // Listeners notified whenever the selection changes (1-9 keys, scroll
+  // wheel, or programmatic select). Used by main.ts to keep the parallel
+  // inventory.selectedHotbar in sync — a held pickaxe needs the same
+  // index to be looked up for durability + mending.
+  private readonly onSelectListeners: ((index: number) => void)[] = [];
 
   private readonly onKey: (e: KeyboardEvent) => void;
   private readonly onWheel: (e: WheelEvent) => void;
@@ -35,7 +42,10 @@ export class Hotbar {
       'background:rgba(10,14,20,0.7)',
       'border:1px solid rgba(230,237,243,0.12)',
       'border-radius:6px',
-      'pointer-events:none',
+      // Was pointer-events:none — touch users had no way to switch
+      // hotbar slots without keyboard 1-9 or scroll wheel. Slots are
+      // now clickable as a per-slot tap-to-select.
+      'pointer-events:auto',
       'user-select:none',
       'z-index:10',
     ].join(';');
@@ -71,7 +81,14 @@ export class Hotbar {
         'line-height:12px',
       ].join(';');
       slot.style.position = 'relative';
+      slot.style.cursor = 'pointer';
       slot.appendChild(countEl);
+      const slotIdx = i;
+      slot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.select(slotIdx);
+      });
       this.container.appendChild(slot);
       this.slotEls.push(slot);
       this.countEls.push(countEl);
@@ -103,6 +120,18 @@ export class Hotbar {
     this.showLabel();
 
     this.onKey = (e) => {
+      // Don't intercept when typing in chat / search input or any text field
+      // (was eating digit keys typed into messages and silently switching slots).
+      const tgt = e.target as Element | null;
+      if (tgt) {
+        const tag = tgt.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || (tgt as HTMLElement).isContentEditable) return;
+      }
+      // Was gated on pointerLock. Headless e2e environments (and some
+      // browsers in iframes / restricted contexts) can't acquire pointer
+      // lock, so the hotbar would silently ignore digit keys. The
+      // INPUT/TEXTAREA gate above already covers chat / search overlays;
+      // pressing 1-9 with no game focus on the page is harmless.
       const code = e.code;
       if (code.startsWith('Digit')) {
         const n = Number(code.slice(5));
@@ -134,9 +163,15 @@ export class Hotbar {
 
   select(index: number): void {
     if (index < 0 || index >= this.entries.length) return;
+    if (this._selected === index) return;
     this._selected = index;
     this.refreshHighlight();
     this.showLabel();
+    for (const fn of this.onSelectListeners) fn(index);
+  }
+
+  onSelect(fn: (index: number) => void): void {
+    this.onSelectListeners.push(fn);
   }
 
   private showLabel(): void {
@@ -162,11 +197,17 @@ export class Hotbar {
   }
 
   setCounts(counts: readonly number[], emptyBehavior: 'dim' | 'infinite' = 'dim'): void {
+    // Hot path — called every frame from main. Skip per-slot DOM writes
+    // when nothing changed since the last call. Each .textContent /
+    // .style.filter write hits browser style invalidation; cumulative
+    // ~9*60 = 540 writes/sec for nothing.
     for (let i = 0; i < this.slotEls.length; i++) {
       const el = this.slotEls[i];
       const countEl = this.countEls[i];
       if (!el || !countEl) continue;
       const n = counts[i] ?? 0;
+      if (emptyBehavior === this.lastEmptyBehavior && this.lastCounts[i] === n) continue;
+      this.lastCounts[i] = n;
       if (emptyBehavior === 'infinite') {
         countEl.textContent = '';
         el.style.filter = 'none';
@@ -180,6 +221,7 @@ export class Hotbar {
         el.style.filter = 'none';
       }
     }
+    this.lastEmptyBehavior = emptyBehavior;
   }
 
   private refreshHighlight(): void {

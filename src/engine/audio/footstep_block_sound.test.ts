@@ -25,4 +25,12 @@ describe('footstep/block sound', () => {
   it('break sound prefixed', () => {
     expect(breakSound('sand')).toContain('break');
   });
+
+  it('wool blocks (webmc + Java naming) are wool group', () => {
+    // Project naming: `wool_<color>`; Java: `<color>_wool`. Both
+    // should resolve to wool sound group.
+    expect(soundGroupFor('wool_red')).toBe('wool');
+    expect(soundGroupFor('wool')).toBe('wool');
+    expect(soundGroupFor('white_wool')).toBe('wool');
+  });
 });

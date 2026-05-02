@@ -34,4 +34,24 @@ describe('template copy', () => {
     });
     expect(r.copiesProduced).toBe(0);
   });
+
+  it('1.21 trial chamber trims duplicate per wiki', () => {
+    // Wiki:
+    //   Flow trim duplicates with a breeze_rod.
+    //   Bolt trim duplicates with a copper_block.
+    expect(baseMaterialFor('flow_trim')).toBe('webmc:breeze_rod');
+    expect(baseMaterialFor('bolt_trim')).toBe('webmc:copper_block');
+    const flow = duplicateTemplate({
+      template: 'flow_trim',
+      diamonds: 7,
+      baseMaterial: 'webmc:breeze_rod',
+    });
+    expect(flow.copiesProduced).toBe(2);
+    const bolt = duplicateTemplate({
+      template: 'bolt_trim',
+      diamonds: 7,
+      baseMaterial: 'webmc:copper_block',
+    });
+    expect(bolt.copiesProduced).toBe(2);
+  });
 });

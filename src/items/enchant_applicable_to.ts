@@ -19,11 +19,14 @@ export type ItemCategory =
   | 'book';
 
 const TABLE: Record<string, readonly ItemCategory[]> = {
-  sharpness: ['sword', 'axe'],
-  smite: ['sword', 'axe'],
-  bane_of_arthropods: ['sword', 'axe'],
-  fire_aspect: ['sword'],
-  knockback: ['sword'],
+  // Wiki (Java 1.21+): mace accepts the sharpness damage family +
+  // fire_aspect + knockback. Was sword/axe-only — players couldn't
+  // sharpness/smite/bane/fire_aspect/knockback their mace.
+  sharpness: ['sword', 'axe', 'mace'],
+  smite: ['sword', 'axe', 'mace'],
+  bane_of_arthropods: ['sword', 'axe', 'mace'],
+  fire_aspect: ['sword', 'mace'],
+  knockback: ['sword', 'mace'],
   looting: ['sword'],
   sweeping_edge: ['sword'],
   efficiency: ['pickaxe', 'shovel', 'axe', 'hoe'],
@@ -43,6 +46,10 @@ const TABLE: Record<string, readonly ItemCategory[]> = {
   density: ['mace'],
   breach: ['mace'],
   wind_burst: ['mace'],
+  // Fishing rod enchantments — were missing entirely. Wiki: lure
+  // reduces wait time, luck_of_the_sea improves catch quality.
+  lure: ['fishing_rod'],
+  luck_of_the_sea: ['fishing_rod'],
   respiration: ['helmet'],
   aqua_affinity: ['helmet'],
   thorns: ['helmet', 'chestplate', 'leggings', 'boots'],

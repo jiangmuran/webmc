@@ -24,7 +24,13 @@ export interface RiptideResult {
   launchVelocity: Vec3; // zeroed if !canLaunch
 }
 
-// Riptide requires rain or water + a valid Riptide enchant + 0.5s charge.
+// Wiki (minecraft.wiki/w/Riptide): "The formula for the number of
+// blocks the trident throws the user is (6 × level) + 3 when in rain
+// or standing in water." → magnitude (blocks/sec) = 6×level + 3:
+// level I = 9, II = 15, III = 21. Old `3 + 1.75 * level` gave
+// 4.75/6.5/8.25 — about 40% of the wiki magnitude. Sibling
+// riptide_trident.launchVelocityBps already returns the wiki value;
+// this module now matches.
 export function computeRiptide(q: RiptideQuery): RiptideResult {
   const level = hasEnchant(q.trident, 'riptide');
   if (level <= 0) return { canLaunch: false, launchVelocity: { x: 0, y: 0, z: 0 } };
@@ -32,7 +38,7 @@ export function computeRiptide(q: RiptideQuery): RiptideResult {
     return { canLaunch: false, launchVelocity: { x: 0, y: 0, z: 0 } };
   }
   if (q.chargeSec < 0.5) return { canLaunch: false, launchVelocity: { x: 0, y: 0, z: 0 } };
-  const magnitude = 3 + 1.75 * level;
+  const magnitude = 6 * level + 3;
   return {
     canLaunch: true,
     launchVelocity: {

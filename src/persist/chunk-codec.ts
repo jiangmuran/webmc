@@ -1,8 +1,7 @@
 import type { BlockState } from '@/blocks/state';
-import { AIR } from '@/blocks/state';
 import { CHUNK_SECTIONS, Chunk } from '@/world/Chunk';
-import { SUBCHUNK_VOLUME } from '@/world/SubChunk';
-import { type BitsPerIndex, readIndex, wordsNeeded } from '@/world/packed-indices';
+import { SubChunk, SUBCHUNK_VOLUME } from '@/world/SubChunk';
+import { type BitsPerIndex, wordsNeeded } from '@/world/packed-indices';
 import type { ChunkLight } from '@/world/lighting';
 import { newChunkLight } from '@/world/lighting';
 
@@ -18,12 +17,38 @@ export interface EncodedChunk {
   sectionCount: number;
 }
 
-function collectSections(chunk: Chunk): number[] {
-  const indices: number[] = [];
+// Reused per-encode scratches. encodeChunk runs on every chunkStore
+// flush (1Hz baseline; up to 32 chunks per batch). Each call previously
+// allocated a fresh ys[], a fresh sectionMetas[] of {cy, sec, bits, ...}
+// objects, AND a fresh array-of-{bits,paletteSize,hasLight} for the
+// length estimator pass. Encoding is synchronous and single-threaded
+// on the main thread, so module-scope reuse is safe.
+const collectSectionsScratch: number[] = [];
+interface SectionMeta {
+  cy: number;
+  sec: SubChunk;
+  bits: BitsPerIndex;
+  paletteSize: number;
+  hasLight: boolean;
+}
+const sectionMetasScratch: SectionMeta[] = [];
+// Reused per-section palette state buffer for decodeChunk. Palette's
+// constructor spread-copies its input, so this can be refilled across
+// sections and across calls without affecting previously-decoded
+// chunks. Was a fresh BlockState[] per section.
+const decodePaletteScratch: BlockState[] = [];
+
+function collectSectionsInto(chunk: Chunk, out: number[]): number[] {
+  out.length = 0;
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
-    if (chunk.section(cy)) indices.push(cy);
+    const sec = chunk.section(cy);
+    // Skip null AND all-air sections. Common after dig-down or initial
+    // sky sections — same on reload (decoder treats missing section as
+    // air via sectionMask bit unset). Saves ~7 bytes per skipped section
+    // and one per-section traversal in encode/decode.
+    if (sec && sec.nonAirCount > 0) out.push(cy);
   }
-  return indices;
+  return out;
 }
 
 function validBits(bits: number): BitsPerIndex {
@@ -31,9 +56,7 @@ function validBits(bits: number): BitsPerIndex {
   throw new Error(`chunk-codec: invalid bitsPerIndex ${String(bits)}`);
 }
 
-function estimateEncodedLength(
-  sections: readonly { bits: BitsPerIndex; paletteSize: number; hasLight: boolean }[],
-): number {
+function estimateEncodedLengthFromMetas(sections: readonly SectionMeta[]): number {
   let total = HEADER_BYTES;
   total += 4; // CRC
   for (const s of sections) {
@@ -45,28 +68,36 @@ function estimateEncodedLength(
 }
 
 export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
-  const ys = collectSections(chunk);
+  const ys = collectSectionsInto(chunk, collectSectionsScratch);
   let sectionMask = 0;
   for (const cy of ys) sectionMask |= 1 << cy;
 
-  const sectionMetas = ys.map((cy) => {
+  // Refill sectionMetasScratch in place. Was a chained .map().map() that
+  // built two fresh arrays of throwaway objects on every chunk encode.
+  const sectionMetas = sectionMetasScratch;
+  while (sectionMetas.length > ys.length) sectionMetas.pop();
+  let anyLight = false;
+  for (let i = 0; i < ys.length; i++) {
+    const cy = ys[i]!;
     const sec = chunk.section(cy);
     if (!sec) throw new Error('unreachable: section missing after collect');
-    return {
-      cy,
-      sec,
-      bits: sec.bitsPerIndex,
-      paletteSize: sec.palette.size,
-      hasLight: !!light?.sections[cy],
-    };
-  });
-
-  const anyLight = sectionMetas.some((m) => m.hasLight);
+    const hasLight = !!light?.sections[cy];
+    if (hasLight) anyLight = true;
+    let m = sectionMetas[i];
+    if (!m) {
+      m = { cy, sec, bits: sec.bitsPerIndex, paletteSize: sec.palette.size, hasLight };
+      sectionMetas.push(m);
+    } else {
+      m.cy = cy;
+      m.sec = sec;
+      m.bits = sec.bitsPerIndex;
+      m.paletteSize = sec.palette.size;
+      m.hasLight = hasLight;
+    }
+  }
   const flags = anyLight ? FLAG_LIGHT : 0;
 
-  const lengthEstimate = estimateEncodedLength(
-    sectionMetas.map((m) => ({ bits: m.bits, paletteSize: m.paletteSize, hasLight: m.hasLight })),
-  );
+  const lengthEstimate = estimateEncodedLengthFromMetas(sectionMetas);
   const buf = new ArrayBuffer(lengthEstimate);
   const view = new DataView(buf);
   const u8 = new Uint8Array(buf);
@@ -94,17 +125,32 @@ export function encodeChunk(chunk: Chunk, light?: ChunkLight): Uint8Array {
     u8[offset++] = m.bits;
     view.setUint16(offset, m.paletteSize, true);
     offset += 2;
+    // Direct array read on palette.entries skips the per-call
+    // Palette.get function dispatch + its `if undefined throw` safety
+    // check. palette.size is the bound, so `entries[i]!` is in range.
+    const entries = m.sec.palette.entries;
     for (let i = 0; i < m.paletteSize; i++) {
-      view.setUint32(offset, m.sec.palette.get(i) >>> 0, true);
+      view.setUint32(offset, entries[i]! >>> 0, true);
       offset += 4;
     }
     if (m.bits > 0) {
       const indices = m.sec.indices;
       const words = wordsNeeded(SUBCHUNK_VOLUME, m.bits);
-      for (let i = 0; i < words; i++) {
-        view.setUint32(offset, indices ? (indices[i] ?? 0) : 0, true);
-        offset += 4;
+      const byteLen = words * 4;
+      if (indices) {
+        // Bulk byte-level memcpy of the Uint32Array's underlying bytes
+        // (little-endian on every browser-supported platform — same as
+        // `setUint32(..., true)`). Replaces the per-word setUint32 loop
+        // which paid a JS function-call + bounds-check per word, ~50K
+        // calls per chunk per save batch on full sections.
+        const indicesBytes = new Uint8Array(indices.buffer, indices.byteOffset, byteLen);
+        u8.set(indicesBytes, offset);
+      } else {
+        // bits>0 but no indices: section is uniform (single-palette).
+        // Buffer is already zero-initialized (ArrayBuffer init); just
+        // skip past the range.
       }
+      offset += byteLen;
     }
     if (m.hasLight && light) {
       const secLight = light.sections[m.cy];
@@ -141,6 +187,14 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
   if (magic !== MAGIC) throw new Error(`chunk-codec: bad magic 0x${magic.toString(16)}`);
   const schemaVersion = view.getUint16(offset, true);
   offset += 2;
+  // Future-version chunks would silently miscount fields. Throw a clear
+  // error so the chunk is regenerated rather than corrupting the world.
+  // Old saves with same/lower version are still readable.
+  if (schemaVersion > SCHEMA_VERSION) {
+    throw new Error(
+      `chunk-codec: schema version ${String(schemaVersion)} > supported ${String(SCHEMA_VERSION)}`,
+    );
+  }
   const flags = view.getUint16(offset, true);
   offset += 2;
   const cx = view.getInt32(offset, true);
@@ -160,45 +214,44 @@ export function decodeChunk(bytes: Uint8Array): DecodedChunk {
 
   for (let cy = 0; cy < CHUNK_SECTIONS; cy++) {
     if (!(sectionMask & (1 << cy))) continue;
-    const bits = validBits(bytes[offset] ?? 0);
+    // bytes is Uint8Array; offset stays in range — `!` over `?? 0`.
+    const bits = validBits(bytes[offset]!);
     offset += 1;
     const paletteSize = view.getUint16(offset, true);
     offset += 2;
-    const paletteStates: BlockState[] = [];
+    // Reused per-section palette scratch — Palette constructor copies
+    // the array via spread, so we can refill in place across sections
+    // and across decodeChunk calls. Was a fresh BlockState[] per
+    // section per chunk load.
+    const paletteStates = decodePaletteScratch;
+    paletteStates.length = paletteSize;
     for (let i = 0; i < paletteSize; i++) {
-      paletteStates.push(view.getUint32(offset, true));
+      paletteStates[i] = view.getUint32(offset, true);
       offset += 4;
     }
-    const sec = chunk.ensureSection(cy);
-    for (let i = 0; i < paletteSize; i++) {
-      if (i === 0) continue;
-      sec.palette.add(paletteStates[i] ?? AIR);
-    }
-    if (paletteStates[0] !== undefined && paletteStates[0] !== AIR) {
-      sec.fill(paletteStates[0]);
-      for (let i = 1; i < paletteSize; i++) sec.palette.add(paletteStates[i] ?? AIR);
-    }
+    let indices: Uint32Array | null = null;
     if (bits > 0) {
       const words = wordsNeeded(SUBCHUNK_VOLUME, bits);
-      const indices = new Uint32Array(words);
-      for (let i = 0; i < words; i++) {
-        indices[i] = view.getUint32(offset, true);
-        offset += 4;
-      }
-      for (let pos = 0; pos < SUBCHUNK_VOLUME; pos++) {
-        const idx = readIndex(indices, pos, bits);
-        const state = paletteStates[idx] ?? AIR;
-        const x = pos & 15;
-        const z = (pos >> 4) & 15;
-        const y = (pos >> 8) & 15;
-        if (state !== AIR) sec.set(x, y, z, state);
-      }
+      const byteLen = words * 4;
+      indices = new Uint32Array(words);
+      // Bulk byte-level copy from the source bytes. Replaces the per-
+      // word getUint32 loop (~50K calls per chunk per load batch on
+      // full sections). Little-endian on every browser-supported
+      // platform — matches the encoder's byte layout.
+      const indicesBytes = new Uint8Array(indices.buffer);
+      indicesBytes.set(bytes.subarray(offset, offset + byteLen));
+      offset += byteLen;
     }
+    // Bulk-construct the SubChunk from the wire data instead of per-
+    // cell sec.set() — saved ~4096 palette+bitpack ops per non-empty
+    // section. Decode is now O(words) instead of O(volume).
+    chunk.setSection(cy, SubChunk.fromRaw(paletteStates, bits, indices));
     if (hasLight && light) {
-      const lightBytes = new Uint8Array(SUBCHUNK_VOLUME);
-      for (let i = 0; i < SUBCHUNK_VOLUME; i++) lightBytes[i] = bytes[offset + i] ?? 0;
+      // Per-byte copy was O(N) JS interpreter overhead — slice() is a
+      // single typed-array memcpy. Same correctness (independent
+      // copy, owns its own buffer).
+      light.sections[cy] = bytes.slice(offset, offset + SUBCHUNK_VOLUME);
       offset += SUBCHUNK_VOLUME;
-      light.sections[cy] = lightBytes;
     }
   }
 
@@ -230,9 +283,17 @@ const CRC_TABLE = ((): Uint32Array => {
 })();
 
 function crc32(bytes: Uint8Array): number {
+  // Indexed for-loop instead of for-of: V8 generally optimizes for-of
+  // on TypedArray, but indexed access is unambiguous and crc32 walks
+  // every byte of the encoded chunk (often 100+ KB at world save). The
+  // CRC_TABLE lookup is bounded to 0..255, so the index-undefined
+  // fallback is purely a TS noUncheckedIndexedAccess satisfier.
   let crc = 0xffffffff;
-  for (const byte of bytes) {
-    crc = ((crc >>> 8) ^ (CRC_TABLE[(crc ^ byte) & 0xff] ?? 0)) >>> 0;
+  const len = bytes.length;
+  for (let i = 0; i < len; i++) {
+    // CRC_TABLE is Uint32Array(256), indexed by `& 0xff` — always in
+    // range. `!` skips the per-byte coalesce (TS narrowing artifact).
+    crc = ((crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]!) & 0xff]!) >>> 0;
   }
   return (crc ^ 0xffffffff) >>> 0;
 }

@@ -40,12 +40,20 @@ export function conduitPower(pos: Vec3, lookup: ConduitLookup): number {
   return power;
 }
 
-// Range in blocks of the Conduit Power effect. Scales with power:
-// 16..96 (+16 per 7 frame blocks, capped at 96).
+// Wiki (minecraft.wiki/w/Conduit): "The effective radius of the
+// conduit is 16 blocks for every seven blocks in the frame, though
+// the effect does not activate until the minimum of 16 blocks is
+// included in the build. Thus, it extends to 48 at 21 blocks, 64 at
+// 28 blocks, 80 at 35 blocks, and 96 with a complete frame of 42
+// blocks."
+//
+// Old `tier = floor((power-16)/7); range = 16 + tier*16` produced
+// 16/16/16/32/32/.../48 — wrong by ~50% across the entire active
+// range (e.g. 42-block full frame yielded 64 blocks instead of the
+// canonical 96). New formula matches wiki: range = floor(blocks/7) * 16.
 export function conduitRange(power: number): number {
-  if (power < 16) return 0; // minimum frame: 16 blocks.
-  const tier = Math.floor((power - 16) / 7);
-  return Math.min(96, 16 + tier * 16);
+  if (power < 16) return 0;
+  return Math.min(96, Math.floor(power / 7) * 16);
 }
 
 export interface ConduitEffect {

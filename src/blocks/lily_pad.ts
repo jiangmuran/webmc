@@ -9,7 +9,15 @@ export interface LilyPadPlaceQuery {
 
 export function canPlaceLilyPad(q: LilyPadPlaceQuery): boolean {
   if (!q.aboveIsAir) return false;
-  return q.targetBlock === 'webmc:water' || q.targetBlock === 'webmc:ice';
+  // Wiki: lily pads can be placed on water source, ice, packed_ice,
+  // blue_ice, frosted_ice. Was water + ice only.
+  return (
+    q.targetBlock === 'webmc:water' ||
+    q.targetBlock === 'webmc:ice' ||
+    q.targetBlock === 'webmc:packed_ice' ||
+    q.targetBlock === 'webmc:blue_ice' ||
+    q.targetBlock === 'webmc:frosted_ice'
+  );
 }
 
 // A boat moving into a lily pad breaks the pad (no drop).

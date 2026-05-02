@@ -36,4 +36,31 @@ describe('fire', () => {
       true,
     );
   });
+
+  it('all wood types are flammable per wiki (not just oak)', () => {
+    // Wiki minecraft.wiki/w/Fire: every wood-family log/planks/leaves
+    // burns. Old table only had oak.
+    for (const id of [
+      'webmc:spruce_log',
+      'webmc:birch_planks',
+      'webmc:jungle_leaves',
+      'webmc:acacia_log',
+      'webmc:dark_oak_planks',
+      'webmc:mangrove_leaves',
+      'webmc:cherry_log',
+      'webmc:pale_oak_planks',
+      'webmc:stripped_spruce_log',
+    ]) {
+      expect(isFlammable(id)).toBe(true);
+    }
+    // Crimson/warped are explicitly non-flammable per wiki.
+    expect(isFlammable('webmc:crimson_planks')).toBe(false);
+    expect(isFlammable('webmc:warped_log')).toBe(false);
+  });
+
+  it('bamboo + vines + grass are flammable per wiki', () => {
+    expect(isFlammable('webmc:bamboo')).toBe(true);
+    expect(isFlammable('webmc:vine')).toBe(true);
+    expect(isFlammable('webmc:short_grass')).toBe(true);
+  });
 });

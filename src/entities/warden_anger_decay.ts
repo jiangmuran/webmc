@@ -3,9 +3,18 @@ export interface WardenAnger {
   level: number;
 }
 
+// Wiki (minecraft.wiki/w/Warden): anger ranges 0-150. Wiki-documented
+// thresholds:
+//   ≥ 35: "suspect" — warden becomes aware of the target.
+//   ≥ 80: "target"  — warden actively pursues, uses sonic boom when
+//                     unreachable.
+//
+// Old RANGED_THRESHOLD = 40 didn't match the wiki's 35 suspect
+// threshold. Sibling warden_anger.ts already uses
+// WARDEN_ANGER_SUSPECT = 35 and WARDEN_ANGER_TARGET = 80.
 export const MAX_ANGER = 150;
 export const DIG_THRESHOLD = 80;
-export const RANGED_THRESHOLD = 40;
+export const RANGED_THRESHOLD = 35;
 export const DECAY_PER_SECOND = 1;
 
 export function addAnger(

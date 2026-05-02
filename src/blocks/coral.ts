@@ -1,6 +1,7 @@
-// Coral bleaching. Live coral (blue/red/pink/yellow/purple) placed outside
-// water for >= 1 tick dies and turns into its "dead" variant. Dead coral
-// doesn't revive.
+// Coral bleaching. Live coral (tube=blue, brain=pink, bubble=purple,
+// fire=red, horn=yellow) placed outside water for >= 1 random tick
+// dies and turns into its "dead" variant. Dead coral doesn't revive.
+// Wiki: minecraft.wiki/w/Coral.
 
 export type CoralColor = 'tube' | 'brain' | 'bubble' | 'fire' | 'horn';
 export type CoralVariant = 'block' | 'fan' | 'plant';

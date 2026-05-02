@@ -13,8 +13,12 @@ describe('firework damage', () => {
     expect(fireworkBaseDamage([])).toBe(0);
   });
 
-  it('2 stars = 8 base damage', () => {
-    expect(fireworkBaseDamage([STAR, STAR])).toBe(8);
+  it('2 stars = 9 base damage (wiki: 7 + 2 per extra)', () => {
+    expect(fireworkBaseDamage([STAR, STAR])).toBe(9);
+  });
+
+  it('1 star = 7 base damage', () => {
+    expect(fireworkBaseDamage([STAR])).toBe(7);
   });
 
   it('radius is 5', () => {

@@ -23,7 +23,7 @@ export class MigrationRegistry {
     if (this.byFrom.has(m.fromVersion)) {
       throw new Error(`duplicate migration from version ${m.fromVersion}`);
     }
-    this.byFrom.set(m.fromVersion, m as unknown as AnyMigration); // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
+    this.byFrom.set(m.fromVersion, m as unknown as AnyMigration);
   }
 
   latestVersion(initial: number): number {

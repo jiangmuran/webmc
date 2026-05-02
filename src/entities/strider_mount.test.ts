@@ -16,17 +16,23 @@ describe('strider mount', () => {
     expect(mountStrider(s, 1)).toBe(true);
   });
 
-  it('shivers + takes damage in rain', () => {
+  it('takes 2 hp/s in rain (wiki: 1 hp per 0.5s)', () => {
     const s = makeStrider();
     const r = tickStrider(s, { inRain: true, inLava: false, dtSec: 1 });
     expect(s.shiveringInRain).toBe(true);
-    expect(r.damageTaken).toBeGreaterThan(0);
+    expect(r.damageTaken).toBe(2);
   });
 
-  it('no damage in lava', () => {
+  it('no damage in lava without rain', () => {
     const s = makeStrider();
     const r = tickStrider(s, { inRain: false, inLava: true, dtSec: 1 });
     expect(r.damageTaken).toBe(0);
+  });
+
+  it('rain damage still hits while in lava (wiki)', () => {
+    const s = makeStrider();
+    const r = tickStrider(s, { inRain: true, inLava: true, dtSec: 1 });
+    expect(r.damageTaken).toBe(2);
   });
 
   it('dismount returns rider id', () => {

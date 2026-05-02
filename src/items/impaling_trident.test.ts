@@ -18,8 +18,13 @@ describe('impaling trident', () => {
     expect(damageBonus(3, 'squid', false)).toBeCloseTo(7.5);
   });
 
-  it('bonus to any target in water', () => {
-    expect(damageBonus(2, 'zombie', true)).toBeCloseTo(5);
+  it('Java Edition: zombie in water gets NO bonus (wiki)', () => {
+    expect(damageBonus(2, 'zombie', true)).toBe(0);
+  });
+
+  it('Java Edition: drowned is NOT aquatic (wiki: MC-128249 WAI)', () => {
+    expect(isAquatic('drowned')).toBe(false);
+    expect(damageBonus(2, 'drowned', false)).toBe(0);
   });
 
   it('no bonus to land target out of water', () => {

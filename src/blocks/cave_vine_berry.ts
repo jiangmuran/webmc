@@ -44,18 +44,26 @@ export function tickCaveVine(state: CaveVineSegment, ctx: VineTickCtx): VineTick
   return 'none';
 }
 
-// Picking berries: removes berries but keeps the vine; drops 1-2 glow
-// berries (MC) + small chance at more.
+// Picking berries: removes berries but keeps the vine.
+//
+// Wiki (minecraft.wiki/w/Glow_Berries): "A cave vine can be broken
+// ... yielding one unit of glow berries if the vine is bearing
+// berries... This is not affected by Fortune." And: "One unit of
+// glow berries can also be collected from cave vines bearing
+// berries without breaking the plant." So picking always returns
+// exactly 1. Old `1 + (rng()<0.11 ? 1 : 0)` rolled an undocumented
+// 11% chance at +1, an artifact of treating cave vine picking like
+// sweet-berry harvest.
 export interface PickResult {
   picked: boolean;
   count: number;
 }
 
 export function pickBerries(state: CaveVineSegment, rng: () => number): PickResult {
+  void rng;
   if (!state.hasBerries) return { picked: false, count: 0 };
   state.hasBerries = false;
-  const extra = rng() < 0.11 ? 1 : 0;
-  return { picked: true, count: 1 + extra };
+  return { picked: true, count: 1 };
 }
 
 // Bone-meal on a cave vine (non-tip or tip): if no berries, force berry

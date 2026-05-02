@@ -46,33 +46,44 @@ function asBuffer(b: ArrayBufferLike): ArrayBuffer {
   return b as ArrayBuffer;
 }
 
+// Hoisted optional-field key list — was rebuilt as a fresh
+// `as const` array per transferablesOfRequest call.
+const TRANSFER_OPTIONAL_KEYS = [
+  'neighborNX',
+  'neighborPX',
+  'neighborNY',
+  'neighborPY',
+  'neighborNZ',
+  'neighborPZ',
+  'flatSkyLight',
+  'flatBlockLight',
+] as const;
+// Reused result array. postMessage reads it synchronously and doesn't
+// retain the reference; the caller (MesherClient.mesh) doesn't hold
+// onto it either. Per-thread sharing is safe (main thread + each
+// worker each get their own module copy).
+const TRANSFER_REQ_OUT: ArrayBuffer[] = [];
+const TRANSFER_RES_OUT: ArrayBuffer[] = [];
+
 export function transferablesOfRequest(req: MesherRequest): ArrayBuffer[] {
-  const out: ArrayBuffer[] = [
-    asBuffer(req.paletteOpaque.buffer),
-    asBuffer(req.paletteColor.buffer),
-  ];
+  const out = TRANSFER_REQ_OUT;
+  out.length = 0;
+  out.push(asBuffer(req.paletteOpaque.buffer));
+  out.push(asBuffer(req.paletteColor.buffer));
   if (req.indices) out.push(asBuffer(req.indices.buffer));
-  for (const k of [
-    'neighborNX',
-    'neighborPX',
-    'neighborNY',
-    'neighborPY',
-    'neighborNZ',
-    'neighborPZ',
-    'flatSkyLight',
-    'flatBlockLight',
-  ] as const) {
-    const n = req[k];
+  for (let i = 0; i < TRANSFER_OPTIONAL_KEYS.length; i++) {
+    const n = req[TRANSFER_OPTIONAL_KEYS[i]!];
     if (n) out.push(asBuffer(n.buffer));
   }
   return out;
 }
 
 export function transferablesOfResponse(res: MesherResponse): ArrayBuffer[] {
-  return [
-    asBuffer(res.positions.buffer),
-    asBuffer(res.normals.buffer),
-    asBuffer(res.colors.buffer),
-    asBuffer(res.indices.buffer),
-  ];
+  const out = TRANSFER_RES_OUT;
+  out.length = 0;
+  out.push(asBuffer(res.positions.buffer));
+  out.push(asBuffer(res.normals.buffer));
+  out.push(asBuffer(res.colors.buffer));
+  out.push(asBuffer(res.indices.buffer));
+  return out;
 }

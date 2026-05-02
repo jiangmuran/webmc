@@ -123,6 +123,34 @@ describe('WorldGenerator', () => {
     expect(airCount).toBeGreaterThan(50);
   });
 
+  it('cave air fraction stays under 25% of deep stone (no swiss-cheese)', () => {
+    // Regression: CAVE_THRESHOLD=0.32 used to carve ~50% of underground,
+    // making the world feel hollow. Sparse noodle caves should stay well
+    // under 25% by volume even averaged across multiple chunks.
+    let solid = 0;
+    let air = 0;
+    for (const seed of [1, 42, 1337, 0xbeef]) {
+      const g = new WorldGenerator(seed, registry);
+      for (let cx = 0; cx < 2; cx++) {
+        for (let cz = 0; cz < 2; cz++) {
+          const c = new Chunk(cx, cz);
+          g.generateChunk(c);
+          for (let y = 10; y <= 50; y++) {
+            for (let x = 0; x < 16; x++) {
+              for (let z = 0; z < 16; z++) {
+                if (c.get(x, y, z) === AIR) air++;
+                else solid++;
+              }
+            }
+          }
+        }
+      }
+    }
+    const total = solid + air;
+    const airFraction = air / total;
+    expect(airFraction).toBeLessThan(0.25);
+  });
+
   it('ores appear at expected y-bands (diamond deep, coal mid)', () => {
     const g = new WorldGenerator(0xbeef, registry);
     const diamondCounts = { shallow: 0, deep: 0 };

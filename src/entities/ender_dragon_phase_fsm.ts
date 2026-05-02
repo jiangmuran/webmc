@@ -30,6 +30,17 @@ export function pickNextPhase(s: DragonState): DragonPhase {
   return s.phase;
 }
 
+// Wiki (minecraft.wiki/w/End_Crystal#Healing_the_ender_dragon): "The
+// dragon is healed 1 HP each half-second" from the nearest active
+// crystal within a 32-block cuboid — single-source, not multiplied
+// by the count of crystals alive.
+//
+// 1 HP per 0.5s = 1 HP per 10 ticks = 0.1 HP per tick. Old constant
+// 0.5 HP/tick (commented as "10 HP/sec") was 5× over the wiki rate.
+// Sibling end_crystal_beam.ts and ender_crystal_beam_link.ts now
+// agree at 0.1 HP/tick.
 export function healthRegenPerTick(s: DragonState): number {
-  return s.crystalsAlive > 0 && s.health < s.maxHealth ? s.crystalsAlive * 0.01 : 0;
+  if (s.crystalsAlive <= 0) return 0;
+  if (s.health >= s.maxHealth) return 0;
+  return 0.1;
 }

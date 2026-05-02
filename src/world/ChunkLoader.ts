@@ -22,13 +22,31 @@ export interface ChunkLoaderStats {
 
 export type PopulateFn = (chunk: Chunk) => Promise<void> | void;
 
+// Stable comparator hoisted out of rebuildPending — was a fresh
+// arrow `(a, b) => a.priority - b.priority` allocated each chunk-
+// boundary cross. Pure ordering of priority ascending.
+function comparePendingPriority(a: { priority: number }, b: { priority: number }): number {
+  return a.priority - b.priority;
+}
+
 export class ChunkLoader {
   private readonly opts: ChunkLoaderOptions;
   private readonly pending: { cx: number; cz: number; priority: number }[] = [];
+  private pendingHead = 0; // index into pending[] — avoids O(N) shift
   private lastCx = Number.NaN;
   private lastCz = Number.NaN;
-  private generating = false;
+  // Number of in-flight populate Promises (async path only). Allows up
+  // to perFrameBudget concurrent IDB loads instead of serializing one
+  // chunk at a time. Sync populate doesn't increment this.
+  private inFlight = 0;
   private populate: PopulateFn;
+  // Stable stats object returned by update(). Was allocating a fresh
+  // {loaded, pending, generating} literal every frame.
+  private readonly statsObj: ChunkLoaderStats = { loaded: 0, pending: 0, generating: false };
+  // Parallel cx/cz arrays for unloadDistant — was allocating a
+  // [number, number][] of fresh tuples per chunk-boundary cross.
+  private readonly toDropCx: number[] = [];
+  private readonly toDropCz: number[] = [];
 
   constructor(world: World, generator: WorldGenerator, opts: Partial<ChunkLoaderOptions> = {}) {
     this.world = world;
@@ -79,39 +97,59 @@ export class ChunkLoader {
       this.unloadDistant(cx, cz, onUnload);
     }
 
+    // Allow up to perFrameBudget concurrent in-flight populates, and
+    // walk the pending list with a head pointer (vs O(N) shift). Was
+    // serializing one async populate at a time, bottlenecked on IDB
+    // read latency — perFrameBudget=4 chunks/frame in spec but only 1
+    // effective.
     let generated = 0;
-    while (generated < this.opts.perFrameBudget && this.pending.length > 0 && !this.generating) {
-      const entry = this.pending.shift();
+    while (
+      generated < this.opts.perFrameBudget &&
+      this.inFlight < this.opts.perFrameBudget &&
+      this.pendingHead < this.pending.length
+    ) {
+      const entry = this.pending[this.pendingHead++];
       if (!entry) break;
       if (this.world.has(entry.cx, entry.cz)) continue;
       const chunk = this.world.ensureChunk(entry.cx, entry.cz);
       const result = this.populate(chunk);
       if (result instanceof Promise) {
-        this.generating = true;
+        this.inFlight++;
+        let failed = false;
         void result
           .catch((err: unknown) => {
+            failed = true;
+            // Drop the empty chunk that ensureChunk created — leaving
+            // it in world produces a void hole until the player edits.
+            this.world.removeChunk(entry.cx, entry.cz);
             console.error('[ChunkLoader] populate failed', err);
           })
           .finally(() => {
-            this.generating = false;
-            onLoad(entry.cx, entry.cz);
+            this.inFlight--;
+            if (!failed) onLoad(entry.cx, entry.cz);
           });
         generated++;
-        break;
+        continue;
       }
       onLoad(entry.cx, entry.cz);
       generated++;
     }
+    // Compact the pending array once head crosses past half so we
+    // don't grow memory unbounded across rebuilds.
+    if (this.pendingHead > 64 && this.pendingHead > this.pending.length / 2) {
+      this.pending.splice(0, this.pendingHead);
+      this.pendingHead = 0;
+    }
 
-    return {
-      loaded: this.world.chunkCount,
-      pending: this.pending.length,
-      generating: this.generating,
-    };
+    this.statsObj.loaded = this.world.chunkCount;
+    this.statsObj.pending = this.pending.length - this.pendingHead;
+    this.statsObj.generating = this.inFlight > 0;
+    return this.statsObj;
   }
 
   private rebuildPending(centerCx: number, centerCz: number, playerVx = 0, playerVz = 0): void {
     this.pending.length = 0;
+    this.pendingHead = 0;
     const r = this.opts.viewRadius;
     const vlen = Math.hypot(playerVx, playerVz);
     for (let dz = -r; dz <= r; dz++) {
@@ -130,7 +168,7 @@ export class ChunkLoader {
         this.pending.push({ cx, cz, priority });
       }
     }
-    this.pending.sort((a, b) => a.priority - b.priority);
+    this.pending.sort(comparePendingPriority);
   }
 
   private unloadDistant(
@@ -140,13 +178,24 @@ export class ChunkLoader {
   ): void {
     const maxR = this.opts.viewRadius + this.opts.unloadPadding;
     const maxRSq = maxR * maxR;
-    const toDrop: [number, number][] = [];
+    // Reuse parallel cx/cz scratches; iterating world.chunks() while
+    // removing chunks would corrupt the iterator, so we still need to
+    // collect first.
+    const toDropCx = this.toDropCx;
+    const toDropCz = this.toDropCz;
+    toDropCx.length = 0;
+    toDropCz.length = 0;
     for (const chunk of this.world.chunks()) {
       const dx = chunk.cx - centerCx;
       const dz = chunk.cz - centerCz;
-      if (dx * dx + dz * dz > maxRSq) toDrop.push([chunk.cx, chunk.cz]);
+      if (dx * dx + dz * dz > maxRSq) {
+        toDropCx.push(chunk.cx);
+        toDropCz.push(chunk.cz);
+      }
     }
-    for (const [cx, cz] of toDrop) {
+    for (let i = 0; i < toDropCx.length; i++) {
+      const cx = toDropCx[i]!;
+      const cz = toDropCz[i]!;
       this.world.removeChunk(cx, cz);
       onUnload(cx, cz);
     }

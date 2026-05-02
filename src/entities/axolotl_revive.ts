@@ -1,7 +1,13 @@
-// Axolotl "play dead" + combat buffs. Axolotl in water has 50% chance to
-// play dead when damaged, restoring health to full over 10s. Attacking
-// a mob attacked by an axolotl gives the player "Regeneration I" for 100
-// ticks + clears Mining Fatigue.
+// Axolotl "play dead" + combat buffs. Axolotl in water has 33% chance
+// to play dead when damaged, restoring health to full over 10s.
+// Attacking a mob attacked by an axolotl gives the player
+// "Regeneration I" for 100 SECONDS + clears Mining Fatigue.
+//
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): "An axolotl in water that
+// takes damage has a 1/3 chance to play dead." Old PLAY_DEAD_CHANCE
+// was 0.5 — Bedrock-style overestimate, ~50% more frequent than the
+// Java 33% Vanilla value. Sibling axolotl_play_dead.ts already uses
+// 0.333.
 
 export interface Vec3 {
   x: number;
@@ -21,7 +27,7 @@ export interface AxolotlState {
 
 export const AXOLOTL_MAX_HEALTH = 14;
 const PLAY_DEAD_DURATION_SEC = 10;
-const PLAY_DEAD_CHANCE = 0.5;
+const PLAY_DEAD_CHANCE = 1 / 3;
 
 export function makeAxolotl(id: number, at: Vec3): AxolotlState {
   return {
@@ -73,10 +79,14 @@ export interface AxolotlBuff {
   clearMiningFatigue: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Axolotl#Behavior): when an axolotl helps the
+// player kill a hostile, the player gets Regeneration I for 100
+// SECONDS (2000 ticks) and Mining Fatigue is cleared. Old code used
+// 100/20 = 5 seconds (treating the 100 as ticks instead of seconds).
 export function killAssistBuff(): AxolotlBuff {
   return {
     applyRegeneration: true,
-    regenDurationSec: 100 / 20,
+    regenDurationSec: 100,
     clearMiningFatigue: true,
   };
 }

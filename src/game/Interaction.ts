@@ -14,7 +14,27 @@ export interface InteractionOptions {
   onBreakProgress?: (bx: number, by: number, bz: number, p01: number) => void;
   onBreakCancel?: () => void;
   canPlace?: () => boolean;
+  // Returning false halts the break attempt before any damage accrues —
+  // used to gate bedrock and other indestructible blocks (hardness < 0).
+  canBreak?: (bx: number, by: number, bz: number) => boolean;
+  // Returning a duration overrides breakDurationSec for the target block.
+  // Lets main.ts scale by block hardness × tool break-speed (vanilla
+  // behaviour: stone takes 7.5s with bare hands, ~1.5s with wood pickaxe).
+  getBreakDurationSec?: (bx: number, by: number, bz: number) => number;
+  // Returning true means the block at (bx,by,bz) can be replaced by a
+  // placement (water, lava, tall grass, fire, snow layer, etc.). Used to
+  // allow underwater building.
+  isReplaceable?: (bx: number, by: number, bz: number) => boolean;
   onInteract?: (bx: number, by: number, bz: number) => boolean;
+  // Right-click with no block hit. Used for fire-into-the-sky actions
+  // like bow / crossbow firing — without this they only worked when
+  // aimed at a block (bow only fired on existing surfaces, never the
+  // open sky).
+  onAirInteract?: () => boolean;
+  // Returning true blocks placement at (bx,by,bz) because a mob occupies
+  // that space — vanilla rule, prevents trapping/suffocating mobs by
+  // placing blocks inside their AABB.
+  collidesWithMob?: (bx: number, by: number, bz: number) => boolean;
 }
 
 const DEFAULTS: InteractionOptions = {
@@ -38,6 +58,12 @@ export class InteractionController {
   selectedBlock: BlockState = AIR;
   breaking: BreakProgress | null = null;
   breakDurationSec: number;
+  // Reused BreakProgress scratch — was a fresh literal each time the
+  // player's aim moved to a different block mid-mine. Mining a vein
+  // (5-10 block transitions/sec) churned an object per transition.
+  // External readers (main.ts hand swing + outline match) only read
+  // fields synchronously, so a single scratch is safe.
+  private readonly breakingScratch: BreakProgress = { bx: 0, by: 0, bz: 0, progress01: 0 };
 
   setHeld(kind: 'break' | 'place' | null): void {
     const prev = this.held;
@@ -115,14 +141,25 @@ export class InteractionController {
       this.cancelBreak();
       return;
     }
+    if (this.opts.canBreak && !this.opts.canBreak(hit.bx, hit.by, hit.bz)) {
+      this.cancelBreak();
+      return;
+    }
     if (
       this.breaking?.bx !== hit.bx ||
       this.breaking.by !== hit.by ||
       this.breaking.bz !== hit.bz
     ) {
-      this.breaking = { bx: hit.bx, by: hit.by, bz: hit.bz, progress01: 0 };
+      this.breakingScratch.bx = hit.bx;
+      this.breakingScratch.by = hit.by;
+      this.breakingScratch.bz = hit.bz;
+      this.breakingScratch.progress01 = 0;
+      this.breaking = this.breakingScratch;
     }
-    const duration = Math.max(0.0001, this.breakDurationSec);
+    const duration = Math.max(
+      0.0001,
+      this.opts.getBreakDurationSec?.(hit.bx, hit.by, hit.bz) ?? this.breakDurationSec,
+    );
     this.breaking.progress01 = Math.min(1, this.breaking.progress01 + dtSec / duration);
     this.opts.onBreakProgress?.(hit.bx, hit.by, hit.bz, this.breaking.progress01);
     if (this.breaking.progress01 >= 1) {
@@ -148,7 +185,12 @@ export class InteractionController {
   private act(nowMs = performance.now()): void {
     this.lastActionAt = nowMs;
     const hit = this.castRay();
-    if (!hit || hit.distance === 0) return;
+    if (!hit || hit.distance === 0) {
+      // Air right-click: lets onAirInteract handle bow / crossbow firing
+      // and the like. Returning true consumes the action.
+      if (this.held === 'place') this.opts.onAirInteract?.();
+      return;
+    }
     if (this.held === 'place') {
       if (this.opts.onInteract?.(hit.bx, hit.by, hit.bz)) return;
       if (this.selectedBlock === AIR) return;
@@ -156,8 +198,14 @@ export class InteractionController {
       const tx = hit.bx + n[0];
       const ty = hit.by + n[1];
       const tz = hit.bz + n[2];
-      if (this.world.get(tx, ty, tz) !== AIR) return;
+      // Was strictly AIR — couldn't place a block where water was, so
+      // underwater building was impossible. Allow replacing fluids
+      // (water/lava). canPlace can override per-game-mode if we ever
+      // want to forbid e.g. lava-replacement in adventure.
+      const target = this.world.get(tx, ty, tz);
+      if (target !== AIR && !(this.opts.isReplaceable?.(tx, ty, tz) ?? false)) return;
       if (this.collidesWithPlayer(tx, ty, tz)) return;
+      if (this.opts.collidesWithMob?.(tx, ty, tz)) return;
       if (this.opts.canPlace && !this.opts.canPlace()) return;
       this.world.set(tx, ty, tz, this.selectedBlock);
       this.opts.onPlace?.(tx, ty, tz);

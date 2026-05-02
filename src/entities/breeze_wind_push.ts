@@ -1,7 +1,12 @@
 // Breeze wind charge pushes entities outward with distance falloff.
 // No damage; knockback only.
-
-export const WIND_CHARGE_RADIUS = 3.5;
+//
+// Wiki (minecraft.wiki/w/Wind_Charge): "When a wind charge hits a
+// block or entity it produces a small explosion-like push within a
+// 1.5-block radius." Old WIND_CHARGE_RADIUS=3.5 was 2.3× the wiki
+// value, pushing entities ~5–6 blocks beyond the canonical splash.
+// Sibling breeze_wind_charge.ts already uses 1.5.
+export const WIND_CHARGE_RADIUS = 1.5;
 
 export interface WindCtx {
   impactX: number;

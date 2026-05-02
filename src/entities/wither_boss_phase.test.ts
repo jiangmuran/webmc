@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   pickPhase,
   damageMultiplier,
-  meleeImmuneIfArmored,
+  projectileImmuneIfArmored,
   initialExplosionRadius,
   SUMMONING_TICKS,
   type WitherState,
@@ -32,12 +32,16 @@ describe('wither boss phase', () => {
     expect(pickPhase({ ...base, health: 0 })).toBe('dying');
   });
 
-  it('armored zero damage mult', () => {
-    expect(damageMultiplier({ ...base, phase: 'armored' })).toBe(0);
+  it('armored: projectile=0, melee=1 (wiki)', () => {
+    // Wiki: wither armor blocks projectiles only, melee still works.
+    expect(damageMultiplier({ ...base, phase: 'armored' }, 'projectile')).toBe(0);
+    expect(damageMultiplier({ ...base, phase: 'armored' }, 'melee')).toBe(1);
   });
 
-  it('armored melee immune', () => {
-    expect(meleeImmuneIfArmored({ ...base, phase: 'armored' })).toBe(true);
+  it('armored projectile-immune, not melee (wiki)', () => {
+    // Wiki: "immune to projectiles below half health" — melee lands.
+    expect(projectileImmuneIfArmored({ ...base, phase: 'armored' })).toBe(true);
+    expect(projectileImmuneIfArmored({ ...base, phase: 'regular' })).toBe(false);
   });
 
   it('summoning end explosion', () => {

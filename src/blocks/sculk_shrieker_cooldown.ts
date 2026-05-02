@@ -38,7 +38,15 @@ export function shouldSummonWarden(s: Shrieker, warning: number): boolean {
   return s.canSummon && warning >= WARNING_LEVEL_MAX;
 }
 
-// Darkness duration scales with warning level.
+// Wiki (minecraft.wiki/w/Sculk_Shrieker): "After the shrieking ends,
+// all players in Survival or Adventure mode within 40 blocks are
+// given the Darkness effect for 12 seconds." Duration is a fixed
+// 240 ticks (12s) regardless of warning level — old `200 + wl*60`
+// scaled with warning level, which the wiki specifically does not
+// do (the warning level controls subtitles + warden summon, not the
+// Darkness window itself). Parameter kept for now to avoid an API
+// break while callers are wired in M-later.
 export function darknessDurationTicks(warningLevel: number): number {
-  return 200 + warningLevel * 60;
+  void warningLevel;
+  return 240;
 }

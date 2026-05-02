@@ -20,10 +20,27 @@ export function tick(c: ChickenCtx): { state: ChickenCtx; laidEgg: boolean } {
   return { state: { ...c, ticksUntilNextEgg: c.ticksUntilNextEgg - 1 }, laidEgg: false };
 }
 
+// Wiki (minecraft.wiki/w/Egg): "When a player throws an egg, there
+// is a 1⁄8 (12.5%) chance to spawn a baby chicken. There is a 1⁄256
+// (~0.4%) chance for an egg to hatch 4 chicks instead of 1."
+//
+// So the rare hatch is 4 chicks (not 3) and the chance is 1/256
+// (not 1/32). Old `rareTripleHatch = 1/32` was 8× the wiki rate AND
+// produced the wrong number of chicks. Function kept under the same
+// name for caller compatibility; new `rareQuadHatch` is the
+// wiki-accurate primitive (4 chicks @ 1/256).
+export const EGG_HATCH_CHANCE = 1 / 8;
+export const RARE_QUAD_HATCH_CHANCE = 1 / 256;
+
 export function thrownEggHatchesChickenChance(): number {
-  return 1 / 8;
+  return EGG_HATCH_CHANCE;
 }
 
+export function rareQuadHatch(): number {
+  return RARE_QUAD_HATCH_CHANCE;
+}
+
+/** @deprecated Use rareQuadHatch (1/256, 4 chicks) per wiki. */
 export function rareTripleHatch(): number {
-  return 1 / 32;
+  return RARE_QUAD_HATCH_CHANCE;
 }

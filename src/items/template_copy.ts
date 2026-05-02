@@ -1,5 +1,15 @@
 // Smithing template duplication. Craft: 1 template + 7 diamonds + matching
 // base material → 2 copies of the same template (+ returns the original).
+//
+// Wiki additions for 1.21 trial-chamber trims:
+//   - flow_trim duplicates with a breeze_rod
+//     (minecraft.wiki/w/Flow_Armor_Trim: "duplicated using an existing
+//     template, a breeze rod, and seven diamonds.")
+//   - bolt_trim duplicates with a copper_block
+//     (minecraft.wiki/w/Bolt_Armor_Trim: "duplicated using ... a block
+//     of copper or waxed block of copper, and diamonds.")
+// Old union/material map omitted both, so 1.21 players couldn't
+// duplicate Trial Chamber trim templates.
 
 export type TemplateKind =
   | 'netherite_upgrade'
@@ -18,7 +28,9 @@ export type TemplateKind =
   | 'vex_trim'
   | 'ward_trim'
   | 'wayfinder_trim'
-  | 'wild_trim';
+  | 'wild_trim'
+  | 'flow_trim'
+  | 'bolt_trim';
 
 const BASE_MATERIAL: Record<TemplateKind, string> = {
   netherite_upgrade: 'webmc:netherrack',
@@ -38,6 +50,8 @@ const BASE_MATERIAL: Record<TemplateKind, string> = {
   ward_trim: 'webmc:cobbled_deepslate',
   wayfinder_trim: 'webmc:terracotta',
   wild_trim: 'webmc:mossy_cobblestone',
+  flow_trim: 'webmc:breeze_rod',
+  bolt_trim: 'webmc:copper_block',
 };
 
 export function baseMaterialFor(kind: TemplateKind): string {

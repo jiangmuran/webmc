@@ -1,5 +1,13 @@
 // Loom. Applies a single banner pattern to a banner, consuming 1 dye
 // and (for special patterns) a pattern item. Max 6 layers per banner.
+//
+// Wiki (minecraft.wiki/w/Banner_Pattern): the special-template
+// patterns are creeper, skull, flower, mojang/'thing', globe, piglin,
+// plus 1.21 trial-chamber additions flow + guster. Old union and
+// PATTERN_ITEM_REQUIRED set both lacked flow + guster — 1.21 players
+// couldn't apply those patterns at the loom even when holding the
+// matching banner_pattern item. Sibling banner_craft_pattern.ts and
+// banner_pattern_layer_apply.ts already include them.
 
 export type BannerPatternCode =
   | 'base'
@@ -27,7 +35,9 @@ export type BannerPatternCode =
   | 'flower'
   | 'mojang'
   | 'globe'
-  | 'piglin';
+  | 'piglin'
+  | 'flow'
+  | 'guster';
 
 export const PATTERN_ITEM_REQUIRED = new Set<BannerPatternCode>([
   'creeper',
@@ -36,6 +46,8 @@ export const PATTERN_ITEM_REQUIRED = new Set<BannerPatternCode>([
   'mojang',
   'globe',
   'piglin',
+  'flow',
+  'guster',
 ]);
 
 export const MAX_LAYERS = 6;

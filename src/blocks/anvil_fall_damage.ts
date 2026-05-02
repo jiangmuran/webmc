@@ -10,7 +10,12 @@ export function anvilPassThroughDamage(fallDistanceBlocks: number): number {
   return Math.min(MAX_DAMAGE, Math.max(0, d));
 }
 
-// On landing, anvil has 12% chance to degrade. Damaged ≤ chipped ≤ normal.
+// Wiki (minecraft.wiki/w/Anvil#Falling_anvils): "If it falls from a
+// height greater than one block, the chance of degrading by one stage
+// is 5% × the number of blocks fallen." 12% is the per-USE chance
+// (anvil_damage_chain.ts); applying it to fall context makes a
+// 1-block drop able to degrade (wiki: cannot) and a 20-block drop
+// no scarier than a 2-block drop (wiki: 100% vs 10%).
 export type AnvilKind = 'webmc:anvil' | 'webmc:chipped_anvil' | 'webmc:damaged_anvil';
 
 const DEGRADE: Record<AnvilKind, AnvilKind | null> = {
@@ -19,10 +24,16 @@ const DEGRADE: Record<AnvilKind, AnvilKind | null> = {
   'webmc:damaged_anvil': null,
 };
 
-export const DEGRADE_CHANCE = 0.12;
+export const FALL_DEGRADE_PER_BLOCK = 0.05;
 
-export function tryDegrade(kind: AnvilKind, rand: () => number): AnvilKind | 'destroyed' | null {
-  if (rand() >= DEGRADE_CHANCE) return null;
+export function tryDegrade(
+  kind: AnvilKind,
+  fallBlocks: number,
+  rand: () => number,
+): AnvilKind | 'destroyed' | null {
+  if (fallBlocks <= 1) return null;
+  const chance = Math.min(1, FALL_DEGRADE_PER_BLOCK * fallBlocks);
+  if (rand() >= chance) return null;
   const next = DEGRADE[kind];
   return next ?? 'destroyed';
 }

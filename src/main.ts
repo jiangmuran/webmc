@@ -4,18 +4,19 @@ import { DayNightCycle } from './engine/time/DayNightCycle';
 import { FirstPersonCamera } from './engine/input/FirstPersonCamera';
 import { TouchControls, isTouchDevice } from './engine/input/TouchControls';
 import { ChunkRenderer } from './engine/render/ChunkRenderer';
-import { type BlockState, AIR, makeState, stateId } from './blocks/state';
+import { type BlockState, AIR, makeState, stateId, stateProps } from './blocks/state';
 import { createDefaultRegistry } from './blocks/registry';
 import { World } from './world/World';
 import { CHUNK_HEIGHT, type Chunk } from './world/Chunk';
 import { WorldGenerator } from './world/generation/WorldGenerator';
 import { ChunkLoader } from './world/ChunkLoader';
-import { type ChunkLight, buildLight, flatLightForSection } from './world/lighting';
+import { type ChunkLight, buildLight, flatLightForSection, getLightByte } from './world/lighting';
 import {
   type BorderOpacity,
   createMesherClient,
   extractBorderFromSubChunk,
 } from './world/workers/MesherClient';
+import type { MesherResponse } from './world/workers/mesher.protocol';
 import { InteractionController } from './game/Interaction';
 import { Hotbar } from './ui/Hotbar';
 import { SubtitleView } from './ui/SubtitleView';
@@ -27,19 +28,67 @@ import { ActiveEffectsHud } from './ui/ActiveEffectsHud';
 import { AudioBus } from './engine/audio/AudioBus';
 import { openIndexedDB } from './persist/db';
 import { ChunkStore } from './persist/ChunkStore';
-import { CURRENT_SCHEMA_VERSION, type WorldMeta } from './persist/types';
+import {
+  CURRENT_SCHEMA_VERSION,
+  type WorldMeta,
+  type PersistedInventory,
+  type PersistedItemStack,
+  type PersistedVitals,
+} from './persist/types';
 import { RoomClient } from './net/RoomClient';
-import { ItemRegistry } from './items/item';
+import { ItemRegistry, type ItemStack } from './items/item';
 import { Inventory } from './items/Inventory';
 import { ARMOR_DEFS } from './items/armor';
 import { reducedDamage as armorReducedDamage } from './game/armor_damage_formula';
 import { isAfk } from './game/afk_idle_kick';
+import {
+  type EatState,
+  cancelEating,
+  makeEatState,
+  startEating,
+  tickEating,
+} from './game/eat_animation';
 import { critMultiplier, sweepingAttack } from './game/critical_hit';
 import { smashDamage } from './items/mace_combat';
 import { computeKnockback } from './game/combat_knockback';
 import { xpForOre } from './game/mining_xp_ore';
 import { WORLD_CAPS as WORLD_MOB_CAPS } from './game/mob_cap_global';
-import { rollXp as rollMobXp } from './game/experience_gain';
+import { randomTick as cropRandomTick, type CropQuery } from './blocks/crop_growth_random_tick';
+import { randomTick as saplingRandomTick } from './blocks/sapling_growth';
+import { randomTick as caneRandomTick, MAX_HEIGHT as CANE_MAX_H } from './blocks/sugar_cane_grow';
+import {
+  canGrow as cactusCanGrow,
+  MAX_AGE as CACTUS_MAX_AGE,
+  MAX_HEIGHT as CACTUS_MAX_H,
+} from './blocks/cactus_grow_damage';
+import { tryGrow as pumpkinStemTryGrow, type StemCtx } from './blocks/pumpkin_stem_grow';
+import { tryGrow as cocoaTryGrow, MAX_AGE as COCOA_MAX_AGE } from './blocks/cocoa_grow';
+import {
+  tryGrow as berryTryGrow,
+  BERRY_MAX_AGE,
+  type BerryBushCtx,
+} from './blocks/sweet_berry_growth';
+import {
+  FREEZE_TICKS_MAX,
+  FREEZE_DAMAGE_PER_INTERVAL,
+  FREEZE_DAMAGE_INTERVAL_TICKS,
+} from './blocks/powder_snow_freeze';
+import { rollCategory as rollFishingCategory } from './items/fishing_rod_reel_drops';
+import { CAMPFIRE_DAMAGE, SOUL_CAMPFIRE_DAMAGE } from './blocks/soul_campfire_repel';
+import { flowerPoolFor } from './items/bone_meal_spread';
+import { fireworkBoost } from './items/elytra_firework_boost';
+import { makeWindChargeBurst, knockbackVector } from './items/wind_charge';
+import { tickFire, isFlammable } from './blocks/fire_spread';
+import { growChance as bambooGrow, MAX_HEIGHT as BAMBOO_MAX_H } from './blocks/bamboo_plant_growth';
+import { tickGrassBlock } from './blocks/grass_spread';
+import { absorbWater } from './blocks/sponge';
+import { shouldDecay as leafShouldDecay, MAX_DISTANCE as LEAF_MAX_DIST } from './blocks/leaf_decay';
+import {
+  shouldFreezeWater,
+  shouldMeltIce,
+  FREEZE_RANDOM_TICK_CHANCE,
+} from './blocks/ice_form_melt';
+import { rollMobXpFor } from './game/experience_gain';
 import { splitXp } from './entities/xp_orb_merge';
 import { phaseOfDay } from './game/time_format_day_count';
 import { moonPhase } from './items/clock_item';
@@ -90,7 +139,7 @@ import { applyBoneMeal } from './items/bone_meal';
 import { pickTrial, CHORUS_MAX_ATTEMPTS } from './items/chorus_fruit_teleport';
 import { makeStats as makeFpsStats, onFrame as fpsFrame, p95Fps } from './engine/fps_counter';
 import { pressureLevel as memPressureLevel } from './engine/memory_pressure';
-import { toIntent as gamepadToIntent } from './engine/input/gamepad_mapping';
+import { toIntentInto as gamepadToIntentInto } from './engine/input/gamepad_mapping';
 import { rumbleForDamage } from './engine/input/gamepad_rumble';
 import {
   init as initGyro,
@@ -103,7 +152,7 @@ import { BlockDropRegistry } from './items/block-drops';
 import { RecipeRegistry } from './items/recipe';
 import { registerDefaultRecipes } from './items/default-recipes';
 import { PlayerState, xpToNext, BREATH_MAX_SEC } from './game/PlayerState';
-import { MobWorld, MOB_DEFS } from './entities/mob';
+import { MobWorld, MOB_DEFS, type MobTickContext } from './entities/mob';
 import {
   makeTameable,
   toggleSit,
@@ -119,7 +168,12 @@ import {
   type AnimalLove,
 } from './entities/animal_breed_love';
 import { canLeash, tensionStep } from './entities/leash_tether';
-import { tick as babyTick, growFraction, type BabyState } from './game/baby_grow_speedup';
+import {
+  tick as babyTick,
+  growFraction,
+  feed as babyFeed,
+  type BabyState,
+} from './game/baby_grow_speedup';
 import { damageTiltAngle } from './game/player_damage_tilt_direction';
 import { MobRenderer } from './engine/render/MobRenderer';
 import { SpawnSystem } from './entities/spawn';
@@ -136,7 +190,7 @@ import { SurvivalInventory } from './ui/SurvivalInventory';
 import { ChestUI } from './ui/ChestUI';
 import { ResourcePackLoader } from './ui/ResourcePackLoader';
 import { SettingsPanel } from './ui/SettingsPanel';
-import { DebugOverlay } from './ui/DebugOverlay';
+import { DebugOverlay, type DebugFrame } from './ui/DebugOverlay';
 import { Crosshair } from './ui/Crosshair';
 import { SurvivalHud, HurtVignette } from './ui/SurvivalHud';
 import { FluidOverlay } from './ui/FluidOverlay';
@@ -298,7 +352,11 @@ void (async (): Promise<void> => {
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8db5f0);
-scene.fog = new THREE.Fog(0x8db5f0, 80, 260);
+// Hoisted typed reference. frame() does `scene.fog instanceof THREE.Fog`
+// twice per tick; the fog is created once here and never replaced. Use
+// the typed local at hot call sites to skip the per-frame instanceof.
+const sceneFog = new THREE.Fog(0x8db5f0, 80, 260);
+scene.fog = sceneFog;
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -314,21 +372,131 @@ const GLOW = nameToState('webmc:glowstone');
 const SAND = nameToState('webmc:sand');
 const PLANKS = nameToState('webmc:oak_planks');
 
+// Pre-resolved opaque/solid lookup tables — props don't affect either
+// in this build, so an id-indexed Uint8Array suffices. The registry is
+// fully populated by `createDefaultRegistry()` and never mutated again
+// (no runtime block registrations), so the table is stable. Replaces
+// `registry.get(stateId(s)).opaque/solid` chains in the lighting BFS,
+// physics AABB sweeps, and mesher border extraction — call counts are
+// in the hundreds-of-thousands per chunk-light rebuild.
+const OPAQUE_BY_ID = new Uint8Array(registry.defs.length);
+const SOLID_BY_ID = new Uint8Array(registry.defs.length);
+for (let i = 0; i < registry.defs.length; i++) {
+  const def = registry.defs[i]!;
+  if (def.opaque) OPAQUE_BY_ID[i] = 1;
+  if (def.solid) SOLID_BY_ID[i] = 1;
+}
 const isOpaque = (state: BlockState): boolean => {
   if (state === AIR) return false;
-  return registry.get(stateId(state)).opaque;
+  return OPAQUE_BY_ID[stateId(state)] === 1;
 };
 const faceColorsOf = (state: BlockState) => registry.get(stateId(state)).faceColors;
 const colorOf = (state: BlockState): readonly [number, number, number] =>
   registry.get(stateId(state)).color;
-const isSolid = (x: number, y: number, z: number): boolean =>
-  y >= 0 && y < CHUNK_HEIGHT && registry.get(stateId(world.get(x, y, z))).solid;
+const isSolid = (x: number, y: number, z: number): boolean => {
+  if (y < 0 || y >= CHUNK_HEIGHT) return false;
+  const s = world.get(x, y, z);
+  // AIR fast path. Most physics probes (player AABB, mob AABB, raycast,
+  // pathfinding) land in air at typical play altitudes.
+  if (s === AIR) return false;
+  return SOLID_BY_ID[stateId(s)] === 1;
+};
 const ladderId = registry.byName('webmc:ladder');
+const vineId = registry.byName('webmc:vine');
+const scaffoldingId = registry.byName('webmc:scaffolding');
+const twistingVinesId = registry.byName('webmc:twisting_vines');
+const weepingVinesId = registry.byName('webmc:weeping_vines');
+// Indexed-by-id climbable flag. fp.update calls this every frame to
+// determine ladder/vine physics; Uint8Array index beats Set.has hash.
+const CLIMBABLE_BY_ID = new Uint8Array(registry.defs.length);
+for (const id of [ladderId, vineId, scaffoldingId, twistingVinesId, weepingVinesId]) {
+  if (id !== undefined) CLIMBABLE_BY_ID[id] = 1;
+}
+// Replaceable-by-placement flag (vanilla parity: fluids, tall_grass,
+// fern, fire, snow, vine). interaction.isReplaceable was allocating a
+// fresh 11-string Set per call AND looking up by name string —
+// happens during right-click placement validation; not per frame but
+// every place attempt.
+const REPLACEABLE_BLOCKS = [
+  'webmc:water',
+  'webmc:lava',
+  'webmc:short_grass',
+  'webmc:tall_grass',
+  'webmc:fern',
+  'webmc:large_fern',
+  'webmc:dead_bush',
+  'webmc:fire',
+  'webmc:soul_fire',
+  'webmc:snow',
+  'webmc:vine',
+];
+const REPLACEABLE_BY_ID = new Uint8Array(registry.defs.length);
+for (const name of REPLACEABLE_BLOCKS) {
+  const id = registry.byName(name);
+  if (id !== undefined) REPLACEABLE_BY_ID[id] = 1;
+}
+// Workstation flag (right-click opens an inventory UI). Was a fresh
+// 20-string Set per right-click on any block.
+const WORKSTATION_BLOCKS = [
+  'webmc:crafting_table',
+  'webmc:furnace',
+  'webmc:smoker',
+  'webmc:blast_furnace',
+  'webmc:enchanting_table',
+  'webmc:anvil',
+  'webmc:chipped_anvil',
+  'webmc:damaged_anvil',
+  'webmc:smithing_table',
+  'webmc:fletching_table',
+  'webmc:cartography_table',
+  'webmc:loom',
+  'webmc:grindstone',
+  'webmc:stonecutter',
+  'webmc:lectern',
+  'webmc:brewing_stand',
+  'webmc:beacon',
+  'webmc:respawn_anchor',
+  'webmc:lodestone',
+  'webmc:conduit',
+];
+const WORKSTATION_BY_ID = new Uint8Array(registry.defs.length);
+for (const name of WORKSTATION_BLOCKS) {
+  const id = registry.byName(name);
+  if (id !== undefined) WORKSTATION_BY_ID[id] = 1;
+}
+// Vanilla MC bed-sleep block list: monsters within 8 blocks prevent
+// sleep. Was being rebuilt as a fresh string-Set per right-click on
+// a bed during the night.
+const BED_SLEEP_HOSTILE_KINDS: ReadonlySet<string> = new Set([
+  'zombie',
+  'skeleton',
+  'creeper',
+  'spider',
+  'enderman',
+  'witch',
+  'pillager',
+  'vindicator',
+  'evoker',
+  'phantom',
+  'drowned',
+  'husk',
+  'stray',
+  'wither_skeleton',
+  'piglin',
+  'piglin_brute',
+  'hoglin',
+  'zoglin',
+  'ravager',
+  'vex',
+]);
 const isClimbable = (x: number, y: number, z: number): boolean => {
   if (y < 0 || y >= CHUNK_HEIGHT) return false;
   const s = world.get(x, y, z);
   if (s === AIR) return false;
-  return ladderId !== undefined && stateId(s) === ladderId;
+  // Was ladder-only — vines, scaffolding, twisting/weeping vines are
+  // also climbable in vanilla. Without this you couldn't climb out of
+  // jungles or use scaffolding for builds.
+  return CLIMBABLE_BY_ID[stateId(s)] === 1;
 };
 
 const world = new World();
@@ -341,7 +509,9 @@ if (!worldMeta) {
   worldMeta = {
     id: activeWorldId,
     name: 'Default World',
-    seed: 0xabc1234,
+    // Random seed per fresh world — was always 0xabc1234 so every new
+    // player got the same flat-default landscape and identical /seed.
+    seed: ((Math.random() * 0x7fffffff) | 0) >>> 0,
     createdAt: Date.now(),
     updatedAt: Date.now(),
     schemaVersion: CURRENT_SCHEMA_VERSION,
@@ -357,8 +527,12 @@ const WORLD_SEED = worldMeta.seed;
 const generator = new WorldGenerator(WORLD_SEED, registry);
 const chunkStore = new ChunkStore(persistDB, { worldId: worldMeta.id });
 chunkStore.startAutoFlush();
+// Initial view radius — perfMonitor will adapt up/down based on FPS, but
+// starting too low (was 6) makes the first 3s of gameplay feel cramped.
+// Desktop opens at 8 (~128 block sight); mobile keeps 4 to be kind to
+// thermals. The dynamic loop in perfMonitor takes over after ~3s.
 const loader = new ChunkLoader(world, generator, {
-  viewRadius: 6,
+  viewRadius: isMobileDevice ? 4 : 8,
   unloadPadding: 2,
   perFrameBudget: 4,
 });
@@ -379,38 +553,111 @@ for (const def of registry.defs) {
 itemRegistry.register({ name: 'webmc:bucket', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:water_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:lava_bucket', maxStack: 1, durability: 0 });
+// Mob buckets — same physical 'bucket of <fish>' shape vanilla uses for
+// catching aquatic mobs. Required for axolotl breeding (BREED_FOOD lists
+// tropical_fish_bucket) and the catch-fish-in-bucket interaction.
+itemRegistry.register({ name: 'webmc:tropical_fish_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:cod_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:salmon_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:pufferfish_bucket', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:axolotl_bucket', maxStack: 1, durability: 0 });
 itemRegistry.register({ name: 'webmc:bone', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:arrow', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:feather', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_porkchop', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_beef', maxStack: 64, durability: 0 });
-itemRegistry.register({ name: 'webmc:raw_chicken', maxStack: 64, durability: 0 });
+// Raw meats — were registered with hungerRestore=0, so eating raw beef
+// dropped from a cow did literally nothing. Vanilla nutrition values:
+//   raw beef:    3 hunger / 1.8 sat
+//   raw porkchop: 3 / 1.8
+//   raw chicken: 2 / 1.2 (+ 30% food poisoning, omitted here)
+//   raw mutton:  2 / 1.2
+//   raw rabbit:  3 / 1.8
+itemRegistry.register({
+  name: 'webmc:raw_porkchop',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:raw_beef',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
+itemRegistry.register({
+  name: 'webmc:raw_chicken',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
+// Was missing: raw_mutton, raw_rabbit. Sheep/rabbit drops referenced
+// these names but the items didn't exist — drops silently failed.
+itemRegistry.register({
+  name: 'webmc:raw_mutton',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 2,
+  saturation: 1.2,
+});
+itemRegistry.register({
+  name: 'webmc:raw_rabbit',
+  maxStack: 64,
+  durability: 0,
+  hungerRestore: 3,
+  saturation: 1.8,
+});
 itemRegistry.register({ name: 'webmc:leather', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wool', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gunpowder', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:stick', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:coal', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:charcoal', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:iron_ingot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:gold_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:copper_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:netherite_ingot', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:netherite_scrap', maxStack: 64, durability: 0 });
+// Raw ore items (1.17+ — ores drop these instead of the block, then smelt
+// to ingots). DROP_OVERRIDES + smelt panel both reference these names but
+// they were never registered, so iron/gold/copper ore mining fell back to
+// the default block-item drop and the smelt list silently dropped 6 entries.
+itemRegistry.register({ name: 'webmc:raw_iron', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_gold', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:raw_copper', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:diamond', maxStack: 64, durability: 0 });
+// Nether quartz item — the drop from nether_quartz_ore. The drop table
+// at DROP_OVERRIDES references 'webmc:quartz' but it was never registered,
+// so nether quartz mining silently produced no item in survival.
+itemRegistry.register({ name: 'webmc:quartz', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wheat', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:cocoa_beans', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:sugar', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:egg', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:snowball', maxStack: 16, durability: 0 });
 itemRegistry.register({ name: 'webmc:milk_bucket', maxStack: 1, durability: 0 });
-itemRegistry.register({ name: 'webmc:wood_pickaxe', maxStack: 1, durability: 60 });
-itemRegistry.register({ name: 'webmc:stone_pickaxe', maxStack: 1, durability: 132 });
-itemRegistry.register({ name: 'webmc:iron_pickaxe', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:gold_pickaxe', maxStack: 1, durability: 33 });
-itemRegistry.register({ name: 'webmc:diamond_pickaxe', maxStack: 1, durability: 1562 });
-itemRegistry.register({ name: 'webmc:wood_sword', maxStack: 1, durability: 60 });
-itemRegistry.register({ name: 'webmc:stone_sword', maxStack: 1, durability: 132 });
-itemRegistry.register({ name: 'webmc:iron_sword', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:diamond_sword', maxStack: 1, durability: 1562 });
-itemRegistry.register({ name: 'webmc:iron_axe', maxStack: 1, durability: 251 });
-itemRegistry.register({ name: 'webmc:iron_shovel', maxStack: 1, durability: 251 });
+// Tool tier table. Vanilla durability values per tier (wiki).
+// Was off-by-one on every tier (e.g. wood=60 vs vanilla=59) — small
+// drift but cumulative across thousands of swings.
+const TOOL_DURABILITY: Record<string, number> = {
+  wood: 59,
+  stone: 131,
+  iron: 250,
+  gold: 32,
+  diamond: 1561,
+  netherite: 2031,
+};
+// Generated tool registrations. Was hand-rolled and patchy: only iron
+// had axe + shovel registered, no hoes existed at all, several tiers
+// missing for sword (gold/netherite). Loop covers every (tier, kind).
+for (const tier of Object.keys(TOOL_DURABILITY) as (keyof typeof TOOL_DURABILITY)[]) {
+  const dur = TOOL_DURABILITY[tier]!;
+  for (const kind of ['pickaxe', 'sword', 'axe', 'shovel', 'hoe'] as const) {
+    itemRegistry.register({ name: `webmc:${tier}_${kind}`, maxStack: 1, durability: dur });
+  }
+}
 itemRegistry.register({
   name: 'webmc:bread',
   maxStack: 64,
@@ -560,6 +807,16 @@ itemRegistry.register({
   hungerRestore: 6,
   saturation: 7.2,
 });
+// Suspicious stew — main.ts checks for it at the eat handler (line 11721)
+// but it was never registered. Wiki: stack 1, 6 hunger / 7.2 saturation,
+// applies a random hidden effect based on the flower used to craft it.
+itemRegistry.register({
+  name: 'webmc:suspicious_stew',
+  maxStack: 1,
+  durability: 0,
+  hungerRestore: 6,
+  saturation: 7.2,
+});
 itemRegistry.register({
   name: 'webmc:sweet_berries',
   maxStack: 64,
@@ -654,11 +911,22 @@ itemRegistry.register({ name: 'webmc:turtle_shell', maxStack: 1, durability: 275
 itemRegistry.register({ name: 'webmc:glass_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:glowstone_dust', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:bow', maxStack: 1, durability: 384 });
+itemRegistry.register({ name: 'webmc:crossbow', maxStack: 1, durability: 465 });
 itemRegistry.register({ name: 'webmc:shield', maxStack: 1, durability: 336 });
 itemRegistry.register({ name: 'webmc:fishing_rod', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:flint_and_steel', maxStack: 1, durability: 64 });
+itemRegistry.register({ name: 'webmc:shears', maxStack: 1, durability: 238 });
+itemRegistry.register({ name: 'webmc:carrot_on_a_stick', maxStack: 1, durability: 25 });
+itemRegistry.register({ name: 'webmc:warped_fungus_on_a_stick', maxStack: 1, durability: 100 });
 itemRegistry.register({ name: 'webmc:fire_charge', maxStack: 64, durability: 0 });
+// Wiki: every mob has a spawn egg in vanilla. Was missing 30+ entries
+// (most of the mob registry was unspawnable from creative inventory).
+// Order roughly matches MobKind enum + extra_mobs.ts so it's easy to
+// audit gaps. Aggressive types that aren't in MobKind (skeleton_horse,
+// zombie_horse, ender_dragon, wither, snow_golem, iron_golem) are
+// skipped — those are special-summoned, not egg-spawned.
 const SPAWN_EGG_MOBS = [
+  // Passive
   'pig',
   'cow',
   'sheep',
@@ -666,27 +934,72 @@ const SPAWN_EGG_MOBS = [
   'wolf',
   'fox',
   'cat',
+  'ocelot',
   'rabbit',
   'goat',
   'horse',
+  'donkey',
+  'mule',
+  'llama',
+  'trader_llama',
   'parrot',
   'bee',
   'panda',
   'frog',
   'axolotl',
+  'turtle',
+  'mooshroom',
+  'strider',
+  'camel',
+  'sniffer',
+  'armadillo',
+  'allay',
+  'bat',
+  'glow_squid',
+  'squid',
+  'cod',
+  'salmon',
+  'pufferfish',
+  'tropical_fish',
+  'dolphin',
+  'wandering_trader',
+  'villager',
+  // Hostile
   'zombie',
+  'zombie_villager',
   'skeleton',
   'creeper',
   'spider',
+  'cave_spider',
   'enderman',
+  'witch',
   'pillager',
   'vindicator',
   'evoker',
+  'vex',
   'piglin',
+  'piglin_brute',
   'wither_skeleton',
   'blaze',
   'ghast',
   'shulker',
+  'husk',
+  'stray',
+  'bogged',
+  'drowned',
+  'breeze',
+  'phantom',
+  'silverfish',
+  'slime',
+  'magma_cube',
+  'guardian',
+  'elder_guardian',
+  'hoglin',
+  'zoglin',
+  'zombified_piglin',
+  'ravager',
+  'polar_bear',
+  'warden',
 ];
 for (const mob of SPAWN_EGG_MOBS) {
   itemRegistry.register({ name: `webmc:${mob}_spawn_egg`, maxStack: 64, durability: 0 });
@@ -726,7 +1039,11 @@ itemRegistry.register({ name: 'webmc:ghast_tear', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:magma_cream', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:rabbit_foot', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:turtle_helmet_scute', maxStack: 64, durability: 0 });
-// Splash + lingering potion variants (drinkable as area-effect on use).
+// Splash potion variants. Wiki: every regular potion has a splash form;
+// duration is 3/4 of the regular potion's duration (instant types deal
+// the same damage/heal). The pool was missing 7 of the 14 splash types,
+// so brewing dragon_breath onto e.g. a fire_resistance potion produced
+// no splash item (silent recipe failure).
 const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec: number }[] = [
   { name: 'webmc:splash_potion_healing', effect: 'instant_health', amplifier: 0, durSec: 0 },
   { name: 'webmc:splash_potion_harming', effect: 'instant_damage', amplifier: 0, durSec: 0 },
@@ -735,10 +1052,36 @@ const SPLASH_POTIONS: { name: string; effect: string; amplifier: number; durSec:
   { name: 'webmc:splash_potion_swiftness', effect: 'speed', amplifier: 0, durSec: 135 },
   { name: 'webmc:splash_potion_strength', effect: 'strength', amplifier: 0, durSec: 135 },
   { name: 'webmc:splash_potion_weakness', effect: 'weakness', amplifier: 0, durSec: 70 },
+  { name: 'webmc:splash_potion_regeneration', effect: 'regeneration', amplifier: 0, durSec: 33 },
+  {
+    name: 'webmc:splash_potion_fire_resistance',
+    effect: 'fire_resistance',
+    amplifier: 0,
+    durSec: 135,
+  },
+  {
+    name: 'webmc:splash_potion_water_breathing',
+    effect: 'water_breathing',
+    amplifier: 0,
+    durSec: 135,
+  },
+  { name: 'webmc:splash_potion_night_vision', effect: 'night_vision', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_invisibility', effect: 'invisibility', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_leaping', effect: 'jump_boost', amplifier: 0, durSec: 135 },
+  { name: 'webmc:splash_potion_slow_falling', effect: 'slow_falling', amplifier: 0, durSec: 67 },
 ];
 for (const p of SPLASH_POTIONS) {
   itemRegistry.register({ name: p.name, maxStack: 1, durability: 0 });
 }
+// Generic lingering_potion + tipped_arrow + spectral_arrow — referenced
+// by tipped_arrow_craft.ts and dispenser_behavior.ts but never registered
+// at the item level. Without these, brewing splash + dragon_breath
+// produced an undefined item id and the tipped-arrow recipe silently
+// dropped 8 plain arrows. Wiki: lingering_potion stacks to 1, both
+// arrow variants stack to 64.
+itemRegistry.register({ name: 'webmc:lingering_potion', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:tipped_arrow', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:spectral_arrow', maxStack: 64, durability: 0 });
 // MC 1.21+ items.
 itemRegistry.register({ name: 'webmc:experience_bottle', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:saddle', maxStack: 1, durability: 0 });
@@ -802,6 +1145,49 @@ const TEMPLATES = [
 ];
 for (const t of TEMPLATES)
   itemRegistry.register({ name: `webmc:${t}_smithing_template`, maxStack: 64, durability: 0 });
+// Short-name armor trim aliases. Several modules (blocks/vault.ts loot,
+// world/generation/trail_ruins.ts, items/brush.ts loot) reference the
+// short form `webmc:${trim}_armor_trim` instead of the full
+// `_smithing_template` suffix. Register them as separate items so those
+// loot drops resolve. Skip 'netherite_upgrade' since it's not a trim.
+for (const t of TEMPLATES) {
+  if (t === 'netherite_upgrade') continue;
+  itemRegistry.register({ name: `webmc:${t}`, maxStack: 64, durability: 0 });
+}
+// Pottery sherds (1.20 archaeology) — found in suspicious_sand /
+// suspicious_gravel via brush. Combine 4 sherds in crafting grid to
+// make a decorated_pot. items/brush.ts had a loot table referencing
+// these, but none were registered. Wiki: all stack to 64.
+const POTTERY_SHERDS = [
+  'angler',
+  'archer',
+  'arms_up',
+  'blade',
+  'bolt',
+  'brewer',
+  'brick',
+  'burn',
+  'danger',
+  'explorer',
+  'flow',
+  'friend',
+  'guster',
+  'heart',
+  'heartbreak',
+  'howl',
+  'miner',
+  'mourner',
+  'plenty',
+  'prize',
+  'scrape',
+  'sheaf',
+  'shelter',
+  'skull',
+  'snort',
+];
+for (const s of POTTERY_SHERDS) {
+  itemRegistry.register({ name: `webmc:${s}_pottery_sherd`, maxStack: 64, durability: 0 });
+}
 // Crafted misc.
 itemRegistry.register({ name: 'webmc:bowl', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:string', maxStack: 64, durability: 0 });
@@ -1003,7 +1389,37 @@ itemRegistry.register({ name: 'webmc:cornflower', maxStack: 64, durability: 0 })
 itemRegistry.register({ name: 'webmc:lily_of_the_valley', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wither_rose', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trident', maxStack: 1, durability: 250 });
-itemRegistry.register({ name: 'webmc:music_disc_13', maxStack: 1, durability: 0 });
+// Music discs — wiki lists 19 vanilla discs across the C418 originals,
+// 1.16 nether/end additions (pigstep, otherside, 5), and 1.20+ trail
+// ruins / trial chamber additions (relic, precipice, creator,
+// creator_music_box). The jukebox_play + items/music_disc.ts modules
+// know about all of them but only music_disc_13 was registered, so the
+// rest couldn't be obtained from creative menu, dungeon loot, or the
+// rare-creeper-killed-by-skeleton drop.
+const MUSIC_DISCS = [
+  '13',
+  'cat',
+  'blocks',
+  'chirp',
+  'far',
+  'mall',
+  'mellohi',
+  'stal',
+  'strad',
+  'ward',
+  '11',
+  'wait',
+  'pigstep',
+  'otherside',
+  '5',
+  'relic',
+  'precipice',
+  'creator',
+  'creator_music_box',
+];
+for (const d of MUSIC_DISCS) {
+  itemRegistry.register({ name: `webmc:music_disc_${d}`, maxStack: 1, durability: 0 });
+}
 itemRegistry.register({ name: 'webmc:firework_rocket', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:firework_star', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:end_crystal', maxStack: 64, durability: 0 });
@@ -1015,11 +1431,83 @@ itemRegistry.register({ name: 'webmc:wind_charge', maxStack: 64, durability: 0 }
 itemRegistry.register({ name: 'webmc:breeze_rod', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:echo_shard', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:goat_horn', maxStack: 1, durability: 0 });
+// Banner pattern items required by items/banner_patterns.ts but never
+// registered. These drop from specific structures (globe = cartographer
+// trade, piglin = bastion remnant, flow/guster = trial chambers) and
+// were silently un-receivable. Wiki: stack to 1.
+itemRegistry.register({ name: 'webmc:globe_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:piglin_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:flow_banner_pattern', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:guster_banner_pattern', maxStack: 1, durability: 0 });
+// Painting + item frames — entity-spawning items targeted by default
+// recipes (painting: 8 sticks + wool; item_frame: 8 sticks + leather)
+// but never registered. Crafting silently produced no output.
+// Wiki: painting + item_frame stack to 64; glow_item_frame is the lit
+// variant (item_frame + glow_ink_sac).
+itemRegistry.register({ name: 'webmc:painting', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:item_frame', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:glow_item_frame', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:disc_fragment_5', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:ominous_trial_key', maxStack: 64, durability: 0 });
 itemRegistry.register({ name: 'webmc:wolf_armor', maxStack: 1, durability: 64 });
 itemRegistry.register({ name: 'webmc:mace', maxStack: 1, durability: 500 });
+// Horse armor — leather/iron/gold/diamond variants. Per wiki, all
+// stack to 1 and have no durability (they don't break, just provide
+// damage reduction). Found in dungeon/temple loot. Was unregistered.
+itemRegistry.register({ name: 'webmc:leather_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:iron_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:golden_horse_armor', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:diamond_horse_armor', maxStack: 1, durability: 0 });
+// Boats — one per wood type. Recipe in default-recipes.ts targets
+// `${wood}_boat` for all 12 wood types. Plus chest_boat variant (post-
+// 1.19) carrying inventory. All stack to 1.
+const BOAT_WOODS = [
+  'oak',
+  'spruce',
+  'birch',
+  'jungle',
+  'acacia',
+  'dark_oak',
+  'cherry',
+  'mangrove',
+  'pale_oak',
+  'bamboo',
+];
+for (const w of BOAT_WOODS) {
+  itemRegistry.register({ name: `webmc:${w}_boat`, maxStack: 1, durability: 0 });
+  itemRegistry.register({ name: `webmc:${w}_chest_boat`, maxStack: 1, durability: 0 });
+}
+// Bamboo's "boat" is technically a raft; keep alias above as
+// bamboo_boat for recipe parity.
+// Items that had logic modules (or were referenced by drop / recipe code)
+// but were never wired into itemRegistry — without registration,
+// byName() returns undefined and addOneToInventory silently no-ops, so
+// e.g. shearing a beehive produced no honeycomb in survival. Wiki:
+// honeycomb 64-stack, recovery_compass 64-stack, bundle/spyglass single,
+// brush 64 durability, music discs single.
+itemRegistry.register({ name: 'webmc:honeycomb', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:recovery_compass', maxStack: 64, durability: 0 });
+itemRegistry.register({ name: 'webmc:bundle', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:spyglass', maxStack: 1, durability: 0 });
+itemRegistry.register({ name: 'webmc:brush', maxStack: 1, durability: 64 });
+// Armor pieces. ARMOR_DEFS is the source of truth (defense / toughness /
+// durability), but every entry needs to be in itemRegistry too so /give,
+// crafting recipes, the survival inventory equip-on-click, and droppers
+// can refer to them by item id. Without this loop, leather_helmet etc.
+// existed as armor metadata but `itemRegistry.byName('webmc:leather_helmet')`
+// returned undefined — equipArmor command silently no-op'd, recipe outputs
+// failed to register, mob death drops referencing helmets dropped nothing.
+for (const armorDef of Object.values(ARMOR_DEFS)) {
+  itemRegistry.register({ name: armorDef.name, maxStack: 1, durability: armorDef.durability });
+}
+// Spawn eggs for every mob kind. The right-click handler at the top of
+// main.ts checks `heldName.endsWith('_spawn_egg')` and uses the prefix
+// as the kind — but no spawn eggs were ever registered as items, so
+// /give @s zombie_spawn_egg always failed and the egg path never fired.
+for (const kind of Object.keys(MOB_DEFS) as (keyof typeof MOB_DEFS)[]) {
+  itemRegistry.register({ name: `webmc:${kind}_spawn_egg`, maxStack: 64, durability: 0 });
+}
 
 const recipeRegistry = new RecipeRegistry();
 const recipesRegistered = registerDefaultRecipes(itemRegistry, recipeRegistry);
@@ -1029,18 +1517,115 @@ const dropRegistry = new BlockDropRegistry();
 for (const [blockId, itemId] of blockToItem) {
   dropRegistry.register(blockId, [{ itemId, min: 1, max: 1 }]);
 }
+// Vanilla overrides for blocks that drop something other than themselves
+// without silk touch. Without these, mining stone gave you stone-block
+// item (which can't be smelted, can't be used as a building primitive in
+// the same way) instead of cobblestone — broke the canonical wood→stone
+// pickaxe progression. Same story for ore blocks dropping the raw item.
+const DROP_OVERRIDES: Record<string, { drop: string; min?: number; max?: number }[]> = {
+  'webmc:stone': [{ drop: 'webmc:cobblestone' }],
+  'webmc:grass_block': [{ drop: 'webmc:dirt' }],
+  'webmc:gravel': [{ drop: 'webmc:gravel' }],
+  'webmc:coal_ore': [{ drop: 'webmc:coal' }],
+  'webmc:deepslate_coal_ore': [{ drop: 'webmc:coal' }],
+  'webmc:iron_ore': [{ drop: 'webmc:raw_iron' }],
+  'webmc:deepslate_iron_ore': [{ drop: 'webmc:raw_iron' }],
+  'webmc:gold_ore': [{ drop: 'webmc:raw_gold' }],
+  'webmc:deepslate_gold_ore': [{ drop: 'webmc:raw_gold' }],
+  'webmc:diamond_ore': [{ drop: 'webmc:diamond' }],
+  'webmc:deepslate_diamond_ore': [{ drop: 'webmc:diamond' }],
+  'webmc:emerald_ore': [{ drop: 'webmc:emerald' }],
+  'webmc:deepslate_emerald_ore': [{ drop: 'webmc:emerald' }],
+  'webmc:redstone_ore': [{ drop: 'webmc:redstone', min: 4, max: 5 }],
+  'webmc:deepslate_redstone_ore': [{ drop: 'webmc:redstone', min: 4, max: 5 }],
+  'webmc:lapis_ore': [{ drop: 'webmc:lapis_lazuli', min: 4, max: 9 }],
+  'webmc:deepslate_lapis_ore': [{ drop: 'webmc:lapis_lazuli', min: 4, max: 9 }],
+  'webmc:nether_quartz_ore': [{ drop: 'webmc:quartz' }],
+  'webmc:nether_gold_ore': [{ drop: 'webmc:gold_nugget', min: 2, max: 6 }],
+  'webmc:ancient_debris': [{ drop: 'webmc:ancient_debris' }],
+  'webmc:copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
+  'webmc:deepslate_copper_ore': [{ drop: 'webmc:raw_copper', min: 2, max: 3 }],
+  'webmc:glowstone': [{ drop: 'webmc:glowstone_dust', min: 2, max: 4 }],
+  'webmc:snow': [{ drop: 'webmc:snowball', min: 1, max: 1 }],
+  'webmc:snow_block': [{ drop: 'webmc:snowball', min: 4, max: 4 }],
+  'webmc:melon': [{ drop: 'webmc:melon_slice', min: 3, max: 7 }],
+  'webmc:bookshelf': [{ drop: 'webmc:book', min: 3, max: 3 }],
+  // Wiki (minecraft.wiki/w/Sea_Lantern): drops 2-3 prismarine_crystals
+  // without silk touch. Was incorrectly listed in DROP_NOTHING, so
+  // mining a sea lantern bare-handed gave the player nothing.
+  'webmc:sea_lantern': [{ drop: 'webmc:prismarine_crystals', min: 2, max: 3 }],
+};
+// Blocks that drop nothing without silk touch (which we don't track yet,
+// so they always drop nothing). Vanilla list — without these, breaking
+// glass / ice / similar gave you the block-item back, which trivially
+// converts mid-game ice/glass farming into infinite supply.
+const DROP_NOTHING: readonly string[] = [
+  'webmc:glass',
+  'webmc:tinted_glass',
+  'webmc:white_stained_glass',
+  'webmc:orange_stained_glass',
+  'webmc:magenta_stained_glass',
+  'webmc:light_blue_stained_glass',
+  'webmc:yellow_stained_glass',
+  'webmc:lime_stained_glass',
+  'webmc:pink_stained_glass',
+  'webmc:gray_stained_glass',
+  'webmc:light_gray_stained_glass',
+  'webmc:cyan_stained_glass',
+  'webmc:purple_stained_glass',
+  'webmc:blue_stained_glass',
+  'webmc:brown_stained_glass',
+  'webmc:green_stained_glass',
+  'webmc:red_stained_glass',
+  'webmc:black_stained_glass',
+  'webmc:glass_pane',
+  'webmc:ice',
+  'webmc:packed_ice',
+  'webmc:blue_ice',
+  'webmc:frosted_ice',
+  'webmc:turtle_egg',
+  'webmc:cake',
+  'webmc:cobweb',
+];
+for (const [blockName, drops] of Object.entries(DROP_OVERRIDES)) {
+  const blockId = registry.byName(blockName);
+  if (blockId === undefined) continue;
+  const resolved: { itemId: number; min: number; max: number }[] = [];
+  for (const d of drops) {
+    const dropItemId = itemRegistry.byName(d.drop);
+    if (dropItemId === undefined) continue;
+    resolved.push({ itemId: dropItemId, min: d.min ?? 1, max: d.max ?? 1 });
+  }
+  if (resolved.length > 0) dropRegistry.register(blockId, resolved);
+}
+for (const blockName of DROP_NOTHING) {
+  const blockId = registry.byName(blockName);
+  if (blockId === undefined) continue;
+  dropRegistry.register(blockId, []);
+}
 
 const inventory = new Inventory(itemRegistry);
 const playerState = new PlayerState({
   inventory,
   onDeath: () => {
     // Peaceful mode (or keepInventory=true) keeps inventory; snapshot+restore.
-    if (mobDamageMultiplier === 0 || gameRules.keepInventory) {
+    // Armor + offhand were missing from the snapshot, so peaceful death wiped
+    // them silently — players woke up unarmored even though their hotbar
+    // came back. Now snapshots all four slot groups.
+    // Creative + spectator are also "keepInventory" modes per vanilla:
+    // /kill or void death in creative used to wipe a builder's hotbar.
+    const keepOnDeath =
+      mobDamageMultiplier === 0 || gameRules.keepInventory || isCreative || isSpectator;
+    if (keepOnDeath) {
       const hot = inventory.hotbar.map((s) => (s ? { ...s } : null));
       const main = inventory.main.map((s) => (s ? { ...s } : null));
+      const armor = inventory.armor.map((s) => (s ? { ...s } : null));
+      const offhand = inventory.offhand ? { ...inventory.offhand } : null;
       queueMicrotask(() => {
         for (let i = 0; i < hot.length; i++) inventory.hotbar[i] = hot[i] ?? null;
         for (let i = 0; i < main.length; i++) inventory.main[i] = main[i] ?? null;
+        for (let i = 0; i < armor.length; i++) inventory.armor[i] = armor[i] ?? null;
+        inventory.offhand = offhand;
       });
       return;
     }
@@ -1056,7 +1641,7 @@ const playerState = new PlayerState({
         px,
         py,
         pz,
-        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
         3,
       );
     }
@@ -1069,12 +1654,63 @@ const playerState = new PlayerState({
         px,
         py,
         pz,
-        { itemId: slot.itemId, count: slot.count, color: colorRgb },
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
         3,
       );
     }
+    // Armor and offhand were silently lost on death — drop them too.
+    for (const slot of inventory.armor) {
+      if (!slot) continue;
+      const def = itemRegistry.get(slot.itemId);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        { itemId: slot.itemId, count: slot.count, color: colorRgb, damage: slot.damage },
+        3,
+      );
+    }
+    if (inventory.offhand) {
+      const def = itemRegistry.get(inventory.offhand.itemId);
+      const colorRgb =
+        def.blockId !== undefined ? registry.get(def.blockId).color : ([200, 200, 200] as const);
+      droppedItems.spawn(
+        px,
+        py,
+        pz,
+        {
+          itemId: inventory.offhand.itemId,
+          count: inventory.offhand.count,
+          color: colorRgb,
+          damage: inventory.offhand.damage,
+        },
+        3,
+      );
+    }
+    // XP drops as orbs (vanilla: 7 per level capped at 100). PlayerState.respawn
+    // will then reset xpLevel/xpProgress; we capture here pre-reset.
+    const xpToDrop = Math.min(
+      100,
+      playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7),
+    );
+    if (xpToDrop > 0) {
+      // Spawn a few orbs spread out so they're easier to pick up.
+      let remaining = xpToDrop;
+      while (remaining > 0) {
+        const chunkXp = Math.min(remaining, 7);
+        xpOrbs.spawn(px, py, pz, chunkXp);
+        remaining -= chunkXp;
+      }
+    }
   },
   onRespawn: () => {
+    // Always reset velocity on respawn — same teleport-velocity-leak fix
+    // pattern as /tp, /spawn, chorus, ender_pearl. Respawning into a bed
+    // mid-fall would otherwise carry the death's downward velocity into
+    // the new life and tank fall damage immediately.
+    fp.velocity.set(0, 0, 0);
     if (playerSpawnPoint) {
       const safe = findSafeRespawnNear(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
       if (safe) {
@@ -1098,7 +1734,7 @@ const playerState = new PlayerState({
         isOpaque: (x, y, z) => {
           const s = world.get(x, y, z);
           if (s === AIR) return false;
-          return registry.get(stateId(s)).opaque;
+          return OPAQUE_BY_ID[stateId(s)] === 1;
         },
       },
       Math.random,
@@ -1108,19 +1744,87 @@ const playerState = new PlayerState({
   },
 });
 
-const lightCache = new Map<string, ChunkLight>();
-const lightKey = (cx: number, cz: number): string => `${cx.toString()},${cz.toString()}`;
+const lightCache = new Map<number, ChunkLight>();
+// Numeric packed key — pack two 16-bit signed coords into a 32-bit
+// unsigned. Was a template-literal string per call (27+ callsites,
+// hot in flushDirty + fluid tick); strings allocated and GC'd
+// every chunk lookup. Safe for chunk coords up to ±32K (way beyond
+// the world border).
+const lightKey = (cx: number, cz: number): number =>
+  ((cx + 32768) & 0xffff) * 65536 + ((cz + 32768) & 0xffff);
+// Pre-resolved emission lookup — values 0..15 fit in u8. computeBlockLight
+// hits this per palette entry of every emissive section and per cell in
+// the seed scan; pre-resolving lets the oracle skip the registry.get +
+// property access chain.
+const LIGHT_EMISSION_BY_ID = new Uint8Array(registry.defs.length);
+for (let i = 0; i < registry.defs.length; i++) {
+  LIGHT_EMISSION_BY_ID[i] = registry.defs[i]!.lightEmission & 0xff;
+}
 const lightOracle = {
   isOpaque,
-  lightEmission: (s: BlockState) => (s === AIR ? 0 : registry.get(stateId(s)).lightEmission),
+  lightEmission: (s: BlockState) => (s === AIR ? 0 : (LIGHT_EMISSION_BY_ID[stateId(s)] ?? 0)),
 };
 
 const fp = new FirstPersonCamera(camera);
+function restoreStack(p: PersistedItemStack | null): ItemStack | null {
+  if (!p) return null;
+  const id = itemRegistry.byName(p.name);
+  if (id === undefined) return null; // item no longer exists in registry
+  // count===0 means an empty slot was saved as a stack — should be null,
+  // not a phantom 1-count item. Old code did Math.max(1, count) which
+  // resurrected zeros into ghost items in saves.
+  if (p.count <= 0) return null;
+  return { itemId: id, count: p.count, damage: Math.max(0, p.damage) };
+}
+function restoreInventory(snap: PersistedInventory): void {
+  for (let i = 0; i < inventory.hotbar.length; i++) {
+    inventory.hotbar[i] = i < snap.hotbar.length ? restoreStack(snap.hotbar[i] ?? null) : null;
+  }
+  for (let i = 0; i < inventory.main.length; i++) {
+    inventory.main[i] = i < snap.main.length ? restoreStack(snap.main[i] ?? null) : null;
+  }
+  for (let i = 0; i < inventory.armor.length; i++) {
+    inventory.armor[i] = i < snap.armor.length ? restoreStack(snap.armor[i] ?? null) : null;
+  }
+  inventory.offhand = restoreStack(snap.offhand);
+  if (
+    Number.isFinite(snap.selectedHotbar) &&
+    snap.selectedHotbar >= 0 &&
+    snap.selectedHotbar < inventory.hotbar.length
+  ) {
+    inventory.selectedHotbar = snap.selectedHotbar;
+  }
+}
+function restoreVitals(v: PersistedVitals): void {
+  if (Number.isFinite(v.health)) playerState.health = Math.max(0, Math.min(20, v.health));
+  if (Number.isFinite(v.hunger)) playerState.hunger = Math.max(0, Math.min(20, v.hunger));
+  if (Number.isFinite(v.saturation)) playerState.saturation = Math.max(0, v.saturation);
+  if (Number.isFinite(v.breath)) playerState.breath = Math.max(0, v.breath);
+  if (Number.isFinite(v.xpLevel)) playerState.xpLevel = Math.max(0, Math.trunc(v.xpLevel));
+  if (Number.isFinite(v.xpProgress)) playerState.xpProgress = Math.max(0, v.xpProgress);
+  if (Number.isFinite(v.exhaustion)) playerState.exhaustion = Math.max(0, v.exhaustion);
+  if (Number.isFinite(v.absorption)) playerState.absorption = Math.max(0, v.absorption);
+  if (Number.isFinite(v.fireRemainingSec))
+    playerState.fireRemainingSec = Math.max(0, v.fireRemainingSec);
+  playerState.effects.clear();
+  if (Array.isArray(v.effects)) {
+    for (const e of v.effects) {
+      if (typeof e?.id === 'string' && e.remainingSec > 0) {
+        playerState.effects.set(e.id, {
+          amplifier: Math.max(0, Math.trunc(e.amplifier ?? 0)),
+          remainingSec: e.remainingSec,
+        });
+      }
+    }
+  }
+}
 const savedPlayer = await persistDB.getPlayer(worldMeta.id);
 if (savedPlayer) {
   fp.position.set(savedPlayer.position.x, savedPlayer.position.y, savedPlayer.position.z);
   fp.yaw = savedPlayer.yaw;
   fp.pitch = savedPlayer.pitch;
+  if (savedPlayer.inventory) restoreInventory(savedPlayer.inventory);
+  if (savedPlayer.vitals) restoreVitals(savedPlayer.vitals);
 } else {
   const spawnHeight = Math.max(generator.surfaceAt(0, 0), 62) + 4;
   fp.position.set(worldMeta.spawn.x, spawnHeight, worldMeta.spawn.z);
@@ -1135,8 +1839,55 @@ touch?.attach(appEl);
 
 const chunkRenderer = new ChunkRenderer();
 scene.add(chunkRenderer.group);
+// Cached uniform refs to skip the per-frame string-keyed lookup +
+// runtime cast overhead. Uniform objects themselves are stable for
+// the material's lifetime.
+const chunkUniforms = chunkRenderer.material.uniforms as Record<
+  string,
+  { value: THREE.Vector3 | THREE.Color | number | THREE.Texture | null }
+>;
+const uSunDirRef = chunkUniforms['uSunDir'] as { value: THREE.Vector3 };
+const uSkyColorRef = chunkUniforms['uSkyColor'] as { value: THREE.Color };
+const uAmbientRef = chunkUniforms['uAmbient'] as { value: number };
+const uFogColorRef = chunkUniforms['uFogColor'] as { value: THREE.Color };
+const uCameraPosWRef = chunkUniforms['uCameraPosW'] as { value: THREE.Vector3 };
+const uFogFarRef = chunkUniforms['uFogFar'] as { value: number };
+const uFogNearRef = chunkUniforms['uFogNear'] as { value: number };
+const uPatternRef = chunkUniforms['uPattern'] as { value: THREE.Texture | null };
+const uPatternStrengthRef = chunkUniforms['uPatternStrength'] as { value: number };
 
 const fluidWorld = new FluidWorld({ world, registry });
+// Lazy-register fluid blocks (sea water from worldgen, loaded saves)
+// as FluidWorld sources when the player opens up an adjacent cell. Cheap
+// 6-neighbour scan; idempotent because FluidWorld uses a Map keyed by
+// position so re-setting an existing cell just overwrites it.
+const registerFluidNeighbors = (bx: number, by: number, bz: number): void => {
+  const checkCell = (x: number, y: number, z: number): void => {
+    if (y < 0 || y >= CHUNK_HEIGHT) return;
+    const s = world.get(x, y, z);
+    if (s === AIR) return;
+    const id = stateId(s);
+    if (id !== waterId && id !== lavaId) return;
+    if (fluidWorld.get(x, y, z)) return;
+    fluidWorld.setSource(x, y, z, id === waterId ? 'water' : 'lava');
+  };
+  checkCell(bx + 1, by, bz);
+  checkCell(bx - 1, by, bz);
+  checkCell(bx, by + 1, bz);
+  checkCell(bx, by - 1, bz);
+  checkCell(bx, by, bz + 1);
+  checkCell(bx, by, bz - 1);
+};
+// FluidWorld.cells (the source/level/falling map) was never persisted —
+// bucket-placed water survived chunk unload as a static block but lost
+// its FluidWorld registration so it stopped flowing forever. Persist
+// the cell list via setMeta + deferred deserialize after chunks load.
+const pendingFluidCells: ReturnType<typeof fluidWorld.serialize> = [];
+void persistDB.getMeta('fluidCells').then((saved) => {
+  if (Array.isArray(saved)) pendingFluidCells.push(...(saved as typeof pendingFluidCells));
+});
+let fluidRestoreAccum = 0;
+let fluidSaveAccum = 0;
 const waterId = registry.byName('webmc:water');
 const lavaId = registry.byName('webmc:lava');
 const isFluid = (x: number, y: number, z: number): 'water' | 'lava' | null => {
@@ -1165,6 +1916,34 @@ const leashedMobs = new Set<number>();
 const saddledMobs = new Set<number>();
 const babyMobs = new Map<number, BabyState>();
 let worldTick = 0;
+const eatState: EatState = makeEatState();
+let rightClickHeldForEat = false;
+
+// Per-block-position chest storage. Old code shared one global 27-slot array
+// across every chest in the world (the comment in ChestUI flagged this as
+// "simplified ender chest" until per-block landed). Now: ender chests share
+// one shared store across positions (vanilla behaviour); regular chests,
+// trapped chests, barrels, and shulker boxes are keyed by (x,y,z).
+const enderChestStorage: (ItemStack | null)[] = new Array(27).fill(null);
+const chestStoragesByPos = new Map<number, (ItemStack | null)[]>();
+// Numeric packed (x, z, y) — same encoding as the leaf-decay BFS:
+// 22 bits x (±2M) + 22 bits z (±2M) + 9 bits y (0..511). Fits inside
+// safe-int. Was a template literal per chest access.
+function chestKey(x: number, y: number, z: number): number {
+  return (
+    ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff)
+  );
+}
+function getChestStorage(blockName: string, x: number, y: number, z: number): (ItemStack | null)[] {
+  if (blockName === 'webmc:ender_chest') return enderChestStorage;
+  const k = chestKey(x, y, z);
+  let s = chestStoragesByPos.get(k);
+  if (!s) {
+    s = new Array<ItemStack | null>(27).fill(null);
+    chestStoragesByPos.set(k, s);
+  }
+  return s;
+}
 const BREED_FOOD: Record<string, readonly string[]> = {
   cow: ['webmc:wheat'],
   sheep: ['webmc:wheat'],
@@ -1174,34 +1953,77 @@ const BREED_FOOD: Record<string, readonly string[]> = {
     'webmc:melon_seeds',
     'webmc:pumpkin_seeds',
     'webmc:beetroot_seeds',
+    // 1.20 added torchflower_seeds and pitcher_pod to chicken's breeding
+    // foods. Both are item-registered already; without these entries
+    // chickens couldn't be bred with the new seeds.
+    'webmc:torchflower_seeds',
+    'webmc:pitcher_pod',
   ],
-  rabbit: ['webmc:carrot', 'webmc:dandelion'],
+  rabbit: ['webmc:carrot', 'webmc:golden_carrot', 'webmc:dandelion'],
   wolf: [
+    // Raw + cooked meats. The mob-drop tables emit raw_* (e.g. cow drops
+    // raw_beef), so without the raw_* entries here, players couldn't
+    // feed the meat they actually had to wolves.
+    'webmc:raw_beef',
     'webmc:beef',
     'webmc:cooked_beef',
+    'webmc:raw_porkchop',
     'webmc:porkchop',
     'webmc:cooked_porkchop',
+    'webmc:raw_chicken',
     'webmc:chicken',
     'webmc:cooked_chicken',
+    'webmc:raw_mutton',
     'webmc:mutton',
     'webmc:cooked_mutton',
+    'webmc:raw_rabbit',
     'webmc:rabbit',
     'webmc:cooked_rabbit',
+    'webmc:rotten_flesh',
   ],
-  cat: ['webmc:raw_fish', 'webmc:raw_salmon', 'webmc:cod', 'webmc:salmon'],
+  // 1.13+ renamed raw_fish→cod and raw_salmon→salmon — both legacy names
+  // were never registered in this project. cod/salmon are.
+  cat: ['webmc:cod', 'webmc:salmon'],
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   goat: ['webmc:wheat'],
-  bee: ['webmc:dandelion', 'webmc:poppy'],
+  // Bees breed on any flower per wiki — was just dandelion+poppy.
+  // Restricted to items actually registered in webmc; tulips and the
+  // 2-tall flowers (sunflower/lilac/peony/rose_bush) aren't items
+  // here yet, so they're omitted (would be dead lookups otherwise).
+  bee: [
+    'webmc:dandelion',
+    'webmc:poppy',
+    'webmc:blue_orchid',
+    'webmc:allium',
+    'webmc:azure_bluet',
+    'webmc:oxeye_daisy',
+    'webmc:cornflower',
+    'webmc:lily_of_the_valley',
+    'webmc:wither_rose',
+  ],
   panda: ['webmc:bamboo'],
   axolotl: ['webmc:tropical_fish_bucket'],
   frog: ['webmc:slime_ball'],
   turtle: ['webmc:seagrass'],
   hoglin: ['webmc:crimson_fungus'],
   strider: ['webmc:warped_fungus'],
-  llama: ['webmc:hay_block'],
-  horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
-  donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
-  mule: ['webmc:golden_apple', 'webmc:golden_carrot'],
+  // Wiki (minecraft.wiki/w/Llama): llamas accept wheat AND hay block
+  // for breeding. Old list missed wheat — players couldn't breed
+  // llamas with the more common feed.
+  llama: ['webmc:hay_block', 'webmc:wheat'],
+  // Wiki (minecraft.wiki/w/Horse): horse/donkey/mule breeding accepts
+  // golden_apple, enchanted_golden_apple, and golden_carrot. Old list
+  // missed enchanted_golden_apple.
+  horse: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
+  donkey: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
+  mule: ['webmc:golden_apple', 'webmc:enchanted_golden_apple', 'webmc:golden_carrot'],
+  // Wiki: camels breed on cactus, sniffers on torchflower seeds
+  // (1.20 Trails & Tales), armadillos on spider eye (1.20.5/1.21).
+  // All three mob kinds existed in the entity registry but had no
+  // breed entry — feeding them did nothing.
+  camel: ['webmc:cactus'],
+  sniffer: ['webmc:torchflower_seeds'],
+  armadillo: ['webmc:spider_eye'],
 };
 const droppedItems = new DroppedItemWorld();
 const xpOrbs = new XpOrbWorld();
@@ -1209,6 +2031,21 @@ scene.add(mobRenderer.group);
 scene.add(droppedItems.group);
 scene.add(xpOrbs.group);
 const spawnSystem = new SpawnSystem();
+
+// Reusable spawnSystem.tick context object — fields mutated each frame
+// vs allocating a fresh literal + 2 closures per frame. Hoisted because
+// the per-frame allocation showed up in heap snapshots.
+const spawnSystemCtx = {
+  playerPos: { x: 0, y: 0, z: 0 },
+  isDay: false,
+  surfaceAt: (x: number, z: number): number => generator.surfaceAt(x, z),
+  // Use the module-scope isSolid directly — same semantics (AIR check
+  // + SOLID_BY_ID id-table) without the wrapper closure that
+  // re-implemented the chain.
+  isSolid,
+  biomeAt: (x: number, z: number): 'forest' | 'plains' =>
+    generator.biomeAt(x, z) === 1 ? 'forest' : 'plains',
+};
 
 const dayNight = new DayNightCycle({ dayLengthSec: 600 });
 
@@ -1222,11 +2059,11 @@ loadingOverlay.set('init', 0.5);
 const activeEffectsHud = new ActiveEffectsHud(appEl);
 const sfx = new ProceduralSfx();
 sfx.attachUnlock(document.body);
-const rain = new RainParticles();
+const rain = new RainParticles({ maxParticles: isMobileDevice ? 300 : 1200 });
 scene.add(rain.group);
 const blockOutline = new BlockOutline();
 scene.add(blockOutline.group);
-const blockParticles = new BlockParticles(600);
+const blockParticles = new BlockParticles(isMobileDevice ? 250 : 600);
 scene.add(blockParticles.group);
 const clouds = new Clouds();
 scene.add(clouds.mesh);
@@ -1239,22 +2076,62 @@ playerAvatar.setName('Player');
 scene.add(playerAvatar.group);
 type CameraMode = 'fp' | 'tp_back' | 'tp_front';
 let cameraMode: CameraMode = 'fp';
+function refreshHandVisibility(): void {
+  // FP hand visible only in first-person AND not spectator. Spectators
+  // have no body in vanilla, including no held-item / hand model.
+  hand.group.visible = cameraMode === 'fp' && !isSpectator;
+}
 function cycleCamera(): void {
   cameraMode = cameraMode === 'fp' ? 'tp_back' : cameraMode === 'tp_back' ? 'tp_front' : 'fp';
-  hand.group.visible = cameraMode === 'fp';
+  refreshHandVisibility();
   playerAvatar.setVisible(cameraMode !== 'fp');
 }
 let lastTouchPrimary = false;
+let lastTouchJump = false;
+let lastTouchSneak = false;
 const sky = new SkyCelestials();
 sky.addTo(scene);
 const stars = new Stars();
 scene.add(stars.points);
+// Capability detected once at boot. typeof checks against navigator
+// fire per frame for the gamepad poll otherwise — the result never
+// changes for the lifetime of the page.
+const hasGamepadApi = typeof navigator.getGamepads === 'function';
+// Track whether any gamepad has ever connected. Without this, the
+// per-frame `navigator.getGamepads()` walk fires for every desktop
+// session — vast majority of users have no gamepad, so the call +
+// 4-slot loop happens 60Hz forever for nothing. Set true on the first
+// connect event and stays true (we still need to handle disconnects
+// inside the poll itself).
+let anyGamepadEverConnected = false;
+if (hasGamepadApi && typeof window.addEventListener === 'function') {
+  window.addEventListener('gamepadconnected', () => {
+    anyGamepadEverConnected = true;
+  });
+}
 let currentWeather: 'clear' | 'rain' | 'thunder' = 'clear';
+// Cached booleans derived from currentWeather. Updated in setWeather()
+// — the only mutation site. Replaces ~6 inline string-equality checks
+// (5+ per frame for fog scaling, lightning, mob spawning).
+let isRain = false;
+let isThunder = false;
 const tmpSkyColor = new THREE.Color();
 const tmpFogColor = new THREE.Color();
+// Pre-scaled biome tint cache. The per-frame frame() body was running
+// 6 divides + 6 multiplies on a stable per-biome RGB palette. Recomputed
+// only when biomeId changes (player crosses a column boundary).
+const BIOME_TINT = 0.18;
+const BIOME_TINT_INV = 1 - BIOME_TINT;
+let cachedBiomeTintId = -1;
+let biomeSkyTintR = 0;
+let biomeSkyTintG = 0;
+let biomeSkyTintB = 0;
+let biomeFogTintR = 0;
+let biomeFogTintG = 0;
+let biomeFogTintB = 0;
 let lastEmptyPlaceWarnAt = 0;
-let weatherTimer = 120 + Math.random() * 180; // 2–5 min until next weather roll
-let autoWeatherEnabled = true;
+// (removed weatherTimer + autoWeatherEnabled — the inline 2nd weather
+//  picker that raced with weatherCycle. F7 now toggles gameRules.doWeatherCycle.)
 let minimapVisible = true;
 let compassBarVisible = true;
 let zoomHeld = false;
@@ -1290,6 +2167,7 @@ const gameRules = {
   doTileDrops: true,
   showDeathMessages: true,
   doEntityDrops: true,
+  doFireTick: true,
 };
 void persistDB.getMeta('gameRules').then((saved) => {
   if (saved && typeof saved === 'object') {
@@ -1309,6 +2187,12 @@ void persistDB.getMeta('difficulty').then((saved) => {
 let sprintDustAccum = 0;
 let prevOnGround = true;
 let prevInWater = false;
+// Powder-snow freeze accumulator (per wiki: 0..140 ticks, +1 per tick
+// in snow without leather boots, -2 per tick out of snow). When at
+// max, takes 1 damage every 40 ticks. Both counters live in real
+// game-ticks (20Hz) and are advanced by dtSec * 20.
+let playerFreezeTicks = 0;
+let playerFreezeSinceDamageTicks = 0;
 let maceFallStartY = 0;
 let isGliding = false;
 let tickRateMultiplier = 1;
@@ -1317,20 +2201,157 @@ const regionPoints: {
   b: { x: number; y: number; z: number } | null;
 } = { a: null, b: null };
 interface LoadoutSnap {
-  hotbar: ((typeof inventory.hotbar)[number] | null)[];
-  main: ((typeof inventory.main)[number] | null)[];
-  armor: ((typeof inventory.armor)[number] | null)[];
+  hotbar: (PersistedItemStack | null)[];
+  main: (PersistedItemStack | null)[];
+  armor: (PersistedItemStack | null)[];
 }
 const loadouts = new Map<string, LoadoutSnap>();
 void persistDB.getMeta('loadouts').then((saved) => {
   if (saved && typeof saved === 'object') {
-    for (const [name, snap] of Object.entries(saved as Record<string, LoadoutSnap>)) {
-      loadouts.set(name, snap);
+    for (const [name, raw] of Object.entries(saved as Record<string, unknown>)) {
+      if (!raw || typeof raw !== 'object') continue;
+      const r = raw as { hotbar?: unknown; main?: unknown; armor?: unknown };
+      // Migrate legacy numeric-id snapshots: look up name from the registry.
+      const migrate = (arr: unknown): (PersistedItemStack | null)[] => {
+        if (!Array.isArray(arr)) return [];
+        return arr.map((s) => {
+          if (!s || typeof s !== 'object') return null;
+          const o = s as { name?: unknown; itemId?: unknown; count?: unknown; damage?: unknown };
+          if (typeof o.name === 'string' && typeof o.count === 'number') {
+            return {
+              name: o.name,
+              count: o.count,
+              damage: typeof o.damage === 'number' ? o.damage : 0,
+            };
+          }
+          if (typeof o.itemId === 'number') {
+            const def = itemRegistry.get(o.itemId);
+            if (!def) return null;
+            return {
+              name: def.name,
+              count: typeof o.count === 'number' ? o.count : 1,
+              damage: typeof o.damage === 'number' ? o.damage : 0,
+            };
+          }
+          return null;
+        });
+      };
+      loadouts.set(name, {
+        hotbar: migrate(r.hotbar),
+        main: migrate(r.main),
+        armor: migrate(r.armor),
+      });
     }
   }
 });
 let lavaEmberAccum = 0;
 let torchEmberAccum = 0;
+// Cached item IDs for the per-frame elytra/turtle/leather-boots
+// equipment checks. Was `itemRegistry.get(stack.itemId).name ===
+// 'webmc:X'` every frame (Map.get + property read + string compare).
+// itemId compare is a single integer compare.
+const elytraItemIdCached = itemRegistry.byName('webmc:elytra');
+const turtleShellItemIdCached = itemRegistry.byName('webmc:turtle_shell');
+const leatherBootsItemIdCached = itemRegistry.byName('webmc:leather_boots');
+// Cached IDs for ember scans + ice formation + crop tick — was
+// registry.byName(...) every tick. (waterId, lavaId already cached
+// above near fluid setup.)
+const torchIdCached = registry.byName('webmc:torch');
+const glowstoneIdCached = registry.byName('webmc:glowstone');
+const iceIdCached = registry.byName('webmc:ice');
+const farmlandIdCached = registry.byName('webmc:farmland');
+// Cached IDs for the per-frame contact-effect AABB sweep (cactus,
+// sweet-berry, cobweb, powder-snow, fire). Replaces the per-cell
+// registry.get(stateId(s)).name === 'webmc:X' string compares — for a
+// 16-cell sweep that was 16 × (registry.get + 4 string equality
+// checks) per frame even when the player wasn't near any of these.
+// undefined here means the block isn't registered (skipped at compare).
+const cactusIdCached = registry.byName('webmc:cactus');
+const sweetBerryBushIdCached = registry.byName('webmc:sweet_berry_bush');
+const cobwebIdCached = registry.byName('webmc:cobweb');
+const powderSnowIdCached = registry.byName('webmc:powder_snow');
+const fireIdCached = registry.byName('webmc:fire');
+const magmaBlockIdCached = registry.byName('webmc:magma_block');
+const soulSandIdCached = registry.byName('webmc:soul_sand');
+const hayBlockIdCached = registry.byName('webmc:hay_block');
+const honeyBlockIdCached = registry.byName('webmc:honey_block');
+const slimeBlockIdCached = registry.byName('webmc:slime_block');
+const sugarCaneIdCached = registry.byName('webmc:sugar_cane');
+const grassBlockIdCached = registry.byName('webmc:grass_block');
+const dirtIdCached = registry.byName('webmc:dirt');
+const bambooIdCached = registry.byName('webmc:bamboo');
+// Stem + fruit ids for the random-tick stem-grow dispatcher (wires
+// blocks/pumpkin_stem_grow into actual gameplay; the module shipped
+// in M3 but stems sat at age 0 forever and never spawned fruit).
+const pumpkinStemIdCached = registry.byName('webmc:pumpkin_stem');
+const melonStemIdCached = registry.byName('webmc:melon_stem');
+const pumpkinIdCached = registry.byName('webmc:pumpkin');
+const melonIdCached = registry.byName('webmc:melon');
+const cocoaIdCached = registry.byName('webmc:cocoa');
+const campfireIdCached = registry.byName('webmc:campfire');
+const soulCampfireIdCached = registry.byName('webmc:soul_campfire');
+// Live coral block ids → dead variant. Used by the random-tick scan:
+// a live coral with no adjacent water dies on the next random tick
+// per wiki. Was unwired despite coral_dry_convert + 5 live + 5 dead
+// variants all shipping.
+const CORAL_DRY_DEAD_BY_LIVE = new Map<number, number>();
+for (const color of ['tube', 'brain', 'bubble', 'fire', 'horn'] as const) {
+  const liveId = registry.byName(`webmc:${color}_coral_block`);
+  const deadId = registry.byName(`webmc:dead_${color}_coral_block`);
+  if (liveId !== undefined && deadId !== undefined) {
+    CORAL_DRY_DEAD_BY_LIVE.set(liveId, deadId);
+  }
+}
+// Amethyst bud growth chain: small → medium → large → cluster. The
+// amethyst_crystal_growth module shipped with stage progression but
+// the random-tick dispatcher never invoked it — placed buds sat at
+// small forever.
+const AMETHYST_NEXT_STAGE_BY_ID = new Map<number, number>();
+{
+  const small = registry.byName('webmc:small_amethyst_bud');
+  const medium = registry.byName('webmc:medium_amethyst_bud');
+  const large = registry.byName('webmc:large_amethyst_bud');
+  const cluster = registry.byName('webmc:amethyst_cluster');
+  if (small !== undefined && medium !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(small, medium);
+  if (medium !== undefined && large !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(medium, large);
+  if (large !== undefined && cluster !== undefined) AMETHYST_NEXT_STAGE_BY_ID.set(large, cluster);
+}
+// Copper oxidation chain: unoxidized → exposed → weathered → oxidized.
+// 1/7500 random-tick chance per wiki. The bare-copper chain only;
+// waxed variants aren't registered as oxidation-progression sources.
+const COPPER_NEXT_STAGE_BY_ID = new Map<number, number>();
+{
+  const unox = registry.byName('webmc:copper_block');
+  const exp = registry.byName('webmc:exposed_copper');
+  const weath = registry.byName('webmc:weathered_copper');
+  const oxid = registry.byName('webmc:oxidized_copper');
+  if (unox !== undefined && exp !== undefined) COPPER_NEXT_STAGE_BY_ID.set(unox, exp);
+  if (exp !== undefined && weath !== undefined) COPPER_NEXT_STAGE_BY_ID.set(exp, weath);
+  if (weath !== undefined && oxid !== undefined) COPPER_NEXT_STAGE_BY_ID.set(weath, oxid);
+}
+// Item-registry caches for frame-rate paths.
+const eggItemIdCached = itemRegistry.byName('webmc:egg');
+const stickItemIdCached = itemRegistry.byName('webmc:stick');
+const appleItemIdCached = itemRegistry.byName('webmc:apple');
+const totemItemIdCached = itemRegistry.byName('webmc:totem_of_undying');
+// Hoisted spawn-pick tables. Were re-allocated as fresh tuple arrays
+// per spawn attempt inside the per-frame natural-mob-spawn block; the
+// arrays are read-only weights so a single shared instance is safe.
+const HOSTILE_SPAWN_CHOICES: readonly ('zombie' | 'skeleton' | 'creeper' | 'spider')[] = [
+  'zombie',
+  'zombie',
+  'skeleton',
+  'creeper',
+  'spider',
+];
+const PASSIVE_SPAWN_CHOICES: readonly ('pig' | 'cow' | 'sheep' | 'chicken' | 'rabbit')[] = [
+  'pig',
+  'cow',
+  'sheep',
+  'sheep',
+  'chicken',
+  'rabbit',
+];
 let brightnessMul = 1.0;
 const playerStats = {
   blocksBroken: 0,
@@ -1345,6 +2366,13 @@ interface Achievement {
   readonly title: string;
   readonly check: () => boolean;
 }
+// Pre-resolve item-id lookups used by the per-frame achievement check
+// closures. Was hitting `itemRegistry.byName(...)` (Map lookup) on every
+// frame for the iron_age + diamond_hunter polls until those were
+// unlocked. Resolved once at module init — registry is fully populated
+// before this point (see line ~420 itemRegistry construction).
+const ACHIEVEMENT_IRON_INGOT_ID = itemRegistry.byName('webmc:iron_ingot') ?? -1;
+const ACHIEVEMENT_DIAMOND_ID = itemRegistry.byName('webmc:diamond') ?? -1;
 const achievements: readonly Achievement[] = [
   { id: 'first_block', title: 'Hello World', check: () => playerStats.blocksBroken >= 1 },
   { id: 'mason', title: 'Mason (100 blocks placed)', check: () => playerStats.blocksPlaced >= 100 },
@@ -1383,12 +2411,12 @@ const achievements: readonly Achievement[] = [
   {
     id: 'iron_age',
     title: 'Iron Age',
-    check: () => inventory.count(itemRegistry.byName('webmc:iron_ingot') ?? -1) >= 1,
+    check: () => inventory.count(ACHIEVEMENT_IRON_INGOT_ID) >= 1,
   },
   {
     id: 'diamond_hunter',
     title: 'Diamond Hunter',
-    check: () => inventory.count(itemRegistry.byName('webmc:diamond') ?? -1) >= 1,
+    check: () => inventory.count(ACHIEVEMENT_DIAMOND_ID) >= 1,
   },
   { id: 'level_30', title: 'Level 30 (max enchant)', check: () => playerState.xpLevel >= 30 },
   { id: 'two_weeks', title: 'Two Weeks (day 14)', check: () => dayCounter >= 14 },
@@ -1401,6 +2429,10 @@ void persistDB.getMeta('achievements').then((saved) => {
   }
 });
 function checkAchievements(): void {
+  // Skip the per-frame iteration once the player has earned them
+  // all — the loop below would otherwise still call .has() on every
+  // achievement every frame for the rest of the session.
+  if (achievedSet.size >= achievements.length) return;
   for (const a of achievements) {
     if (!achievedSet.has(a.id) && a.check()) {
       achievedSet.add(a.id);
@@ -1421,7 +2453,35 @@ void persistDB.getMeta('playerStats').then((saved) => {
   }
 });
 let statsSaveAccum = 0;
-let lastStatsPos = { x: 0, y: 0, z: 0 };
+// Mutated in place every frame — was being reassigned to a fresh
+// {x,y,z} literal per frame.
+const lastStatsPos = { x: 0, y: 0, z: 0 };
+// Tracks whether the underwater fog override is currently active so
+// we only re-set the color/near/far on transition (not every frame).
+let lastUnderwaterFog = false;
+// Boss-bar candidate scratch — see the loop in frame() for safety
+// rationale (bossBar.set copies synchronously, no retention).
+const bossCandidateScratch: { name: string; health: number; maxHealth: number; kind: string } = {
+  name: '',
+  health: 0,
+  maxHealth: 0,
+  kind: '',
+};
+// Per-frame biome lookup cache. biomeAt() does fbm2 with octaves=2
+// (~30+ floating-point ops). frame() calls it twice each tick (sky/fog
+// tint + debug overlay), and the result only changes when the player
+// crosses a block-column boundary — block transitions happen ~10x/sec
+// while frames render at 60Hz, so the cache hits ~83% of frames in
+// motion and 100% when standing still. Sentinel value Number.MAX_SAFE_INTEGER
+// guarantees a miss on the first call after world spawn.
+let cachedBiomeBx = Number.MAX_SAFE_INTEGER;
+let cachedBiomeBz = Number.MAX_SAFE_INTEGER;
+let cachedBiomeId = 0;
+// Throttle the debug-overlay + fallback HUD textContent rebuild to
+// ~5Hz. Both paths build large per-frame strings (~10 toFixed calls
+// each); player can't visually distinguish 60Hz vs 5Hz updates on
+// numeric stats display, so cap at 0.2s.
+let hudUpdateAccumSec = 0;
 let lightningTimer = 15 + Math.random() * 30; // countdown during thunder
 const weatherCycle = new WeatherCycle(Math.random, {
   clearMinSec: 600,
@@ -1510,6 +2570,8 @@ window.addEventListener(
 );
 function setWeather(w: 'clear' | 'rain' | 'thunder'): void {
   currentWeather = w;
+  isRain = w === 'rain';
+  isThunder = w === 'thunder';
   if (w === 'clear') {
     rain.setActive(false);
   } else {
@@ -1611,15 +2673,338 @@ function computeArmorPoints(): number {
   let pts = 0;
   for (const slot of inventory.armor) {
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (armorDef) pts += armorDef.defense;
   }
   return pts;
 }
 
+// Lowercased name of what the player is *actually* holding. Prefers the
+// inventory hotbar slot (real items: pickaxes, foods, tools) and falls
+// back to the canned Hotbar-UI entry (creative-mode block selector).
+// Strips the webmc: prefix so the existing `.includes('diamond')` etc.
+// checks keep working.
+// Memoize the per-item-id stripped + lowercased name. Called from
+// every break tick and many event handlers; the regex + toLowerCase
+// + new string were the actual cost. Item names never change for a
+// given id.
+const ITEM_SHORT_NAME_LOWER: string[] = [];
+function itemShortNameLower(id: number): string {
+  let s = ITEM_SHORT_NAME_LOWER[id];
+  if (s !== undefined) return s;
+  const def = itemRegistry.get(id);
+  s = def ? def.name.replace(/^webmc:/, '').toLowerCase() : '';
+  ITEM_SHORT_NAME_LOWER[id] = s;
+  return s;
+}
+// Cache for the visible-hotbar fallback path. heldNameLower fires per
+// frame from tickBreak / weapon-damage / footstep paths; in creative
+// mode (where inventory.hotbar is null) we'd allocate a fresh
+// lowercased string every call. Block names are already lowercase by
+// convention but .toLowerCase() still allocates. Track by reference
+// + index so a slot-switch invalidates the cache.
+let heldNameLowerCacheEntry: { name: string } | null = null;
+let heldNameLowerCacheValue = '';
+
+// Memoized tool flags (kind/speed/level) by held-name string. Was
+// running 12+ heldName.includes() per break tick to derive these —
+// for stable tool names (which don't change while the player is
+// breaking the same block) this is pure waste. Map gets cleared on
+// hotbar-switch is unnecessary because the same name resolves to the
+// same tier; lookups grow only with distinct held-name strings.
+interface ToolFlags {
+  isSword: boolean;
+  isShears: boolean;
+  isPickaxe: boolean;
+  isAxe: boolean;
+  isShovel: boolean;
+  toolSpeed: number;
+  toolLevel: number;
+}
+const TOOL_FLAGS_CACHE = new Map<string, ToolFlags>();
+function toolFlagsFor(heldName: string): ToolFlags {
+  const cached = TOOL_FLAGS_CACHE.get(heldName);
+  if (cached) return cached;
+  const isShears = heldName === 'shears';
+  const isSword = heldName.includes('sword');
+  const isPickaxe = heldName.includes('pickaxe');
+  const isAxe = heldName.includes('axe') && !isPickaxe;
+  const isShovel = heldName.includes('shovel');
+  let toolSpeed = 1;
+  if (heldName.includes('netherite')) toolSpeed = 9;
+  else if (heldName.includes('diamond')) toolSpeed = 8;
+  else if (heldName.includes('gold')) toolSpeed = 12;
+  else if (heldName.includes('iron')) toolSpeed = 6;
+  else if (heldName.includes('stone')) toolSpeed = 4;
+  else if (heldName.includes('wood')) toolSpeed = 2;
+  let toolLevel = 0;
+  if (heldName.includes('netherite')) toolLevel = 5;
+  else if (heldName.includes('diamond')) toolLevel = 4;
+  else if (heldName.includes('iron')) toolLevel = 3;
+  else if (heldName.includes('stone')) toolLevel = 2;
+  else if (heldName.includes('wood') || heldName.includes('gold')) toolLevel = 1;
+  const flags: ToolFlags = {
+    isSword,
+    isShears,
+    isPickaxe,
+    isAxe,
+    isShovel,
+    toolSpeed,
+    toolLevel,
+  };
+  TOOL_FLAGS_CACHE.set(heldName, flags);
+  return flags;
+}
+function heldNameLower(): string {
+  const stack = inventory.hotbar[inventory.selectedHotbar];
+  if (stack) return itemShortNameLower(stack.itemId);
+  const sel = hotbar.selected;
+  if (sel === heldNameLowerCacheEntry) return heldNameLowerCacheValue;
+  heldNameLowerCacheEntry = sel;
+  heldNameLowerCacheValue = sel?.name.toLowerCase() ?? '';
+  return heldNameLowerCacheValue;
+}
+
+// Vanilla weapon-tier base damage. Touch attack handler reused a hard-coded
+// `2` and ignored the held tool entirely, so an iron sword tap dealt the
+// same damage as a bare-hand tap. Now both code paths read this table.
+// Memoize the base-damage lookup. Was running up to 7 string
+// .includes() calls per attack event; result is stable per held-name
+// string and the cache grows only with distinct tool names.
+const WEAPON_BASE_DAMAGE_CACHE = new Map<string, number>();
+function weaponBaseDamageFor(heldName: string): number {
+  const cached = WEAPON_BASE_DAMAGE_CACHE.get(heldName);
+  if (cached !== undefined) return cached;
+  let result = 1; // fist
+  if (heldName.includes('sword')) {
+    result = heldName.includes('netherite')
+      ? 8
+      : heldName.includes('diamond')
+        ? 7
+        : heldName.includes('iron')
+          ? 6
+          : heldName.includes('stone')
+            ? 5
+            : 4; // wood/gold
+  } else if (heldName.includes('pickaxe')) {
+    result = heldName.includes('netherite')
+      ? 6
+      : heldName.includes('diamond')
+        ? 5
+        : heldName.includes('iron')
+          ? 4
+          : heldName.includes('stone')
+            ? 3
+            : 2; // wood/gold
+  } else if (heldName.includes('shovel')) {
+    result = heldName.includes('netherite')
+      ? 7
+      : heldName.includes('diamond')
+        ? 6
+        : heldName.includes('iron')
+          ? 5
+          : heldName.includes('stone')
+            ? 4
+            : 3; // wood/gold
+  } else if (heldName.includes('axe')) {
+    result = heldName.includes('netherite')
+      ? 10
+      : heldName.includes('iron') || heldName.includes('stone') || heldName.includes('diamond')
+        ? 9
+        : 7;
+  } else if (heldName.includes('mace')) {
+    result = 6;
+  } else if (heldName.includes('trident')) {
+    result = 9;
+  }
+  WEAPON_BASE_DAMAGE_CACHE.set(heldName, result);
+  return result;
+}
+
+// Resolves the BlockState the player is about to place from hotbar slot `i`.
+// In survival/adventure this comes from the inventory hotbar slot (the item
+// must have a blockId — swords/foods are non-placeable). In creative it
+// comes from the canned UI Hotbar entry (the creative quick-pick selector).
+// Returns null if the slot holds nothing placeable.
+// Pooled scratch reused across all placeableFromSlot calls. The three
+// call sites — frame()'s held-block sync, onPlace, canPlace — all read
+// the result fields synchronously and never store the reference, so
+// returning a shared mutated object avoids allocating a fresh literal
+// per frame (frame()'s call alone ran 60×/sec).
+const placeableScratch: { state: BlockState; blockId: number; itemId: number | null } = {
+  state: 0,
+  blockId: 0,
+  itemId: null,
+};
+
+function placeableFromSlot(i: number): typeof placeableScratch | null {
+  if (isCreative) {
+    const entry = hotbar.getEntry(i);
+    if (!entry) return null;
+    placeableScratch.state = entry.state;
+    placeableScratch.blockId = stateId(entry.state);
+    placeableScratch.itemId = null;
+    return placeableScratch;
+  }
+  const stack = inventory.hotbar[i];
+  if (!stack) return null;
+  const itemDef = itemRegistry.get(stack.itemId);
+  if (itemDef.blockId === undefined) return null;
+  placeableScratch.state = makeState(itemDef.blockId, 0);
+  placeableScratch.blockId = itemDef.blockId;
+  placeableScratch.itemId = stack.itemId;
+  return placeableScratch;
+}
+
+// Mirror inventory.hotbar into the visible Hotbar UI in survival/adventure.
+// Without this the player saw 9 hardcoded creative blocks (stone/dirt/...)
+// regardless of what they actually had — meaning they could only ever place
+// blocks that happened to be on the canned list. Now picking up sandstone
+// puts sandstone in the visible hotbar and lets you place it. Skips no-op
+// updates so we don't thrash the DOM each frame.
+// Constant colors for empty + non-block hotbar entries. Were fresh
+// [r,g,b] literals per setEntry call.
+const HOTBAR_EMPTY_COLOR: readonly [number, number, number] = [40, 44, 52];
+const HOTBAR_ITEM_COLOR: readonly [number, number, number] = [120, 100, 80];
+
+function syncVisibleHotbarFromInventory(): void {
+  if (gameMode !== 'survival' && gameMode !== 'adventure') return;
+  for (let i = 0; i < 9; i++) {
+    const stack = inventory.hotbar[i];
+    const cur = hotbar.getEntry(i);
+    if (!stack) {
+      if (cur && stateId(cur.state) === 0 && cur.name === '(empty)') continue;
+      hotbar.setEntry(i, { state: AIR, name: '(empty)', color: HOTBAR_EMPTY_COLOR });
+      continue;
+    }
+    const itemDef = itemRegistry.get(stack.itemId);
+    if (itemDef.blockId !== undefined) {
+      if (cur && stateId(cur.state) === itemDef.blockId) continue;
+      const blockDef = registry.get(itemDef.blockId);
+      hotbar.setEntry(i, {
+        state: makeState(itemDef.blockId, 0),
+        name: blockDef.name.replace(/^webmc:/, ''),
+        color: blockDef.color,
+      });
+    } else {
+      const itemShortName = itemDef.name.replace(/^webmc:/, '');
+      if (cur?.name === itemShortName && stateId(cur.state) === 0) continue;
+      hotbar.setEntry(i, { state: AIR, name: itemShortName, color: HOTBAR_ITEM_COLOR });
+    }
+  }
+}
+
+// Apply hunger/saturation + item-specific side effects (potions, golden apple
+// regen, rotten flesh hunger, chorus warp, ...) for one food item. Both the
+// survival inventory UI and the right-click hold-to-eat path go through here
+// so the effects stay consistent. Caller is responsible for consuming the
+// item from inventory and starting/animating the eat — this just applies
+// the gameplay payload.
+function consumeFoodItem(id: number, hungerRestore: number, saturation: number): void {
+  playerState.eat(hungerRestore, saturation);
+  sfx.play('click');
+  const itemName = itemRegistry.get(id).name;
+  if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
+    const ptype = POTION_TYPES.find((p) => p.name === itemName);
+    if (ptype) {
+      if (ptype.effect === 'instant_health') playerState.heal(4);
+      else if (ptype.effect === 'instant_damage')
+        playerState.takeDamage({ amount: 6, source: 'harming' });
+      else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
+      const glassId = itemRegistry.byName('webmc:glass_bottle');
+      if (glassId !== undefined) addOneToInventory(glassId);
+      subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
+    }
+    return;
+  }
+  if (itemName === 'webmc:honey_bottle') {
+    // Wiki: honey bottle removes poison and returns an empty glass
+    // bottle on consume. The bottle-return path was unwired — players
+    // ate honey bottles and silently lost the glass bottle.
+    playerState.effects.delete('poison');
+    const glassBottleId = itemRegistry.byName('webmc:glass_bottle');
+    if (glassBottleId !== undefined) addOneToInventory(glassBottleId);
+  } else if (itemName === 'webmc:milk_bucket') {
+    // Vanilla MC: drinking milk clears all status effects (positive AND
+    // negative). Replace the bucket with an empty bucket. Without this
+    // wired, milk was inert — players had no way to cure poison/wither.
+    playerState.effects.clear();
+    const bucketId = itemRegistry.byName('webmc:bucket');
+    if (bucketId !== undefined) addOneToInventory(bucketId);
+    subtitles.push('Drank milk');
+  } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
+    playerState.applyEffect('hunger', 0, 30);
+  } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
+    // Wiki: poisonous_potato has 60% chance of Poison I for 4 seconds.
+    // Was 5 seconds — off by one.
+    playerState.applyEffect('poison', 0, 4);
+  } else if (itemName === 'webmc:spider_eye') {
+    // Wiki: spider_eye always inflicts Poison I for 5 seconds. Was 4 —
+    // swapped with poisonous_potato by mistake.
+    playerState.applyEffect('poison', 0, 5);
+  } else if (itemName === 'webmc:raw_chicken' && Math.random() < 0.3) {
+    // Wiki: raw chicken has a 30% chance of inflicting Hunger for 30s
+    // when eaten. Was unwired — eating raw chicken was identical to
+    // eating cooked chicken in terms of side effects.
+    playerState.applyEffect('hunger', 0, 30);
+  } else if (itemName === 'webmc:pufferfish') {
+    // Wiki: pufferfish always inflicts Hunger III (15s), Nausea II
+    // (15s), Poison II (60s) on eat. Was unwired — players ate raw
+    // pufferfish for free hunger restore with zero downside.
+    playerState.applyEffect('hunger', 2, 15);
+    playerState.applyEffect('nausea', 1, 15);
+    playerState.applyEffect('poison', 1, 60);
+  } else if (itemName === 'webmc:golden_apple') {
+    playerState.applyEffect('regeneration', 1, 5);
+    playerState.applyEffect('absorption', 0, 120);
+  } else if (itemName === 'webmc:enchanted_golden_apple') {
+    // Wiki spec (1.9+): Regeneration II (amp=1) for 30s, Absorption IV
+    // (amp=3) for 120s, Fire Resistance I (amp=0) for 300s, Resistance I
+    // (amp=0) for 300s. Pre-1.9 was Regen V for 20s; webmc was using
+    // Regen V (amp=4) for 30s — a non-vanilla mix that overpowered the
+    // notch-apple vs current spec.
+    playerState.applyEffect('regeneration', 1, 30);
+    playerState.applyEffect('absorption', 3, 120);
+    playerState.applyEffect('fire_resistance', 0, 300);
+    playerState.applyEffect('resistance', 0, 300);
+  } else if (itemName === 'webmc:chorus_fruit') {
+    let placed = false;
+    for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
+      const trial = pickTrial(fp.position, Math.random);
+      const tx = Math.floor(trial.x);
+      const ty = Math.floor(trial.y);
+      const tz = Math.floor(trial.z);
+      const here = world.get(tx, ty, tz);
+      const above = world.get(tx, ty + 1, tz);
+      const below = world.get(tx, ty - 1, tz);
+      const isAirHere = here === AIR || SOLID_BY_ID[stateId(here)] !== 1;
+      const isAirAbove = above === AIR || SOLID_BY_ID[stateId(above)] !== 1;
+      const solidBelow = below !== AIR && SOLID_BY_ID[stateId(below)] === 1;
+      if (isAirHere && isAirAbove && solidBelow) {
+        fp.position.set(tx + 0.5, ty, tz + 0.5);
+        // Zero velocity on teleport so the player doesn't keep any
+        // momentum / fall speed from before the warp. Without this,
+        // chorus-fruiting mid-fall left you accelerating downward into
+        // the new spot — vanilla resets motion.
+        fp.velocity.set(0, 0, 0);
+        subtitles.push('Chorus warp');
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) subtitles.push('Chorus fizzle');
+  }
+  const look = fp.lookVector(consumeFoodLookTmp);
+  blockParticles.emitPlace(
+    fp.position.x + look.x * 0.6,
+    fp.position.y + look.y * 0.5,
+    fp.position.z + look.z * 0.6,
+    FOOD_PARTICLE_COLOR,
+  );
+}
+
 function consumeHeldToolDurability(amount = 1): void {
-  if (gameMode === 'creative') return;
+  if (isCreative) return;
   const sel = inventory.hotbar[inventory.selectedHotbar];
   if (!sel) return;
   const def = itemRegistry.get(sel.itemId);
@@ -1634,17 +3019,20 @@ function consumeHeldToolDurability(amount = 1): void {
 }
 
 function consumeArmorDurability(damageAmount: number): void {
+  // Vanilla parity: creative armor doesn't degrade. Without this gate,
+  // creative players accumulated durability damage on every hit and
+  // their cosmetic armor could break / disappear.
+  if (isCreative) return;
   const cost = Math.max(1, Math.floor(damageAmount / 4));
   for (let i = 0; i < inventory.armor.length; i++) {
     const slot = inventory.armor[i];
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (!armorDef) continue;
     const newDamage = slot.damage + cost;
     if (newDamage >= armorDef.durability) {
       inventory.armor[i] = null;
-      chatInput.addLine(`${def.name.replace(/^webmc:/, '')} broke!`, '#ff8080');
+      chatInput.addLine(`${itemShortNameLower(slot.itemId)} broke!`, '#ff8080');
     } else {
       inventory.armor[i] = { ...slot, damage: newDamage };
     }
@@ -1655,8 +3043,7 @@ function computeArmorToughness(): number {
   let t = 0;
   for (const slot of inventory.armor) {
     if (!slot) continue;
-    const def = itemRegistry.get(slot.itemId);
-    const armorDef = ARMOR_DEFS[def.name.replace(/^webmc:/, '')];
+    const armorDef = ARMOR_DEFS[itemShortNameLower(slot.itemId)];
     if (armorDef) t += armorDef.toughness;
   }
   return t;
@@ -1676,11 +3063,479 @@ function directionFromPlayer(sourceX: number, sourceZ: number): 'left' | 'right'
   return 'center';
 }
 
+// Reused look-vector scratch — passed to fp.lookVector(out) and then
+// straight through to raycastVoxels. THREE.Vector3 satisfies Vec3Lite
+// structurally so no copy step is needed.
+const interactionLookTmp = new THREE.Vector3();
+// Shared event-handler look-vector scratch. Was a fresh THREE.Vector3
+// per `fp.lookVector()` call in mousedown / right-click / command
+// callbacks (~14 distinct call sites) — each click allocated one
+// Vector3 just to read x/y/z. JS is single-threaded so a shared
+// scratch is safe across event handlers.
+const eventLookTmp = new THREE.Vector3();
+// Reused for the food-consumption particle emit position.
+const consumeFoodLookTmp = new THREE.Vector3();
+const FOOD_PARTICLE_COLOR: readonly [number, number, number] = [180, 140, 80];
+// Hoisted egg color — was a fresh tuple per egg lay.
+const EGG_COLOR: readonly [number, number, number] = [240, 230, 200];
+// Reused break-ticks ctx scratch. ticksToBreak fires every frame
+// while the player is breaking a block — was building a fresh
+// 9-field BreakCtx literal per frame.
+const breakTicksCtxScratch = {
+  hardness: 0,
+  correctTool: true,
+  toolSpeed: 1,
+  onGround: false,
+  underwater: false,
+  hasAquaAffinity: false,
+  hasteLevel: 0,
+  fatigueLevel: 0,
+  efficiencyBonus: 0,
+};
+// Reused autosave-trigger scratches (timer + threshold). shouldSave
+// fires both per frame; was building two fresh {nowMs, trigger}
+// literals every frame.
+const shouldSaveTimerArg: { nowMs: number; trigger: 'timer' } = { nowMs: 0, trigger: 'timer' };
+const shouldSaveThresholdArg: { nowMs: number; trigger: 'threshold' } = {
+  nowMs: 0,
+  trigger: 'threshold',
+};
+// Reused mobWorld.spawn position scratch. spawn() copies the input
+// via spread, so passing a shared scratch is safe and avoids fresh
+// {x,y,z} literals per spawn (egg hatch, /summon, natural spawning,
+// breeding, phantom).
+const mobSpawnPosScratch = { x: 0, y: 0, z: 0 };
+// Reused per-frame env damage event. Void / world-border /
+// suffocation each fired playerState.takeDamage with a fresh
+// {amount, source} literal every frame the condition held.
+// playerState.takeDamage reads ev.amount + ev.source synchronously
+// and never re-enters with a different ev (its internal effect-
+// damage path uses its own class-scoped scratch).
+const envDamageEv: { amount: number; source: string } = { amount: 0, source: '' };
+function envTakeDamage(amount: number, source: string): void {
+  envDamageEv.amount = amount;
+  envDamageEv.source = source;
+  playerState.takeDamage(envDamageEv);
+}
+// Memoized "webmc:foo_bar" → "foo_bar" lookup, keyed by BlockId.
+// def.name.replace(/^webmc:/, '') was firing per-frame in
+// getBreakDurationSec (every break tick) and other hot paths; the
+// regex + new string were both pure overhead since the name never
+// changes for a given id.
+const BLOCK_SHORT_NAME_BY_ID: string[] = [];
+
+// Memoized block category flags for tool-speed gates. Was running 30+
+// string includes/equals per frame in getBreakDurationSec — the result
+// is stable per blockId so cache it. -1 placeholder means "not yet
+// computed"; the bitfield encodes stone/wood/dirt/cobweb/wool/leaves.
+const BLOCK_CATEGORY_STONE_LIKE = 1 << 0;
+const BLOCK_CATEGORY_WOOD_LIKE = 1 << 1;
+const BLOCK_CATEGORY_DIRT_LIKE = 1 << 2;
+const BLOCK_CATEGORY_COBWEB = 1 << 3;
+const BLOCK_CATEGORY_WOOL = 1 << 4;
+const BLOCK_CATEGORY_LEAVES = 1 << 5;
+const BLOCK_CATEGORY_BY_ID: number[] = [];
+function blockCategoryFor(id: number, blockShortName: string): number {
+  let cat = BLOCK_CATEGORY_BY_ID[id];
+  if (cat !== undefined) return cat;
+  cat = 0;
+  if (
+    blockShortName.includes('stone') ||
+    blockShortName.includes('ore') ||
+    blockShortName.includes('cobble') ||
+    blockShortName.includes('brick') ||
+    blockShortName.includes('basalt') ||
+    blockShortName === 'obsidian' ||
+    blockShortName === 'crying_obsidian' ||
+    blockShortName === 'glowstone' ||
+    blockShortName === 'iron_block' ||
+    blockShortName === 'gold_block' ||
+    blockShortName === 'diamond_block' ||
+    blockShortName === 'netherite_block' ||
+    blockShortName === 'lapis_block' ||
+    blockShortName === 'redstone_block' ||
+    blockShortName === 'emerald_block' ||
+    blockShortName === 'coal_block' ||
+    blockShortName === 'ancient_debris'
+  )
+    cat |= BLOCK_CATEGORY_STONE_LIKE;
+  if (
+    blockShortName.endsWith('_log') ||
+    blockShortName.endsWith('_planks') ||
+    blockShortName.endsWith('_wood') ||
+    blockShortName === 'oak_log' ||
+    blockShortName === 'crafting_table' ||
+    blockShortName.endsWith('_door') ||
+    blockShortName.endsWith('_fence') ||
+    blockShortName.endsWith('_trapdoor')
+  )
+    cat |= BLOCK_CATEGORY_WOOD_LIKE;
+  if (
+    blockShortName === 'dirt' ||
+    blockShortName === 'grass_block' ||
+    blockShortName === 'sand' ||
+    blockShortName === 'gravel' ||
+    blockShortName === 'snow' ||
+    blockShortName === 'soul_sand' ||
+    blockShortName === 'soul_soil' ||
+    blockShortName === 'farmland' ||
+    blockShortName === 'mycelium' ||
+    blockShortName === 'podzol' ||
+    blockShortName === 'clay'
+  )
+    cat |= BLOCK_CATEGORY_DIRT_LIKE;
+  if (blockShortName === 'cobweb') cat |= BLOCK_CATEGORY_COBWEB;
+  if (blockShortName === 'wool' || blockShortName.endsWith('_wool')) cat |= BLOCK_CATEGORY_WOOL;
+  if (blockShortName.endsWith('_leaves')) cat |= BLOCK_CATEGORY_LEAVES;
+  BLOCK_CATEGORY_BY_ID[id] = cat;
+  return cat;
+}
+function blockShortNameFn(id: number): string {
+  let s = BLOCK_SHORT_NAME_BY_ID[id];
+  if (s !== undefined) return s;
+  s = registry.get(id).name.replace(/^webmc:/, '');
+  BLOCK_SHORT_NAME_BY_ID[id] = s;
+  return s;
+}
+type FootStepMat =
+  | 'wood'
+  | 'stone'
+  | 'gravel'
+  | 'grass'
+  | 'sand'
+  | 'snow'
+  | 'wool'
+  | 'metal'
+  | undefined;
+// Per-block-id memo for the footstep-material classifier. The frame
+// loop runs the name.includes() chain (7 scans on a stable string)
+// every tick the player is onGround, even when standing still on a
+// constant block — pure overhead. Map stateId → material once and
+// reuse forever. null sentinel = computed but no match (so we don't
+// re-scan blocks that classify as undefined).
+const FOOT_STEP_MAT_BY_ID: (FootStepMat | null)[] = [];
+function footStepMatForStateId(stateId: number): FootStepMat {
+  const v = FOOT_STEP_MAT_BY_ID[stateId];
+  if (v === null) return undefined;
+  if (v !== undefined) return v;
+  const fname = registry.get(stateId).name;
+  let mat: FootStepMat;
+  if (fname.includes('log') || fname.includes('plank')) mat = 'wood';
+  else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick'))
+    mat = 'stone';
+  else if (fname.includes('gravel')) mat = 'gravel';
+  else if (fname.includes('sand')) mat = 'sand';
+  else if (fname.includes('snow')) mat = 'snow';
+  else if (fname.includes('wool')) mat = 'wool';
+  else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper'))
+    mat = 'metal';
+  else if (fname.includes('grass') || fname.includes('dirt')) mat = 'grass';
+  FOOT_STEP_MAT_BY_ID[stateId] = mat ?? null;
+  return mat;
+}
+// Reused inventory.add input scratch. Inventory.add reads itemId +
+// count + damage synchronously and stores fresh stack() copies into
+// slots; no reference retention. Most event-handler add() callers
+// were building a fresh {itemId, count: 1, damage: 0} literal.
+const inventoryAddArg: { itemId: number; count: number; damage: number } = {
+  itemId: 0,
+  count: 0,
+  damage: 0,
+};
+function addOneToInventory(itemId: number, damage = 0): number {
+  inventoryAddArg.itemId = itemId;
+  inventoryAddArg.count = 1;
+  inventoryAddArg.damage = damage;
+  return inventory.add(inventoryAddArg);
+}
+function addToInventory(itemId: number, count: number, damage = 0): number {
+  inventoryAddArg.itemId = itemId;
+  inventoryAddArg.count = count;
+  inventoryAddArg.damage = damage;
+  return inventory.add(inventoryAddArg);
+}
+// Reused per-mob AABB scratch for ray picking. Was allocated fresh per
+// mob per call: hover-aim cast every frame O(mobs), attack cast on
+// every primary tap O(mobs). At 50 mobs in the radius that's ≥3000
+// throwaway box objects/sec just for the crosshair.
+const mobAabbScratch = { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
+// Reused knockback ctx + nested attacker/target Vec3 scratches. Was
+// allocating four fresh literals per melee hit (touch + desktop
+// attack paths each built the full triple). computeKnockback reads
+// the fields synchronously and doesn't keep the reference.
+const knockbackAttackerPos = { x: 0, y: 0, z: 0 };
+const knockbackTargetPos = { x: 0, y: 0, z: 0 };
+const knockbackQueryScratch: {
+  attackerPos: { x: number; y: number; z: number };
+  targetPos: { x: number; y: number; z: number };
+  sprinting: boolean;
+  knockbackLevel: number;
+  knockbackResistance: number;
+} = {
+  attackerPos: knockbackAttackerPos,
+  targetPos: knockbackTargetPos,
+  sprinting: false,
+  knockbackLevel: 0,
+  knockbackResistance: 0,
+};
+// Reused per-frame look-vector scratch (third-person camera offset,
+// elytra glide thrust). Was new THREE.Vector3() per call.
+const frameLookTmp = new THREE.Vector3();
+// Reused per-frame fp.update options object — was a fresh object
+// literal per frame, ~60 throwaway objects/sec for nothing.
+const fpUpdateOpts: {
+  isSolid: typeof isSolid;
+  isFluid: typeof isFluid;
+  isClimbable: typeof isClimbable;
+} = {
+  isSolid,
+  isFluid,
+  isClimbable,
+};
+// Reused per-frame far-mob despawn list. Was allocated fresh every
+// frame when overall mob caps weren't full — a 50-mob world would
+// trash one Array per frame just to walk distances.
+const farMobsScratch: number[] = [];
+// Reused per-explosion changed-chunks set. TNT chains can fire many
+// explosions in rapid succession; was allocating a fresh
+// Set<string> + per-cell template-literal keys per blast.
+const explodeChangedChunksScratch = new Set<number>();
+// Reused per-call grass-spread ctx + nested center + lookup with
+// stateful closures. Was allocating 6 objects per grass random
+// tick (ctx, center, lookup, isGrass, isDirt, lightAbove,
+// hasOpaqueAbove). With 80 random-tick samples/sec the grass-block
+// branch alone churned dozens of object/closure allocs per sec in
+// plains biomes.
+const grassCtxCenter = { x: 0, y: 0, z: 0 };
+const grassCtxLookup = {
+  isGrass(gx: number, gy: number, gz: number): boolean {
+    // Numeric id compare — was registry.get + name-string equality
+    // per cell of the 27-iteration grass-spread BFS.
+    const s = world.get(gx, gy, gz);
+    return s !== AIR && stateId(s) === grassBlockIdCached;
+  },
+  isDirt(gx: number, gy: number, gz: number): boolean {
+    const s = world.get(gx, gy, gz);
+    return s !== AIR && stateId(s) === dirtIdCached;
+  },
+  lightAbove(gx: number, gy: number, gz: number): number {
+    const cx = gx >> 4;
+    const cz = gz >> 4;
+    const lx = gx & 0xf;
+    const lz = gz & 0xf;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (!lt) return 0;
+    const lb = getLightByte(lt, lx, gy, lz);
+    return Math.max((lb >>> 4) & 0xf, lb & 0xf);
+  },
+  hasOpaqueAbove(gx: number, gy: number, gz: number): boolean {
+    const ss = world.get(gx, gy, gz);
+    if (ss === AIR) return false;
+    return OPAQUE_BY_ID[stateId(ss)] === 1;
+  },
+};
+const grassCtxScratch: {
+  center: typeof grassCtxCenter;
+  lookup: typeof grassCtxLookup;
+  rng: () => number;
+} = {
+  center: grassCtxCenter,
+  lookup: grassCtxLookup,
+  rng: Math.random,
+};
+// Sugar-cane query scratch — was allocating tickState {age} and the
+// outer {state, currentHeight} ctx per cane every random tick.
+const caneTickStateScratch = { age: 0 };
+const caneCtxScratch: { state: typeof caneTickStateScratch; currentHeight: number } = {
+  state: caneTickStateScratch,
+  currentHeight: 1,
+};
+// Bamboo growth ctx scratch — same pattern, fresh literal per
+// bamboo block per random tick.
+const bambooCtxScratch = { totalHeight: 1, ageBoost: false };
+// Cactus growth state scratch — passed to canGrow() per cactus block
+// per random tick. Reused across calls.
+const cactusGrowStateScratch = { age: 0, adjacentToBlock: false };
+// Pumpkin/melon stem grow scratch.
+const stemGrowCtxScratch: StemCtx = {
+  age: 0,
+  maxAge: 7,
+  fruitSpawned: false,
+  hasEmptyDirtNeighbor: false,
+};
+// Cocoa grow scratch — tryGrow mutates `age` in place, so reuse one
+// instance and re-seed `age` from block-state props each call.
+const cocoaGrowCtxScratch: { age: number; facing: 'north' | 'south' | 'east' | 'west' } = {
+  age: 0,
+  facing: 'north',
+};
+// Sweet berry bush grow scratch — tryGrow returns a fresh ctx each
+// call but the only field we read back is `age`, so the scratch
+// just feeds the input.
+const berryGrowCtxScratch: BerryBushCtx = { age: 0 };
+// Shared ice melt/freeze ctx — same shape for both helpers.
+const iceCtxScratch = {
+  biomeTemperature: 0,
+  isNight: false,
+  hasSkyLight: true,
+  nearbyWarmBlock: false,
+  lightLevel: 0,
+};
+// Shared leaf-decay query scratch.
+const leafDecayScratch = { persistent: false, distance: 0 };
+// Reused active-effects HUD scratch + entry pool. ActiveEffectsHud
+// .render diffs by signature internally so sharing the entries
+// across calls is safe (it doesn't retain references). Skip the
+// whole allocation when the player has no active effects (the common
+// case — no potions, no enchantments triggering effects).
+const activeEffectsScratch: { id: string; amplifier: number; remainingSec: number }[] = [];
+const activeEffectsPool: { id: string; amplifier: number; remainingSec: number }[] = [];
+const ACTIVE_EFFECTS_EMPTY: readonly { id: string; amplifier: number; remainingSec: number }[] = [];
+// Reused minimap markers list + pool of marker objects. Was a fresh
+// array of ~130 marker literals at every minimap redraw (2Hz, gated
+// by minimap.willRedraw). At busy mob farms the per-redraw
+// allocation count was the dominant minimap cost.
+type MinimapMarker = { x: number; z: number; color: string; size?: number };
+const minimapMarkersScratch: MinimapMarker[] = [];
+const minimapMarkerPool: MinimapMarker[] = [];
+function minimapMarker(x: number, z: number, color: string, size = 2): MinimapMarker {
+  // Default size to 2 here (matches the reader's `?? 2` fallback) and
+  // assign unconditionally — `delete m.size` for the unsized case
+  // shifted the object out of V8's fast-property hidden class into
+  // dictionary mode, costing more than the savings from pooling.
+  const m = minimapMarkerPool.pop() ?? { x: 0, z: 0, color: '', size: 2 };
+  m.x = x;
+  m.z = z;
+  m.color = color;
+  m.size = size;
+  return m;
+}
+// Fire-tick ctx scratch + stateful neighborAt closure. The random-
+// tick scan calls tickFire for every fire block; was building a
+// fresh ctx + 5 closures per fire block per second.
+const fireCtxPos = { x: 0, y: 0, z: 0 };
+function fireNeighborAt(dx: number, dy: number, dz: number): string {
+  const ns = world.get(fireCtxPos.x + dx, fireCtxPos.y + dy, fireCtxPos.z + dz);
+  if (ns === AIR) return 'webmc:air';
+  return registry.get(stateId(ns)).name;
+}
+const fireCtxScratch: {
+  pos: { x: number; y: number; z: number };
+  age: number;
+  fireTickAllowed: boolean;
+  humidity: number;
+  neighborAt: (dx: number, dy: number, dz: number) => string;
+  rng: () => number;
+} = {
+  pos: fireCtxPos,
+  age: 0,
+  fireTickAllowed: true,
+  humidity: 0.4,
+  neighborAt: fireNeighborAt,
+  rng: Math.random,
+};
+// Reused per-frame hotbar-counts list. Was a fresh number[] every
+// frame in survival/adventure (and a fresh empty [] every frame in
+// creative for the 'infinite' marker).
+const hotbarCountsScratch: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+const hotbarCountsEmpty: number[] = [];
+// Reused leaf-decay BFS scratches. Was allocating a fresh
+// visited:Set<string>, a stack:Array<{x,y,z,d}>, and ~150 stack
+// entries per scan. Fires several times per sec in a forest under
+// the 1/8 random-tick gate. Use parallel typed arrays for the
+// stack and a numeric packed key for the visited set.
+const leafBfsVisitedScratch = new Set<number>();
+const leafBfsStackX: number[] = [];
+const leafBfsStackY: number[] = [];
+const leafBfsStackZ: number[] = [];
+const leafBfsStackD: number[] = [];
+// Pack (x, y, z) into one Number safely. y fits in 9 bits (0..383);
+// x and z get 22 bits each (±2M). Same encoding the chunk renderer
+// uses elsewhere — fits in Number.MAX_SAFE_INTEGER.
+function leafBfsKey(x: number, y: number, z: number): number {
+  return (
+    ((x + 0x200000) & 0x3fffff) * 0x80000000 + ((z + 0x200000) & 0x3fffff) * 0x200 + (y & 0x1ff)
+  );
+}
+// Reused per-frame boss-bar update payload. Was a fresh object
+// literal per frame any time a boss/custom-boss-bar was visible.
+const bossBarPayload: {
+  name: string;
+  hp: number;
+  maxHp: number;
+  color: 'pink' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'white';
+  style: 'progress' | 'notched_6' | 'notched_10' | 'notched_12' | 'notched_20';
+  visible: boolean;
+} = {
+  name: '',
+  hp: 0,
+  maxHp: 1,
+  color: 'purple',
+  style: 'progress',
+  visible: false,
+};
+// Reused per-frame DebugFrame payload — was a 22-field object literal
+// (with three nested {x,y,z}/{cx,cz}/{yaw,pitch} sub-objects) on every
+// frame the F3 debug overlay was open.
+// Reused per-frame leash-tension scratches. Was allocating an anchor
+// {x,y,z}, a broken[] list, AND a per-mob ctx literal every frame any
+// time the player had a leashed mob (walking your wolf around).
+const leashAnchorScratch = { x: 0, y: 0, z: 0 };
+const leashBrokenScratch: number[] = [];
+const leashCtxScratch: {
+  anchorPos: { x: number; y: number; z: number };
+  mobPos: { x: number; y: number; z: number };
+} = {
+  anchorPos: leashAnchorScratch,
+  mobPos: { x: 0, y: 0, z: 0 },
+};
+const debugFramePos = { x: 0, y: 0, z: 0 };
+const debugFrameLook = { yaw: 0, pitch: 0 };
+const debugFrameChunkPos = { cx: 0, cz: 0 };
+const debugFramePayload: DebugFrame = {
+  fps: 0,
+  frameMs: 0,
+  position: debugFramePos,
+  look: debugFrameLook,
+  chunkPos: debugFrameChunkPos,
+  meshCount: 0,
+  triangles: 0,
+  pendingChunks: 0,
+  gameMode: 'creative',
+  timeOfDay: 0,
+  health: 0,
+  hunger: 0,
+  fly: false,
+  onGround: false,
+  fluid: null,
+  viewDistance: 0,
+  rendererName: '',
+};
+// Reused gamepad poll scratch. Was allocating a state {axes, buttons},
+// a fresh axes literal, a fresh buttons.map(), an intent, and an inner
+// look {yaw, pitch} every frame for connected pads.
+const gamepadStateScratch: { axes: [number, number, number, number]; buttons: boolean[] } = {
+  axes: [0, 0, 0, 0],
+  buttons: [],
+};
+const gamepadIntentScratch = {
+  forward: 0,
+  strafe: 0,
+  look: { yaw: 0, pitch: 0 },
+  jump: false,
+  sneak: false,
+  attack: false,
+  use: false,
+};
 const interaction = new InteractionController(
   camera,
   () => {
-    const l = fp.lookVector();
-    return { x: l.x, y: l.y, z: l.z };
+    // Skip the per-frame Vector3 → {x,y,z} copy. raycastVoxels reads
+    // the result via the structural Vec3Lite interface, and THREE.Vector3
+    // already exposes x/y/z fields, so passing the Vector3 directly saves
+    // 3 reads + 3 writes per cast (which fires every frame for the
+    // crosshair outline + on every place/break).
+    return fp.lookVector(interactionLookTmp);
   },
   world,
   isSolid,
@@ -1697,59 +3552,36 @@ const interaction = new InteractionController(
       );
       blockParticles.emitBreak(bx, by, bz, def.color);
       // Mining XP for ores (matches MC: coal 0-2, iron 0 via smelt, diamond 3-7, redstone 1-5, lapis 2-5, emerald 3-7).
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         const xp = oreXp(def.name);
         if (xp > 0) xpOrbs.spawn(bx + 0.5, by + 0.5, bz + 0.5, xp);
       }
       // Tool tier check: ores require correct mining level or no drops.
-      const blockShortName = def.name.replace(/^webmc:/, '');
+      const blockShortName = blockShortNameFn(prevBlockId);
       const requiredLevel = requiredMiningLevel(blockShortName);
       let toolLevel = 1;
-      const heldNameForTool = hotbar.selected?.name.toLowerCase() ?? '';
+      const heldNameForTool = heldNameLower();
       if (heldNameForTool.includes('netherite')) toolLevel = 5;
       else if (heldNameForTool.includes('diamond')) toolLevel = 4;
       else if (heldNameForTool.includes('iron')) toolLevel = 3;
       else if (heldNameForTool.includes('stone')) toolLevel = 2;
       else if (heldNameForTool.includes('wood') || heldNameForTool.includes('gold')) toolLevel = 1;
       else toolLevel = 0; // bare hand
-      const dropsAllowed = gameMode === 'creative' || toolLevel >= requiredLevel;
+      const dropsAllowed = isCreative || toolLevel >= requiredLevel;
       // Crop drops: when a mature crop block is broken, drop the harvest items instead of the crop block.
-      const CROP_DROP: Record<string, { id: string; min: number; max: number }[]> = {
-        'webmc:wheat': [
-          { id: 'webmc:wheat', min: 1, max: 1 },
-          { id: 'webmc:wheat_seeds', min: 0, max: 3 },
-        ],
-        'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
-        'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
-        'webmc:beetroots': [
-          { id: 'webmc:beetroot', min: 1, max: 1 },
-          { id: 'webmc:beetroot_seeds', min: 1, max: 3 },
-        ],
-        'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
-        'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
-        'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
-        'webmc:cocoa': [{ id: 'webmc:cocoa_beans', min: 1, max: 3 }],
-        'webmc:melon': [{ id: 'webmc:melon_slice', min: 3, max: 7 }],
-        'webmc:pumpkin': [{ id: 'webmc:pumpkin_seeds', min: 1, max: 4 }],
-        'webmc:torchflower_crop': [{ id: 'webmc:torchflower_seeds', min: 1, max: 1 }],
-        'webmc:pitcher_crop': [{ id: 'webmc:pitcher_pod', min: 1, max: 1 }],
-        'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
-        'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
-      };
-      // Leaf drops: 5% chance for sapling matching wood, 2% sticks, 0.5% apple (oak only).
-      const LEAF_TO_SAPLING: Record<string, string> = {
-        'webmc:oak_leaves': 'webmc:oak_sapling',
-        'webmc:spruce_leaves': 'webmc:spruce_sapling',
-        'webmc:birch_leaves': 'webmc:birch_sapling',
-        'webmc:jungle_leaves': 'webmc:jungle_sapling',
-        'webmc:acacia_leaves': 'webmc:acacia_sapling',
-        'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
-        'webmc:cherry_leaves': 'webmc:cherry_sapling',
-        'webmc:azalea_leaves': 'webmc:azalea',
-      };
+      // (CROP_DROP + LEAF_TO_SAPLING_FOR_DECAY hoisted to module scope below.)
       let leafDrops: { itemId: number; count: number; damage: number }[] | null = null;
-      const sapName = LEAF_TO_SAPLING[def.name];
-      if (sapName !== undefined && dropsAllowed) {
+      const sapName = LEAF_TO_SAPLING_FOR_DECAY[def.name];
+      const heldNameAtBreak = heldNameLower();
+      const usingShears = heldNameAtBreak === 'shears';
+      // Shears on leaves drop the leaf block itself (silk-touch parity).
+      if (sapName !== undefined && usingShears && dropsAllowed) {
+        const leafId = itemRegistry.byName(def.name);
+        if (leafId !== undefined) {
+          leafDrops = [{ itemId: leafId, count: 1, damage: 0 }];
+          consumeHeldToolDurability(1);
+        }
+      } else if (sapName !== undefined && dropsAllowed) {
         leafDrops = [];
         if (Math.random() < 0.05) {
           const sId = itemRegistry.byName(sapName);
@@ -1762,6 +3594,15 @@ const interaction = new InteractionController(
         if (def.name === 'webmc:oak_leaves' && Math.random() < 0.005) {
           const aId = itemRegistry.byName('webmc:apple');
           if (aId !== undefined) leafDrops.push({ itemId: aId, count: 1, damage: 0 });
+        }
+      }
+      // Shears on cobweb drop string (vanilla — without it cobweb gave
+      // nothing from sword, only string from shears).
+      if (def.name === 'webmc:cobweb' && usingShears && dropsAllowed && leafDrops === null) {
+        const stringId = itemRegistry.byName('webmc:string');
+        if (stringId !== undefined) {
+          leafDrops = [{ itemId: stringId, count: 1, damage: 0 }];
+          consumeHeldToolDurability(1);
         }
       }
       const cropDrop = CROP_DROP[def.name];
@@ -1778,7 +3619,25 @@ const interaction = new InteractionController(
             : gameRules.doTileDrops && dropsAllowed
               ? dropRegistry.drops(prevBlockId, undefined, 99)
               : [];
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      // Wiki: gravel has a 10% chance to drop flint instead of itself
+      // (Fortune scales the chance up; Silk Touch always drops gravel).
+      // Was a flat 100% gravel drop; replace one stack with flint on
+      // the proc. Fortune/silk-touch enchant tracking isn't wired yet,
+      // so the base 10% chance applies unconditionally.
+      if (def.name === 'webmc:gravel' && drops.length > 0 && Math.random() < 0.1) {
+        const flintId = itemRegistry.byName('webmc:flint');
+        const gravelId = itemRegistry.byName('webmc:gravel');
+        if (flintId !== undefined && gravelId !== undefined) {
+          for (let i = 0; i < drops.length; i++) {
+            const s = drops[i];
+            if (s?.itemId === gravelId) {
+              drops[i] = { itemId: flintId, count: s.count, damage: s.damage };
+              break;
+            }
+          }
+        }
+      }
+      if (vitalsActive) {
         for (const s of drops) {
           droppedItems.spawn(bx + 0.5, by + 0.5, bz + 0.5, {
             itemId: s.itemId,
@@ -1789,11 +3648,53 @@ const interaction = new InteractionController(
       } else {
         for (const s of drops) inventory.add(s);
       }
+      // Chest-style block broken with stored items: dump the contents into
+      // the world so the player can pick them up. Without this, breaking a
+      // full chest silently destroyed every item inside — the storage
+      // entry stayed in chestStoragesByPos but became unreachable because
+      // there was no chest block left to right-click.
+      const isChestBlock =
+        def.name === 'webmc:chest' ||
+        def.name === 'webmc:trapped_chest' ||
+        def.name === 'webmc:barrel' ||
+        def.name.endsWith('_shulker_box') ||
+        def.name === 'webmc:shulker_box';
+      if (isChestBlock) {
+        const k = chestKey(bx, by, bz);
+        const slots = chestStoragesByPos.get(k);
+        if (slots) {
+          for (const stk of slots) {
+            if (!stk || stk.count <= 0) continue;
+            const itemDef = itemRegistry.get(stk.itemId);
+            const colorRgb =
+              itemDef.blockId !== undefined
+                ? registry.get(itemDef.blockId).color
+                : ([200, 200, 200] as const);
+            droppedItems.spawn(
+              bx + 0.5,
+              by + 0.5,
+              bz + 0.5,
+              { itemId: stk.itemId, count: stk.count, color: colorRgb, damage: stk.damage },
+              2.5,
+            );
+          }
+          chestStoragesByPos.delete(k);
+          // Persist the now-empty storage state so the dropped items don't
+          // resurrect on reload as ghost contents of an empty position.
+          void saveAllChestStorages();
+        }
+      }
       touchWorldEdit(bx, by, bz, 0);
+      // After breaking a block, any adjacent water/lava that wasn't yet
+      // tracked by FluidWorld (e.g. sea water generated by worldgen, or
+      // loaded from a chunk save) should now flow into the new opening.
+      // Register the 6 neighbours as source cells so the next tick picks
+      // them up.
+      registerFluidNeighbors(bx, by, bz);
       hand.swing();
       playerStats.blocksBroken++;
       markSaveDirty(autosaveState);
-      if (gameMode === 'survival' || gameMode === 'adventure') {
+      if (vitalsActive) {
         playerState.addExhaustion(0.005);
         consumeHeldToolDurability(1);
       }
@@ -1804,71 +3705,191 @@ const interaction = new InteractionController(
     onPlace: (bx, by, bz) => {
       audio.play3D('place', bx + 0.5, by + 0.5, bz + 0.5);
       sfx.play('place');
-      const sel = hotbar.selected;
-      const blockId = sel ? stateId(sel.state) : 0;
-      if (sel) {
-        const def = registry.get(stateId(sel.state));
-        subtitles.push(
-          `Block placed: ${def.name.replace(/^webmc:/, '')}`,
-          directionFromPlayer(bx + 0.5, bz + 0.5),
-        );
-        blockParticles.emitPlace(bx, by, bz, def.color);
-        // Sponge soak: dry water in 5×5×5 area, convert to wet_sponge.
-        if (def.name === 'webmc:sponge') {
-          const waterId = registry.byName('webmc:water');
-          const wetSpongeId = registry.byName('webmc:wet_sponge');
-          if (waterId !== undefined && wetSpongeId !== undefined) {
-            let absorbed = 0;
-            for (let dy = -2; dy <= 2; dy++) {
-              for (let dz = -2; dz <= 2; dz++) {
-                for (let dx = -2; dx <= 2; dx++) {
-                  const s = world.get(bx + dx, by + dy, bz + dz);
-                  if (s !== AIR && stateId(s) === waterId) {
-                    world.set(bx + dx, by + dy, bz + dz, AIR);
-                    touchWorldEdit(bx + dx, by + dy, bz + dz, 0);
-                    absorbed++;
-                  }
-                }
-              }
-            }
-            if (absorbed > 0) {
-              world.set(bx, by, bz, makeState(wetSpongeId, 0));
-              touchWorldEdit(bx, by, bz, wetSpongeId);
-              subtitles.push(`Sponge absorbed ${absorbed} water`);
-            }
+      const placeable = placeableFromSlot(hotbar.selectedIndex);
+      if (!placeable) return;
+      const def = registry.get(placeable.blockId);
+      subtitles.push(
+        `Block placed: ${def.name.replace(/^webmc:/, '')}`,
+        directionFromPlayer(bx + 0.5, bz + 0.5),
+      );
+      blockParticles.emitPlace(bx, by, bz, def.color);
+      // Sponge soak: BFS through connected water cells, up to 65 blocks
+      // within 7-block reach. Was a flat 5×5×5 box (125 cells max but
+      // capped by water density) which missed water past the box edge
+      // even when reachable through connected cells. Vanilla uses BFS.
+      if (def.name === 'webmc:sponge') {
+        const waterId = registry.byName('webmc:water');
+        const wetSpongeId = registry.byName('webmc:wet_sponge');
+        if (waterId !== undefined && wetSpongeId !== undefined) {
+          const positions = absorbWater(
+            { x: bx, y: by, z: bz },
+            {
+              isWaterSource: (x, y, z) => {
+                const s = world.get(x, y, z);
+                return s !== AIR && stateId(s) === waterId;
+              },
+            },
+          );
+          for (const p of positions) {
+            world.set(p.x, p.y, p.z, AIR);
+            touchWorldEdit(p.x, p.y, p.z, 0);
+          }
+          if (positions.length > 0) {
+            world.set(bx, by, bz, makeState(wetSpongeId, 0));
+            touchWorldEdit(bx, by, bz, wetSpongeId);
+            fluidWorld.clear(bx, by, bz);
+            subtitles.push(`Sponge absorbed ${positions.length} water`);
           }
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
-          const itemId = itemRegistry.byName(def.name);
-          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
-        }
       }
-      touchWorldEdit(bx, by, bz, blockId);
+      if (vitalsActive && placeable.itemId !== null) {
+        consumeInventoryItem(placeable.itemId, 1);
+      }
+      touchWorldEdit(bx, by, bz, placeable.blockId);
       hand.swing();
       playerStats.blocksPlaced++;
       markSaveDirty(autosaveState);
     },
     canPlace: () => {
-      if (gameMode === 'creative') return true;
-      const sel = hotbar.selected;
-      if (!sel) return false;
-      const def = registry.get(stateId(sel.state));
-      const itemId = itemRegistry.byName(def.name);
-      if (itemId === undefined) return false;
-      const ok = countInventoryItem(itemId) > 0;
-      if (!ok && performance.now() - lastEmptyPlaceWarnAt > 800) {
+      if (isSpectator) return false;
+      if (isCreative) return true;
+      const placeable = placeableFromSlot(hotbar.selectedIndex);
+      if (placeable) return true;
+      if (performance.now() - lastEmptyPlaceWarnAt > 800) {
         lastEmptyPlaceWarnAt = performance.now();
-        chatInput.addLine(`No ${def.name.replace(/^webmc:/, '')} in inventory`, '#ffb080');
+        const stk = inventory.hotbar[hotbar.selectedIndex];
+        const msg = stk
+          ? `${itemRegistry.get(stk.itemId).name.replace(/^webmc:/, '')} can't be placed`
+          : 'Nothing in hand';
+        chatInput.addLine(msg, '#ffb080');
       }
-      return ok;
+      return false;
+    },
+    isReplaceable: (bx, by, bz) => {
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return true;
+      // Pre-resolved at module scope (REPLACEABLE_BY_ID) — was a fresh
+      // 11-string Set + name-string lookup per call.
+      return REPLACEABLE_BY_ID[stateId(s)] === 1;
+    },
+    collidesWithMob: (bx, by, bz) => {
+      // Vanilla blocks placement inside a mob AABB. Without this you
+      // could trap / suffocate any mob by stacking blocks on its head.
+      const minX = bx;
+      const maxX = bx + 1;
+      const minY = by;
+      const maxY = by + 1;
+      const minZ = bz;
+      const maxZ = bz + 1;
+      for (const m of mobWorld.all()) {
+        const mMinX = m.position.x - m.def.aabb.halfX;
+        const mMaxX = m.position.x + m.def.aabb.halfX;
+        const mMinY = m.position.y - m.def.aabb.halfY;
+        const mMaxY = m.position.y + m.def.aabb.halfY;
+        const mMinZ = m.position.z - m.def.aabb.halfZ;
+        const mMaxZ = m.position.z + m.def.aabb.halfZ;
+        if (
+          mMaxX > minX &&
+          mMinX < maxX &&
+          mMaxY > minY &&
+          mMinY < maxY &&
+          mMaxZ > minZ &&
+          mMinZ < maxZ
+        )
+          return true;
+      }
+      return false;
+    },
+    canBreak: (bx, by, bz) => {
+      // Spectator: ghost mode, no block edits at all (vanilla parity).
+      if (isSpectator) return false;
+      // Bedrock and other indestructible blocks (hardness < 0) are
+      // breakable in creative only — vanilla parity. Without this gate
+      // bedrock could be punched through after the standard 0.4s timer
+      // because nothing was checking hardness in tickBreak.
+      if (isCreative) return true;
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return false;
+      const def = registry.get(stateId(s));
+      return def.hardness >= 0;
+    },
+    getBreakDurationSec: (bx, by, bz) => {
+      // Vanilla MC formula: timeSec = 1.5 × hardness / toolSpeed when the
+      // tool can harvest, 5 × hardness / toolSpeed otherwise. Tool speed
+      // is 1 (hand), 2 (wood), 4 (stone), 6 (iron), 8 (diamond), 9
+      // (netherite), 12 (gold). Without this, every block took the flat
+      // 0.4s default — mining stone and dirt with bare hands felt
+      // identical, and netherite blocks broke as fast as wool.
+      if (isCreative) return 0.001;
+      const s = world.get(bx, by, bz);
+      if (s === AIR) return 0.4;
+      const blockId = stateId(s);
+      const def = registry.get(blockId);
+      const hardness = Math.max(0, def.hardness);
+      if (hardness === 0) return 0.05; // wool / leaves / flowers / instant blocks
+      const heldName = heldNameLower();
+      // Tool kind matching: pickaxe for stone/ore, axe for wood/log, shovel
+      // for dirt/sand/gravel/snow, sword for cobwebs. Anything else is hand.
+      const blockShortName = blockShortNameFn(blockId);
+      // Memoized category bitfield — was 30+ string includes/equals
+      // every frame while breaking. Cached per blockId now.
+      const blockCat = blockCategoryFor(blockId, blockShortName);
+      const isStoneLike = (blockCat & BLOCK_CATEGORY_STONE_LIKE) !== 0;
+      const isWoodLike = (blockCat & BLOCK_CATEGORY_WOOD_LIKE) !== 0;
+      const isDirtLike = (blockCat & BLOCK_CATEGORY_DIRT_LIKE) !== 0;
+      // Sword + cobweb: vanilla breaks cobweb 15x faster with sword.
+      // Shears + wool / leaves / cobweb: instant-ish (15x).
+      const isCobweb = (blockCat & BLOCK_CATEGORY_COBWEB) !== 0;
+      const isWool = (blockCat & BLOCK_CATEGORY_WOOL) !== 0;
+      const isLeaves = (blockCat & BLOCK_CATEGORY_LEAVES) !== 0;
+      // Memoized tool flags by held-name (cached across calls).
+      const tf = toolFlagsFor(heldName);
+      const correctTool =
+        (isStoneLike && tf.isPickaxe) ||
+        (isWoodLike && tf.isAxe) ||
+        (isDirtLike && tf.isShovel) ||
+        (isCobweb && (tf.isSword || tf.isShears)) ||
+        (isWool && tf.isShears) ||
+        (isLeaves && tf.isShears);
+      let toolSpeed = tf.toolSpeed;
+      // Sword cuts cobweb at 15x speed; shears cut wool/leaves/cobweb at 15x.
+      if (isCobweb && (tf.isSword || tf.isShears)) toolSpeed = Math.max(toolSpeed, 15);
+      else if ((isWool || isLeaves) && tf.isShears) toolSpeed = Math.max(toolSpeed, 15);
+      // Tool only contributes its speed when it's the correct kind.
+      const speed = correctTool ? toolSpeed : 1;
+      // Tool tier requirement: if the player can't harvest this block at
+      // all (e.g. wood pickaxe on diamond), use the slow no-harvest formula.
+      const requiredLevel = requiredMiningLevel(blockShortName);
+      const canHarvest = correctTool && tf.toolLevel >= requiredLevel;
+      const factor = canHarvest ? 1.5 : 5;
+      let durationSec = (hardness * factor) / speed;
+      // Vanilla mining-speed penalties:
+      //   Underwater × 5 (no aqua affinity yet)
+      //   Mid-air × 5 (not on ground)
+      //   Haste / mining fatigue effects (not yet)
+      // Without these the player could mine just as fast while swimming
+      // or jumping straight up, then place blocks normally — easy iron
+      // farming abuse.
+      if (fp.inFluidEyes === 'water') durationSec *= 5;
+      if (!fp.onGround) durationSec *= 5;
+      const haste = playerState.effects.get('haste');
+      if (haste) durationSec /= 1 + 0.2 * (haste.amplifier + 1);
+      const fatigue = playerState.effects.get('mining_fatigue');
+      if (fatigue) durationSec *= 1 + 0.3 * (fatigue.amplifier + 1) * 10;
+      return durationSec;
     },
     onInteract: (bx, by, bz) => {
+      // Spectator: no block interactions at all (vanilla parity).
+      // Without this gate, spectators could toggle doors, light TNT,
+      // strip logs, place water, ignite fires, set spawn at beds, etc. —
+      // anything in the long onInteract chain below.
+      if (isSpectator) return false;
       const state = world.get(bx, by, bz);
       if (state === AIR) return false;
       const id = stateId(state);
       const def = registry.get(id);
       // Axe / Shovel / Hoe: tool-on-block interactions.
-      const heldName = hotbar.selected?.name.toLowerCase() ?? '';
+      const heldName = heldNameLower();
       const airAbove = world.get(bx, by + 1, bz) === AIR;
       if (heldName.includes('axe') && !heldName.includes('pickaxe')) {
         const result = useAxe(def.name);
@@ -1879,6 +3900,11 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(1);
             sfx.play('break');
+            // Hand swing for tool-on-block interactions (strip / unwax /
+            // scrape / make path / till). Vanilla MC swings the hand on
+            // every right-click that consumes durability; without it,
+            // axe-stripping a log gave no animation feedback.
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             const verb =
               result.kind === 'strip'
@@ -1900,6 +3926,7 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(1);
             sfx.play('break');
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             subtitles.push('Made path');
             return true;
@@ -1916,6 +3943,7 @@ const interaction = new InteractionController(
             touchWorldEdit(bx, by, bz, newId);
             consumeHeldToolDurability(result.durabilityCost);
             sfx.play('break');
+            hand.swing();
             blockParticles.emitBreak(bx, by, bz, registry.get(newId).color);
             subtitles.push(result.tilled === 'farmland' ? 'Tilled farmland' : 'Loosened soil');
             return true;
@@ -1937,11 +3965,12 @@ const interaction = new InteractionController(
               [220, 100, 220],
             );
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const eId = itemRegistry.byName('webmc:end_crystal');
           if (eId !== undefined) consumeInventoryItem(eId, 1);
         }
         sfx.play('click');
+        hand.swing();
         subtitles.push('End crystal placed');
         return true;
       }
@@ -1988,11 +4017,12 @@ const interaction = new InteractionController(
             cz + (Math.random() - 0.5),
             [220, 230, 80],
           );
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const xbId = itemRegistry.byName('webmc:experience_bottle');
           if (xbId !== undefined) consumeInventoryItem(xbId, 1);
         }
         sfx.play('click');
+        hand.swing();
         subtitles.push(`Bottle o' enchanting (+${total} XP)`);
         return true;
       }
@@ -2007,30 +4037,70 @@ const interaction = new InteractionController(
             [200, 220, 240],
           );
         sfx.play('click');
+        // Cast was silent on the arm — every other right-click consume in
+        // this file swings the hand; fishing-rod was the holdout.
+        hand.swing();
         subtitles.push('Cast line');
         // Schedule a fish drop in 5-30s.
         const waitMs = 5000 + Math.random() * 25000;
         setTimeout(() => {
           if (gameMode !== 'survival' && gameMode !== 'adventure') return;
-          const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:raw_fish', 'webmc:tropical_fish'];
-          const treasure = [
+          // Wiki-spec category roll: 85% fish, 5% treasure, 10% junk.
+          // Was 95% fish + 5% treasure with no junk path — vanilla
+          // junk drops (string, bones, rotten flesh, etc) were silently
+          // unreachable. rollFishingCategory uses the canonical
+          // rod-reel-drops weights so future luckOfSea wiring just
+          // passes the level through.
+          const FISH = ['webmc:cod', 'webmc:salmon', 'webmc:pufferfish', 'webmc:tropical_fish'];
+          const TREASURE = [
             'webmc:bow',
             'webmc:enchanted_book',
             'webmc:fishing_rod',
             'webmc:nautilus_shell',
           ];
-          const useTreasure = Math.random() < 0.05;
-          const pool = (useTreasure ? treasure : FISH).filter(
-            (n) => itemRegistry.byName(n) !== undefined,
-          );
+          // Wiki junk pool: bone, bowl, fishing_rod, leather, leather_boots,
+          // rotten_flesh, stick, string, water_bottle, lily_pad, ink_sac,
+          // tripwire_hook. Filter by what's registered locally.
+          // Wiki junk pool entries with rough weights (commented out for
+          // reference): bone(10), bowl(10), fishing_rod(2 damaged),
+          // leather(10), leather_boots(10 damaged), rotten_flesh(10),
+          // stick(5), string(5), water_bottle(10), lily_pad(10),
+          // ink_sac(1), tripwire_hook(10), bamboo(10). The current
+          // selector picks uniformly from registered entries — close
+          // enough to wiki distribution for most of the pool.
+          const JUNK = [
+            'webmc:bone',
+            'webmc:bowl',
+            'webmc:fishing_rod',
+            'webmc:leather',
+            'webmc:leather_boots',
+            'webmc:rotten_flesh',
+            'webmc:stick',
+            'webmc:string',
+            'webmc:water_bottle',
+            'webmc:lily_pad',
+            'webmc:ink_sac',
+            'webmc:tripwire_hook',
+            'webmc:bamboo',
+          ];
+          const category = rollFishingCategory({
+            luckOfSeaLevel: 0,
+            rainInBiome: false,
+            openWaterBonus: true,
+            rng: Math.random,
+          });
+          const sourceList = category === 'fish' ? FISH : category === 'treasure' ? TREASURE : JUNK;
+          const pool = sourceList.filter((n) => itemRegistry.byName(n) !== undefined);
           if (pool.length === 0) return;
           const pickName = pool[Math.floor(Math.random() * pool.length)] ?? 'webmc:cod';
           const itemId = itemRegistry.byName(pickName);
           if (itemId !== undefined) {
-            inventory.add({ itemId, count: 1, damage: 0 });
+            addOneToInventory(itemId);
             const def2 = itemRegistry.get(itemId);
-            chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, '#a0e0ff');
+            const labelColor = category === 'treasure' ? '#ffd080' : '#a0e0ff';
+            chatInput.addLine(`Caught ${def2.name.replace(/^webmc:/, '')}`, labelColor);
             sfx.play('click');
+            // Vanilla XP: 1-6 for any catch (treasure same as fish).
             playerState.addXP(1 + Math.floor(Math.random() * 6));
           }
         }, waitMs);
@@ -2071,7 +4141,7 @@ const interaction = new InteractionController(
           `${note} Now playing: ${heldName.replace('music_disc_', 'C418 - ')}`,
           '#d0a0ff',
         );
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const dId = itemRegistry.byName(`webmc:${heldName}`);
           if (dId !== undefined) consumeInventoryItem(dId, 1);
         }
@@ -2090,53 +4160,48 @@ const interaction = new InteractionController(
         subtitles.push(`Now playing: ${heldName.replace('music_disc_', '')}`);
         return true;
       }
-      // Wind charge: right-click block → AOE knockback in 3-block radius (MC 1.21+ Breeze drop).
+      // Wind charge: right-click block → AOE wind burst (MC 1.21+
+      // Breeze drop). Wiki spec via wind_charge.makeWindChargeBurst:
+      // radius 2, knockback 1.2 with falloff, +0.3 upward lift.
+      // Was a custom 3-block radius with magnitudes 8/5/6 — much
+      // more aggressive than vanilla.
       if (heldName === 'wind_charge') {
         const cx = bx + 0.5,
           cy = by + 1,
           cz = bz + 0.5;
         for (let i = 0; i < 24; i++)
           blockParticles.emitPlace(
-            cx + (Math.random() - 0.5) * 3,
-            cy + Math.random() * 2,
-            cz + (Math.random() - 0.5) * 3,
+            cx + (Math.random() - 0.5) * 2,
+            cy + Math.random() * 1.5,
+            cz + (Math.random() - 0.5) * 2,
             [200, 220, 255],
           );
+        const burst = makeWindChargeBurst({ x: cx, y: cy, z: cz });
         for (const m of mobWorld.all()) {
-          const dx = m.position.x - cx;
-          const dy = m.position.y - cy;
-          const dz = m.position.z - cz;
-          const d2 = dx * dx + dy * dy + dz * dz;
-          if (d2 > 9) continue;
-          const len = Math.max(0.001, Math.sqrt(d2));
-          m.velocity.x += (dx / len) * 8;
-          m.velocity.y += 5;
-          m.velocity.z += (dz / len) * 8;
+          const kb = knockbackVector(burst, m.position);
+          if (kb === null) continue;
+          m.velocity.x += kb.x;
+          m.velocity.y += kb.y;
+          m.velocity.z += kb.z;
         }
-        // Player gets pushed away too.
-        const pdx = fp.position.x - cx;
-        const pdz = fp.position.z - cz;
-        const pd2 = pdx * pdx + pdz * pdz;
-        if (pd2 < 9) {
-          const len = Math.max(0.001, Math.sqrt(pd2));
-          fp.velocity.x += (pdx / len) * 6;
-          fp.velocity.y += 4;
-          fp.velocity.z += (pdz / len) * 6;
+        const pkb = knockbackVector(burst, fp.position);
+        if (pkb !== null) {
+          fp.velocity.x += pkb.x;
+          fp.velocity.y += pkb.y;
+          fp.velocity.z += pkb.z;
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const wcId = itemRegistry.byName('webmc:wind_charge');
           if (wcId !== undefined) consumeInventoryItem(wcId, 1);
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Wind charge!');
         return true;
       }
       // Trident with Riptide (active when player is in water OR rain): propel forward.
-      if (
-        heldName === 'trident' &&
-        (fp.inFluid === 'water' || currentWeather === 'rain' || currentWeather === 'thunder')
-      ) {
-        const look = fp.lookVector();
+      if (heldName === 'trident' && (fp.inFluid === 'water' || isRain || isThunder)) {
+        const look = fp.lookVector(eventLookTmp);
         const power = 18;
         fp.velocity.x += look.x * power;
         fp.velocity.y += look.y * power;
@@ -2150,8 +4215,12 @@ const interaction = new InteractionController(
             [180, 220, 255],
           );
         sfx.play('break');
+        hand.swing();
         subtitles.push('Riptide!');
         return true;
+      }
+      if (heldName === 'bow' || heldName === 'crossbow') {
+        return fireBowOrCrossbow();
       }
       // Snowball / egg: small visual hit at target, no projectile arc.
       if (heldName === 'snowball' || heldName === 'egg') {
@@ -2167,17 +4236,23 @@ const interaction = new InteractionController(
             cz + (Math.random() - 0.5) * 1.5,
             burstColor,
           );
-        // Knockback nearest mob within 2 blocks of impact (~1 dmg if egg, snowballs do 0 to most mobs but knock blaze/dragon).
+        // Knockback nearest mob within 2 blocks of impact. Wiki:
+        // snowballs deal 3 damage to blazes, 1 damage to the ender
+        // dragon, and 0 to everything else. Was 3 dmg to both blaze
+        // and dragon; corrected to dragon=1.
         for (const m of mobWorld.all()) {
           const dx = m.position.x - cx;
           const dy = m.position.y - cy;
           const dz = m.position.z - cz;
           if (dx * dx + dy * dy + dz * dz > 4) continue;
-          if (
-            heldName === 'snowball' &&
-            (m.def.kind === 'blaze' || m.def.kind === 'ender_dragon')
-          ) {
-            mobWorld.damage(m.id, 3);
+          let snowballDmg = 0;
+          if (heldName === 'snowball') {
+            if (m.def.kind === 'blaze') snowballDmg = 3;
+            else if (m.def.kind === 'ender_dragon') snowballDmg = 1;
+          }
+          if (snowballDmg > 0) {
+            const r = mobWorld.damage(m.id, snowballDmg);
+            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           } else {
             // Just knockback.
             const len = Math.max(0.001, Math.hypot(dx, dz));
@@ -2189,27 +4264,49 @@ const interaction = new InteractionController(
         // Egg: 12.5% chance to hatch a chicken at impact.
         if (heldName === 'egg' && Math.random() < 0.125) {
           try {
-            mobWorld.spawn('chicken', { x: cx, y: cy, z: cz });
+            mobSpawnPosScratch.x = cx;
+            mobSpawnPosScratch.y = cy;
+            mobSpawnPosScratch.z = cz;
+            mobWorld.spawn('chicken', mobSpawnPosScratch);
           } catch {
             /* ignore */
           }
           subtitles.push('Egg hatched!');
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const itemId = itemRegistry.byName(`webmc:${heldName}`);
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
         }
         sfx.play('click');
+        // Hand swing for projectile-style throws (snowball / egg). Vanilla
+        // animates the throw arm; was missing here so throws looked like
+        // teleporting particles with no avatar feedback.
+        hand.swing();
         return true;
       }
-      // Firework rocket while gliding → forward thrust boost.
+      // Firework rocket while gliding → forward thrust boost. Wiki
+      // formula via fireworkBoost: per-second impulse = 1.5×look +
+      // 0.5×current_velocity for `flightDuration*0.5+0.5` seconds.
+      // Was a constant 18×look kick with hardcoded y-dampening that
+      // ignored current velocity (so a fast glide and a slow glide
+      // got the same boost — wrong in vanilla).
       if (heldName === 'firework_rocket' && isGliding) {
-        const look = fp.lookVector();
-        const power = 18;
-        fp.velocity.x += look.x * power;
-        fp.velocity.y += look.y * power * 0.6;
-        fp.velocity.z += look.z * power;
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        const look = fp.lookVector(eventLookTmp);
+        const boost = fireworkBoost({
+          lookForward: { x: look.x, y: look.y, z: look.z },
+          // Default flightDuration=1 (gunpowder count). NBT-encoded
+          // multi-stage rockets are a separate wiring task.
+          flightDuration: 1,
+          currentVelocity: {
+            x: fp.velocity.x,
+            y: fp.velocity.y,
+            z: fp.velocity.z,
+          },
+        });
+        fp.velocity.x += boost.velocityDelta.x;
+        fp.velocity.y += boost.velocityDelta.y;
+        fp.velocity.z += boost.velocityDelta.z;
+        if (vitalsActive) {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
@@ -2221,6 +4318,7 @@ const interaction = new InteractionController(
             [255, 200, 100],
           );
         sfx.play('break');
+        hand.swing();
         subtitles.push('Firework boost!');
         return true;
       }
@@ -2257,11 +4355,12 @@ const interaction = new InteractionController(
             color,
           );
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const fwId = itemRegistry.byName('webmc:firework_rocket');
           if (fwId !== undefined) consumeInventoryItem(fwId, 1);
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Firework!');
         return true;
       }
@@ -2278,8 +4377,10 @@ const interaction = new InteractionController(
             const dy = m.position.y - cy;
             const dz = m.position.z - cz;
             if (dx * dx + dy * dy + dz * dz > 16) continue;
-            if (ptype.effect === 'instant_damage') mobWorld.damage(m.id, 6);
-            else if (ptype.effect === 'instant_health') mobWorld.damage(m.id, -4);
+            if (ptype.effect === 'instant_damage') {
+              const r = mobWorld.damage(m.id, 6);
+              if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
+            } else if (ptype.effect === 'instant_health') mobWorld.damage(m.id, -4);
             // Persistent effects on mobs not modeled; visual only.
             affected++;
           }
@@ -2305,12 +4406,13 @@ const interaction = new InteractionController(
               cz + (Math.random() - 0.5) * 4,
               [180, 100, 220],
             );
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const sId = itemRegistry.byName(`webmc:${heldName}`);
             if (sId !== undefined) consumeInventoryItem(sId, 1);
           }
           subtitles.push(`Splash potion (${affected})`);
           sfx.play('break');
+          hand.swing();
           return true;
         }
       }
@@ -2318,17 +4420,17 @@ const interaction = new InteractionController(
       if (heldName.endsWith('_spawn_egg') && airAbove) {
         const mobKind = heldName.replace(/_spawn_egg$/, '');
         try {
-          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], {
-            x: bx + 0.5,
-            y: by + 1,
-            z: bz + 0.5,
-          });
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          mobSpawnPosScratch.x = bx + 0.5;
+          mobSpawnPosScratch.y = by + 1;
+          mobSpawnPosScratch.z = bz + 0.5;
+          mobWorld.spawn(mobKind as Parameters<typeof mobWorld.spawn>[0], mobSpawnPosScratch);
+          if (vitalsActive) {
             const eggId = itemRegistry.byName(`webmc:${heldName}`);
             if (eggId !== undefined) consumeInventoryItem(eggId, 1);
           }
           subtitles.push(`Spawned ${mobKind}`);
           sfx.play('click');
+          hand.swing();
           return true;
         } catch {
           /* unknown mob kind */
@@ -2338,8 +4440,19 @@ const interaction = new InteractionController(
       if (heldName === 'ender_pearl') {
         if (airAbove) {
           fp.position.set(bx + 0.5, by + 1, bz + 0.5);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
-            playerState.takeDamage({ amount: 5, source: 'pearl' });
+          // Vanilla zeros velocity on pearl teleport — without this the
+          // player kept their pre-throw fall speed and started instantly
+          // taking fall damage at the destination.
+          fp.velocity.set(0, 0, 0);
+          if (vitalsActive) {
+            // Wiki: ender pearl teleport deals 5 damage on landing.
+            // slow_falling effect or feather_falling boots reduce / skip
+            // the damage. webmc tracks slow_falling as a status effect;
+            // feather_falling enchantment isn't tracked separately yet.
+            const slowFalling = playerState.effects.has('slow_falling');
+            if (!slowFalling) {
+              playerState.takeDamage({ amount: 5, source: 'pearl' });
+            }
             const pearlId = itemRegistry.byName('webmc:ender_pearl');
             if (pearlId !== undefined) consumeInventoryItem(pearlId, 1);
           }
@@ -2351,6 +4464,7 @@ const interaction = new InteractionController(
               [60, 200, 180],
             );
           sfx.play('click');
+          hand.swing();
           subtitles.push('Pearl warped');
           return true;
         }
@@ -2363,6 +4477,7 @@ const interaction = new InteractionController(
           touchWorldEdit(bx, by + 1, bz, fireId);
           consumeHeldToolDurability(1);
           sfx.play('click');
+          hand.swing();
           subtitles.push('Ignited');
           return true;
         }
@@ -2374,12 +4489,29 @@ const interaction = new InteractionController(
         if (fireId !== undefined) {
           world.set(bx, by + 1, bz, makeState(fireId, 0));
           touchWorldEdit(bx, by + 1, bz, fireId);
-          if (fcId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
-            consumeInventoryItem(fcId, 1);
+          if (fcId !== undefined && vitalsActive) consumeInventoryItem(fcId, 1);
           sfx.play('click');
+          hand.swing();
           subtitles.push('Ignited');
           return true;
         }
+      }
+      // Glass bottle on water: fill into water_bottle. The glass_bottle
+      // item shipped + water_bottle is registered, but the player had
+      // no way to obtain water_bottles outside potion-drinking. Wiki:
+      // right-click a water source to fill (does NOT consume the
+      // source block). Lava can't be bottled.
+      if (heldName === 'glass_bottle' && def.name === 'webmc:water') {
+        const wbId = itemRegistry.byName('webmc:water_bottle');
+        const gbId = itemRegistry.byName('webmc:glass_bottle');
+        if (wbId !== undefined && gbId !== undefined && vitalsActive) {
+          consumeInventoryItem(gbId, 1);
+          addOneToInventory(wbId);
+        }
+        sfx.play('click');
+        hand.swing();
+        subtitles.push('Filled water bottle');
+        return true;
       }
       // Bucket fill: right-click water/lava with empty bucket.
       if (heldName === 'bucket' && (def.name === 'webmc:water' || def.name === 'webmc:lava')) {
@@ -2387,13 +4519,15 @@ const interaction = new InteractionController(
         const filledItemId = itemRegistry.byName(filled);
         const emptyItemId = itemRegistry.byName('webmc:bucket');
         if (filledItemId !== undefined && emptyItemId !== undefined) {
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             consumeInventoryItem(emptyItemId, 1);
-            inventory.add({ itemId: filledItemId, count: 1, damage: 0 });
+            addOneToInventory(filledItemId);
           }
-          world.set(bx, by, bz, AIR);
+          // Drop fluid registration so the cell stops ticking + flowing.
+          fluidWorld.clear(bx, by, bz);
           touchWorldEdit(bx, by, bz, 0);
           sfx.play('click');
+          hand.swing();
           subtitles.push(def.name === 'webmc:water' ? 'Filled water bucket' : 'Filled lava bucket');
           return true;
         }
@@ -2402,15 +4536,16 @@ const interaction = new InteractionController(
       if (heldName === 'water_bucket' && def.name === 'webmc:fire') {
         world.set(bx, by, bz, AIR);
         touchWorldEdit(bx, by, bz, 0);
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const wbId = itemRegistry.byName('webmc:water_bucket');
           const eId = itemRegistry.byName('webmc:bucket');
           if (wbId !== undefined && eId !== undefined) {
             consumeInventoryItem(wbId, 1);
-            inventory.add({ itemId: eId, count: 1, damage: 0 });
+            addOneToInventory(eId);
           }
         }
         sfx.play('break');
+        hand.swing();
         subtitles.push('Extinguished fire');
         return true;
       }
@@ -2419,17 +4554,21 @@ const interaction = new InteractionController(
         const fluidName = heldName === 'water_bucket' ? 'webmc:water' : 'webmc:lava';
         const fluidId = registry.byName(fluidName);
         if (fluidId !== undefined) {
-          world.set(bx, by + 1, bz, makeState(fluidId, 0));
+          // Register source with FluidWorld so it actually flows on tick
+          // (setSource itself writes the world cell). Skipping this step
+          // was the long-standing bug where bucketed water sat still.
+          fluidWorld.setSource(bx, by + 1, bz, heldName === 'water_bucket' ? 'water' : 'lava');
           touchWorldEdit(bx, by + 1, bz, fluidId);
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const heldItemId = itemRegistry.byName(`webmc:${heldName}`);
             const emptyId = itemRegistry.byName('webmc:bucket');
             if (heldItemId !== undefined && emptyId !== undefined) {
               consumeInventoryItem(heldItemId, 1);
-              inventory.add({ itemId: emptyId, count: 1, damage: 0 });
+              addOneToInventory(emptyId);
             }
           }
           sfx.play('place');
+          hand.swing();
           subtitles.push(heldName === 'water_bucket' ? 'Placed water' : 'Placed lava');
           return true;
         }
@@ -2445,33 +4584,12 @@ const interaction = new InteractionController(
         }
         playerState.eat(2, 0.4);
         sfx.play('click');
+        hand.swing();
         subtitles.push('Ate cake slice');
         return true;
       }
       // Composter: right-click with compostable food/plant → fill chance per item.
       if (def.name === 'webmc:composter') {
-        const COMPOSTABLES: Record<string, number> = {
-          wheat: 0.65,
-          wheat_seeds: 0.3,
-          beetroot_seeds: 0.3,
-          melon_seeds: 0.3,
-          pumpkin_seeds: 0.3,
-          carrot: 0.65,
-          potato: 0.65,
-          beetroot: 0.65,
-          apple: 0.65,
-          bread: 0.85,
-          cookie: 0.85,
-          cactus: 0.5,
-          sugar_cane: 0.5,
-          kelp: 0.3,
-          dried_kelp: 0.85,
-          sweet_berries: 0.3,
-          glow_berries: 0.3,
-          melon_slice: 0.5,
-          pumpkin_pie: 1.0,
-          baked_potato: 0.85,
-        };
         const chance = COMPOSTABLES[heldName];
         if (chance !== undefined) {
           if (Math.random() < chance) {
@@ -2479,7 +4597,7 @@ const interaction = new InteractionController(
             if (props >= 8) {
               // Output bone meal.
               const bmId = itemRegistry.byName('webmc:bone_meal');
-              if (bmId !== undefined) inventory.add({ itemId: bmId, count: 1, damage: 0 });
+              if (bmId !== undefined) addOneToInventory(bmId);
               world.set(bx, by, bz, makeState(id, 0));
               subtitles.push('Composter full → 1 bone meal');
             } else {
@@ -2489,31 +4607,25 @@ const interaction = new InteractionController(
           } else {
             subtitles.push('Compost failed');
           }
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+          if (vitalsActive) {
             const itemId = itemRegistry.byName(`webmc:${heldName}`);
             if (itemId !== undefined) consumeInventoryItem(itemId, 1);
           }
           sfx.play('click');
+          // Composter consume animation was missing the hand swing.
+          hand.swing();
           return true;
         }
       }
       // Plant crops on farmland: seeds/carrot/potato/beetroot_seeds with farmland target → place crop block above.
       if (def.name === 'webmc:farmland' && airAbove) {
-        const PLANT_MAP: Record<string, string> = {
-          wheat_seeds: 'webmc:wheat',
-          beetroot_seeds: 'webmc:beetroots',
-          carrot: 'webmc:carrots',
-          potato: 'webmc:potatoes',
-          torchflower_seeds: 'webmc:torchflower_crop',
-          pitcher_pod: 'webmc:pitcher_crop',
-        };
         const cropName = PLANT_MAP[heldName];
         if (cropName !== undefined) {
           const cropId = registry.byName(cropName);
           if (cropId !== undefined) {
             world.set(bx, by + 1, bz, makeState(cropId, 0));
             touchWorldEdit(bx, by + 1, bz, cropId);
-            if (gameMode === 'survival' || gameMode === 'adventure') {
+            if (vitalsActive) {
               const itemId = itemRegistry.byName(`webmc:${heldName}`);
               if (itemId !== undefined) consumeInventoryItem(itemId, 1);
             }
@@ -2525,48 +4637,14 @@ const interaction = new InteractionController(
       }
       // Bone meal on sapling: 50% advance growth → instant tree (simplified: replace sapling with 4-tall log+leaves).
       if (heldName === 'bone_meal' && def.name.endsWith('_sapling') && Math.random() < 0.5) {
-        const wood = def.name.replace('webmc:', '').replace('_sapling', '');
-        const logId = registry.byName(`webmc:${wood}_log`);
-        const leavesId =
-          registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
-        if (logId !== undefined && leavesId !== undefined) {
-          const trunkH = 4 + Math.floor(Math.random() * 3);
-          for (let h = 0; h < trunkH; h++) {
-            const above = world.get(bx, by + h, bz);
-            if (above === AIR || registry.get(stateId(above)).name.endsWith('_sapling')) {
-              world.set(bx, by + h, bz, makeState(logId, 0));
-              touchWorldEdit(bx, by + h, bz, logId);
-            }
-          }
-          for (let dx = -2; dx <= 2; dx++) {
-            for (let dz = -2; dz <= 2; dz++) {
-              for (let dy = trunkH - 2; dy <= trunkH; dy++) {
-                if (dx === 0 && dz === 0 && dy < trunkH) continue;
-                if (Math.abs(dx) + Math.abs(dz) > 3) continue;
-                const lx = bx + dx,
-                  ly = by + dy,
-                  lz = bz + dz;
-                if (world.get(lx, ly, lz) !== AIR) continue;
-                if (Math.random() < 0.85) {
-                  world.set(lx, ly, lz, makeState(leavesId, 0));
-                  touchWorldEdit(lx, ly, lz, leavesId);
-                }
-              }
-            }
-          }
-          if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (growTreeAt(bx, by, bz, def.name)) {
+          if (vitalsActive) {
             const bmId = itemRegistry.byName('webmc:bone_meal');
             if (bmId !== undefined) consumeInventoryItem(bmId, 1);
           }
-          for (let i = 0; i < 18; i++)
-            blockParticles.emitPlace(
-              bx + (Math.random() - 0.5) * 3,
-              by + Math.random() * trunkH,
-              bz + (Math.random() - 0.5) * 3,
-              [200, 220, 80],
-            );
           subtitles.push('Tree grown');
           sfx.play('place');
+          hand.swing();
           return true;
         }
       }
@@ -2579,26 +4657,19 @@ const interaction = new InteractionController(
           def.name === 'webmc:beetroots')
       ) {
         // Drop the corresponding harvested item.
-        const dropMap: Record<string, string[]> = {
-          'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
-          'webmc:carrots': ['webmc:carrot'],
-          'webmc:potatoes': ['webmc:potato'],
-          'webmc:beetroots': ['webmc:beetroot', 'webmc:beetroot_seeds'],
-        };
-        const drops = dropMap[def.name] ?? [];
+        const drops = BONEMEAL_DROP_MAP[def.name] ?? [];
         for (const dropName of drops) {
           const dropId = itemRegistry.byName(dropName);
           if (dropId === undefined) continue;
           const count = 1 + Math.floor(Math.random() * 3);
-          inventory.add({ itemId: dropId, count, damage: 0 });
+          addToInventory(dropId, count);
         }
         // Replace crop with farmland.
-        const farmlandId = registry.byName('webmc:farmland');
-        if (farmlandId !== undefined) {
-          world.set(bx, by, bz, makeState(farmlandId, 0));
-          touchWorldEdit(bx, by, bz, farmlandId);
+        if (farmlandIdCached !== undefined) {
+          world.set(bx, by, bz, makeState(farmlandIdCached, 0));
+          touchWorldEdit(bx, by, bz, farmlandIdCached);
         }
-        if (gameMode === 'survival' || gameMode === 'adventure') {
+        if (vitalsActive) {
           const bmId = itemRegistry.byName('webmc:bone_meal');
           if (bmId !== undefined) consumeInventoryItem(bmId, 1);
         }
@@ -2610,21 +4681,94 @@ const interaction = new InteractionController(
             [200, 220, 80],
           );
         subtitles.push('Crop matured');
+        hand.swing();
         return true;
+      }
+      // Bone meal on bamboo: grow 1-2 stalks immediately (vanilla).
+      if (heldName === 'bone_meal' && def.name === 'webmc:bamboo') {
+        const bambooId = id;
+        // Walk both up and down from the clicked stalk so the height
+        // cap counts the full column, not just from-click-up. Was
+        // letting players bone-meal middle-of-column past the 16-cap.
+        let topY = by;
+        for (let h = 1; h <= 16; h++) {
+          const above = world.get(bx, by + h, bz);
+          if (above === AIR) break;
+          if (stateId(above) !== bambooIdCached) break;
+          topY = by + h;
+        }
+        let bottomY = by;
+        for (let h = 1; h <= 16; h++) {
+          const below = world.get(bx, by - h, bz);
+          if (below === AIR) break;
+          if (stateId(below) !== bambooIdCached) break;
+          bottomY = by - h;
+        }
+        const totalHeight = topY - bottomY + 1;
+        if (totalHeight < 16) {
+          const grow = 1 + Math.floor(Math.random() * 2);
+          let added = 0;
+          for (let h = 1; h <= grow; h++) {
+            const target = topY + h;
+            if (world.get(bx, target, bz) !== AIR) break;
+            world.set(bx, target, bz, makeState(bambooId, 0));
+            touchWorldEdit(bx, target, bz, bambooId);
+            added++;
+          }
+          if (added > 0) {
+            if (vitalsActive) {
+              const bmId = itemRegistry.byName('webmc:bone_meal');
+              if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+            }
+            sfx.play('place');
+            hand.swing();
+            return true;
+          }
+        }
+      }
+      // Bone meal on sugar_cane: grow up to 3 stalks (vanilla parity).
+      if (heldName === 'bone_meal' && def.name === 'webmc:sugar_cane') {
+        const caneId = id;
+        let topY = by;
+        for (let h = 1; h <= 3; h++) {
+          const above = world.get(bx, by + h, bz);
+          if (above === AIR) break;
+          if (stateId(above) !== sugarCaneIdCached) break;
+          topY = by + h;
+        }
+        let bottomY = by;
+        for (let h = 1; h <= 3; h++) {
+          const below = world.get(bx, by - h, bz);
+          if (below === AIR) break;
+          if (stateId(below) !== sugarCaneIdCached) break;
+          bottomY = by - h;
+        }
+        const totalHeight = topY - bottomY + 1;
+        if (totalHeight < 3 && world.get(bx, topY + 1, bz) === AIR) {
+          world.set(bx, topY + 1, bz, makeState(caneId, 0));
+          touchWorldEdit(bx, topY + 1, bz, caneId);
+          if (vitalsActive) {
+            const bmId = itemRegistry.byName('webmc:bone_meal');
+            if (bmId !== undefined) consumeInventoryItem(bmId, 1);
+          }
+          sfx.play('place');
+          hand.swing();
+          return true;
+        }
       }
       if (heldName === 'bone_meal' && def.name === 'webmc:grass_block' && airAbove) {
         const result = applyBoneMeal({ kind: 'grass_block', hasSpace: true }, Math.random);
         if (result.consumed && result.spawnFlora) {
-          const FLOWERS = [
-            'webmc:dandelion',
-            'webmc:poppy',
-            'webmc:blue_orchid',
-            'webmc:allium',
-            'webmc:azure_bluet',
-            'webmc:oxeye_daisy',
-            'webmc:cornflower',
-            'webmc:lily_of_the_valley',
-          ];
+          // Biome-aware flower pool per wiki: plains/forest/swamp/etc.
+          // each has a distinct flower set (swamp = blue_orchid only,
+          // flower_forest = full variety, etc.). Was a hardcoded
+          // 8-flower list ignoring biome — bone-mealing in a swamp
+          // produced cornflowers (which don't naturally exist there).
+          const biomeId = generator.biomeAt(bx, bz);
+          const biomeName = biomeId === 1 ? 'forest' : 'plains';
+          // Filter the pool to flowers actually registered locally.
+          const FLOWERS = flowerPoolFor(biomeName).filter((n) => registry.byName(n) !== undefined);
+          if (FLOWERS.length === 0) FLOWERS.push('webmc:dandelion');
           let spawned = 0;
           for (const f of result.spawnFlora) {
             const tx = bx + f.x;
@@ -2649,8 +4793,7 @@ const interaction = new InteractionController(
           }
           if (spawned > 0) {
             const itemId = itemRegistry.byName('webmc:bone_meal');
-            if (itemId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
-              consumeInventoryItem(itemId, 1);
+            if (itemId !== undefined && vitalsActive) consumeInventoryItem(itemId, 1);
             for (let i = 0; i < 12; i++)
               blockParticles.emitPlace(
                 bx + (Math.random() - 0.5) * 4,
@@ -2659,21 +4802,27 @@ const interaction = new InteractionController(
                 [200, 220, 80],
               );
             subtitles.push('Bone meal applied');
+            hand.swing();
             return true;
           }
         }
       }
-      // Doors / trapdoors / levers / buttons: toggle the "powered/open" bit.
+      // Doors / trapdoors / levers / buttons / fence gates: toggle the
+      // "powered/open" bit. Fence gates were missing — players couldn't
+      // open them by right-click, so any fenced enclosure with a gate
+      // was effectively a permanent fence.
       const interactable =
         def.name.endsWith('_door') ||
         def.name.endsWith('_trapdoor') ||
         def.name.endsWith('_button') ||
         def.name.endsWith('_pressure_plate') ||
+        def.name.endsWith('_fence_gate') ||
         def.name === 'webmc:lever';
       if (interactable) {
         const props = (state >>> 16) ^ 1;
         world.set(bx, by, bz, makeState(id, props));
         sfx.play('click');
+        hand.swing();
         touchWorldEdit(bx, by, bz, id);
         return true;
       }
@@ -2685,6 +4834,15 @@ const interaction = new InteractionController(
         def.name.endsWith('_shulker_box') ||
         def.name === 'webmc:shulker_box'
       ) {
+        // Vanilla "shiftBypassesUse": sneaking while holding a placeable
+        // block bypasses the chest open so you can stack blocks on top
+        // of the chest. Without this, you couldn't put a torch on top of
+        // your chest in survival without alt-tabbing the chest UI shut.
+        const heldStack = inventory.hotbar[inventory.selectedHotbar] ?? null;
+        const heldIsPlaceable =
+          heldStack !== null && itemRegistry.get(heldStack.itemId).blockId !== undefined;
+        if (fp.input.sneak && heldIsPlaceable) return false;
+        chestUI.setStorage(getChestStorage(def.name, bx, by, bz));
         chestUI.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
@@ -2696,46 +4854,122 @@ const interaction = new InteractionController(
         return true;
       }
       if (def.name === 'webmc:bed') {
+        // Setting spawn always works regardless of mob proximity — vanilla
+        // does the same: clicking the bed even during the day saves the
+        // spawn. Sleep-through-night additionally needs no hostile mobs
+        // within 8 blocks (MC behaviour).
         playerSpawnPoint = { x: bx + 0.5, y: by + 1, z: bz + 0.5 };
         void persistDB.setMeta('playerSpawnPoint', playerSpawnPoint);
         if (!dayNight.isDay) {
+          let mobNearby = false;
+          for (const m of mobWorld.all()) {
+            // Module-scope BED_SLEEP_HOSTILE_KINDS Set — was a fresh
+            // 20-string Set per right-click on a bed at night.
+            if (!BED_SLEEP_HOSTILE_KINDS.has(m.def.kind)) continue;
+            const dx = m.position.x - (bx + 0.5);
+            const dy = m.position.y - (by + 0.5);
+            const dz = m.position.z - (bz + 0.5);
+            if (dx * dx + dy * dy + dz * dz <= 64) {
+              mobNearby = true;
+              break;
+            }
+          }
+          if (mobNearby) {
+            chatInput.addLine('You may not rest now; there are monsters nearby.', '#ffd080');
+            toast.show('Spawn set', '#ffb0c0', 1200);
+            sfx.play('click');
+            return true;
+          }
           dayNight.setTimeOfDayTicks(1000);
-          toast.show(`Spawn set. Day ${String(++dayCounter)}`, '#ffb0c0');
+          // The day-cycle watcher in frame() does dayCounter++ when
+          // isDay becomes true; show that pending value here without
+          // mutating dayCounter ourselves (was double-counting on sleep).
+          toast.show(`Spawn set. Day ${String(dayCounter + 1)}`, '#ffb0c0');
           chatInput.addLine('You sleep. Dawn arrives.', '#d0d0ff');
+          lastSleepDay = dayCounter;
+          // Vanilla heals the sleeper to full HP if hunger >= 9 (no hunger
+          // restored). Sleep also clears the on-fire timer. Without this,
+          // beds were just a spawn-setter — the heal-on-rest gameplay loop
+          // (which makes early-game sustainable) didn't exist.
+          if (playerState.hunger >= 9) {
+            playerState.health = 20;
+          }
+          playerState.fireRemainingSec = 0;
+          // Vanilla also clears rain/thunder when sleeping through night.
+          // Without this, sleeping during a thunderstorm woke you to the
+          // same storm — no escape from a multi-day storm except waiting.
+          if (currentWeather !== 'clear') setWeather('clear');
+          // Cancel any in-flight phantom approach — vanilla resets the
+          // since-slept counter when sleeping.
         } else {
           toast.show('Spawn set', '#ffb0c0', 1200);
         }
         sfx.play('click');
         return true;
       }
-      const WORKSTATIONS = new Set([
-        'webmc:crafting_table',
-        'webmc:furnace',
-        'webmc:smoker',
-        'webmc:blast_furnace',
-        'webmc:enchanting_table',
-        'webmc:anvil',
-        'webmc:chipped_anvil',
-        'webmc:damaged_anvil',
-        'webmc:smithing_table',
-        'webmc:fletching_table',
-        'webmc:cartography_table',
-        'webmc:loom',
-        'webmc:grindstone',
-        'webmc:stonecutter',
-        'webmc:lectern',
-        'webmc:brewing_stand',
-        'webmc:beacon',
-        'webmc:respawn_anchor',
-        'webmc:lodestone',
-        'webmc:conduit',
-      ]);
-      if (WORKSTATIONS.has(def.name)) {
-        if (gameMode === 'survival' || gameMode === 'adventure') survivalInv.show();
+      // Pre-resolved at module scope (WORKSTATION_BY_ID) — was a fresh
+      // 20-string Set per right-click.
+      if (WORKSTATION_BY_ID[id] === 1) {
+        // Sneak+placeable bypasses workstation open too (vanilla parity).
+        const heldStack = inventory.hotbar[inventory.selectedHotbar] ?? null;
+        const heldIsPlaceable =
+          heldStack !== null && itemRegistry.get(heldStack.itemId).blockId !== undefined;
+        if (fp.input.sneak && heldIsPlaceable) return false;
+        if (vitalsActive) survivalInv.show();
         else creativeInv.show();
         fp.inputBlocked = true;
         document.exitPointerLock();
         sfx.play('click');
+        return true;
+      }
+      return false;
+    },
+    onAirInteract: () => {
+      // Right-click into the open sky / void (no block hit). Bow firing
+      // works here too — vanilla shoots wherever you're aimed. Spectator
+      // is gated out (matches the onInteract spectator gate).
+      if (isSpectator) return false;
+      const heldName = heldNameLower();
+      if (heldName === 'bow' || heldName === 'crossbow') {
+        return fireBowOrCrossbow();
+      }
+      // Snowball / egg / ender_pearl thrown into the air — project the
+      // impact point along the look ray. Vanilla mechanics. Without
+      // this, throwing snowballs at the sky did nothing because the
+      // onInteract path required a target block.
+      if (heldName === 'snowball' || heldName === 'egg' || heldName === 'ender_pearl') {
+        const look = fp.lookVector(eventLookTmp);
+        const impactDist = 30;
+        const ix = fp.position.x + look.x * impactDist;
+        const iy = fp.position.y + look.y * impactDist;
+        const iz = fp.position.z + look.z * impactDist;
+        for (let k = 0; k < 8; k++) {
+          const t = (k + 1) / 9;
+          blockParticles.emitPlace(
+            fp.position.x + (ix - fp.position.x) * t,
+            fp.position.y + (iy - fp.position.y) * t,
+            fp.position.z + (iz - fp.position.z) * t,
+            heldName === 'snowball'
+              ? [240, 250, 255]
+              : heldName === 'egg'
+                ? [240, 220, 180]
+                : [60, 200, 180],
+          );
+        }
+        if (vitalsActive) {
+          const itemId = itemRegistry.byName(`webmc:${heldName}`);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+        }
+        sfx.play('click');
+        hand.swing();
+        if (heldName === 'ender_pearl') {
+          // Air-pearl: just consume + impact particles, no teleport
+          // (no surface to land on). Match vanilla — pearl hitting only
+          // sky is effectively wasted.
+          subtitles.push('Pearl flew off');
+        } else {
+          subtitles.push(heldName === 'snowball' ? 'Snowball thrown' : 'Egg thrown');
+        }
         return true;
       }
       return false;
@@ -2750,33 +4984,204 @@ function countInventoryItem(itemId: number): number {
   return total;
 }
 
+// Grow a tree by replacing a sapling with a 4-6 log trunk + leaf canopy.
+// Pulled out of the bone-meal handler so the random-tick path can call it
+// too — saplings shipped with no growth wiring, so a planted sapling just
+// stayed a knee-high stick forever unless you bone-mealed it.
+function growTreeAt(bx: number, by: number, bz: number, saplingName: string): boolean {
+  const wood = saplingName.replace('webmc:', '').replace('_sapling', '');
+  const logId = registry.byName(`webmc:${wood}_log`);
+  const leavesId = registry.byName(`webmc:${wood}_leaves`) ?? registry.byName('webmc:oak_leaves');
+  if (logId === undefined || leavesId === undefined) return false;
+  const trunkH = 4 + Math.floor(Math.random() * 3);
+  for (let h = 0; h < trunkH; h++) {
+    const above = world.get(bx, by + h, bz);
+    // IS_SAPLING table is pre-resolved at module init — skip the
+    // registry.get(...).name string fetch + endsWith check per cell.
+    if (above === AIR || IS_SAPLING[stateId(above)] === 1) {
+      world.set(bx, by + h, bz, makeState(logId, 0));
+      touchWorldEdit(bx, by + h, bz, logId);
+    }
+  }
+  for (let dx = -2; dx <= 2; dx++) {
+    for (let dz = -2; dz <= 2; dz++) {
+      for (let dy = trunkH - 2; dy <= trunkH; dy++) {
+        if (dx === 0 && dz === 0 && dy < trunkH) continue;
+        if (Math.abs(dx) + Math.abs(dz) > 3) continue;
+        const lx = bx + dx;
+        const ly = by + dy;
+        const lz = bz + dz;
+        if (world.get(lx, ly, lz) !== AIR) continue;
+        if (Math.random() < 0.85) {
+          world.set(lx, ly, lz, makeState(leavesId, 0));
+          touchWorldEdit(lx, ly, lz, leavesId);
+        }
+      }
+    }
+  }
+  for (let i = 0; i < 18; i++)
+    blockParticles.emitPlace(
+      bx + (Math.random() - 0.5) * 3,
+      by + Math.random() * trunkH,
+      bz + (Math.random() - 0.5) * 3,
+      [200, 220, 80],
+    );
+  return true;
+}
+
+// Bow / crossbow instant-hit hitscan. Was registered as an item since
+// M2 but never wired to fire — drawing a bow did nothing. Vanilla has
+// draw-charge + arc, but webmc trades that for hitscan matching how
+// snowball/egg already work. Damage = 6 (full-draw ceil(speed*2) from
+// arrow_trajectory). Consumes 1 arrow in survival/adventure (creative
+// is free), bow loses 1 durability. Called from both onInteract (when
+// aimed at a block) and onAirInteract (firing into the open sky).
+function fireBowOrCrossbow(): boolean {
+  const arrowId = itemRegistry.byName('webmc:arrow');
+  const isSurvival = vitalsActive;
+  // Vanilla checks both main inventory AND offhand for arrows. webmc was
+  // hotbar+main only, so a stack of arrows in the offhand silently
+  // failed to fire — players had to manually swap them to hotbar first.
+  const arrowInOffhand =
+    arrowId !== undefined && inventory.offhand?.itemId === arrowId && inventory.offhand.count > 0;
+  if (
+    isSurvival &&
+    (arrowId === undefined || (countInventoryItem(arrowId) === 0 && !arrowInOffhand))
+  ) {
+    subtitles.push('Out of arrows');
+    return false;
+  }
+  const origin = camera.position;
+  const look = fp.lookVector(eventLookTmp);
+  let bestId: number | null = null;
+  let bestDist = Infinity;
+  for (const m of mobWorld.all()) {
+    mobAabbScratch.minX = m.position.x - m.def.aabb.halfX;
+    mobAabbScratch.minY = m.position.y - m.def.aabb.halfY;
+    mobAabbScratch.minZ = m.position.z - m.def.aabb.halfZ;
+    mobAabbScratch.maxX = m.position.x + m.def.aabb.halfX;
+    mobAabbScratch.maxY = m.position.y + m.def.aabb.halfY;
+    mobAabbScratch.maxZ = m.position.z + m.def.aabb.halfZ;
+    const hit = intersectRayAABB(origin, look, mobAabbScratch, 50);
+    if (hit && hit.tMin < bestDist) {
+      bestDist = hit.tMin;
+      bestId = m.id;
+    }
+  }
+  const dmg = 6;
+  if (bestId !== null) {
+    const result = mobWorld.damage(bestId, dmg);
+    if (result) {
+      damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
+      const ix = origin.x + look.x * bestDist;
+      const iy = origin.y + look.y * bestDist;
+      const iz = origin.z + look.z * bestDist;
+      for (let k = 0; k < 6; k++) {
+        const t = (k + 1) / 7;
+        blockParticles.emitPlace(
+          origin.x + (ix - origin.x) * t,
+          origin.y + (iy - origin.y) * t,
+          origin.z + (iz - origin.z) * t,
+          [220, 200, 160],
+        );
+      }
+      if (result.killed) {
+        spawnMobDrops(result.kind, result.position);
+        const xpAmount = rollMobXpFor(result.kind, Math.random);
+        for (const chunk of splitXp(xpAmount)) {
+          xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
+        }
+        playerStats.mobsKilled++;
+      }
+    }
+  } else {
+    for (let k = 0; k < 6; k++) {
+      const t = ((k + 1) / 7) * 20;
+      blockParticles.emitPlace(
+        origin.x + look.x * t,
+        origin.y + look.y * t,
+        origin.z + look.z * t,
+        [220, 200, 160],
+      );
+    }
+  }
+  if (isSurvival && arrowId !== undefined) {
+    // Vanilla pulls from main first, then offhand. Match that order so
+    // hotbar arrows deplete before offhand backup quivers.
+    if (countInventoryItem(arrowId) > 0) {
+      consumeInventoryItem(arrowId, 1);
+    } else if (arrowInOffhand && inventory.offhand) {
+      const after = inventory.offhand.count - 1;
+      inventory.offhand = after > 0 ? { ...inventory.offhand, count: after } : null;
+    }
+  }
+  consumeHeldToolDurability(1);
+  sfx.play('break');
+  hand.swing();
+  return true;
+}
+
 function consumeInventoryItem(itemId: number, count: number): boolean {
   let remaining = count;
-  const go = (slots: (typeof inventory.hotbar)[number][]): void => {
-    for (let i = 0; i < slots.length && remaining > 0; i++) {
-      const s = slots[i];
+  // Inline both pool walks — was allocating a `go` arrow closure
+  // (capturing remaining + itemId) per call. Hot path: every food
+  // eaten / arrow fired / torch placed / ingredient brewed.
+  const hotbar = inventory.hotbar;
+  for (let i = 0; i < hotbar.length && remaining > 0; i++) {
+    const s = hotbar[i];
+    if (s?.itemId !== itemId) continue;
+    const take = Math.min(s.count, remaining);
+    const after = s.count - take;
+    hotbar[i] = after <= 0 ? null : { ...s, count: after };
+    remaining -= take;
+  }
+  if (remaining > 0) {
+    const main = inventory.main;
+    for (let i = 0; i < main.length && remaining > 0; i++) {
+      const s = main[i];
       if (s?.itemId !== itemId) continue;
       const take = Math.min(s.count, remaining);
       const after = s.count - take;
-      slots[i] = after <= 0 ? null : { ...s, count: after };
+      main[i] = after <= 0 ? null : { ...s, count: after };
       remaining -= take;
     }
-  };
-  go(inventory.hotbar);
-  if (remaining > 0) go(inventory.main);
+  }
   return remaining === 0;
 }
 interaction.attach(canvas);
 interaction.selectedBlock = STONE;
 
+// Right-click release cancels in-progress eating. Listen on window so
+// releasing outside the canvas also stops eating (otherwise the player
+// could "eat" forever by releasing off-canvas, with no consume).
+window.addEventListener('mouseup', (e) => {
+  if (e.button === 2 && rightClickHeldForEat) {
+    cancelEating(eatState);
+    rightClickHeldForEat = false;
+  }
+});
+
 let lastPlayerAttackAt = 0;
+// Memoize attack-charge-ms by held-name. Called every frame from
+// crosshair.setCooldown — was running 12+ string .includes() per call
+// for a stable per-tool result. The cache grows only with distinct
+// tool name strings (~100 max).
+const HELD_ATTACK_CHARGE_MS_CACHE = new Map<string, number>();
 function heldAttackFullChargeMs(heldName: string): number {
+  const cached = HELD_ATTACK_CHARGE_MS_CACHE.get(heldName);
+  if (cached !== undefined) return cached;
   let attacksPerSec = 4.0;
   if (heldName.includes('sword')) attacksPerSec = 1.6;
-  else if (heldName.includes('netherite_axe')) attacksPerSec = 1.0;
-  else if (heldName.includes('axe'))
-    attacksPerSec = heldName.includes('wood') || heldName.includes('gold') ? 0.8 : 0.9;
-  else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
+  else if (heldName.includes('axe')) {
+    // Wiki Java axe attack speeds: wood/stone 0.8, iron 0.9,
+    // gold/diamond/netherite 1.0. Was wood/gold→0.8 + everyone-else→0.9
+    // (so gold/diamond came out 0.8/0.9 instead of 1.0/1.0, and stone
+    // came out 0.9 instead of 0.8).
+    if (heldName.includes('netherite') || heldName.includes('diamond') || heldName.includes('gold'))
+      attacksPerSec = 1.0;
+    else if (heldName.includes('iron')) attacksPerSec = 0.9;
+    else attacksPerSec = 0.8; // wood, stone
+  } else if (heldName.includes('pickaxe')) attacksPerSec = 1.2;
   else if (heldName.includes('shovel')) attacksPerSec = 1.0;
   else if (heldName.includes('hoe')) {
     if (heldName.includes('netherite') || heldName.includes('diamond')) attacksPerSec = 4.0;
@@ -2785,7 +5190,9 @@ function heldAttackFullChargeMs(heldName: string): number {
     else attacksPerSec = 1.0;
   } else if (heldName.includes('trident')) attacksPerSec = 1.1;
   else if (heldName.includes('mace')) attacksPerSec = 0.5;
-  return Math.max(50, 1000 / attacksPerSec);
+  const result = Math.max(50, 1000 / attacksPerSec);
+  HELD_ATTACK_CHARGE_MS_CACHE.set(heldName, result);
+  return result;
 }
 window.addEventListener('mousemove', (e) => {
   if (document.pointerLockElement !== canvas) return;
@@ -2794,9 +5201,12 @@ window.addEventListener('mousemove', (e) => {
 
 canvas.addEventListener('mousedown', (e) => {
   if (document.pointerLockElement !== canvas) return;
+  // Spectator: no entity / world right-click interactions. Mob feed,
+  // tame, leash, saddle, name-tag, hold-to-eat all bypass otherwise.
+  if (e.button === 2 && isSpectator) return;
   if (e.button === 2) {
     // Right-click: if aimed at a mob, try feed → tame → leash with held item.
-    const aimLook = fp.lookVector();
+    const aimLook = fp.lookVector(eventLookTmp);
     let aimedMob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M | null : null =
       null;
     let bestDist = Infinity;
@@ -2816,8 +5226,116 @@ canvas.addEventListener('mousedown', (e) => {
       const sel = hotbar.selected;
       const heldName = sel ? `webmc:${sel.name.toLowerCase()}` : '';
       const kind = aimedMob.def.kind;
+      // Cow / goat milking: empty bucket → milk_bucket. Vanilla mechanic
+      // never wired in webmc — players had no way to make milk despite
+      // milk_bucket being a registered item used by 5 recipes (cake)
+      // and the all-effects-clear cure.
+      if (
+        heldName === 'webmc:bucket' &&
+        (kind === 'cow' || kind === 'goat' || kind === 'mooshroom')
+      ) {
+        const milkId = itemRegistry.byName('webmc:milk_bucket');
+        const stewId = itemRegistry.byName('webmc:mushroom_stew');
+        const bucketId = itemRegistry.byName('webmc:bucket');
+        if (kind === 'mooshroom' && stewId !== undefined && bucketId !== undefined) {
+          if (vitalsActive) {
+            consumeInventoryItem(bucketId, 1);
+          }
+          addOneToInventory(stewId);
+          chatInput.addLine('Got mushroom stew', '#a0e0ff');
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+        if (milkId !== undefined && bucketId !== undefined) {
+          if (vitalsActive) {
+            consumeInventoryItem(bucketId, 1);
+          }
+          addOneToInventory(milkId);
+          chatInput.addLine(`Milked ${kind}`, '#a0e0ff');
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+      }
+      // Cookie kills parrots (instant). Wiki: cookies are toxic to
+      // parrots; feeding one kills the parrot immediately. Was unwired
+      // — cookies on parrots silently fell through to the breed-food
+      // path and did nothing.
+      if (heldName === 'webmc:cookie' && kind === 'parrot') {
+        mobWorld.damage(aimedMob.id, 9999);
+        chatInput.addLine('Cookie poisoned the parrot', '#ff8080');
+        if (vitalsActive) {
+          const cookieId = itemRegistry.byName('webmc:cookie');
+          if (cookieId !== undefined) consumeInventoryItem(cookieId, 1);
+        }
+        sfx.play('break');
+        hand.swing();
+        return;
+      }
+      // Sheep shearing: shears + sheep → wool drops + sheep marked sheared.
+      if (heldName === 'webmc:shears' && kind === 'sheep') {
+        const woolId = itemRegistry.byName('webmc:wool');
+        if (woolId !== undefined) {
+          addToInventory(woolId, 1 + Math.floor(Math.random() * 3));
+          chatInput.addLine('Sheared sheep', '#e0e0e0');
+          consumeHeldToolDurability(1);
+          sfx.play('click');
+          hand.swing();
+          return;
+        }
+      }
+      // Snow golem shearing: shears + snow_golem → drops the pumpkin
+      // hat. Vanilla mechanic — was unwired despite shears + snow_golem
+      // both being valid in webmc.
+      if (heldName === 'webmc:shears' && kind === 'snow_golem') {
+        const pumpkinId = itemRegistry.byName('webmc:carved_pumpkin');
+        if (pumpkinId !== undefined) addOneToInventory(pumpkinId);
+        chatInput.addLine('Sheared snow golem (head dropped)', '#e0e0e0');
+        consumeHeldToolDurability(1);
+        sfx.play('click');
+        hand.swing();
+        return;
+      }
+      // Mooshroom shearing: shears + mooshroom → 5 red mushrooms +
+      // mooshroom turns into a regular cow. Vanilla mechanic.
+      if (heldName === 'webmc:shears' && kind === 'mooshroom') {
+        const mushId = itemRegistry.byName('webmc:red_mushroom');
+        if (mushId !== undefined) {
+          addToInventory(mushId, 5);
+        }
+        // Replace mooshroom with cow at the same position.
+        try {
+          mobWorld.spawn('cow', aimedMob.position);
+        } catch {
+          /* cow not registered, leave mooshroom alone */
+        }
+        mobWorld.remove(aimedMob.id);
+        chatInput.addLine('Sheared mooshroom → cow', '#e0a0a0');
+        consumeHeldToolDurability(1);
+        sfx.play('click');
+        hand.swing();
+        return;
+      }
       const breedFood = BREED_FOOD[kind];
       if (breedFood?.includes(heldName)) {
+        // Wiki: feeding breed-food to a BABY animal advances its
+        // growth by 10% of remaining time (vs entering love mode for
+        // adults). Was treating babies as adults — players feeding
+        // bread to a baby cow accidentally put it in love mode (which
+        // can't breed) instead of speeding growth.
+        const babyState = babyMobs.get(aimedMob.id);
+        if (babyState?.isBaby) {
+          // Use the canonical baby_grow_speedup.feed() — 10% of remaining
+          // time per wiki spec (not a flat tick count).
+          const advanced = babyFeed(babyState);
+          babyMobs.set(aimedMob.id, advanced);
+          const itemId = itemRegistry.byName(heldName);
+          if (itemId !== undefined) consumeInventoryItem(itemId, 1);
+          chatInput.addLine(`${kind} grows faster`, '#ffd0a0');
+          hand.swing();
+          return;
+        }
         const prev = lovingMobs.get(aimedMob.id) ?? {
           inLoveUntilTick: 0,
           breedCooldownUntilTick: 0,
@@ -2829,6 +5347,7 @@ canvas.addEventListener('mousedown', (e) => {
           if (itemId !== undefined) consumeInventoryItem(itemId, 1);
           mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
           chatInput.addLine(`${kind} entered love mode ♥`, '#ff80c0');
+          hand.swing();
         }
         return;
       }
@@ -2847,6 +5366,7 @@ canvas.addEventListener('mousedown', (e) => {
               mobRenderer.setMobName(aimedMob.id, `♥ ${kind}`);
               chatInput.addLine(`Tamed ${kind}! ♥`, '#80ff80');
             }
+            hand.swing();
             return;
           }
         }
@@ -2855,16 +5375,28 @@ canvas.addEventListener('mousedown', (e) => {
         leashedMobs.add(aimedMob.id);
         mobRenderer.setMobName(aimedMob.id, `🪢 ${kind}`);
         chatInput.addLine(`Leashed ${kind}`, '#80ff80');
+        hand.swing();
         return;
       }
-      if (heldName === 'webmc:saddle' && (kind === 'pig' || kind === 'horse')) {
+      // Saddle: vanilla allows pigs, horses, donkeys, mules, and
+      // striders (matches saddle_and_mount.canSaddle's allowed set).
+      // Was pig+horse only — donkey/mule/strider players couldn't
+      // ride their mount despite being valid mount kinds in webmc.
+      if (
+        heldName === 'webmc:saddle' &&
+        (kind === 'pig' ||
+          kind === 'horse' ||
+          kind === 'donkey' ||
+          kind === 'mule' ||
+          kind === 'strider')
+      ) {
         if (!saddledMobs.has(aimedMob.id)) {
           saddledMobs.add(aimedMob.id);
           mobRenderer.setMobName(aimedMob.id, `🪞 ${kind}`);
           const sId = itemRegistry.byName('webmc:saddle');
-          if (sId !== undefined && (gameMode === 'survival' || gameMode === 'adventure'))
-            consumeInventoryItem(sId, 1);
+          if (sId !== undefined && vitalsActive) consumeInventoryItem(sId, 1);
           chatInput.addLine(`Saddled ${kind}`, '#80ff80');
+          hand.swing();
           return;
         }
       }
@@ -2874,15 +5406,55 @@ canvas.addEventListener('mousedown', (e) => {
         return;
       }
     }
+    // No mob in front — try hold-to-eat. Right-click on a food item starts
+    // the 1.6s eat animation; mouseup cancels. Fully restored hunger gates
+    // out unless the item bypasses (golden apple / chorus fruit / honey).
+    if (vitalsActive) {
+      const stk = inventory.hotbar[inventory.selectedHotbar];
+      if (stk) {
+        const itemDef = itemRegistry.get(stk.itemId);
+        const restore = itemDef.hungerRestore ?? 0;
+        const itemName = itemDef.name;
+        const alwaysEdible =
+          itemName === 'webmc:golden_apple' ||
+          itemName === 'webmc:enchanted_golden_apple' ||
+          itemName === 'webmc:chorus_fruit' ||
+          itemName === 'webmc:honey_bottle' ||
+          itemName === 'webmc:milk_bucket' ||
+          itemName.includes('potion_') ||
+          itemName === 'webmc:awkward_potion';
+        // Milk has zero hunger restore but is drinkable for the effect-clear.
+        const drinkable = restore > 0 || itemName === 'webmc:milk_bucket';
+        if (drinkable && (playerState.hunger < 20 || alwaysEdible)) {
+          // Wiki eat-time overrides: honey_bottle is 2s (40 ticks),
+          // dried_kelp is faster than other food at ~0.85s (17 ticks).
+          // All other food uses the 1.6s (32 ticks) default. Was a
+          // flat default for everything — milk + honey_bottle eats
+          // were the same speed as bread.
+          const startQuery: Parameters<typeof startEating>[1] =
+            itemName === 'webmc:honey_bottle'
+              ? { itemId: itemName, eatTicks: 40 }
+              : itemName === 'webmc:dried_kelp'
+                ? { itemId: itemName, eatTicks: 17 }
+                : { itemId: itemName };
+          if (startEating(eatState, startQuery)) {
+            rightClickHeldForEat = true;
+          }
+        }
+      }
+    }
     return;
   }
   if (e.button === 1) {
     e.preventDefault();
+    // Spectator: no inventory mutation, no held-block change.
+    if (isSpectator) return;
     const hit = interaction.castRay();
-    if (hit) {
-      const pickedState = world.get(hit.bx, hit.by, hit.bz);
-      const pickedId = stateId(pickedState);
-      const def = registry.get(pickedId);
+    if (!hit) return;
+    const pickedState = world.get(hit.bx, hit.by, hit.bz);
+    const pickedId = stateId(pickedState);
+    const def = registry.get(pickedId);
+    if (isCreative) {
       hotbar.setEntry(hotbar.selectedIndex, {
         state: pickedState,
         name: def.name.replace(/^webmc:/, ''),
@@ -2890,25 +5462,62 @@ canvas.addEventListener('mousedown', (e) => {
       });
       interaction.selectedBlock = pickedState;
       chatInput.addLine(`Picked ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
     }
+    // Survival/adventure: locate the matching item in the inventory and
+    // swap to it. If the player already has it on the hotbar, switch slots.
+    // If only in the main inventory, swap into the held slot. If they
+    // don't have any, no-op (vanilla behaviour without cheats).
+    const itemId = itemRegistry.byName(def.name);
+    if (itemId === undefined) return;
+    let foundHotbarIdx = -1;
+    for (let i = 0; i < 9; i++) {
+      if (inventory.hotbar[i]?.itemId === itemId) {
+        foundHotbarIdx = i;
+        break;
+      }
+    }
+    if (foundHotbarIdx !== -1) {
+      hotbar.select(foundHotbarIdx);
+      chatInput.addLine(`Selected ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
+    }
+    let foundMainIdx = -1;
+    for (let i = 0; i < inventory.main.length; i++) {
+      if (inventory.main[i]?.itemId === itemId) {
+        foundMainIdx = i;
+        break;
+      }
+    }
+    if (foundMainIdx !== -1) {
+      const heldIdx = hotbar.selectedIndex;
+      const tmp = inventory.hotbar[heldIdx];
+      inventory.hotbar[heldIdx] = inventory.main[foundMainIdx] ?? null;
+      inventory.main[foundMainIdx] = tmp ?? null;
+      chatInput.addLine(`Picked ${def.name.replace(/^webmc:/, '')}`, '#80d080');
+      return;
+    }
+    chatInput.addLine(`No ${def.name.replace(/^webmc:/, '')} in inventory`, '#ffb080');
     return;
   }
   if (e.button !== 0) return;
+  // Spectator: ghost mode, no damage to mobs (matches the canBreak gate
+  // I added for blocks). Without this, spectators could one-shot any mob
+  // they aimed at — not vanilla behaviour.
+  if (isSpectator) return;
   const origin = camera.position;
-  const look = fp.lookVector();
+  const look = fp.lookVector(eventLookTmp);
   const reach = 5;
   let bestId: number | null = null;
   let bestDist = Infinity;
   for (const mob of mobWorld.all()) {
-    const box = {
-      minX: mob.position.x - mob.def.aabb.halfX,
-      minY: mob.position.y - mob.def.aabb.halfY,
-      minZ: mob.position.z - mob.def.aabb.halfZ,
-      maxX: mob.position.x + mob.def.aabb.halfX,
-      maxY: mob.position.y + mob.def.aabb.halfY,
-      maxZ: mob.position.z + mob.def.aabb.halfZ,
-    };
-    const hit = intersectRayAABB(origin, look, box, reach);
+    mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
+    mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
+    mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
+    mobAabbScratch.maxX = mob.position.x + mob.def.aabb.halfX;
+    mobAabbScratch.maxY = mob.position.y + mob.def.aabb.halfY;
+    mobAabbScratch.maxZ = mob.position.z + mob.def.aabb.halfZ;
+    const hit = intersectRayAABB(origin, look, mobAabbScratch, reach);
     if (hit && hit.tMin < bestDist) {
       bestDist = hit.tMin;
       bestId = mob.id;
@@ -2917,7 +5526,7 @@ canvas.addEventListener('mousedown', (e) => {
   if (bestId !== null) {
     const nowMs = performance.now();
     const sinceMs = nowMs - lastPlayerAttackAt;
-    const heldNameLow = hotbar.selected?.name.toLowerCase() ?? '';
+    const heldNameLow = heldNameLower();
     const fullChargeMs = heldAttackFullChargeMs(heldNameLow);
     const charge = Math.min(1, sinceMs / fullChargeMs);
     const damageMult = 0.2 + 0.8 * (charge * charge);
@@ -2934,29 +5543,8 @@ canvas.addEventListener('mousedown', (e) => {
     });
     const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
     const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
-    // Weapon tier damage (held item determines base).
-    let weaponBase = 1; // fist
-    const heldName = hotbar.selected?.name.toLowerCase() ?? '';
-    if (heldName.includes('sword')) {
-      if (heldName.includes('netherite')) weaponBase = 8;
-      else if (heldName.includes('diamond')) weaponBase = 7;
-      else if (heldName.includes('iron')) weaponBase = 6;
-      else if (heldName.includes('stone')) weaponBase = 5;
-      else weaponBase = 4; // wood/gold
-    } else if (heldName.includes('axe')) {
-      if (heldName.includes('netherite')) weaponBase = 10;
-      else if (
-        heldName.includes('iron') ||
-        heldName.includes('stone') ||
-        heldName.includes('diamond')
-      )
-        weaponBase = 9;
-      else weaponBase = 7;
-    } else if (heldName.includes('mace')) {
-      weaponBase = 6;
-    } else if (heldName.includes('trident')) {
-      weaponBase = 9;
-    }
+    const heldName = heldNameLower();
+    const weaponBase = weaponBaseDamageFor(heldName);
     // Mace smash: bonus damage scaled by fall distance (>1.5 blocks falling, capped +24 dmg).
     let maceBonus = 0;
     if (
@@ -2976,9 +5564,14 @@ canvas.addEventListener('mousedown', (e) => {
       });
       if (maceBonus > 0) subtitles.push(`Smash +${maceBonus.toFixed(0)}`);
     }
-    const baseDmg =
-      Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult + maceBonus;
-    if (critMult > 1) subtitles.push('Critical hit!');
+    // Vanilla creative: left-click insta-kills any mob (any weapon, any
+    // damage). Without the override, creative players had to grind down
+    // a wither's 600 HP one normal hit at a time.
+    const baseDmg = isCreative
+      ? 9999
+      : Math.max(0, weaponBase + strengthBonus + weaknessReduce) * damageMult * critMult +
+        maceBonus;
+    if (critMult > 1 && !isCreative) subtitles.push('Critical hit!');
     const result = mobWorld.damage(bestId, baseDmg);
     // Sweep attack: fully-charged sword (and not crit) hits other mobs in 1.5-block radius around the primary target.
     if (heldNameLow.includes('sword') && charge >= 0.9 && critMult === 1 && !fp.input.sprint) {
@@ -2989,7 +5582,7 @@ canvas.addEventListener('mousedown', (e) => {
         attackChargedRatio: charge,
       });
       if (sweep.sweeps && sweep.sweepDamage > 0) {
-        const primary = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+        const primary = mobWorld.byId(bestId);
         if (primary) {
           let extras = 0;
           for (const m of mobWorld.all()) {
@@ -3005,12 +5598,26 @@ canvas.addEventListener('mousedown', (e) => {
         }
       }
     }
-    if (gameMode === 'survival' || gameMode === 'adventure') {
+    if (vitalsActive) {
       playerState.addExhaustion(0.1);
-      // Sword takes 1 durability per hit; axe takes 2.
-      const heldNow = hotbar.selected?.name.toLowerCase() ?? '';
-      if (heldNow.includes('sword')) consumeHeldToolDurability(1);
-      else if (heldNow.includes('axe')) consumeHeldToolDurability(2);
+      // Vanilla per-attack durability:
+      //   sword: 1
+      //   pickaxe / axe / shovel / hoe: 2
+      //   bare hand: 0
+      // Was only catching sword + axe — pickaxes/shovels/hoes never lost
+      // durability when used as makeshift weapons, so a stone shovel
+      // could last forever on combat-only sessions.
+      const heldNow = heldNameLower();
+      if (heldNow.includes('sword') || heldNow.includes('mace') || heldNow.includes('trident')) {
+        consumeHeldToolDurability(1);
+      } else if (
+        heldNow.includes('pickaxe') ||
+        heldNow.includes('axe') ||
+        heldNow.includes('shovel') ||
+        heldNow.includes('hoe')
+      ) {
+        consumeHeldToolDurability(2);
+      }
     }
     sfx.play('hit');
     interaction.setHeld(null);
@@ -3019,15 +5626,18 @@ canvas.addEventListener('mousedown', (e) => {
     if (result)
       damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, baseDmg);
     // Knockback: push mob away from player along horizontal look vector.
-    const mobHit = Array.from(mobWorld.all()).find((m) => m.id === bestId);
+    const mobHit = mobWorld.byId(bestId);
     if (mobHit) {
-      const kb = computeKnockback({
-        attackerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-        targetPos: { x: mobHit.position.x, y: mobHit.position.y, z: mobHit.position.z },
-        sprinting: fp.input.sprint,
-        knockbackLevel: 0,
-        knockbackResistance: 0,
-      });
+      knockbackAttackerPos.x = fp.position.x;
+      knockbackAttackerPos.y = fp.position.y;
+      knockbackAttackerPos.z = fp.position.z;
+      knockbackTargetPos.x = mobHit.position.x;
+      knockbackTargetPos.y = mobHit.position.y;
+      knockbackTargetPos.z = mobHit.position.z;
+      knockbackQueryScratch.sprinting = fp.input.sprint;
+      knockbackQueryScratch.knockbackLevel = 0;
+      knockbackQueryScratch.knockbackResistance = 0;
+      const kb = computeKnockback(knockbackQueryScratch);
       const KB_SCALE = 12;
       mobHit.velocity.x += kb.x * KB_SCALE;
       mobHit.velocity.z += kb.z * KB_SCALE;
@@ -3035,7 +5645,7 @@ canvas.addEventListener('mousedown', (e) => {
     }
     if (result?.killed) {
       spawnMobDrops(result.kind, result.position);
-      const xpAmount = rollMobXp({ source: { kind: 'mob', mob: result.kind }, rng: Math.random });
+      const xpAmount = rollMobXpFor(result.kind, Math.random);
       // MC-style XP chunks (2477, 1237, 617, 307, 149, 73, 37, 17, 7, 3, 1) — fewer orbs for huge drops.
       for (const chunk of splitXp(xpAmount)) {
         xpOrbs.spawn(
@@ -3070,10 +5680,53 @@ const hotbar = new Hotbar(appEl, registry, [
   { state: SAND, name: 'sand', color: colorOf(SAND) },
   { state: GLOW, name: 'glow', color: colorOf(GLOW) },
 ]);
+// Persist hotbar selection so the chosen slot survives a reload.
+void persistDB.getMeta('hotbarSelected').then((saved) => {
+  if (typeof saved === 'number' && saved >= 0 && saved < 9) hotbar.select(saved);
+});
+// Keep inventory.selectedHotbar in lockstep with the Hotbar UI selection.
+// Several systems looked up "the held tool" via inventory.hotbar[selectedHotbar]
+// (durability consumption, mending repair, drop-on-Q, ...) — without this
+// sync those systems all targeted slot 0 forever, regardless of which
+// hotbar slot the player visually had highlighted.
+inventory.selectedHotbar = hotbar.selectedIndex;
+hotbar.onSelect((index) => {
+  inventory.selectedHotbar = index;
+  // Switching hotbar slot mid-eat cancels the bite — vanilla does the
+  // same. Without this, you could start eating bread, switch to a
+  // pickaxe, and still get the food effect when the timer completed
+  // (consuming the bread that was no longer in your hand).
+  if (eatState.itemId !== null) {
+    cancelEating(eatState);
+    rightClickHeldForEat = false;
+  }
+});
+let lastHotbarSavedIndex = hotbar.selectedIndex;
+function saveHotbarIfChanged(): void {
+  if (hotbar.selectedIndex !== lastHotbarSavedIndex) {
+    lastHotbarSavedIndex = hotbar.selectedIndex;
+    void persistDB.setMeta('hotbarSelected', lastHotbarSavedIndex);
+  }
+}
 
 let gameMode: GameMode = 'creative';
+// Shared booleans derived from gameMode. Replace dozens of inline
+// `gameMode === 'survival' || gameMode === 'adventure'` (vitalsActive),
+// `isCreative` (isCreative), and
+// `isSpectator` (isSpectator) chains across the file —
+// dominant frame() checks for hunger/exhaustion/contact-effect/save-
+// vitals gates and creative/spectator suppressions. Updated whenever
+// gameMode changes (applyGameMode is the single downstream mutation).
+let vitalsActive = false;
+let isCreative = true;
+let isSpectator = false;
 function applyGameMode(m: GameMode): void {
   gameMode = m;
+  vitalsActive = m === 'survival' || m === 'adventure';
+  isCreative = m === 'creative';
+  isSpectator = m === 'spectator';
+  // Persist so the next reload doesn't drop the player back into creative.
+  void persistDB.setMeta('gameMode', m);
   const eff = effectsFor(m);
   fp.input.fly = eff.canFly;
   fp.canFly = eff.canFly;
@@ -3081,9 +5734,25 @@ function applyGameMode(m: GameMode): void {
   playerState.invulnerable = eff.invulnerable;
   survivalHud.setVisible(m === 'survival' || m === 'adventure');
   interaction.breakDurationSec = m === 'creative' ? 0.001 : 0.4;
+  // Spectator → no FP hand. Other modes show the hand in first-person.
+  refreshHandVisibility();
 }
 
 const survivalHud = new SurvivalHud(appEl);
+// Reused per-frame survival HUD frame object.
+const survivalHudFrame: Parameters<typeof survivalHud.render>[0] = {
+  health: 20,
+  maxHealth: 20,
+  hunger: 20,
+  maxHunger: 20,
+  breathSec: BREATH_MAX_SEC,
+  maxBreathSec: BREATH_MAX_SEC,
+  underwater: false,
+  xpLevel: 0,
+  xpProgress: 0,
+  xpToNext: 0,
+  armorPoints: 0,
+};
 const hurtVignette = new HurtVignette(appEl);
 const fluidOverlay = new FluidOverlay(appEl);
 const deathScreen = new DeathScreen(appEl);
@@ -3098,6 +5767,9 @@ void persistDB.getMeta('minimapRange').then((saved) => {
   while (minimap.currentRange < saved && minimap.currentRange < 256) minimap.zoomOut();
 });
 deathScreen.setOnRespawn(() => {
+  // Inventory + position reset moved out of takeDamage so totem can run
+  // pre-respawn; the death screen now drives it.
+  playerState.respawn();
   fp.inputBlocked = false;
   void canvas.requestPointerLock();
   toast.show('Respawned', '#80ffa0', 1200);
@@ -3112,6 +5784,8 @@ let lastPhase: 'dawn' | 'day' | 'dusk' | 'night' = 'day';
 let dayCounter = 1;
 let lastSleepDay = 0;
 let lastPhantomCheckMs = 0;
+let lastNaturalSpawnAttemptMs = 0;
+let lastPassiveSpawnAttemptMs = 0;
 let tickFrozen = false;
 let lastDeathPos: { x: number; y: number; z: number } | null = null;
 let customBossBar: {
@@ -3174,7 +5848,12 @@ const chatInput = new ChatInput(appEl, {
       const exec = useChain ? executeCommands : executeCommand;
       exec(text, {
         playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-        setPlayerPos: (x, y, z) => fp.position.set(x, y, z),
+        setPlayerPos: (x, y, z) => {
+          fp.position.set(x, y, z);
+          // Zero velocity so /tp doesn't preserve fall speed and instantly
+          // damage the player on landing at the destination.
+          fp.velocity.set(0, 0, 0);
+        },
         gameMode,
         setGameMode: (m) => {
           applyGameMode(m);
@@ -3196,7 +5875,7 @@ const chatInput = new ChatInput(appEl, {
             if (id !== undefined) break;
           }
           if (id === undefined) return false;
-          const leftover = inventory.add({ itemId: id, count, damage: 0 });
+          const leftover = addToInventory(id, count);
           return leftover < count;
         },
         lookupItem: (name) => {
@@ -3236,7 +5915,7 @@ const chatInput = new ChatInput(appEl, {
           let n = 0;
           // Include every registered item: covers blocks-with-items, tools, foods, dyes, etc.
           for (let id = 1; id < itemRegistry.size; id++) {
-            inventory.add({ itemId: id, count: 1, damage: 0 });
+            addOneToInventory(id);
             n++;
           }
           return n;
@@ -3475,7 +6154,7 @@ const chatInput = new ChatInput(appEl, {
           return valid[valid.length - 1]!.id.replace(/^webmc:/, '');
         },
         renameLookedAtMob: (name) => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: typeof mobWorld extends { all(): IterableIterator<infer M> } ? M : never;
@@ -3497,7 +6176,7 @@ const chatInput = new ChatInput(appEl, {
           return best.mob.def.kind;
         },
         tameLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -3543,7 +6222,7 @@ const chatInput = new ChatInput(appEl, {
           return { kind, tamed: result.tamed, itemUsed: heldName.replace(/^webmc:/, '') };
         },
         leashLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -3571,16 +6250,15 @@ const chatInput = new ChatInput(appEl, {
         },
         unleashAllMobs: () => {
           const n = leashedMobs.size;
-          const allMobs = [...mobWorld.all()];
           for (const id of leashedMobs) {
-            const m = allMobs.find((mm) => mm.id === id);
+            const m = mobWorld.byId(id);
             if (m) mobRenderer.setMobName(id, m.def.kind);
           }
           leashedMobs.clear();
           return n;
         },
         feedLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -3664,20 +6342,21 @@ const chatInput = new ChatInput(appEl, {
           const sz = Math.min(a.z, b.z),
             ez = Math.max(a.z, b.z);
           let n = 0;
-          const chunksTouched = new Set<string>();
+          const chunksTouched = new Set<number>();
           for (let y = sy; y <= ey; y++) {
             for (let z = sz; z <= ez; z++) {
               for (let x = sx; x <= ex; x++) {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 n++;
-                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+                chunksTouched.add(lightKey(x >> 4, z >> 4));
               }
             }
           }
           for (const k of chunksTouched) {
-            const [cxS, czS] = k.split(',');
-            const c = world.getChunk(Number(cxS), Number(czS));
+            const cx = (k >>> 16) - 32768;
+            const cz = (k & 0xffff) - 32768;
+            const c = world.getChunk(cx, cz);
             if (c) markChunkAllDirty(c);
           }
           return n;
@@ -3708,7 +6387,7 @@ const chatInput = new ChatInput(appEl, {
           };
         },
         chunkStats: () => ({
-          loaded: Array.from(world.chunks()).length,
+          loaded: world.chunkCount,
           pending: 0,
           meshes: chunkRenderer.meshCount,
           triangles: chunkRenderer.triangleCount,
@@ -3719,10 +6398,10 @@ const chatInput = new ChatInput(appEl, {
           document.exitPointerLock();
         },
         saveLoadout: (name) => {
-          const snapshot = {
-            hotbar: inventory.hotbar.map((s) => (s ? { ...s } : null)),
-            main: inventory.main.map((s) => (s ? { ...s } : null)),
-            armor: inventory.armor.map((s) => (s ? { ...s } : null)),
+          const snapshot: LoadoutSnap = {
+            hotbar: inventory.hotbar.map(snapshotStack),
+            main: inventory.main.map(snapshotStack),
+            armor: inventory.armor.map(snapshotStack),
           };
           loadouts.set(name, snapshot);
           void persistDB.setMeta('loadouts', Object.fromEntries(loadouts));
@@ -3730,12 +6409,9 @@ const chatInput = new ChatInput(appEl, {
         loadLoadout: (name) => {
           const snap = loadouts.get(name);
           if (!snap) return false;
-          for (let i = 0; i < 9; i++)
-            inventory.hotbar[i] = snap.hotbar[i] ? { ...snap.hotbar[i]! } : null;
-          for (let i = 0; i < 27; i++)
-            inventory.main[i] = snap.main[i] ? { ...snap.main[i]! } : null;
-          for (let i = 0; i < 4; i++)
-            inventory.armor[i] = snap.armor[i] ? { ...snap.armor[i]! } : null;
+          for (let i = 0; i < 9; i++) inventory.hotbar[i] = restoreStack(snap.hotbar[i] ?? null);
+          for (let i = 0; i < 27; i++) inventory.main[i] = restoreStack(snap.main[i] ?? null);
+          for (let i = 0; i < 4; i++) inventory.armor[i] = restoreStack(snap.armor[i] ?? null);
           return true;
         },
         listLoadouts: () => Array.from(loadouts.keys()),
@@ -3860,7 +6536,7 @@ const chatInput = new ChatInput(appEl, {
                 fp.position.x + (Math.random() - 0.5),
                 fp.position.y,
                 fp.position.z + (Math.random() - 0.5),
-                { itemId: s.itemId, count: s.count, color: colorRgb },
+                { itemId: s.itemId, count: s.count, color: colorRgb, damage: s.damage },
                 1.5,
               );
               slots[i] = null;
@@ -3966,7 +6642,7 @@ const chatInput = new ChatInput(appEl, {
         },
         applyVelocity: (dx, dy, dz) => {
           if (dx !== 0 || dz !== 0) {
-            const look = fp.lookVector();
+            const look = fp.lookVector(eventLookTmp);
             fp.velocity.x += look.x * dx;
             fp.velocity.z += look.z * dx;
           }
@@ -3976,7 +6652,7 @@ const chatInput = new ChatInput(appEl, {
           }
         },
         toggleSitLookedAtMob: () => {
-          const aimLook = fp.lookVector();
+          const aimLook = fp.lookVector(eventLookTmp);
           const reach = 6;
           let best: {
             mob: ReturnType<typeof mobWorld.all> extends IterableIterator<infer M> ? M : never;
@@ -3995,7 +6671,7 @@ const chatInput = new ChatInput(appEl, {
           }
           if (!best) return null;
           const state = tamedMobs.get(best.mob.id);
-          if (!state || state.ownerId === null) return null;
+          if (state?.ownerId == null) return null;
           toggleSit(state, 1);
           mobRenderer.setMobName(best.mob.id, `${state.sitting ? '○' : '♥'} ${best.mob.def.kind}`);
           return { kind: best.mob.def.kind, sitting: state.sitting };
@@ -4032,28 +6708,174 @@ const chatInput = new ChatInput(appEl, {
                 `Detecting format of ${f.name} (${(f.size / 1024).toFixed(1)} kB)…`,
                 '#cccccc',
               );
-              if (f.name.endsWith('.mca') || f.name.endsWith('.dat')) {
-                chatInput.addLine(
-                  'Detected Anvil region/level. Native import scaffold present (full NBT decode TBD).',
-                  '#ffd080',
-                );
-                chatInput.addLine(
-                  'User uploads at own licensing risk; webmc never ships Mojang data.',
-                  '#888888',
-                );
-              } else if (f.name.endsWith('.webmc')) {
-                chatInput.addLine(
-                  'webmc save detected. Use Main Menu → Import to load.',
-                  '#80ff80',
-                );
-              } else if (f.name.endsWith('.zip')) {
-                chatInput.addLine(
-                  'ZIP: drop in resource-pack uploader for textures or main-menu import for save.',
-                  '#ffd080',
-                );
-              } else {
-                chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
-              }
+              const handle = async (): Promise<void> => {
+                const buf = new Uint8Array(await f.arrayBuffer());
+                if (f.name.endsWith('.dat')) {
+                  try {
+                    const { gunzip } = await import('./persist/nbt_gzip');
+                    const { parseLevelDat } = await import('./persist/level_dat_fields');
+                    const raw = await gunzip(buf);
+                    const sanitized = parseLevelDat(raw);
+                    chatInput.addLine(
+                      `level.dat: seed=${sanitized.seed} spawn=(${String(sanitized.spawnX)},${String(sanitized.spawnY)},${String(sanitized.spawnZ)}) diff=${sanitized.difficulty}`,
+                      '#80ff80',
+                    );
+                    chatInput.addLine(
+                      `time=${String(sanitized.gameTime)} dayTime=${String(sanitized.dayTime)} hardcore=${String(sanitized.hardcore)}`,
+                      '#cccccc',
+                    );
+                  } catch (e) {
+                    chatInput.addLine(`level.dat parse failed: ${String(e)}`, '#ff8080');
+                  }
+                } else if (f.name.endsWith('.mca')) {
+                  try {
+                    const { importVanillaChunk } = await import('./persist/anvil_chunk_to_webmc');
+                    const airId = registry.byName('webmc:air');
+                    const stoneId = registry.byName('webmc:stone');
+                    if (airId === undefined || stoneId === undefined) {
+                      chatInput.addLine('Internal: registry missing air/stone', '#ff8080');
+                      return;
+                    }
+                    // Paste imported chunks centered on the player's current
+                    // chunk so they land in view. The .mca holds 32x32 chunks
+                    // at local (0..31, 0..31); we anchor (0,0) at the player.
+                    const anchorCx = Math.floor(camera.position.x / 16);
+                    const anchorCz = Math.floor(camera.position.z / 16);
+                    let placed = 0;
+                    let chunksWritten = 0;
+                    const chunksTouched = new Set<number>();
+                    const MAX_CHUNKS = 32;
+                    for (let lx = 0; lx < 32 && chunksWritten < MAX_CHUNKS; lx++) {
+                      for (let lz = 0; lz < 32 && chunksWritten < MAX_CHUNKS; lz++) {
+                        const out = await importVanillaChunk(buf, lx, lz, {
+                          byName: (n) => registry.byName(n),
+                          airId,
+                          fallbackId: stoneId,
+                        });
+                        if (!out) continue;
+                        const destCx = anchorCx + lx;
+                        const destCz = anchorCz + lz;
+                        const baseX = destCx * 16;
+                        const baseZ = destCz * 16;
+                        // ids array is laid out Y*256 + Z*16 + X with Y in
+                        // 0..(yMax - yMin); destination Y = yMin + ly.
+                        const yRange = out.yMax - out.yMin + 1;
+                        for (let ly = 0; ly < yRange; ly++) {
+                          const destY = out.yMin + ly;
+                          if (destY < 0 || destY >= CHUNK_HEIGHT) continue;
+                          for (let lzz = 0; lzz < 16; lzz++) {
+                            for (let lxx = 0; lxx < 16; lxx++) {
+                              const srcIdx = (ly << 8) | (lzz << 4) | lxx;
+                              const blockId: number = out.ids[srcIdx] ?? airId;
+                              if (blockId === airId) continue;
+                              world.set(baseX + lxx, destY, baseZ + lzz, makeState(blockId, 0));
+                              placed++;
+                            }
+                          }
+                        }
+                        chunksTouched.add(lightKey(destCx, destCz));
+                        chunksWritten++;
+                      }
+                    }
+                    // Single chunk-rebuild pass, like fillBlocks does.
+                    for (const k of chunksTouched) {
+                      const cxN = (k >>> 16) - 32768;
+                      const czN = (k & 0xffff) - 32768;
+                      const ch = world.getChunk(cxN, czN);
+                      if (ch) {
+                        const newLight = buildLight(ch, lightOracle);
+                        lightCache.set(k, newLight);
+                        // Save the freshly-built light, not the stale
+                        // pre-edit version.
+                        chunkStore.markDirty(ch, newLight);
+                        markChunkAllDirty(ch);
+                      }
+                    }
+                    if (chunksWritten === 0) {
+                      chatInput.addLine(
+                        '.mca: no chunks decoded (file empty or unsupported format)',
+                        '#ffd080',
+                      );
+                    } else {
+                      chatInput.addLine(
+                        `.mca: pasted ${String(placed)} blocks across ${String(chunksWritten)} chunks at (${String(anchorCx)},${String(anchorCz)})${chunksWritten === MAX_CHUNKS ? ` [capped at ${String(MAX_CHUNKS)}]` : ''}`,
+                        '#80ff80',
+                      );
+                    }
+                  } catch (e) {
+                    chatInput.addLine(`.mca parse failed: ${String(e)}`, '#ff8080');
+                  }
+                } else if (f.name.endsWith('.webmc')) {
+                  chatInput.addLine(
+                    'webmc save detected. Use Main Menu → Import to load.',
+                    '#80ff80',
+                  );
+                } else if (f.name.endsWith('.zip')) {
+                  try {
+                    const { readZip } = await import('./persist/zip_reader');
+                    const { importVanillaPack } = await import('./persist/vanilla_pack_import');
+                    const zipEntries = await readZip(buf);
+                    const decoder = new TextDecoder('utf-8', { fatal: false });
+                    const packEntries = await Promise.all(
+                      zipEntries.map(async (z) => {
+                        const lower = z.name.toLowerCase();
+                        const isText =
+                          lower.endsWith('.json') ||
+                          lower.endsWith('.mcmeta') ||
+                          lower.endsWith('.mcfunction') ||
+                          lower.endsWith('.txt') ||
+                          lower.endsWith('.properties') ||
+                          lower.endsWith('.lang');
+                        if (!isText) return { path: z.name };
+                        try {
+                          const bytes = await z.data();
+                          return { path: z.name, text: decoder.decode(bytes) };
+                        } catch {
+                          return { path: z.name };
+                        }
+                      }),
+                    );
+                    const report = importVanillaPack(packEntries);
+                    chatInput.addLine(
+                      `ZIP imported: ${String(zipEntries.length)} entries, pack=${
+                        report.pack
+                          ? `format=${String(report.pack.packFormat)} "${report.pack.description}"`
+                          : 'none'
+                      }`,
+                      '#80ff80',
+                    );
+                    chatInput.addLine(
+                      `recipes=${String(report.recipes.length)} tags=${String(report.tags.length)} loot=${String(report.lootTables.length)} adv=${String(report.advancements.length)} fn=${String(report.functions.length)} biome=${String(report.biomes.length)} dim=${String(report.dimensions.length)} bs=${String(report.blockstates.length)} model=${String(report.models.length)} lang=${String(report.lang.length)} sounds=${String(report.sounds.length)} anim=${String(report.animations.length)}`,
+                      '#cccccc',
+                    );
+                    chatInput.addLine(
+                      `enchant=${String(report.enchantments.length)} dmg=${String(report.damageTypes.length)} chat=${String(report.chatTypes.length)} splash=${String(report.splashes.length)} paint=${String(report.paintingVariants.length)} trim_p=${String(report.trimPatterns.length)} trim_m=${String(report.trimMaterials.length)} mob_v=${String(report.mobVariants.length)} banner=${String(report.bannerPatterns.length)} inst=${String(report.instruments.length)}`,
+                      '#cccccc',
+                    );
+                    chatInput.addLine(
+                      `atlas=${String(report.atlases.length)} pred=${String(report.predicates.length)} font=${String(report.fonts.length)} item_mod=${String(report.itemModifiers.length)} world_pre=${String(report.worldPresets.length)} flat_pre=${String(report.flatPresets.length)} cfeat=${String(report.configuredFeatures.length)} pfeat=${String(report.placedFeatures.length)}`,
+                      '#cccccc',
+                    );
+                    chatInput.addLine(
+                      `struct=${String(report.structures.length)} pool=${String(report.templatePools.length)} proc=${String(report.processorLists.length)} noise=${String(report.noiseSettings.length)} mn=${String(report.multiNoiseSources.length)} dens=${String(report.densityFunctions.length)} jukebox=${String(report.jukeboxSongs.length)} skipped=${String(report.skipped.length)} unknown=${String(report.unknown.length)}`,
+                      '#cccccc',
+                    );
+                    if (report.errors.length > 0) {
+                      chatInput.addLine(
+                        `${String(report.errors.length)} per-file errors (first: ${
+                          report.errors[0]?.path ?? ''
+                        })`,
+                        '#ff8080',
+                      );
+                    }
+                  } catch (e) {
+                    chatInput.addLine(`ZIP parse failed: ${String(e)}`, '#ff8080');
+                  }
+                } else {
+                  chatInput.addLine(`Unknown format: ${f.name}`, '#ff8080');
+                }
+              };
+              void handle();
             },
             { once: true },
           );
@@ -4083,45 +6905,61 @@ const chatInput = new ChatInput(appEl, {
           const sz = Math.min(z1, z2),
             ez = Math.max(z1, z2);
           let count = 0;
-          const chunksTouched = new Set<string>();
+          const chunksTouched = new Set<number>();
           for (let y = sy; y <= ey; y++) {
             for (let z = sz; z <= ez; z++) {
               for (let x = sx; x <= ex; x++) {
                 if (y < 0 || y >= CHUNK_HEIGHT) continue;
                 world.set(x, y, z, state);
                 count++;
-                chunksTouched.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+                chunksTouched.add(lightKey(x >> 4, z >> 4));
               }
             }
           }
           for (const k of chunksTouched) {
-            const [cxS, czS] = k.split(',');
-            const cxN = Number(cxS),
-              czN = Number(czS);
+            const cxN = (k >>> 16) - 32768;
+            const czN = (k & 0xffff) - 32768;
             const chunk = world.getChunk(cxN, czN);
             if (chunk) {
-              const light = lightCache.get(lightKey(cxN, czN)) ?? null;
-              chunkStore.markDirty(chunk, light);
               const newLight = buildLight(chunk, lightOracle);
-              lightCache.set(lightKey(cxN, czN), newLight);
+              lightCache.set(k, newLight);
+              // markDirty AFTER rebuild so the saved blob has the new
+              // light, not the stale pre-edit version.
+              chunkStore.markDirty(chunk, newLight);
               markChunkAllDirty(chunk);
             }
           }
           return count;
         },
         save: () => {
+          // Flush every persistent surface — was only flushing player +
+          // chunks, leaving recent meta changes (game mode, weather,
+          // time, fluid cells, day counter, chest, hotbar, ...) only on
+          // their next periodic timer / visibilitychange.
           void savePlayerNow();
           void chunkStore.flush();
+          void saveAllChestStorages();
+          void persistDB.setMeta('playerStats', playerStats);
+          void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+          void persistDB.setMeta('dayCounter', dayCounter);
+          void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+          saveHotbarIfChanged();
         },
         summon: (kind, x, y, z) => {
           try {
-            mobWorld.spawn(kind as Parameters<typeof mobWorld.spawn>[0], { x, y, z });
+            mobSpawnPosScratch.x = x;
+            mobSpawnPosScratch.y = y;
+            mobSpawnPosScratch.z = z;
+            mobWorld.spawn(kind as Parameters<typeof mobWorld.spawn>[0], mobSpawnPosScratch);
             return true;
           } catch {
             return false;
           }
         },
         openChest: () => {
+          // Debug command — open the shared ender chest store. Per-block
+          // chests have their own storage opened via right-clicking them.
+          chestUI.setStorage(enderChestStorage);
           chestUI.show();
           fp.inputBlocked = true;
           document.exitPointerLock();
@@ -4129,6 +6967,7 @@ const chatInput = new ChatInput(appEl, {
         teleportSpawn: () => {
           if (playerSpawnPoint) {
             fp.position.set(playerSpawnPoint.x, playerSpawnPoint.y, playerSpawnPoint.z);
+            fp.velocity.set(0, 0, 0);
             chatInput.addLine(
               `Spawn at ${playerSpawnPoint.x.toFixed(1)} ${playerSpawnPoint.y.toFixed(1)} ${playerSpawnPoint.z.toFixed(1)}`,
               '#cccccc',
@@ -4136,6 +6975,7 @@ const chatInput = new ChatInput(appEl, {
           } else {
             const s = Math.max(generator.surfaceAt(0, 0), 62) + 4;
             fp.position.set(worldMeta.spawn.x, s, worldMeta.spawn.z);
+            fp.velocity.set(0, 0, 0);
             chatInput.addLine(
               `World spawn at ${worldMeta.spawn.x.toFixed(1)} ${s.toFixed(1)} ${worldMeta.spawn.z.toFixed(1)}`,
               '#cccccc',
@@ -4169,18 +7009,29 @@ const chatInput = new ChatInput(appEl, {
         listGameRules: () => ({ ...gameRules }),
         biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
         findMob: (kind) => {
-          let best: { x: number; y: number; z: number; dist: number } | null = null;
+          // Compare by dist² inside the loop (ordering-preserving),
+          // sqrt once at the end for the report.
+          let bestX = 0,
+            bestY = 0,
+            bestZ = 0,
+            bestDistSq = Infinity;
+          let found = false;
           for (const m of mobWorld.all()) {
             if (m.def.kind !== kind) continue;
             const dx = m.position.x - fp.position.x;
             const dy = m.position.y - fp.position.y;
             const dz = m.position.z - fp.position.z;
-            const dist = Math.hypot(dx, dy, dz);
-            if (!best || dist < best.dist) {
-              best = { x: m.position.x, y: m.position.y, z: m.position.z, dist };
+            const distSq = dx * dx + dy * dy + dz * dz;
+            if (distSq < bestDistSq) {
+              bestDistSq = distSq;
+              bestX = m.position.x;
+              bestY = m.position.y;
+              bestZ = m.position.z;
+              found = true;
             }
           }
-          return best;
+          if (!found) return null;
+          return { x: bestX, y: bestY, z: bestZ, dist: Math.sqrt(bestDistSq) };
         },
         findBlock: (name, r) => {
           const fullName = name.startsWith('webmc:') ? name : `webmc:${name}`;
@@ -4189,7 +7040,15 @@ const chatInput = new ChatInput(appEl, {
           const px = Math.floor(fp.position.x);
           const py = Math.floor(fp.position.y);
           const pz = Math.floor(fp.position.z);
-          let best: { x: number; y: number; z: number; dist: number } | null = null;
+          // Track best by squared distance — sqrt preserves ordering,
+          // so dist² ranks identically. Skips one sqrt per matching
+          // cell (potentially millions for r=64) and pays one sqrt at
+          // the end for the report.
+          let bestX = 0,
+            bestY = 0,
+            bestZ = 0,
+            bestDistSq = Infinity;
+          let found = false;
           for (let dy = -r; dy <= r; dy++) {
             for (let dz = -r; dz <= r; dz++) {
               for (let dx = -r; dx <= r; dx++) {
@@ -4200,12 +7059,19 @@ const chatInput = new ChatInput(appEl, {
                 const s = world.get(x, y, z);
                 if (s === AIR) continue;
                 if (stateId(s) !== id) continue;
-                const dist = Math.hypot(dx, dy, dz);
-                if (!best || dist < best.dist) best = { x, y, z, dist };
+                const distSq = dx * dx + dy * dy + dz * dz;
+                if (distSq < bestDistSq) {
+                  bestDistSq = distSq;
+                  bestX = x;
+                  bestY = y;
+                  bestZ = z;
+                  found = true;
+                }
               }
             }
           }
-          return best;
+          if (!found) return null;
+          return { x: bestX, y: bestY, z: bestZ, dist: Math.sqrt(bestDistSq) };
         },
         killAllMobs: () => {
           const ids: number[] = [];
@@ -4248,7 +7114,12 @@ const chatInput = new ChatInput(appEl, {
         },
       });
     } else {
-      chatInput.addLine(`<You> ${text}`);
+      // Local echo. Show under the player's actual name (so the local view
+      // matches what other peers see) instead of the static '<You>' label
+      // — and broadcast to room peers if connected. Multiplayer chat was
+      // one-way: receivers got the messages but never sent.
+      chatInput.addLine(`<${currentPlayerName}> ${text}`);
+      roomClient?.sendChat(text);
     }
   },
   onOpenChanged: (open) => {
@@ -4259,6 +7130,12 @@ const chatInput = new ChatInput(appEl, {
       fp.input.vertical = 0;
       fp.input.sprint = false;
       fp.input.jump = false;
+      // Sneak/fly were missing — if the player held Shift to sneak then
+      // pressed T to chat, sneak persisted because keyDown is gated on
+      // !inputBlocked but the held state was never cleared. Closed chat
+      // would still apply the lower eye height + edge cling until the
+      // player tapped Shift again.
+      fp.input.sneak = false;
       document.exitPointerLock();
     }
   },
@@ -4642,6 +7519,58 @@ const chatInput = new ChatInput(appEl, {
       '/beaconbase',
       '/campfire_circle',
       '/cfc',
+      '/zoo',
+      '/parkour',
+      '/lighthouse',
+      '/igloo',
+      '/skyscraper',
+      '/treehouse',
+      '/windmill',
+      '/bridge',
+      '/pillar',
+      '/road',
+      '/tunnel',
+      '/aquarium',
+      '/spiralstaircase',
+      '/spiral',
+      '/platform',
+      '/clearfloor',
+      '/wall',
+      '/dome',
+      '/barn',
+      '/watchtower',
+      '/rainbow_path',
+      '/rainbowpath',
+      '/test_blocks',
+      '/blockgrid',
+      '/panic',
+      '/pets',
+      '/kittens',
+      '/carnival',
+      '/sky_island',
+      '/skyisland',
+      '/forge',
+      '/kitchen',
+      '/stable',
+      '/tavern',
+      '/inn',
+      '/shop',
+      '/tradinghouse',
+      '/library',
+      '/chess',
+      '/checkerboard',
+      '/fortress',
+      '/castle_walls',
+      '/brewery',
+      '/apothecary',
+      '/observatory',
+      '/oasis',
+      '/desert_temple',
+      '/sandtemple',
+      '/pale_garden',
+      '/palegarden',
+      '/trial_chamber',
+      '/trialchamber',
       '/compliment',
       '/salute',
       '/gg',
@@ -4677,8 +7606,19 @@ const pauseMenu = new PauseMenu(appEl, {
     mainMenu.show();
     fp.inputBlocked = true;
     document.exitPointerLock();
+    // Was only saving player + chunks — chest contents, fluid cells,
+    // day counter, time of day, player stats, hotbar selection were
+    // left to their next periodic flush. Quitting to main menu and
+    // immediately closing the tab lost them. Mirror the full /save +
+    // visibilitychange flush set.
     void savePlayerNow();
     void chunkStore.flush();
+    void saveAllChestStorages();
+    void persistDB.setMeta('playerStats', playerStats);
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    void persistDB.setMeta('dayCounter', dayCounter);
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+    saveHotbarIfChanged();
   },
   onOpenSettings: () => {
     settingsPanel.show();
@@ -4706,12 +7646,10 @@ const resourcePackLoader = new ResourcePackLoader(appEl, {
     const result = applyPackToRegistry(registry, pack);
     const newPattern = buildPatternTextureFromPack(pack);
     if (newPattern) {
-      const oldTex = (
-        chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture | null }
-      ).value;
+      const oldTex = uPatternRef.value;
       if (oldTex) oldTex.dispose();
-      (chunkRenderer.material.uniforms['uPattern'] as { value: THREE.Texture }).value = newPattern;
-      (chunkRenderer.material.uniforms['uPatternStrength'] as { value: number }).value = 0.9;
+      uPatternRef.value = newPattern;
+      uPatternStrengthRef.value = 0.9;
     }
     for (const chunk of world.chunks()) markChunkAllDirty(chunk);
     chatInput.addLine(
@@ -4746,6 +7684,12 @@ const settingsPanel = new SettingsPanel(appEl, {
     loader.setViewRadius(v.viewDistance);
     (fp as unknown as { opts: { lookSensitivity: number } }).opts.lookSensitivity =
       v.mouseSensitivity;
+    // Touch look sensitivity. Touch px-deltas are smaller than mouse
+    // deltas, so we don't share the raw multiplier — instead derive a
+    // relative scale: touchSens = touchDefault × (userMouseSens /
+    // mouseDefault). User doubling the sensitivity slider doubles both.
+    // Touch users couldn't adjust look sens at all before.
+    touch?.setLookSensitivity(0.005 * (v.mouseSensitivity / 0.0022));
     fp.invertY = v.invertY;
     fp.sprintToggle = v.sprintToggle;
     brightnessMul = v.brightness;
@@ -4759,24 +7703,28 @@ const settingsPanel = new SettingsPanel(appEl, {
     sfx.setMasterVolume(v.masterVolume);
     loader.setPerFrameBudget(v.chunkUploadBudget);
     const far = v.viewDistance * 16;
-    (chunkRenderer.material.uniforms['uFogFar'] as { value: number }).value = far;
-    (chunkRenderer.material.uniforms['uFogNear'] as { value: number }).value = far * 0.6;
-    if (scene.fog instanceof THREE.Fog) {
-      scene.fog.near = far * 0.6;
-      scene.fog.far = far;
-    }
+    uFogFarRef.value = far;
+    uFogNearRef.value = far * 0.6;
+    sceneFog.near = far * 0.6;
+    sceneFog.far = far;
     document.body.classList.toggle('webmc-high-contrast', v.highContrast);
     document.body.classList.toggle('webmc-large-text', v.largeText);
     document.body.classList.toggle('webmc-reduce-motion', v.reduceMotion);
   },
 });
+// Apply persisted settings at startup. Without this, the SettingsPanel
+// loaded values from localStorage but no onChange ever fired before the
+// user opened the panel, so FOV / sensitivity / volume / sprintToggle
+// / playerName / mob nameplates / brightness / etc. all stayed at
+// hardcoded defaults until the user manually clicked "Settings".
+settingsPanel.applyCurrent();
 
 const TIPS: readonly string[] = [
   'Tip: Press E for inventory',
   'Tip: Press F4 to cycle game modes',
   'Tip: Press F5 for third-person',
   'Tip: Press T for chat, / for commands',
-  'Tip: Press B to sleep through the night',
+  'Tip: Right-click a bed at night to sleep (or B in creative)',
   'Tip: Press F2 for a screenshot',
   'Tip: Double-tap W to sprint',
   'Tip: Right-click TNT to prime it',
@@ -4802,22 +7750,76 @@ const mainMenu = new MainMenu(appEl, {
   },
 });
 fp.inputBlocked = true;
+// Auto-skip the main menu when the URL requests it (?autoplay=1) or
+// when entering a multiplayer room (?mp=...). Without this, e2e
+// scenarios that go straight to `/` see the menu blocking input + the
+// pause-zeroed dtSec freezing the simulation, so chunks never stream
+// in and the HUD never updates past the boot placeholder.
+{
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('autoplay') === '1' || params.get('mp') !== null) {
+    mainMenu.hide();
+    fp.inputBlocked = false;
+  }
+}
+const savedGameMode = (await persistDB.getMeta('gameMode')) as GameMode | null;
+if (
+  savedGameMode === 'survival' ||
+  savedGameMode === 'creative' ||
+  savedGameMode === 'adventure' ||
+  savedGameMode === 'spectator'
+) {
+  gameMode = savedGameMode;
+}
 applyGameMode(gameMode);
 
 const chestUI = new ChestUI(appEl, inventory, itemRegistry, {
   onClose: () => {
     fp.inputBlocked = false;
     void canvas.requestPointerLock();
-    void persistDB.setMeta('chestStorage', chestUI.storage);
+    void saveAllChestStorages();
   },
 });
-void persistDB.getMeta('chestStorage').then((saved) => {
-  if (!Array.isArray(saved)) return;
-  for (let i = 0; i < Math.min(27, saved.length); i++) {
-    const v = saved[i];
-    chestUI.storage[i] =
-      v && typeof v === 'object' ? (v as (typeof chestUI.storage)[number]) : null;
+// New per-position chest storage. Falls back to the legacy single-array
+// 'chestStorage' meta if the v2 'chestStorages' meta isn't present, so
+// existing saves load their old shared chest contents into the ender chest
+// (closest equivalent — was effectively a global shared store).
+void persistDB.getMeta('chestStorages').then((saved) => {
+  if (
+    saved &&
+    typeof saved === 'object' &&
+    !Array.isArray(saved) &&
+    'ender' in (saved as Record<string, unknown>)
+  ) {
+    const s = saved as { ender?: unknown; byPos?: Record<string, unknown> };
+    const ender = restoreChestSlots(s.ender);
+    for (let i = 0; i < 27; i++) enderChestStorage[i] = ender[i] ?? null;
+    if (s.byPos && typeof s.byPos === 'object') {
+      for (const [k, v] of Object.entries(s.byPos)) {
+        // Backward compat: pre-numeric-key saves used "x,y,z" strings;
+        // re-pack them through chestKey so existing worlds don't lose
+        // their chests when the new code loads them.
+        let nk: number;
+        if (k.includes(',')) {
+          const parts = k.split(',');
+          const px = Number(parts[0] ?? 0);
+          const py = Number(parts[1] ?? 0);
+          const pz = Number(parts[2] ?? 0);
+          nk = chestKey(px, py, pz);
+        } else {
+          nk = Number(k);
+        }
+        chestStoragesByPos.set(nk, restoreChestSlots(v));
+      }
+    }
+    return;
   }
+  // Legacy migration: old single-array chest storage → ender chest store.
+  void persistDB.getMeta('chestStorage').then((legacy) => {
+    if (!Array.isArray(legacy)) return;
+    const restored = restoreChestSlots(legacy);
+    for (let i = 0; i < 27; i++) enderChestStorage[i] = restored[i] ?? null;
+  });
 });
 
 const survivalInv = new SurvivalInventory(
@@ -4830,71 +7832,9 @@ const survivalInv = new SurvivalInventory(
       void canvas.requestPointerLock();
     },
     onEat: (id, hungerRestore, saturation) => {
-      playerState.eat(hungerRestore, saturation);
-      sfx.play('click');
-      // Item-specific food effects.
-      const itemName = itemRegistry.get(id).name;
-      // Potion drinks: apply effect, return glass bottle.
-      if (itemName.includes('potion_') || itemName === 'webmc:awkward_potion') {
-        const ptype = POTION_TYPES.find((p) => p.name === itemName);
-        if (ptype) {
-          if (ptype.effect === 'instant_health') playerState.heal(4);
-          else if (ptype.effect === 'instant_damage')
-            playerState.takeDamage({ amount: 6, source: 'harming' });
-          else playerState.applyEffect(ptype.effect, ptype.amplifier, ptype.durSec);
-          const glassId = itemRegistry.byName('webmc:glass_bottle');
-          if (glassId !== undefined) inventory.add({ itemId: glassId, count: 1, damage: 0 });
-          subtitles.push(`Drank ${itemName.replace('webmc:potion_', '').replace(/_/g, ' ')}`);
-        }
-        return;
-      }
-      if (itemName === 'webmc:honey_bottle') {
-        playerState.effects.delete('poison');
-      } else if (itemName === 'webmc:rotten_flesh' && Math.random() < 0.8) {
-        playerState.applyEffect('hunger', 0, 30);
-      } else if (itemName === 'webmc:poisonous_potato' && Math.random() < 0.6) {
-        playerState.applyEffect('poison', 0, 5);
-      } else if (itemName === 'webmc:spider_eye') {
-        playerState.applyEffect('poison', 0, 4);
-      } else if (itemName === 'webmc:golden_apple') {
-        playerState.applyEffect('regeneration', 1, 5);
-        playerState.applyEffect('absorption', 0, 120);
-      } else if (itemName === 'webmc:enchanted_golden_apple') {
-        playerState.applyEffect('regeneration', 1, 20);
-        playerState.applyEffect('absorption', 3, 120);
-        playerState.applyEffect('fire_resistance', 0, 300);
-        playerState.applyEffect('resistance', 0, 300);
-      } else if (itemName === 'webmc:chorus_fruit') {
-        // MC-accurate: 16 attempts to find a safe spot within ±8 blocks.
-        let placed = false;
-        for (let attempt = 0; attempt < CHORUS_MAX_ATTEMPTS; attempt++) {
-          const trial = pickTrial(fp.position, Math.random);
-          const tx = Math.floor(trial.x);
-          const ty = Math.floor(trial.y);
-          const tz = Math.floor(trial.z);
-          const here = world.get(tx, ty, tz);
-          const above = world.get(tx, ty + 1, tz);
-          const below = world.get(tx, ty - 1, tz);
-          const isAirHere = here === AIR || !registry.get(stateId(here)).solid;
-          const isAirAbove = above === AIR || !registry.get(stateId(above)).solid;
-          const solidBelow = below !== AIR && registry.get(stateId(below)).solid;
-          if (isAirHere && isAirAbove && solidBelow) {
-            fp.position.set(tx + 0.5, ty, tz + 0.5);
-            subtitles.push('Chorus warp');
-            placed = true;
-            break;
-          }
-        }
-        if (!placed) subtitles.push('Chorus fizzle');
-      }
-      const look = fp.lookVector();
-      blockParticles.emitPlace(
-        fp.position.x + look.x * 0.6,
-        fp.position.y + look.y * 0.5,
-        fp.position.z + look.z * 0.6,
-        [180, 140, 80],
-      );
+      consumeFoodItem(id, hungerRestore, saturation);
     },
+    getHunger: () => playerState.hunger,
   },
   recipeRegistry,
 );
@@ -4908,6 +7848,12 @@ const creativeInv = new CreativeInventory(appEl, registry, {
     });
     interaction.selectedBlock = entry.state;
     chatInput.addLine(`Picked ${entry.shortName}`, '#80d080');
+  },
+  // Close button bypasses the keydown handler in main.ts; without an
+  // onClose hook the player got stuck with inputBlocked=true.
+  onClose: () => {
+    fp.inputBlocked = false;
+    void canvas.requestPointerLock();
   },
 });
 
@@ -4931,6 +7877,16 @@ document.addEventListener(
     }
     if (mainMenu.isVisible()) return;
     if (chatInput.isOpen()) return;
+    // Pause menu was missing from the early-return chain — pressing E /
+    // T / F4 / etc. while paused fired the in-game keybinds (opened
+    // inventory, opened chat, cycled gamemode), which made the pause
+    // menu inert in the worst way: it looked paused but the player was
+    // still mashing through hotkeys behind it. Only ESC should pass
+    // through (handled below to close the menu).
+    if (pauseMenu.isVisible() && e.code !== 'Escape') return;
+    // Death screen had the same passthrough issue — pressing E or T
+    // during the death overlay opened inventory or chat over a corpse.
+    if (deathScreen.isVisible()) return;
     if (creativeInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
@@ -4943,6 +7899,8 @@ document.addEventListener(
     if (survivalInv.isVisible()) {
       if (e.code === 'Escape' || e.code === 'KeyE') {
         e.preventDefault();
+        // hide() fires the onClose callback which releases inputBlocked
+        // and re-requests pointer lock — no need to duplicate that here.
         survivalInv.hide();
       }
       return;
@@ -4956,7 +7914,7 @@ document.addEventListener(
     }
     if (e.code === 'KeyE') {
       e.preventDefault();
-      if (gameMode === 'creative') {
+      if (isCreative) {
         creativeInv.show();
       } else {
         survivalInv.show();
@@ -5010,8 +7968,13 @@ document.addEventListener(
     }
     if (e.code === 'F7') {
       e.preventDefault();
-      autoWeatherEnabled = !autoWeatherEnabled;
-      toast.show(`Auto weather: ${autoWeatherEnabled ? 'on' : 'off'}`, '#a0d0ff', 1200);
+      // F7 toggles the doWeatherCycle gamerule (the actual driver in
+      // weatherCycle.tick). The old inline autoWeatherEnabled timer
+      // ran in parallel — two random weather pickers fighting each
+      // other every few minutes.
+      gameRules.doWeatherCycle = !gameRules.doWeatherCycle;
+      void persistDB.setMeta('gameRules', gameRules);
+      toast.show(`Auto weather: ${gameRules.doWeatherCycle ? 'on' : 'off'}`, '#a0d0ff', 1200);
     }
     if (e.code === 'F9') {
       e.preventDefault();
@@ -5059,6 +8022,14 @@ document.addEventListener(
     }
     if (e.code === 'KeyB') {
       e.preventDefault();
+      // Bed-less sleep shortcut. Allowed in creative as a quick way to skip
+      // night while building. In survival/adventure it would be a cheat —
+      // players should actually find/place a bed and sleep through it
+      // (vanilla also permanently locks night-skip behind a real bed).
+      if (!isCreative) {
+        chatInput.addLine('Use a bed to sleep.', '#ffd080');
+        return;
+      }
       if (!dayNight.isDay) {
         dayNight.setTimeOfDayTicks(1000);
         chatInput.addLine('You slept through the night.', '#d0d0ff');
@@ -5071,27 +8042,43 @@ document.addEventListener(
     }
     if (e.code === 'KeyQ') {
       e.preventDefault();
-      const sel = hotbar.selected;
-      if (sel && (gameMode === 'survival' || gameMode === 'adventure')) {
-        const def = registry.get(stateId(sel.state));
-        const itemId = itemRegistry.byName(def.name);
-        if (itemId !== undefined && countInventoryItem(itemId) > 0) {
-          consumeInventoryItem(itemId, 1);
-          const look = fp.lookVector();
-          droppedItems.spawn(
-            fp.position.x + look.x * 1.2,
-            fp.position.y,
-            fp.position.z + look.z * 1.2,
-            {
-              itemId,
-              count: 1,
-              color: def.color,
-            },
-            1.5,
-          );
-          sfx.play('click');
-        }
-      }
+      if (gameMode !== 'survival' && gameMode !== 'adventure') return;
+      // Drop the EXACT held stack — modify inventory.hotbar[selected]
+      // directly. inventory.remove() iterates from slot 0 up, so it would
+      // happily drop a different pickaxe (with full durability) instead of
+      // the one in your hand if you had spares. It also wiped per-stack
+      // damage state because remove() searches by itemId only.
+      const slotIdx = inventory.selectedHotbar;
+      const stk = inventory.hotbar[slotIdx];
+      if (!stk || stk.count <= 0) return;
+      const itemDef = itemRegistry.get(stk.itemId);
+      const dropCount = e.shiftKey ? stk.count : 1;
+      const actualCount = Math.min(dropCount, stk.count);
+      const remaining = stk.count - actualCount;
+      inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
+      const look = fp.lookVector(eventLookTmp);
+      const color: readonly [number, number, number] =
+        itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 130, 100];
+      droppedItems.spawn(
+        fp.position.x + look.x * 1.2,
+        fp.position.y,
+        fp.position.z + look.z * 1.2,
+        { itemId: stk.itemId, count: actualCount, color, damage: stk.damage },
+        1.5,
+      );
+      sfx.play('click');
+    }
+    if (e.code === 'KeyF') {
+      e.preventDefault();
+      // F key: swap mainhand ↔ offhand. Vanilla shortcut. Was missing —
+      // touch users have no offhand UI either, so the offhand slot was
+      // effectively inaccessible from gameplay (only via inventory UI).
+      const slotIdx = inventory.selectedHotbar;
+      const main = inventory.hotbar[slotIdx];
+      const off = inventory.offhand;
+      inventory.hotbar[slotIdx] = off;
+      inventory.offhand = main ?? null;
+      sfx.play('click');
     }
   },
   true,
@@ -5110,7 +8097,11 @@ document.addEventListener('pointerlockchange', () => {
       !resourcePackLoader.isVisible() &&
       !creativeInv.isVisible() &&
       !survivalInv.isVisible() &&
-      !chestUI.isVisible()
+      !chestUI.isVisible() &&
+      // Death screen owns the modal stack while it's up — auto-showing
+      // the pause menu over it would stack two overlays and the player
+      // couldn't reach either's button.
+      !deathScreen.isVisible()
     ) {
       pauseMenu.show();
       fp.inputBlocked = true;
@@ -5120,15 +8111,27 @@ document.addEventListener('pointerlockchange', () => {
   }
 });
 
+// Reused per-dispatch BorderOpacity wrapper. Each face's Uint8Array
+// is allocated fresh by extractBorderFromSubChunk because that array
+// gets transferred to the mesher worker (and detaches on the main
+// thread); the wrapper itself just needs a stable mutable shell.
+const borderForScratch: BorderOpacity = {
+  nx: null,
+  px: null,
+  ny: null,
+  py: null,
+  nz: null,
+  pz: null,
+};
+
 function borderFor(cx: number, cy: number, cz: number): BorderOpacity {
-  const b: BorderOpacity = {
-    nx: null,
-    px: null,
-    ny: null,
-    py: null,
-    nz: null,
-    pz: null,
-  };
+  const b = borderForScratch;
+  b.nx = null;
+  b.px = null;
+  b.ny = null;
+  b.py = null;
+  b.nz = null;
+  b.pz = null;
   const here = world.getChunk(cx, cz);
   if (!here) return b;
 
@@ -5163,49 +8166,167 @@ function markChunkAllDirty(chunk: Chunk): void {
   }
 }
 
+// Scratch dirty-section list reused across flushDirty calls; sized
+// for max sections per chunk (24).
+const dirtyScratch: number[] = new Array<number>(24);
+// Parallel scratch — squared y-distance from camera, computed once per
+// dirty section before the insertion sort. Replaces the per-inner-
+// iter `(cmp * 16 - py)²` which was recomputed up to N² times per
+// chunk (was 24² = 576 redundant ops worst case).
+const dirtyKeyScratch = new Float64Array(24);
+// Reused across flushDirty mesh dispatches:
+//  - emptyLightSlice: returned when this chunk has no lighting yet
+//    (mesher.worker falls back to its DEFAULT_FLAT_SKY/BLOCK constants);
+//  - mesherLightOpts: the {flatSkyLight, flatBlockLight} options
+//    object passed into mesherClient.mesh — its fields are read
+//    synchronously and the typed arrays themselves get transferred to
+//    the worker; the wrapper just needs to be a stable mutable shell.
+const emptyLightSlice: { sky: Uint8Array | null; block: Uint8Array | null } = {
+  sky: null,
+  block: null,
+};
+const mesherLightOpts: { flatSkyLight: Uint8Array | null; flatBlockLight: Uint8Array | null } = {
+  flatSkyLight: null,
+  flatBlockLight: null,
+};
+// Stable .then() callback for the mesher response. Was an inline
+// arrow per dispatch; chunk streaming hits this hundreds of times
+// per second at startup. Stale-response guard: chunk may have
+// unloaded while the mesher worker was still building. Without it,
+// the late response re-adds a phantom mesh into the scene-graph that
+// onUnload already cleared — leaking GPU memory and drawing outside
+// view distance until the next radius shrink.
+const applyMeshResponse = (response: MesherResponse): void => {
+  if (!world.has(response.cx, response.cz)) return;
+  chunkRenderer.apply(response);
+};
+// Stable per-frame pickup callbacks for droppedItems.tick + xpOrbs
+// .tick. Were inline arrow closures allocated per frame.
+const droppedItemPickupCallback = (out: {
+  itemId: number;
+  count: number;
+  damage?: number;
+}): number => {
+  // Preserve damage on pickup. Was hard-coded to 0, so dropping a
+  // 50% durability tool and walking back over it healed it for free.
+  pickupAddArg.itemId = out.itemId;
+  pickupAddArg.count = out.count;
+  pickupAddArg.damage = out.damage ?? 0;
+  const leftover = inventory.add(pickupAddArg);
+  const taken = out.count - leftover;
+  if (taken > 0) {
+    sfx.play('click');
+    const itemDef = itemRegistry.get(out.itemId);
+    chatInput.addLine(`+ ${String(taken)} ${itemDef.name.replace(/^webmc:/, '')}`, '#d2ff80');
+  }
+  // Tell DroppedItems how much we couldn't accept; it'll either
+  // delete the entity (leftover === 0) or reduce its count + re-arm
+  // pickup delay (leftover > 0).
+  return leftover;
+};
+const xpOrbPickupCallback = (xp: number): void => {
+  // Mending-style auto-repair: damaged held tool gets durability from XP first.
+  let remaining = xp;
+  const sel = inventory.hotbar[inventory.selectedHotbar];
+  if (sel && sel.damage > 0) {
+    const def = itemRegistry.get(sel.itemId);
+    if (def.durability > 0) {
+      const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
+      const repair = xpToFix * 2;
+      const newDamage = Math.max(0, sel.damage - repair);
+      inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
+      remaining -= xpToFix;
+    }
+  }
+  if (remaining > 0) playerState.addXP(remaining);
+  sfx.play('click');
+};
 function flushDirty(): void {
+  // Skip the entire pass when no chunks are dirty. The for-of below
+  // iterates an empty set in that case, but we also avoid the
+  // budget calculation + Math.max + multiplication on every empty
+  // frame.
+  if (world.dirtyChunkCount === 0) return;
   // Cap mesh re-builds per frame to keep the main thread responsive.
   // Budget mirrors loader chunk-upload budget; default 6, dropped to 1-3 by potato preset.
   const budget = Math.max(1, loader.perFrameBudget * 3);
   let dispatched = 0;
-  for (const chunk of world.chunks()) {
-    if (chunk.meshDirty.size === 0) continue;
+  // Iterate only chunks with dirty meshes (maintained by World via
+  // Chunk.onMeshDirty). Was iterating every loaded chunk every frame
+  // just to find the dirty ones — 576+ size checks per frame at
+  // 12-radius for nothing in steady state.
+  for (const chunk of world.dirtyChunks()) {
+    if (chunk.meshDirty.size === 0) {
+      world.clearDirty(chunk);
+      continue;
+    }
     if (dispatched >= budget) break;
-    const dirty = Array.from(chunk.meshDirty);
-    // Sort so closer-to-player sections process first.
-    const px = fp.position.x,
-      py = fp.position.y,
-      pz = fp.position.z;
-    dirty.sort((a, b) => {
-      const dxA = chunk.cx * 16 - px,
-        dzA = chunk.cz * 16 - pz,
-        dyA = a * 16 - py;
-      const dxB = chunk.cx * 16 - px,
-        dzB = chunk.cz * 16 - pz,
-        dyB = b * 16 - py;
-      return dxA * dxA + dyA * dyA + dzA * dzA - (dxB * dxB + dyB * dyB + dzB * dzB);
-    });
-    for (const cy of dirty) {
+    // Reuse scratch list — Array.from(chunk.meshDirty) was allocating
+    // a fresh array per dirty chunk per frame. Fill scratch then take
+    // a subarray-style view via length.
+    let dirtyLen = 0;
+    for (const cy of chunk.meshDirty) {
+      dirtyScratch[dirtyLen++] = cy;
+    }
+    const dirty = dirtyScratch;
+    const dirtyEnd = dirtyLen;
+    // Sort so closer-to-player sections process first. Old impl re-
+    // computed dxA/dzA/dxB/dzB inside the comparator from chunk.cx/cz
+    // (same for both a and b, since they're sections of the same chunk)
+    // — wasted work. Now compares only the per-section dy. Insertion
+    // sort over the first dirtyEnd elements (max 24, so cost is tiny
+    // and avoids Array.sort's allocation for the comparator state).
+    // Precompute (cy<<4 - py)² once per element instead of recomputing
+    // in the comparator's inner while loop (was up to 24² = 576 squared-
+    // diff evaluations per chunk; now 24).
+    const py = fp.position.y;
+    const keys = dirtyKeyScratch;
+    for (let i = 0; i < dirtyEnd; i++) {
+      const diff = (dirty[i]! << 4) - py;
+      keys[i] = diff * diff;
+    }
+    for (let i = 1; i < dirtyEnd; i++) {
+      const v = dirty[i]!;
+      const vKey = keys[i]!;
+      let j = i - 1;
+      while (j >= 0 && keys[j]! > vKey) {
+        dirty[j + 1] = dirty[j]!;
+        keys[j + 1] = keys[j]!;
+        j--;
+      }
+      dirty[j + 1] = v;
+      keys[j + 1] = vKey;
+    }
+    // Hoist lightCache lookup out of the cy loop — chunk light is per-
+    // chunk, not per-section, so all 24 dirty sections of a chunk would
+    // independently re-do the lookup.
+    const chunkLight = lightCache.get(lightKey(chunk.cx, chunk.cz));
+    for (let di = 0; di < dirtyEnd; di++) {
+      const cy = dirty[di]!;
       if (dispatched >= budget) break;
       (chunk.meshDirty as Set<number>).delete(cy);
       const section = chunk.section(cy);
-      if (!section) {
+      if (!section || section.nonAirCount === 0) {
+        // All-air section: remove any prior mesh and skip dispatch.
+        // The mesher would correctly emit zero quads but spends ~5ms on
+        // the empty traversal + worker round-trip per call. Worth it
+        // for tall sky sections that toggle empty/non-empty as the
+        // player builds upward.
         chunkRenderer.remove(chunk.cx, cy, chunk.cz);
         continue;
       }
       const borders = borderFor(chunk.cx, cy, chunk.cz);
-      const light = lightCache.get(lightKey(chunk.cx, chunk.cz));
-      const lightSlice = light ? flatLightForSection(light, cy) : { sky: null, block: null };
+      const lightSlice = chunkLight ? flatLightForSection(chunkLight, cy) : emptyLightSlice;
+      mesherLightOpts.flatSkyLight = lightSlice.sky;
+      mesherLightOpts.flatBlockLight = lightSlice.block;
       void mesherClient
-        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, {
-          flatSkyLight: lightSlice.sky,
-          flatBlockLight: lightSlice.block,
-        })
-        .then((response) => {
-          chunkRenderer.apply(response);
-        });
+        .mesh(chunk.cx, cy, chunk.cz, section, isOpaque, faceColorsOf, borders, mesherLightOpts)
+        .then(applyMeshResponse);
       dispatched++;
     }
+    // If we drained all dirty sections this frame, remove the chunk
+    // from the dirty-chunks set so future iterations skip it.
+    if (chunk.meshDirty.size === 0) world.clearDirty(chunk);
   }
 }
 
@@ -5214,6 +8335,80 @@ const onUnload = (cx: number, cz: number): void => {
   lightCache.delete(lightKey(cx, cz));
 };
 
+function snapshotStack(stack: ItemStack | null): PersistedItemStack | null {
+  if (!stack) return null;
+  const def = itemRegistry.get(stack.itemId);
+  if (!def) return null;
+  return { name: def.name, count: stack.count, damage: stack.damage };
+}
+
+function snapshotChestSlots(slots: (ItemStack | null)[]): (PersistedItemStack | null)[] {
+  return slots.map(snapshotStack);
+}
+function restoreChestSlots(saved: unknown): (ItemStack | null)[] {
+  const out = new Array<ItemStack | null>(27).fill(null);
+  if (!Array.isArray(saved)) return out;
+  for (let i = 0; i < Math.min(27, saved.length); i++) {
+    const v = saved[i];
+    if (v && typeof v === 'object' && typeof (v as PersistedItemStack).name === 'string') {
+      out[i] = restoreStack(v as PersistedItemStack);
+    } else if (v && typeof v === 'object' && typeof (v as ItemStack).itemId === 'number') {
+      // Legacy save (numeric itemId) — keep as-is so existing chests don't
+      // disappear; gets re-persisted in name form on next close. Filter
+      // out count=0 stacks though (same ghost-item issue as restoreStack).
+      const stk = v as ItemStack;
+      out[i] = stk.count > 0 ? stk : null;
+    }
+  }
+  return out;
+}
+// Snapshot every per-position chest plus the shared ender-chest store.
+// Empty-everywhere chests are skipped to keep the saved blob small.
+function saveAllChestStorages(): Promise<void> {
+  const byPos: Record<string, (PersistedItemStack | null)[]> = {};
+  for (const [k, slots] of chestStoragesByPos) {
+    if (slots.every((s) => s === null)) continue;
+    byPos[k] = snapshotChestSlots(slots);
+  }
+  return persistDB.setMeta('chestStorages', {
+    version: 2,
+    ender: snapshotChestSlots(enderChestStorage),
+    byPos,
+  });
+}
+
+function snapshotInventory(): PersistedInventory {
+  return {
+    hotbar: inventory.hotbar.map(snapshotStack),
+    main: inventory.main.map(snapshotStack),
+    armor: inventory.armor.map(snapshotStack),
+    offhand: snapshotStack(inventory.offhand),
+    selectedHotbar: inventory.selectedHotbar,
+  };
+}
+
+function snapshotVitals(): PersistedVitals {
+  const effs: PersistedVitals['effects'] = [];
+  for (const [id, e] of playerState.effects) {
+    effs.push({ id, amplifier: e.amplifier, remainingSec: e.remainingSec });
+  }
+  return {
+    health: playerState.health,
+    hunger: playerState.hunger,
+    saturation: playerState.saturation,
+    breath: playerState.breath,
+    xpLevel: playerState.xpLevel,
+    xpProgress: playerState.xpProgress,
+    exhaustion: playerState.exhaustion,
+    absorption: playerState.absorption,
+    fireRemainingSec: playerState.fireRemainingSec,
+    effects: effs,
+  };
+}
+
+// Session save counter shown in the HUD as `save{N}`. e2e tests poll
+// for this string to confirm persistence is wired.
+let sessionSaveCount = 0;
 async function savePlayerNow(): Promise<void> {
   if (!worldMeta) return;
   await persistDB.putPlayer({
@@ -5222,38 +8417,330 @@ async function savePlayerNow(): Promise<void> {
     yaw: fp.yaw,
     pitch: fp.pitch,
     hotbarSlots: [],
-    selectedSlot: 0,
+    selectedSlot: inventory.selectedHotbar,
     updatedAt: Date.now(),
+    inventory: snapshotInventory(),
+    vitals: snapshotVitals(),
   });
+  sessionSaveCount++;
 }
 
 let lastPlayerSaveAt = performance.now();
+let lastWorldSaveAnnounceAt = performance.now();
 let fluidTickAccum = 0;
+let cropTickAccum = 0;
 const FLUID_TICK_SEC = 0.25;
-const fallableIds = new Set<number>();
-for (const name of ['webmc:sand', 'webmc:gravel', 'webmc:red_sand']) {
+const CROP_TICK_SEC = 1;
+// Reused per-fluid-tick scratches. Were allocated fresh on every
+// fluid tick (every 0.25s, much more frequent at active lava lakes /
+// flowing rivers): a Set of touched chunk keys and a Map of chunk →
+// Set of dirty cy slots inside that chunk.
+const fluidChunksToRelightScratch = new Set<number>();
+const fluidSectionsToRemeshScratch = new Map<number, Set<number>>();
+const fluidSectionSetPool: Set<number>[] = [];
+const CROP_BLOCKS: Record<string, CropQuery['crop'] | undefined> = {
+  'webmc:wheat': 'wheat',
+  'webmc:carrots': 'carrot',
+  'webmc:potatoes': 'potato',
+  'webmc:beetroots': 'beetroot',
+  'webmc:nether_wart': 'nether_wart',
+};
+// Numeric-id lookup for the per-tick crop scan (80 samples/sec each
+// hits this). The string path was: world.get → registry.get(id).name
+// (full block name string) → CROP_BLOCKS[name] (string-keyed Record).
+// Pre-resolve once at module init so the runtime path is a single
+// Map.get with a numeric key.
+const CROP_KIND_BY_BLOCK_ID = new Map<number, CropQuery['crop']>();
+for (const [name, kind] of Object.entries(CROP_BLOCKS)) {
+  if (!kind) continue;
   const id = registry.byName(name);
-  if (id !== undefined) fallableIds.add(id);
+  if (id !== undefined) CROP_KIND_BY_BLOCK_ID.set(id, kind);
+}
+// Parallel neighbor-offset arrays (6 axis-aligned). Was a tuple-of-
+// tuples that the leaf-decay BFS deref'd as `off[0]/off[1]/off[2]`
+// per neighbor visit. Three flat number[] reads are simpler.
+const NEIGHBOR_OFFSETS_DX_6: readonly number[] = [1, -1, 0, 0, 0, 0];
+const NEIGHBOR_OFFSETS_DY_6: readonly number[] = [0, 0, 1, -1, 0, 0];
+const NEIGHBOR_OFFSETS_DZ_6: readonly number[] = [0, 0, 0, 0, 1, -1];
+const LEAF_TO_SAPLING_FOR_DECAY: Record<string, string> = {
+  'webmc:oak_leaves': 'webmc:oak_sapling',
+  'webmc:spruce_leaves': 'webmc:spruce_sapling',
+  'webmc:birch_leaves': 'webmc:birch_sapling',
+  'webmc:jungle_leaves': 'webmc:jungle_sapling',
+  'webmc:acacia_leaves': 'webmc:acacia_sapling',
+  'webmc:dark_oak_leaves': 'webmc:dark_oak_sapling',
+  'webmc:cherry_leaves': 'webmc:cherry_sapling',
+  'webmc:azalea_leaves': 'webmc:azalea',
+  // Wiki: mangrove leaves drop mangrove_propagule, flowering azalea
+  // leaves drop flowering_azalea, pale oak leaves drop pale_oak_sapling.
+  // Were missing → those leaves silently dropped no sapling, breaking
+  // the replant loop in mangrove swamp / lush cave / pale garden biomes.
+  'webmc:mangrove_leaves': 'webmc:mangrove_propagule',
+  'webmc:flowering_azalea_leaves': 'webmc:flowering_azalea',
+  'webmc:pale_oak_leaves': 'webmc:pale_oak_sapling',
+};
+// Pre-resolved id tables for the leaf-decay BFS. The hot inner loop
+// did `registry.get(id).name + .endsWith('_log'|'_wood'|'_leaves')`
+// per visited cell — full BlockDef fetch + 3 string compares. Resolve
+// once at module init by iterating the registry's defs array; runtime
+// becomes a single Uint8Array index (faster than Set.has hashing for
+// hot paths).
+const LEAF_BFS_LOG_OR_WOOD = new Uint8Array(registry.defs.length);
+const LEAF_BFS_LEAVES = new Uint8Array(registry.defs.length);
+// Same pattern for the sapling random-tick branch — was running
+// `name.endsWith('_sapling')` per sample.
+const IS_SAPLING = new Uint8Array(registry.defs.length);
+// Per-leaf-id sapling drop lookup. Numeric-id parallel map; the
+// previous string-keyed version was an intermediate step.
+const LEAF_TO_SAPLING_BY_ID: (number | undefined)[] = [];
+const OAK_LEAVES_ID = registry.byName('webmc:oak_leaves') ?? -1;
+for (let i = 0; i < registry.defs.length; i++) {
+  const n = registry.defs[i]!.name;
+  if (n.endsWith('_log') || n.endsWith('_wood')) LEAF_BFS_LOG_OR_WOOD[i] = 1;
+  else if (n.endsWith('_leaves')) {
+    LEAF_BFS_LEAVES[i] = 1;
+    const sapName = LEAF_TO_SAPLING_FOR_DECAY[n];
+    if (sapName !== undefined) {
+      const sapItemId = itemRegistry.byName(sapName);
+      if (sapItemId !== undefined) LEAF_TO_SAPLING_BY_ID[i] = sapItemId;
+    }
+  } else if (n.endsWith('_sapling')) {
+    IS_SAPLING[i] = 1;
+  }
+}
+// Composter input → fill chance per wiki. Was being rebuilt on every
+// composter right-click. Tier table: 30% (raw seeds/berries/kelp),
+// 50% (cactus/cane/melon_slice/vines), 65% (raw food crops),
+// 85% (cooked/processed food + dried_kelp_block + hay_block + pumpkin),
+// 100% (cake + pumpkin_pie). dried_kelp the ITEM is 30% (the BLOCK
+// is 85%; we don't have dried_kelp_block as a compostable input
+// here). Was 85% — overshooting wiki by ~3x.
+// Wiki: composter accepts a wide set of organic/plant items. Was missing
+// the entire mushroom + fungus + sapling + leaf + vine families plus
+// nether-wart + chorus + lily-pad + others — players couldn't compost
+// most of the actual decorative drops they collect. Tier mapping per
+// minecraft.wiki/w/Composter#Composting:
+//   0.30: seeds, saplings, kelp/dried_kelp, sweet_berries, glow_berries,
+//         pink_petals, pitcher_pod-as-seed, moss_carpet, leaves
+//   0.50: cactus, sugar_cane, vine, melon_slice, fern (small+large),
+//         nether_sprouts, twisting/weeping_vines, dripleaf (small+big),
+//         glow_lichen, sea_pickle, mushroom variants
+//   0.65: wheat, carrot, potato, beetroot, apple, pumpkin, melon,
+//         cocoa_beans, nether_wart, lily_pad, mushrooms (red+brown),
+//         crimson/warped_fungus, moss_block, shroomlight, spore_blossom
+//   0.85: bread, cookie, baked_potato, hay_block, nether/warped_wart_block
+//   1.00: cake, pumpkin_pie
+const COMPOSTABLES: Record<string, number> = {
+  // 30% tier
+  wheat_seeds: 0.3,
+  beetroot_seeds: 0.3,
+  melon_seeds: 0.3,
+  pumpkin_seeds: 0.3,
+  torchflower_seeds: 0.3,
+  kelp: 0.3,
+  dried_kelp: 0.3,
+  sweet_berries: 0.3,
+  glow_berries: 0.3,
+  bamboo: 0.3,
+  oak_sapling: 0.3,
+  spruce_sapling: 0.3,
+  birch_sapling: 0.3,
+  jungle_sapling: 0.3,
+  acacia_sapling: 0.3,
+  dark_oak_sapling: 0.3,
+  cherry_sapling: 0.3,
+  mangrove_propagule: 0.3,
+  oak_leaves: 0.3,
+  spruce_leaves: 0.3,
+  birch_leaves: 0.3,
+  jungle_leaves: 0.3,
+  acacia_leaves: 0.3,
+  dark_oak_leaves: 0.3,
+  cherry_leaves: 0.3,
+  mangrove_leaves: 0.3,
+  azalea_leaves: 0.3,
+  pink_petals: 0.3,
+  moss_carpet: 0.3,
+  // 50% tier — wiki: cactus, sugar_cane, melon_slice, vine, glow_lichen,
+  // sea_pickle, twisting_vines, weeping_vines, nether_sprouts, small_dripleaf.
+  cactus: 0.5,
+  sugar_cane: 0.5,
+  melon_slice: 0.5,
+  vine: 0.5,
+  twisting_vines: 0.5,
+  weeping_vines: 0.5,
+  nether_sprouts: 0.5,
+  small_dripleaf: 0.5,
+  glow_lichen: 0.5,
+  sea_pickle: 0.5,
+  // 65% tier — wiki: tall_grass, fern, large_fern, big_dripleaf, mushrooms
+  // (red+brown), mushroom_stem, crimson/warped_roots, mangrove_roots all
+  // moved up from 50%. Was treating these as 50%.
+  tall_grass: 0.65,
+  fern: 0.65,
+  large_fern: 0.65,
+  big_dripleaf: 0.65,
+  red_mushroom: 0.65,
+  brown_mushroom: 0.65,
+  mushroom_stem: 0.65,
+  crimson_roots: 0.65,
+  warped_roots: 0.65,
+  mangrove_roots: 0.65,
+  wheat: 0.65,
+  carrot: 0.65,
+  potato: 0.65,
+  beetroot: 0.65,
+  apple: 0.65,
+  pumpkin: 0.65,
+  melon: 0.65,
+  cocoa_beans: 0.65,
+  nether_wart: 0.65,
+  lily_pad: 0.65,
+  moss_block: 0.65,
+  shroomlight: 0.65,
+  spore_blossom: 0.65,
+  crimson_fungus: 0.65,
+  warped_fungus: 0.65,
+  azalea: 0.65,
+  flowering_azalea: 0.65,
+  pitcher_pod: 0.65,
+  // Wiki (minecraft.wiki/w/Composter): every single-block flower
+  // composts at 65% chance. Old table omitted them — players had no
+  // efficient way to compost their flower drops.
+  dandelion: 0.65,
+  poppy: 0.65,
+  blue_orchid: 0.65,
+  allium: 0.65,
+  azure_bluet: 0.65,
+  red_tulip: 0.65,
+  orange_tulip: 0.65,
+  white_tulip: 0.65,
+  pink_tulip: 0.65,
+  oxeye_daisy: 0.65,
+  cornflower: 0.65,
+  lily_of_the_valley: 0.65,
+  wither_rose: 0.65,
+  torchflower: 0.65,
+  // 85% tier
+  bread: 0.85,
+  cookie: 0.85,
+  baked_potato: 0.85,
+  hay_block: 0.85,
+  nether_wart_block: 0.85,
+  warped_wart_block: 0.85,
+  // 100% tier
+  pumpkin_pie: 1.0,
+  cake: 1.0,
+};
+// Seed → crop block. Right-click on farmland — was rebuilt per click.
+const PLANT_MAP: Record<string, string> = {
+  wheat_seeds: 'webmc:wheat',
+  beetroot_seeds: 'webmc:beetroots',
+  carrot: 'webmc:carrots',
+  potato: 'webmc:potatoes',
+  torchflower_seeds: 'webmc:torchflower_crop',
+  pitcher_pod: 'webmc:pitcher_crop',
+};
+// Crop → harvest item names for bone-meal-on-crop instant ripen.
+const BONEMEAL_DROP_MAP: Record<string, readonly string[]> = {
+  'webmc:wheat': ['webmc:wheat', 'webmc:wheat_seeds'],
+  'webmc:carrots': ['webmc:carrot'],
+  'webmc:potatoes': ['webmc:potato'],
+  'webmc:beetroots': ['webmc:beetroot', 'webmc:beetroot_seeds'],
+};
+// Crop block → harvest drop table. Was being rebuilt as a fresh
+// Record literal on every block-break right-click on a crop.
+const CROP_DROP: Record<string, readonly { id: string; min: number; max: number }[]> = {
+  'webmc:wheat': [
+    { id: 'webmc:wheat', min: 1, max: 1 },
+    { id: 'webmc:wheat_seeds', min: 0, max: 3 },
+  ],
+  'webmc:carrots': [{ id: 'webmc:carrot', min: 1, max: 4 }],
+  'webmc:potatoes': [{ id: 'webmc:potato', min: 1, max: 4 }],
+  'webmc:beetroots': [
+    { id: 'webmc:beetroot', min: 1, max: 1 },
+    { id: 'webmc:beetroot_seeds', min: 1, max: 3 },
+  ],
+  'webmc:short_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+  'webmc:tall_grass': [{ id: 'webmc:wheat_seeds', min: 0, max: 1 }],
+  'webmc:sweet_berry_bush': [{ id: 'webmc:sweet_berries', min: 0, max: 2 }],
+  'webmc:cocoa': [{ id: 'webmc:cocoa_beans', min: 1, max: 3 }],
+  'webmc:melon': [{ id: 'webmc:melon_slice', min: 3, max: 7 }],
+  'webmc:pumpkin': [{ id: 'webmc:pumpkin_seeds', min: 1, max: 4 }],
+  'webmc:torchflower_crop': [{ id: 'webmc:torchflower_seeds', min: 1, max: 1 }],
+  'webmc:pitcher_crop': [{ id: 'webmc:pitcher_pod', min: 1, max: 1 }],
+  'webmc:bamboo': [{ id: 'webmc:bamboo', min: 1, max: 1 }],
+  'webmc:sugar_cane': [{ id: 'webmc:sugar_cane', min: 1, max: 1 }],
+};
+const FALLABLE_BY_ID = new Uint8Array(registry.defs.length);
+const FALLABLE_BLOCKS = [
+  'webmc:sand',
+  'webmc:gravel',
+  'webmc:red_sand',
+  'webmc:suspicious_sand',
+  'webmc:suspicious_gravel',
+  'webmc:anvil',
+  'webmc:chipped_anvil',
+  'webmc:damaged_anvil',
+  // Concrete powder — all 16 colors. Was missing entirely so a stack of
+  // concrete_powder placed mid-air just hung there instead of falling.
+  'webmc:white_concrete_powder',
+  'webmc:orange_concrete_powder',
+  'webmc:magenta_concrete_powder',
+  'webmc:light_blue_concrete_powder',
+  'webmc:yellow_concrete_powder',
+  'webmc:lime_concrete_powder',
+  'webmc:pink_concrete_powder',
+  'webmc:gray_concrete_powder',
+  'webmc:light_gray_concrete_powder',
+  'webmc:cyan_concrete_powder',
+  'webmc:purple_concrete_powder',
+  'webmc:blue_concrete_powder',
+  'webmc:brown_concrete_powder',
+  'webmc:green_concrete_powder',
+  'webmc:red_concrete_powder',
+  'webmc:black_concrete_powder',
+  // Wiki (minecraft.wiki/w/Dragon_Egg): the dragon egg is gravity-
+  // affected and falls when unsupported, behaving like sand. Was
+  // missing — eggs left without a block beneath floated.
+  'webmc:dragon_egg',
+];
+for (const name of FALLABLE_BLOCKS) {
+  const id = registry.byName(name);
+  if (id !== undefined) FALLABLE_BY_ID[id] = 1;
 }
 
 // Cascading falling-block check: called from touchWorldEdit when a block
 // below a fallable-block column is removed. Drops the column one step and
 // recursively checks the block above.
 function cascadeFalling(bx: number, by: number, bz: number): void {
+  // Drop the whole column of fallable blocks above (bx, by, bz) onto the
+  // surface below them. Old impl only checked "is the cell directly
+  // below air?" which broke after the first drop because the just-dropped
+  // sand became "the cell below" for the next iteration — so only the
+  // bottom block in a stack ever fell, instead of the whole pile.
+  let dropTarget = by; // first known air cell to drop the next solid into
   let y = by + 1;
   while (y < CHUNK_HEIGHT) {
     const s = world.get(bx, y, bz);
-    if (s === AIR) break;
-    if (!fallableIds.has(stateId(s))) break;
-    if (world.get(bx, y - 1, bz) !== AIR) break;
-    world.set(bx, y - 1, bz, s);
+    if (s === AIR) {
+      // Found another air pocket — future sands above can fall further.
+      // dropTarget stays the same; we still want the next sand to land
+      // on the lowest empty cell, which is dropTarget.
+      y++;
+      continue;
+    }
+    if (FALLABLE_BY_ID[stateId(s)] !== 1) break;
+    if (dropTarget >= y) break; // no air below — pile is already settled
+    world.set(bx, dropTarget, bz, s);
     world.set(bx, y, bz, AIR);
+    dropTarget++;
     y++;
   }
 }
 
 const perfMonitor = new PerfMonitor({
-  startQuality: 6,
+  startQuality: isMobileDevice ? 4 : 8,
   minQuality: 2,
   maxQuality: 12,
   upShiftThresholdSec: 0.033,
@@ -5263,12 +8750,20 @@ const perfMonitor = new PerfMonitor({
 });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
-    void chunkStore.flush();
+    // Drain entire dirty queue, not just one batch — tab may close
+    // before the next setInterval fires.
+    void chunkStore.flushAll();
     void savePlayerNow();
-    void persistDB.setMeta('chestStorage', chestUI.storage);
-    void persistDB.setMeta('playerStats', playerStats);
-    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
-    void persistDB.setMeta('dayCounter', dayCounter);
+    void saveAllChestStorages();
+    // Batch the meta writes — was 4 separate IDB transactions racing
+    // tab teardown; now a single transaction.
+    void persistDB.setMetas([
+      { key: 'playerStats', value: playerStats },
+      { key: 'timeOfDay', value: dayNight.timeOfDay },
+      { key: 'dayCounter', value: dayCounter },
+      { key: 'fluidCells', value: fluidWorld.serialize() },
+    ]);
+    saveHotbarIfChanged();
     if (!mainMenu.isVisible() && !pauseMenu.isVisible()) {
       pauseMenu.show();
       fp.inputBlocked = true;
@@ -5277,12 +8772,20 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 window.addEventListener('beforeunload', () => {
-  void chunkStore.flush();
+  void chunkStore.flushAll();
   void savePlayerNow();
-  void persistDB.setMeta('chestStorage', chestUI.storage);
-  void persistDB.setMeta('playerStats', playerStats);
-  void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
-  void persistDB.setMeta('dayCounter', dayCounter);
+  void saveAllChestStorages();
+  // Single batched meta transaction — beforeunload fires once and the
+  // browser may kill the tab before independent transactions complete.
+  // Was missing fluidCells and hotbarSelected — closing the tab during
+  // active fluid placement or after switching hotbar slot lost both.
+  void persistDB.setMetas([
+    { key: 'playerStats', value: playerStats },
+    { key: 'timeOfDay', value: dayNight.timeOfDay },
+    { key: 'dayCounter', value: dayCounter },
+    { key: 'fluidCells', value: fluidWorld.serialize() },
+  ]);
+  saveHotbarIfChanged();
 });
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -5298,15 +8801,24 @@ async function initMultiplayer(): Promise<void> {
   const client = new RoomClient({
     signalingUrl,
     world,
-    name: 'Player',
+    // Use the persisted player name (was always 'Player' so every peer
+    // showed up nameless in chat).
+    name: currentPlayerName,
     onRoom: (code) => {
       roomCode = code;
     },
     onError: (msg) => {
       console.warn('[webmc] mp error:', msg);
+      // Surface to the in-game chat too — was console-only so peers had
+      // no idea why a connection silently failed.
+      chatInput.addLine(`✗ multiplayer: ${msg}`, '#ff8080');
     },
     onChat: (from, text) => {
       console.log(`[chat ${from}]`, text);
+      // Was only logging to the dev console; remote chat messages never
+      // appeared in the actual chat panel, so multiplayer chat was a
+      // one-way silence from the receiver's perspective.
+      chatInput.addLine(`<${from}> ${text}`, '#80c0ff');
     },
   });
   try {
@@ -5333,8 +8845,11 @@ function igniteTnt(bx: number, by: number, bz: number): void {
   const def = registry.get(id);
   if (def.name !== 'webmc:tnt') return;
   world.set(bx, by, bz, AIR);
-  const cx = Math.floor(bx / 16);
-  const cz = Math.floor(bz / 16);
+  // Block coords are integers; `>> 4` matches Math.floor(_/16) and
+  // skips the divide. Same below in touchWorldEdit + explodeAt
+  // chunksTouched paths.
+  const cx = bx >> 4;
+  const cz = bz >> 4;
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
     const light = lightCache.get(lightKey(cx, cz)) ?? null;
@@ -5346,7 +8861,18 @@ function igniteTnt(bx: number, by: number, bz: number): void {
 }
 
 let tntSmokeAccum = 0;
+// Constant colors for ambient particles. Were fresh [r,g,b] literals
+// per emit; firing at 3-6Hz across torches + lava + TNT during normal
+// play.
+const TNT_SMOKE_COLOR: readonly [number, number, number] = [90, 90, 90];
+const TORCH_EMBER_COLOR: readonly [number, number, number] = [255, 235, 140];
+const LAVA_EMBER_COLOR: readonly [number, number, number] = [255, 160, 60];
+
 function tickTnt(dtSec: number): void {
+  // Skip the entire tick when no TNT is primed — common case in
+  // normal play. Without this, every frame paid the smoke-accum
+  // advance + emitNow boolean even with nothing to tick.
+  if (primedTnt.length === 0) return;
   tntSmokeAccum += dtSec;
   const emitNow = tntSmokeAccum > 0.1;
   if (emitNow) tntSmokeAccum = 0;
@@ -5354,11 +8880,13 @@ function tickTnt(dtSec: number): void {
     const t = primedTnt[i]!;
     t.remainingSec -= dtSec;
     if (emitNow) {
-      blockParticles.emitPlace(t.bx + 0.5, t.by + 0.8, t.bz + 0.5, [90, 90, 90]);
+      blockParticles.emitPlace(t.bx + 0.5, t.by + 0.8, t.bz + 0.5, TNT_SMOKE_COLOR);
     }
     if (t.remainingSec <= 0) {
       explodeAt(t.bx, t.by, t.bz, 4);
-      primedTnt.splice(i, 1);
+      const last = primedTnt.length - 1;
+      if (i !== last) primedTnt[i] = primedTnt[last]!;
+      primedTnt.pop();
     }
   }
 }
@@ -5371,7 +8899,12 @@ function explosionDrops(power: number): boolean {
 function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   const r2 = radius * radius;
   const airState = AIR;
-  const changedChunks = new Set<string>();
+  // Numeric packed (cx, cz) keys instead of template-literal strings —
+  // a TNT chain at a creeper farm can hit hundreds of cells per blast,
+  // each previously building two strings (one to add, one to split
+  // back via .split + Number).
+  const changedChunks = explodeChangedChunksScratch;
+  changedChunks.clear();
   for (let dy = -radius; dy <= radius; dy++) {
     for (let dz = -radius; dz <= radius; dz++) {
       for (let dx = -radius; dx <= radius; dx++) {
@@ -5390,40 +8923,75 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
           // Cascading TNT: remove as block, schedule fuse with random delay.
           world.set(x, y, z, airState);
           primedTnt.push({ bx: x, by: y, bz: z, remainingSec: 0.3 + Math.random() * 0.6 });
-          changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+          changedChunks.add(lightKey(x >> 4, z >> 4));
           continue;
         }
         const falloff = 1 - dSq / r2;
         if (Math.random() > falloff * 0.9) continue;
+        // Chest-style block destroyed by explosion: dump its contents
+        // before the world.set wipes it. Without this, a creeper next to
+        // a chest deleted every item inside silently — the chestStoragesByPos
+        // entry stayed orphaned at a position with no chest.
+        const isChestBlock =
+          def2.name === 'webmc:chest' ||
+          def2.name === 'webmc:trapped_chest' ||
+          def2.name === 'webmc:barrel' ||
+          def2.name.endsWith('_shulker_box') ||
+          def2.name === 'webmc:shulker_box';
+        if (isChestBlock) {
+          const k = chestKey(x, y, z);
+          const slots = chestStoragesByPos.get(k);
+          if (slots) {
+            for (const stk of slots) {
+              if (!stk || stk.count <= 0) continue;
+              const itemDef = itemRegistry.get(stk.itemId);
+              const colorRgb =
+                itemDef.blockId !== undefined
+                  ? registry.get(itemDef.blockId).color
+                  : ([200, 200, 200] as const);
+              droppedItems.spawn(
+                x + 0.5,
+                y + 0.5,
+                z + 0.5,
+                { itemId: stk.itemId, count: stk.count, color: colorRgb, damage: stk.damage },
+                3,
+              );
+            }
+            chestStoragesByPos.delete(k);
+          }
+        }
         world.set(x, y, z, airState);
         if (explosionDrops(radius)) {
           blockParticles.emitBreak(x, y, z, def2.color);
-          const itemId = itemRegistry.byName(def2.name);
-          if (itemId !== undefined) {
+          // Use the same drop registry the regular break path uses so
+          // stone → cobblestone, ores → raw items, glass → nothing
+          // (silk-touch only). Old code dropped the block-item directly,
+          // which gave players "stone block" item from an explosion when
+          // vanilla would've dropped cobblestone.
+          const drops = dropRegistry.drops(id2, undefined, 99);
+          for (const s of drops) {
             droppedItems.spawn(
               x + 0.5,
               y + 0.5,
               z + 0.5,
-              {
-                itemId,
-                count: 1,
-                color: def2.color,
-              },
+              { itemId: s.itemId, count: s.count, color: def2.color },
               3,
             );
           }
         }
-        changedChunks.add(`${String(Math.floor(x / 16))},${String(Math.floor(z / 16))}`);
+        changedChunks.add(lightKey(x >> 4, z >> 4));
       }
     }
   }
   for (const k of changedChunks) {
-    const [cxS, czS] = k.split(',');
-    const cx = Number(cxS);
-    const cz = Number(czS);
+    // Unpack the numeric key back into (cx, cz). Same encoding as
+    // World.chunkKey / lightKey. `>>> 16` matches Math.floor(k / 65536)
+    // for valid keys (bounded to 32 bits) and skips the divide.
+    const cx = (k >>> 16) - 32768;
+    const cz = (k & 0xffff) - 32768;
     const chunk = world.getChunk(cx, cz);
     if (chunk) {
-      const light = lightCache.get(lightKey(cx, cz)) ?? null;
+      const light = lightCache.get(k) ?? null;
       chunkStore.markDirty(chunk, light);
     }
   }
@@ -5432,186 +9000,448 @@ function explodeAt(bx: number, by: number, bz: number, radius: number): void {
   sfx.play('break');
   audio.play3D('break', bx + 0.5, by + 0.5, bz + 0.5);
   chatInput.addLine(`💥 BOOM`, '#ff6040');
+  // Damage and knockback the player. Vanilla MC explosion damage scales
+  // by ((1 - dist/(2*r)) * (2*r) + 1) ^ 2 / 2 with armor mitigation;
+  // simplified here as linear falloff with a 7HP-at-zero peak for radius 4
+  // (TNT) → 14HP for radius 5 (charged creeper). Pre-fix the player took
+  // zero damage from explosions; you could stand on top of a creeper and
+  // walk away with full HP after blocks vanished underfoot.
+  if (vitalsActive) {
+    const dx = fp.position.x - (bx + 0.5);
+    const dy = fp.position.y - (by + 0.5);
+    const dz = fp.position.z - (bz + 0.5);
+    const dist = Math.hypot(dx, dy, dz);
+    const blastRange = radius * 2;
+    if (dist < blastRange) {
+      const fall = 1 - dist / blastRange;
+      const baseDmg = fall * (2 * radius) + 1;
+      const dmg = (baseDmg * baseDmg) / 2;
+      const armorPts = computeArmorPoints();
+      const toughnessPts = computeArmorToughness();
+      const finalDmg = armorPts > 0 ? armorReducedDamage(dmg, armorPts, toughnessPts) : dmg;
+      playerState.takeDamage({ amount: finalDmg, source: 'explosion' });
+      if (armorPts > 0) consumeArmorDurability(dmg);
+      // Knockback away from blast center.
+      if (dist > 0.0001) {
+        const KB = fall * 14;
+        fp.velocity.x += (dx / dist) * KB;
+        fp.velocity.y += (dy / Math.max(0.1, Math.abs(dy))) * KB * 0.5 + 4;
+        fp.velocity.z += (dz / dist) * KB;
+      }
+    }
+  }
+  // Damage nearby mobs too — a creeper next to a sheep was just shoving
+  // the sheep, never killing it.
+  for (const m of mobWorld.all()) {
+    const dx = m.position.x - (bx + 0.5);
+    const dy = m.position.y - (by + 0.5);
+    const dz = m.position.z - (bz + 0.5);
+    const dist = Math.hypot(dx, dy, dz);
+    const blastRange = radius * 2;
+    if (dist >= blastRange) continue;
+    const fall = 1 - dist / blastRange;
+    const baseDmg = fall * (2 * radius) + 1;
+    const dmg = (baseDmg * baseDmg) / 2;
+    const result = mobWorld.damage(m.id, dmg);
+    // mobWorld.damage marks dropsHandled=true, so the dyingSec
+    // onMobDeath callback won't fire drops. Spawn them here for
+    // explosion kills since the caller (this function) is responsible.
+    if (result?.killed) {
+      spawnMobDrops(result.kind, result.position);
+      const xpAmount = rollMobXpFor(result.kind, Math.random);
+      for (const chunk of splitXp(xpAmount)) {
+        xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, chunk);
+      }
+    }
+    if (dist > 0.0001) {
+      const KB = fall * 14;
+      m.velocity.x += (dx / dist) * KB;
+      m.velocity.z += (dz / dist) * KB;
+      m.velocity.y = Math.max(m.velocity.y, fall * 8);
+    }
+  }
 }
 
 function oreXp(blockName: string): number {
   return xpForOre(blockName.replace(/^webmc:/, ''), Math.random, false);
 }
 
+// Mob drop tables — was a fresh literal on every spawnMobDrops call,
+// allocating ~130 entry objects + ~130 color tuples per mob death.
+// Hoist as a module-scope constant; spawnMobDrops just indexes it.
+const MOB_DROP_TABLES: Record<
+  string,
+  readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
+> = {
+  zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+  skeleton: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  creeper: [{ name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] }],
+  spider: [
+    { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
+    { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
+  ],
+  pig: [{ name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] }],
+  cow: [
+    { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  sheep: [
+    { name: 'wool', min: 1, max: 1, color: [240, 240, 240] },
+    // Vanilla also drops 1-2 raw_mutton on kill — was missing.
+    { name: 'raw_mutton', min: 1, max: 2, color: [180, 90, 90] },
+  ],
+  chicken: [
+    { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
+    // Wiki: chicken drops 0-2 feathers (was 0-1).
+    { name: 'feather', min: 0, max: 2, color: [250, 250, 250] },
+  ],
+  wolf: [],
+  // Wiki: llama drops 0-2 leather + 1-3 XP. Was missing entirely so
+  // killing llamas (e.g. raid pillager-trader llamas) gave nothing.
+  llama: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  // Wiki: polar bear drops 0-2 raw_cod OR 0-2 raw_salmon (50/50 per
+  // kill). Approximated as 0-1 of each independently — avg is similar
+  // and the drop schema doesn't support mutually-exclusive choice.
+  polar_bear: [
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+    { name: 'salmon', min: 0, max: 1, color: [208, 106, 74] },
+  ],
+  enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
+  ghast: [
+    { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
+    { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
+  ],
+  blaze: [{ name: 'blaze_rod', min: 0, max: 1, color: [240, 180, 40] }],
+  // Wiki: piglins drop NO items naturally on death. They will drop
+  // their equipped golden weapon (sword/crossbow) with random damage,
+  // but that's an equipment-drop mechanism not in place yet. The
+  // rotten_flesh entry was likely confusion with zombified_piglin (which
+  // does drop rotten_flesh naturally per wiki).
+  piglin: [],
+  wither_skeleton: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
+  ],
+  rabbit: [
+    // 'rabbit' was the cooked-meat item id — drops should use the
+    // raw form (raw_rabbit). Other passive drops (raw_beef etc) all
+    // use the raw_* convention, so this was the lone outlier.
+    { name: 'raw_rabbit', min: 0, max: 1, color: [200, 160, 130] },
+    { name: 'rabbit_hide', min: 0, max: 1, color: [180, 140, 110] },
+    // Vanilla 10% drop chance for rabbit_foot — needed for leaping
+    // potion brewing (M12) but already a registered item, just was
+    // missing from the drop table.
+    { name: 'rabbit_foot', min: 0, max: 1, color: [220, 180, 150] },
+  ],
+  fox: [],
+  horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  // Wiki: donkey + mule drop 0-2 leather like horses on death. Was
+  // missing from the drop table — players killing donkeys/mules
+  // got nothing.
+  donkey: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  mule: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
+  bee: [],
+  // Wiki: cats drop NO items on death (only 1-3 XP). Was incorrectly
+  // dropping 0-2 string — likely a holdover from pre-1.14 ocelot data
+  // or confusion with spider drops.
+  cat: [],
+  parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
+  witch: [
+    // Wiki: witches drop 0-2 of any of 7 items — was missing 4 of
+    // them (spider_eye, stick, sugar, glowstone_dust). Players got
+    // a much sparser drop pool than vanilla.
+    { name: 'glass_bottle', min: 0, max: 2, color: [220, 240, 250] },
+    { name: 'redstone', min: 0, max: 2, color: [200, 30, 30] },
+    { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
+    { name: 'spider_eye', min: 0, max: 2, color: [120, 30, 30] },
+    { name: 'stick', min: 0, max: 2, color: [150, 110, 60] },
+    { name: 'sugar', min: 0, max: 2, color: [240, 240, 240] },
+    { name: 'glowstone_dust', min: 0, max: 2, color: [240, 200, 80] },
+  ],
+  husk: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+  drowned: [
+    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
+    { name: 'copper_ingot', min: 0, max: 1, color: [180, 100, 70] },
+  ],
+  stray: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  bogged: [
+    { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+  ],
+  breeze: [
+    { name: 'wind_charge', min: 0, max: 2, color: [200, 220, 255] },
+    // Wiki: breeze drops 0-2 breeze_rod (was 0-1, half of vanilla rate).
+    { name: 'breeze_rod', min: 0, max: 2, color: [180, 220, 255] },
+  ],
+  // Wiki (minecraft.wiki/w/Armadillo): armadillos drop NOTHING when
+  // killed (only 1-3 XP). Scutes are obtained by brushing them with a
+  // brush, or from natural shedding while a baby grows. Old entry let
+  // killing drop scutes — non-vanilla.
+  armadillo: [],
+  sniffer: [],
+  dolphin: [{ name: 'cod', min: 0, max: 1, color: [196, 160, 106] }],
+  cod: [{ name: 'cod', min: 1, max: 1, color: [196, 160, 106] }],
+  salmon: [{ name: 'salmon', min: 1, max: 1, color: [208, 106, 74] }],
+  pufferfish: [{ name: 'pufferfish', min: 1, max: 1, color: [255, 215, 70] }],
+  tropical_fish: [{ name: 'tropical_fish', min: 1, max: 1, color: [255, 128, 64] }],
+  // Wiki: guardian drops 0-2 prismarine_shard + 0-1 prismarine_crystals
+  // OR 0-1 fish (random). Approximated as both shards + crystals since
+  // the drop schema doesn't support mutually-exclusive choice.
+  guardian: [
+    { name: 'prismarine_shard', min: 0, max: 2, color: [120, 200, 180] },
+    { name: 'prismarine_crystals', min: 0, max: 1, color: [200, 230, 220] },
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+  ],
+  // Wiki: elder_guardian drops 0-2 prismarine_shard + 1 wet_sponge
+  // (always) + 0-1 random fish. wet_sponge isn't an item-registered
+  // entry so omit; the block-form drops via mining the wet_sponge if
+  // the player kills the elder above land.
+  elder_guardian: [
+    { name: 'prismarine_shard', min: 0, max: 2, color: [120, 200, 180] },
+    { name: 'prismarine_crystals', min: 0, max: 1, color: [200, 230, 220] },
+    { name: 'cod', min: 0, max: 1, color: [196, 160, 106] },
+  ],
+  squid: [{ name: 'ink_sac', min: 1, max: 3, color: [25, 25, 25] }],
+  glow_squid: [{ name: 'glow_ink_sac', min: 1, max: 3, color: [80, 230, 220] }],
+  magma_cube: [{ name: 'magma_cream', min: 0, max: 1, color: [220, 90, 50] }],
+  slime: [{ name: 'slime_ball', min: 0, max: 2, color: [120, 220, 100] }],
+  silverfish: [],
+  cave_spider: [
+    { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
+    { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
+  ],
+  phantom: [{ name: 'phantom_membrane', min: 0, max: 1, color: [200, 180, 220] }],
+  mooshroom: [
+    { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  // Wiki: pandas drop NO items on death (only 1-3 XP). They can be
+  // seen carrying bamboo or cake as a held item, but the held-item
+  // drop is conditional and requires per-mob held-item state which
+  // isn't modelled. Was incorrectly always-dropping 0-2 bamboo.
+  panda: [],
+  villager: [],
+  zombie_villager: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
+  pillager: [
+    { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
+    { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
+  ],
+  vindicator: [{ name: 'emerald', min: 0, max: 1, color: [80, 220, 120] }],
+  evoker: [
+    { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
+    { name: 'totem_of_undying', min: 1, max: 1, color: [220, 200, 80] },
+  ],
+  iron_golem: [
+    { name: 'poppy', min: 0, max: 2, color: [220, 30, 30] },
+    { name: 'iron_ingot', min: 3, max: 5, color: [220, 220, 220] },
+  ],
+  snow_golem: [{ name: 'snowball', min: 0, max: 15, color: [240, 250, 255] }],
+  // Wiki (minecraft.wiki/w/Zoglin): zoglins drop 1-3 rotten flesh on
+  // kill. Old empty list let zoglin kills give nothing.
+  zoglin: [{ name: 'rotten_flesh', min: 1, max: 3, color: [110, 80, 60] }],
+  hoglin: [
+    { name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] },
+    { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
+  ],
+  strider: [{ name: 'string', min: 2, max: 5, color: [230, 230, 230] }],
+  // Wiki: piglin brutes have NO natural drops. They always drop their
+  // equipped golden axe (with random damage), but that requires
+  // equipment-drop infrastructure not yet in place. Was incorrectly
+  // dropping 0-1 gold_nugget.
+  piglin_brute: [],
+  zombified_piglin: [
+    { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
+    { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
+  ],
+  // Wiki (minecraft.wiki/w/Warden): warden drops nothing on death,
+  // only 5 XP. Old entry `echo_shard, min 0 max 0` was a no-op
+  // already; cleaner as the empty list.
+  warden: [],
+  // Wiki (minecraft.wiki/w/Ender_Dragon): the dragon drops no items
+  // — only XP, the dragon egg (placed at the exit portal), and the
+  // exit portal itself. `dragon_scale` isn't a vanilla item; was
+  // confusing players seeking an "always-drop" loot.
+  ender_dragon: [],
+  wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
+};
+
+// Memoized name → itemId cache for mob-drop lookups. Skips the
+// `webmc:${name}` template literal alloc per drop entry per kill.
+// Map.get returns undefined for unresolved names, distinct from -1
+// for "looked up, not registered" so we can negative-cache misses.
+const MOB_DROP_ITEM_ID: Map<string, number> = new Map();
+function resolveMobDropItemId(name: string): number {
+  let id = MOB_DROP_ITEM_ID.get(name);
+  if (id === undefined) {
+    id = itemRegistry.byName(`webmc:${name}`) ?? -1;
+    MOB_DROP_ITEM_ID.set(name, id);
+  }
+  return id;
+}
+
 function spawnMobDrops(kind: string, pos: { x: number; y: number; z: number }): void {
-  const lookup = (name: string): number | undefined => itemRegistry.byName(`webmc:${name}`);
-  const dropTables: Record<
-    string,
-    readonly { name: string; min: number; max: number; color: readonly [number, number, number] }[]
-  > = {
-    zombie: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    skeleton: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    creeper: [{ name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] }],
-    spider: [
-      { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
-      { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
-    ],
-    pig: [{ name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] }],
-    cow: [
-      { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    sheep: [{ name: 'wool', min: 1, max: 1, color: [240, 240, 240] }],
-    chicken: [
-      { name: 'raw_chicken', min: 1, max: 1, color: [240, 210, 180] },
-      { name: 'feather', min: 0, max: 1, color: [250, 250, 250] },
-    ],
-    wolf: [],
-    enderman: [{ name: 'ender_pearl', min: 0, max: 1, color: [40, 130, 100] }],
-    ghast: [
-      { name: 'ghast_tear', min: 0, max: 1, color: [220, 220, 220] },
-      { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
-    ],
-    blaze: [{ name: 'blaze_rod', min: 0, max: 1, color: [240, 180, 40] }],
-    piglin: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
-    ],
-    wither_skeleton: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'coal', min: 0, max: 1, color: [40, 40, 40] },
-    ],
-    rabbit: [
-      { name: 'rabbit', min: 0, max: 1, color: [200, 160, 130] },
-      { name: 'rabbit_hide', min: 0, max: 1, color: [180, 140, 110] },
-    ],
-    fox: [],
-    horse: [{ name: 'leather', min: 0, max: 2, color: [130, 90, 60] }],
-    bee: [],
-    cat: [{ name: 'string', min: 0, max: 2, color: [230, 230, 230] }],
-    parrot: [{ name: 'feather', min: 1, max: 2, color: [250, 250, 250] }],
-    witch: [
-      { name: 'glass_bottle', min: 0, max: 2, color: [220, 240, 250] },
-      { name: 'redstone', min: 0, max: 2, color: [200, 30, 30] },
-      { name: 'gunpowder', min: 0, max: 2, color: [90, 90, 90] },
-    ],
-    husk: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    drowned: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'copper_ingot', min: 0, max: 1, color: [180, 100, 70] },
-    ],
-    stray: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    bogged: [
-      { name: 'bone', min: 0, max: 2, color: [230, 225, 210] },
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-    ],
-    breeze: [
-      { name: 'wind_charge', min: 0, max: 2, color: [200, 220, 255] },
-      { name: 'breeze_rod', min: 0, max: 1, color: [180, 220, 255] },
-    ],
-    armadillo: [{ name: 'armadillo_scute', min: 0, max: 1, color: [180, 140, 110] }],
-    sniffer: [],
-    dolphin: [{ name: 'cod', min: 0, max: 1, color: [196, 160, 106] }],
-    cod: [{ name: 'cod', min: 1, max: 1, color: [196, 160, 106] }],
-    salmon: [{ name: 'salmon', min: 1, max: 1, color: [208, 106, 74] }],
-    pufferfish: [{ name: 'pufferfish', min: 1, max: 1, color: [255, 215, 70] }],
-    tropical_fish: [{ name: 'tropical_fish', min: 1, max: 1, color: [255, 128, 64] }],
-    squid: [{ name: 'ink_sac', min: 1, max: 3, color: [25, 25, 25] }],
-    glow_squid: [{ name: 'glow_ink_sac', min: 1, max: 3, color: [80, 230, 220] }],
-    magma_cube: [{ name: 'magma_cream', min: 0, max: 1, color: [220, 90, 50] }],
-    slime: [{ name: 'slime_ball', min: 0, max: 2, color: [120, 220, 100] }],
-    silverfish: [],
-    cave_spider: [
-      { name: 'string', min: 0, max: 2, color: [230, 230, 230] },
-      { name: 'spider_eye', min: 0, max: 1, color: [120, 30, 30] },
-    ],
-    phantom: [{ name: 'phantom_membrane', min: 0, max: 1, color: [200, 180, 220] }],
-    mooshroom: [
-      { name: 'raw_beef', min: 1, max: 3, color: [180, 60, 60] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    panda: [{ name: 'bamboo', min: 0, max: 2, color: [148, 192, 90] }],
-    villager: [],
-    zombie_villager: [{ name: 'rotten_flesh', min: 0, max: 2, color: [110, 80, 60] }],
-    pillager: [
-      { name: 'arrow', min: 0, max: 2, color: [200, 190, 160] },
-      { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
-    ],
-    vindicator: [{ name: 'emerald', min: 0, max: 1, color: [80, 220, 120] }],
-    evoker: [
-      { name: 'emerald', min: 0, max: 1, color: [80, 220, 120] },
-      { name: 'totem_of_undying', min: 1, max: 1, color: [220, 200, 80] },
-    ],
-    iron_golem: [
-      { name: 'poppy', min: 0, max: 2, color: [220, 30, 30] },
-      { name: 'iron_ingot', min: 3, max: 5, color: [220, 220, 220] },
-    ],
-    snow_golem: [{ name: 'snowball', min: 0, max: 15, color: [240, 250, 255] }],
-    zoglin: [],
-    hoglin: [
-      { name: 'raw_porkchop', min: 1, max: 3, color: [240, 170, 160] },
-      { name: 'leather', min: 0, max: 2, color: [130, 90, 60] },
-    ],
-    strider: [{ name: 'string', min: 2, max: 5, color: [230, 230, 230] }],
-    piglin_brute: [{ name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] }],
-    zombified_piglin: [
-      { name: 'rotten_flesh', min: 0, max: 1, color: [110, 80, 60] },
-      { name: 'gold_nugget', min: 0, max: 1, color: [240, 230, 100] },
-    ],
-    warden: [{ name: 'echo_shard', min: 0, max: 0, color: [80, 200, 220] }],
-    ender_dragon: [{ name: 'dragon_scale', min: 1, max: 1, color: [60, 50, 80] }],
-    wither: [{ name: 'nether_star', min: 1, max: 1, color: [240, 240, 240] }],
-  };
-  const table = dropTables[kind];
+  const table = MOB_DROP_TABLES[kind];
   if (!table) return;
   for (const entry of table) {
     const count = entry.min + Math.floor(Math.random() * (entry.max - entry.min + 1));
     if (count <= 0) continue;
-    const itemId = lookup(entry.name);
-    if (itemId === undefined) continue;
+    const itemId = resolveMobDropItemId(entry.name);
+    if (itemId < 0) continue;
+    // droppedItems.spawn stores `data` by reference in the dropped
+    // entity, so this MUST be a fresh literal per entry — sharing a
+    // scratch would link every dropped item's data to the same
+    // object, breaking pickup count/color tracking.
     droppedItems.spawn(pos.x, pos.y + 0.5, pos.z, { itemId, count, color: entry.color });
   }
 }
+
+// Shared helper for environmental kills (lightning / explosion / sunburn /
+// lava / void) that need to spawn drops + XP. mobWorld.damage() marks
+// dropsHandled=true on its return, gating the dyingSec onMobDeath
+// callback off — so callers that route through damage() must spawn
+// drops themselves.
+function spawnLightningKillRewards(kind: string, pos: { x: number; y: number; z: number }): void {
+  spawnMobDrops(kind, pos);
+  const xpAmount = rollMobXpFor(kind, Math.random);
+  for (const chunk of splitXp(xpAmount)) {
+    xpOrbs.spawn(pos.x, pos.y + 0.8, pos.z, chunk);
+  }
+}
+
+// Reused per-edit chunk-coord scratches. touchWorldEdit fires on every
+// place/break (and synthetic edits like fluid spread/cascade fall), and
+// previously allocated up to 5 fresh {cx,cz} literals + a 3-element
+// [cy-1, cy, cy+1] array PER edit. Heavy mining sessions (10+ edits/sec)
+// burned a steady stream of throwaway objects.
+const touchAffectedCx = new Int32Array(5);
+const touchAffectedCz = new Int32Array(5);
+// Reused per-sample crop query scratch. Random-tick scan does 80
+// crop samples per second; was a fresh literal per sample.
+const cropQueryScratch: CropQuery = {
+  crop: 'wheat',
+  age: 0,
+  lightAbove: 0,
+  hydrated: false,
+  inRowWithSameCrop: false,
+  rand: Math.random,
+};
+// Same idea for the sapling stage/light/clearance ctx.
+const saplingQueryScratch: { stage: 0 | 1; lightLevel: number; verticalClearance: number } = {
+  stage: 0,
+  lightLevel: 0,
+  verticalClearance: 0,
+};
+const touchWorldEditApplyArg: { x: number; y: number; z: number; block: number; meta: number } = {
+  x: 0,
+  y: 0,
+  z: 0,
+  block: 0,
+  meta: 0,
+};
 
 const touchWorldEdit = (bx: number, by: number, bz: number, block: number): void => {
   // Cascade fallable-block stacks above the edited cell.
   cascadeFalling(bx, by, bz);
   // If the edited cell itself is fallable, cascade starting one below it.
   const selfState = world.get(bx, by, bz);
-  if (selfState !== AIR && fallableIds.has(stateId(selfState)) && by > 0) {
+  if (selfState !== AIR && FALLABLE_BY_ID[stateId(selfState)] === 1 && by > 0) {
     cascadeFalling(bx, by - 1, bz);
   }
-  const cx = Math.floor(bx / 16);
-  const cz = Math.floor(bz / 16);
+  const cx = bx >> 4;
+  const cz = bz >> 4;
   const chunk = world.getChunk(cx, cz);
   if (chunk) {
     // Decide scope: neighbor rebuild only if the block emits light or we're
     // breaking (block=0, might have removed a light source). Keeps common
     // placements cheap (1 chunk rebuild instead of 5).
-    const emitsNew = block !== 0 && registry.get(block).lightEmission > 0;
+    const emitsNew = block !== 0 && (LIGHT_EMISSION_BY_ID[block] ?? 0) > 0;
     const wasBreak = block === 0;
-    const affected: { cx: number; cz: number }[] =
-      emitsNew || wasBreak
-        ? [
-            { cx, cz },
-            { cx: cx - 1, cz },
-            { cx: cx + 1, cz },
-            { cx, cz: cz - 1 },
-            { cx, cz: cz + 1 },
-          ]
-        : [{ cx, cz }];
-    for (const a of affected) {
-      const c = world.getChunk(a.cx, a.cz);
-      if (!c) continue;
-      const newLight = buildLight(c, lightOracle);
-      lightCache.set(lightKey(a.cx, a.cz), newLight);
-      markChunkAllDirty(c);
+    let affectedLen: number;
+    if (emitsNew || wasBreak) {
+      touchAffectedCx[0] = cx;
+      touchAffectedCz[0] = cz;
+      touchAffectedCx[1] = cx - 1;
+      touchAffectedCz[1] = cz;
+      touchAffectedCx[2] = cx + 1;
+      touchAffectedCz[2] = cz;
+      touchAffectedCx[3] = cx;
+      touchAffectedCz[3] = cz - 1;
+      touchAffectedCx[4] = cx;
+      touchAffectedCz[4] = cz + 1;
+      affectedLen = 5;
+    } else {
+      touchAffectedCx[0] = cx;
+      touchAffectedCz[0] = cz;
+      affectedLen = 1;
     }
-    const light = lightCache.get(lightKey(cx, cz)) ?? null;
-    chunkStore.markDirty(chunk, light);
+    // For non-light edits within the player chunk we only need to remesh
+    // the section the block is in (and adjacent sections for AO across
+    // section borders), not all 24 sections. Was rebuilding all 24 per
+    // single block place — costly on 12-radius views (5 chunks × 24 =
+    // 120 mesh rebuilds for one block placement).
+    // by is a block-y in [0, 384), always non-negative; `>> 4` matches
+    // Math.floor(by / 16) and skips the divide.
+    const editCy = by >> 4;
+    const onlyLocal = !emitsNew && !wasBreak && affectedLen === 1;
+    // Skip the full chunk-light BFS when the edit can't change light:
+    // - placement: opaque blocks block skylight, so always rebuild
+    // - non-opaque non-light placement (glass, fence, stairs, crop
+    //   age update): light unchanged, reuse cached
+    // - break: removed block might've been blocking skylight, rebuild
+    const newDef = block !== 0 ? registry.get(block) : null;
+    const placementChangesLight = block !== 0 && (emitsNew || newDef?.opaque === true);
+    const lightUnchanged = !wasBreak && !placementChangesLight;
+    for (let i = 0; i < affectedLen; i++) {
+      const acx = touchAffectedCx[i]!;
+      const acz = touchAffectedCz[i]!;
+      const c = world.getChunk(acx, acz);
+      if (!c) continue;
+      // Compute lightKey once — was being called for both the get and
+      // (potentially) the set. Touch fires per block edit and the
+      // affected loop runs 1 or 5 chunks per call.
+      const lk = lightKey(acx, acz);
+      let cachedLight = lightCache.get(lk);
+      const lightWasRebuilt = !lightUnchanged || !cachedLight;
+      if (lightWasRebuilt) {
+        cachedLight = buildLight(c, lightOracle);
+        lightCache.set(lk, cachedLight);
+      }
+      if (onlyLocal && acx === cx && acz === cz) {
+        // Mark only the touched section + immediate vertical neighbors
+        // (for AO at section borders). Manual unroll avoids the 3-element
+        // literal array that ran on every edit.
+        const cyBelow = editCy - 1;
+        if (cyBelow >= 0 && c.section(cyBelow)) c.markMeshDirty(cyBelow);
+        if (editCy >= 0 && editCy < 24 && c.section(editCy)) c.markMeshDirty(editCy);
+        const cyAbove = editCy + 1;
+        if (cyAbove < 24 && c.section(cyAbove)) c.markMeshDirty(cyAbove);
+      } else {
+        markChunkAllDirty(c);
+      }
+      // Also mark neighbor chunks dirty for save when their lighting
+      // actually changed (torch placed/broken near a chunk border
+      // propagates light into the neighbor; without this the neighbor
+      // saved stale pre-edit light).
+      if (lightWasRebuilt && (acx !== cx || acz !== cz)) {
+        chunkStore.markDirty(c, cachedLight ?? null);
+      }
+    }
+    chunkStore.markDirty(chunk, lightCache.get(lightKey(cx, cz)) ?? null);
   }
-  roomClient?.applyLocalBlockEdit({ x: bx, y: by, z: bz, block, meta: 0 });
+  if (roomClient) {
+    touchWorldEditApplyArg.x = bx;
+    touchWorldEditApplyArg.y = by;
+    touchWorldEditApplyArg.z = bz;
+    touchWorldEditApplyArg.block = block;
+    touchWorldEditApplyArg.meta = 0;
+    roomClient.applyLocalBlockEdit(touchWorldEditApplyArg);
+  }
 };
 
 window.addEventListener('resize', () => {
@@ -5631,25 +9461,34 @@ const rendererInfo = ((): { gl: string; rend: string } => {
   const rend = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) as string) : 'unknown';
   return { gl: api, rend };
 })();
+// Pre-formatted display string. Was a per-HUD-tick template-literal
+// concat (`${rendererInfo.gl}  ${rendererInfo.rend}`) for stable
+// values.
+const rendererInfoDisplay = `${rendererInfo.gl}  ${rendererInfo.rend}`;
 
 loader.setPopulate(async (chunk) => {
   const saved = await chunkStore.load(chunk.cx, chunk.cz);
   if (saved) {
+    // Bulk swap pre-built SubChunks in. Old per-cell loop did 4096
+    // chunk.set calls per non-empty section (each walking the palette
+    // and rewriting the bit-packed indices) — ~50ms per loaded chunk.
+    // Direct swap is microseconds.
     for (let cy = 0; cy < 24; cy++) {
       const src = saved.chunk.section(cy);
-      if (!src) continue;
-      for (let y = 0; y < 16; y++) {
-        for (let z = 0; z < 16; z++) {
-          for (let x = 0; x < 16; x++) {
-            const state = src.get(x, y, z);
-            if (state !== AIR) chunk.set(x, cy * 16 + y, z, state);
-          }
-        }
-      }
+      if (src) chunk.setSection(cy, src);
     }
+    // Reuse saved light to skip the expensive buildLight on chunk load.
+    // Edge cells can be slightly off w.r.t. unloaded neighbors but the
+    // next edit (or neighbor load) will rebuild. Saves ~5-15ms per
+    // restored chunk.
+    if (saved.light) lightCache.set(lightKey(chunk.cx, chunk.cz), saved.light);
   } else {
     generator.generateChunk(chunk);
     const light = buildLight(chunk, lightOracle);
+    // Cache the freshly-built light so onLoad below doesn't rebuild it
+    // a second time. Was effectively running buildLight twice for every
+    // freshly-generated (vs restored) chunk.
+    lightCache.set(lightKey(chunk.cx, chunk.cz), light);
     chunkStore.markDirty(chunk, light);
   }
 });
@@ -5657,25 +9496,198 @@ loader.setPopulate(async (chunk) => {
 const onLoad = (cx: number, cz: number): void => {
   const chunk = world.getChunk(cx, cz);
   if (!chunk) return;
-  lightCache.set(lightKey(cx, cz), buildLight(chunk, lightOracle));
-  markChunkAllDirty(chunk);
-  for (const [ncx, ncz] of [
-    [cx - 1, cz],
-    [cx + 1, cz],
-    [cx, cz - 1],
-    [cx, cz + 1],
-  ] as const) {
-    const neighbor = world.getChunk(ncx, ncz);
-    if (neighbor) markChunkAllDirty(neighbor);
+  // Skip rebuild if populate already cached saved light. Was always
+  // rebuilding even when a freshly-restored chunk had its serialized
+  // light right there. Compute lightKey once — was being called twice
+  // (has + set), pure waste even though the call is just a bit-twiddle.
+  const lk = lightKey(cx, cz);
+  if (!lightCache.has(lk)) {
+    lightCache.set(lk, buildLight(chunk, lightOracle));
   }
+  markChunkAllDirty(chunk);
+  // Manual unroll — inner array literal allocated 4 fresh tuples per
+  // chunk load. At chunk-streaming startup this fires hundreds of
+  // times, churning ~1600 throwaway tuples for nothing.
+  const nxN = world.getChunk(cx - 1, cz);
+  if (nxN) markChunkAllDirty(nxN);
+  const pxN = world.getChunk(cx + 1, cz);
+  if (pxN) markChunkAllDirty(pxN);
+  const nzN = world.getChunk(cx, cz - 1);
+  if (nzN) markChunkAllDirty(nzN);
+  const pzN = world.getChunk(cx, cz + 1);
+  if (pzN) markChunkAllDirty(pzN);
 };
 
+// Reused world-to-screen projector for damage numbers etc. Hoisted
+// to avoid per-call closure + Vector3 allocation in the per-frame
+// damageNumbers.tick loop. Returns a stable object too — caller copies.
+const tmpProject = new THREE.Vector3();
+const tmpProjectResult = { sx: 0, sy: 0, visible: false };
+function projectWorldToScreen(
+  wx: number,
+  wy: number,
+  wz: number,
+): { sx: number; sy: number; visible: boolean } {
+  tmpProject.set(wx, wy, wz);
+  tmpProject.project(camera);
+  if (tmpProject.z > 1) {
+    tmpProjectResult.sx = 0;
+    tmpProjectResult.sy = 0;
+    tmpProjectResult.visible = false;
+    return tmpProjectResult;
+  }
+  tmpProjectResult.sx = (tmpProject.x + 1) * 0.5 * window.innerWidth;
+  tmpProjectResult.sy = (-tmpProject.y + 1) * 0.5 * window.innerHeight;
+  tmpProjectResult.visible = true;
+  return tmpProjectResult;
+}
+
+// Reusable mob-tick context. Hoisted because the original was a fresh
+// object literal + 5 closures allocated every frame (60Hz × 6 alloc =
+// 360/sec). The closures all capture module-scope refs so hoisting
+// behavior is unchanged.
+const mobTickCtx: MobTickContext = {
+  isSolid,
+  isFluid,
+  playerPos: { x: 0, y: 0, z: 0 },
+  playerSneaking: false,
+  playerInvisible: false,
+  damagePlayer: (amt, attackerPos) => {
+    const scaled = amt * mobDamageMultiplier;
+    const armorPts = computeArmorPoints();
+    const toughnessPts = computeArmorToughness();
+    const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
+    if (finalDmg > 0) {
+      playerState.takeDamage({ amount: finalDmg, source: 'mob' });
+      if (armorPts > 0) consumeArmorDurability(scaled);
+      if (attackerPos) {
+        const angle = damageTiltAngle({
+          attackerX: attackerPos.x,
+          attackerZ: attackerPos.z,
+          playerX: fp.position.x,
+          playerZ: fp.position.z,
+          playerYaw: fp.yaw,
+        });
+        fp.pulseDamageTilt(angle);
+        const dx = fp.position.x - attackerPos.x;
+        const dz = fp.position.z - attackerPos.z;
+        const horiz = Math.hypot(dx, dz);
+        if (horiz > 0.0001) {
+          const KB = 6.0;
+          fp.velocity.x += (dx / horiz) * KB;
+          fp.velocity.z += (dz / horiz) * KB;
+          fp.velocity.y = Math.max(fp.velocity.y, 4.0);
+        }
+      }
+    }
+    if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
+  },
+  onCreeperExplode: (x, y, z) => {
+    if (gameRules.mobGriefing) {
+      explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
+    } else {
+      for (let i = 0; i < 12; i++)
+        blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
+      screenShake.pulse(0.4);
+    }
+  },
+  isSunlit: (x, y, z) => {
+    if (!dayNight.isDay) return false;
+    if (isThunder) return false;
+    const bx = Math.floor(x);
+    const by = Math.floor(y + 0.5);
+    const bz = Math.floor(z);
+    const cx = bx >> 4;
+    const cz = bz >> 4;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (lt) {
+      const lb = getLightByte(lt, bx & 0xf, by, bz & 0xf);
+      return ((lb >>> 4) & 0xf) === 15;
+    }
+    for (let yy = by; yy < CHUNK_HEIGHT; yy++) {
+      const s = world.get(bx, yy, bz);
+      if (s === AIR) continue;
+      if (OPAQUE_BY_ID[stateId(s)] === 1) return false;
+    }
+    return true;
+  },
+  onMobDeath: (kind, position) => {
+    spawnMobDrops(kind, position);
+    const xpAmount = rollMobXpFor(kind, Math.random);
+    for (const chunk of splitXp(xpAmount)) {
+      xpOrbs.spawn(position.x, position.y + 0.8, position.z, chunk);
+    }
+  },
+};
+
+// Reused per-frame argument objects.
+const afkArg = { lastInputTick: 0, currentTick: 0, idleKickEnabled: false };
+const memArg = { heapUsed: 0, heapLimit: 0 };
+const moodCtx = { skyLight: 15, blockLight: 12, dtMs: 0 };
+const playerTickEnv: { inFluid: 'water' | 'lava' | null; drainHunger: boolean } = {
+  inFluid: null,
+  drainHunger: true,
+};
+// Off-world sentinel for droppedItems/xpOrbs pickup-blocked path. Was
+// allocated per frame as a fresh {x:-9999,y:0,z:0} literal.
+const FAR_POS_BLOCK_PICKUP = { x: -9999, y: 0, z: 0 };
+// Reused scoreboard rows — was a fresh array of 6 literals per frame
+// (when visible).
+const scoreboardRows: { name: string; score: number }[] = [
+  { name: 'Broken', score: 0 },
+  { name: 'Placed', score: 0 },
+  { name: 'Killed', score: 0 },
+  { name: 'Walked', score: 0 },
+  { name: 'Time', score: 0 },
+  { name: 'Level', score: 0 },
+];
+// Reused per-frame arg for shouldPauseRender (battery / charging /
+// thermalState fixed).
+const pauseRenderArg = { batteryLevel: 1, charging: true, thermalState: 'nominal' as const };
+// Reused inventory.add arg for dropped-item pickups. Mutable (cast)
+// because ItemStack's fields are nominally readonly but inventory.add
+// only reads them.
+const pickupAddArg = { itemId: 0, count: 0, damage: 0 } as {
+  itemId: number;
+  count: number;
+  damage: number;
+};
+// Hoisted neutral RGB for the first-person hand cube when the held
+// item isn't a placeable block (tools, food). Was a fresh
+// `[180, 130, 100]` literal every frame in survival mode the player
+// wasn't holding a placeable. setHeldBlockColor only reads the array
+// values synchronously into a Color, so a shared readonly tuple is safe.
+const NEUTRAL_HAND_COLOR: readonly [number, number, number] = [180, 130, 100];
+// Reused contexts for the per-quality-decision power + thermal checks.
+// Both helpers read fields synchronously and return primitives; refilling
+// in place skips one fresh literal each per perfMonitor.tick fire.
+const powerCtxScratch: {
+  batteryLevel: number;
+  charging: boolean;
+  thermalState: 'nominal' | 'fair' | 'serious' | 'critical';
+} = { batteryLevel: 1, charging: true, thermalState: 'nominal' };
+const thermalCtxScratch: { cpuTempCelsius: number; fpsP95: number; battery: number } = {
+  cpuTempCelsius: 50,
+  fpsP95: 60,
+  battery: 1,
+};
+function biomeIdAtPlayerColumn(): number {
+  const bx = Math.floor(fp.position.x);
+  const bz = Math.floor(fp.position.z);
+  if (bx === cachedBiomeBx && bz === cachedBiomeBz) return cachedBiomeId;
+  cachedBiomeBx = bx;
+  cachedBiomeBz = bz;
+  cachedBiomeId = generator.biomeAt(bx, bz);
+  return cachedBiomeId;
+}
 function frame(): void {
   const stats = timer.tick();
   fpsFrame(fpsStats, stats.frameMs);
   tpsTracker.pushMspt(stats.frameMs);
   currentTickCount++;
-  const afkOn = isAfk({ lastInputTick, currentTick: currentTickCount, idleKickEnabled: false });
+  afkArg.lastInputTick = lastInputTick;
+  afkArg.currentTick = currentTickCount;
+  const afkOn = isAfk(afkArg);
   if (afkOn !== (afkBadge.style.display === 'block')) {
     afkBadge.style.display = afkOn ? 'block' : 'none';
   }
@@ -5683,10 +9695,9 @@ function frame(): void {
     performance as Performance & { memory?: { usedJSHeapSize: number; jsHeapSizeLimit: number } }
   ).memory;
   if (perfMem) {
-    const lvl = memPressureLevel({
-      heapUsed: perfMem.usedJSHeapSize,
-      heapLimit: perfMem.jsHeapSizeLimit,
-    });
+    memArg.heapUsed = perfMem.usedJSHeapSize;
+    memArg.heapLimit = perfMem.jsHeapSizeLimit;
+    const lvl = memPressureLevel(memArg);
     if (lvl === 'critical' && performance.now() - lastMemoryWarnAt > 30000) {
       lastMemoryWarnAt = performance.now();
       toast.show('High memory pressure — flushing chunks', '#ffd080', 3000);
@@ -5694,31 +9705,38 @@ function frame(): void {
     }
   }
   const now = performance.now();
-  const dtSec = Math.min(stats.frameMs / 1000, 0.1);
+  // Paused menus freeze the world tick by zeroing dtSec — every tick
+  // call below uses dtSec, so day/night, mobs, breath, weather, fluids,
+  // hunger, etc. stop advancing. Rendering still runs to draw the menu.
+  // /tick freeze should also pause world systems (vanilla parity), not
+  // just mob AI like before.
+  const isPaused = pauseMenu.isVisible() || mainMenu.isVisible() || tickFrozen;
+  const dtSec = isPaused ? 0 : Math.min(stats.frameMs / 1000, 0.1);
   if (perfMonitor.tick(dtSec)) {
     let qualityLimit = perfMonitor.quality;
     if (isMobileDevice) {
-      const powerLimit = maxRenderDistanceChunks(
-        {
-          batteryLevel: powerState.batteryLevel,
-          charging: powerState.charging,
-          thermalState: 'nominal',
-        },
-        false,
-      );
+      powerCtxScratch.batteryLevel = powerState.batteryLevel;
+      powerCtxScratch.charging = powerState.charging;
+      powerCtxScratch.thermalState = 'nominal';
+      const powerLimit = maxRenderDistanceChunks(powerCtxScratch, false);
       qualityLimit = Math.min(qualityLimit, powerLimit);
     }
     // Thermal-throttle: shrink view radius if FPS p95 < 25 or low battery (chunk_unload_strategy_thermal).
-    if (
-      inThermalThrottle({
-        cpuTempCelsius: 50,
-        fpsP95: p95Fps(fpsStats),
-        battery: powerState.batteryLevel,
-      })
-    ) {
+    thermalCtxScratch.cpuTempCelsius = 50;
+    thermalCtxScratch.fpsP95 = p95Fps(fpsStats);
+    thermalCtxScratch.battery = powerState.batteryLevel;
+    if (inThermalThrottle(thermalCtxScratch)) {
       qualityLimit = Math.max(4, qualityLimit - 4);
     }
     loader.setViewRadius(qualityLimit);
+    // Per-frame chunk-upload budget: scale with view radius. A 12-radius
+    // world has 4x the chunks of a 3-radius world; using budget=4 for
+    // both means tiny worlds finish populating in 30ms while huge ones
+    // take 30s. Big budgets on potato hardware also stutter the main
+    // thread when the chunk-mesh queue drains. Heuristic: budget = max(1,
+    // floor(qualityLimit/2)) — 8 view = 4/frame, 4 view = 2/frame, 2
+    // view = 1/frame. Keeps mesh-upload work proportional to load.
+    loader.setPerFrameBudget(Math.max(1, Math.floor(qualityLimit / 2)));
     const lowTier = qualityLimit < 4;
     clouds.mesh.visible = !lowTier;
     stars.points.visible = !lowTier;
@@ -5727,13 +9745,9 @@ function frame(): void {
     const targetPx = lowTier ? Math.min(basePx, 1.0) : basePx;
     if (Math.abs(renderer.getPixelRatio() - targetPx) > 0.01) renderer.setPixelRatio(targetPx);
   }
-  if (
-    shouldPauseRender({
-      batteryLevel: powerState.batteryLevel,
-      charging: powerState.charging,
-      thermalState: 'nominal',
-    })
-  ) {
+  pauseRenderArg.batteryLevel = powerState.batteryLevel;
+  pauseRenderArg.charging = powerState.charging;
+  if (shouldPauseRender(pauseRenderArg)) {
     return;
   }
 
@@ -5748,7 +9762,80 @@ function frame(): void {
       fp.input.forward = touch.state.moveForward;
       fp.input.strafe = touch.state.moveStrafe;
     }
+    // Touch sneak/jump need to clear on release — without it, the touch
+    // button setting fp.input.sneak=true had no path to false (keyboard
+    // ShiftLeft-up was the only setter), so tapping touch sneak left
+    // the player permanently sneaking. Track previous-frame touch state
+    // and clear fp.input on the falling edge so keyboard input still
+    // overlays correctly the rest of the time.
     if (touch.state.jump) fp.input.jump = true;
+    else if (lastTouchJump) fp.input.jump = false;
+    lastTouchJump = touch.state.jump;
+    if (touch.state.sprint) fp.input.sprint = true;
+    // Fly-mode vertical: keyboard maps Space → vertical=+1, Shift →
+    // vertical=-1. Touch only ever set fp.input.sneak which the camera
+    // ignores in fly mode — touch fliers had no way to descend. Map
+    // touch jump → +1, touch sneak → -1 when flying. AND don't set
+    // sneak in fly mode (sneak narrows mouse sensitivity by 0.45,
+    // making touch look feel painfully slow during a fly descent).
+    if (fp.input.fly) {
+      const v = touch.state.jump ? 1 : touch.state.sneak ? -1 : 0;
+      fp.input.vertical = v;
+      fp.input.sneak = false;
+      lastTouchSneak = false;
+    } else {
+      if (touch.state.sneak) fp.input.sneak = true;
+      else if (lastTouchSneak) fp.input.sneak = false;
+      lastTouchSneak = touch.state.sneak;
+    }
+    // Edge-triggered touch buttons (Inv / Drop). Cleared after handling
+    // so they fire once per tap. Without these, touch users had no way
+    // to open inventory or drop the held stack.
+    if (touch.state.inventoryToggle) {
+      touch.state.inventoryToggle = false;
+      if (
+        !chestUI.isVisible() &&
+        !creativeInv.isVisible() &&
+        !survivalInv.isVisible() &&
+        !pauseMenu.isVisible() &&
+        !deathScreen.isVisible() &&
+        !chatInput.isOpen()
+      ) {
+        if (isCreative) creativeInv.show();
+        else if (vitalsActive) survivalInv.show();
+        fp.inputBlocked = true;
+      } else if (survivalInv.isVisible()) {
+        survivalInv.hide();
+      } else if (creativeInv.isVisible()) {
+        creativeInv.hide();
+      } else if (chestUI.isVisible()) {
+        chestUI.hide();
+      }
+    }
+    if (touch.state.drop) {
+      touch.state.drop = false;
+      if (vitalsActive) {
+        const slotIdx = inventory.selectedHotbar;
+        const stk = inventory.hotbar[slotIdx];
+        if (stk && stk.count > 0) {
+          const itemDef = itemRegistry.get(stk.itemId);
+          const dropCount = 1;
+          const remaining = stk.count - dropCount;
+          inventory.hotbar[slotIdx] = remaining > 0 ? { ...stk, count: remaining } : null;
+          const look = fp.lookVector(eventLookTmp);
+          const color: readonly [number, number, number] =
+            itemDef.blockId !== undefined ? registry.get(itemDef.blockId).color : [180, 140, 80];
+          droppedItems.spawn(
+            fp.position.x + look.x * 1.2,
+            fp.position.y,
+            fp.position.z + look.z * 1.2,
+            { itemId: stk.itemId, count: dropCount, color, damage: stk.damage },
+            1.5,
+          );
+          sfx.play('click');
+        }
+      }
+    }
   }
 
   if (gyroYawAccum !== 0) {
@@ -5757,32 +9844,50 @@ function frame(): void {
   }
 
   // MC sprint rule: cannot sprint if hunger ≤ 6.
-  if (
-    fp.input.sprint &&
-    playerState.hunger <= 6 &&
-    (gameMode === 'survival' || gameMode === 'adventure')
-  ) {
+  if (fp.input.sprint && playerState.hunger <= 6 && vitalsActive) {
     fp.input.sprint = false;
   }
-  if (fp.input.sprint && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (fp.input.sprint && vitalsActive) {
     // Sprint exhaustion: 0.1 per meter sprinted. Approximate via dtSec * 5 m/s.
     playerState.addExhaustion(0.1 * dtSec * 5);
   }
 
   // Gamepad poll (Xbox-style mapping). Honors pointer-lock equivalent: only
   // applies when no menus are open and the player is not in chat.
-  if (
-    typeof navigator.getGamepads === 'function' &&
-    !chatInput.isOpen() &&
-    !pauseMenu.isVisible()
-  ) {
+  // anyGamepadEverConnected gates the entire poll — desktop users with
+  // no gamepad skip the navigator.getGamepads() call + 4-slot scan.
+  if (hasGamepadApi && anyGamepadEverConnected && !chatInput.isOpen() && !pauseMenu.isVisible()) {
     const pads = navigator.getGamepads();
-    const pad = pads ? Array.from(pads).find((p) => p && p.connected) : null;
+    let pad: Gamepad | null = null;
+    if (pads) {
+      // Walk the GamepadList directly — Array.from + .find allocated a
+      // wrapper array every frame just to skip nulls.
+      for (let i = 0; i < pads.length; i++) {
+        const p = pads[i];
+        if (p?.connected) {
+          pad = p;
+          break;
+        }
+      }
+    }
     if (pad) {
-      const intent = gamepadToIntent({
-        axes: [pad.axes[0] ?? 0, pad.axes[1] ?? 0, pad.axes[2] ?? 0, pad.axes[3] ?? 0],
-        buttons: pad.buttons.map((b) => b.pressed),
-      });
+      // Reused scratch state + result objects (defined at module scope).
+      // The previous code allocated a fresh axes array, a buttons.map()
+      // array, a state object, an intent object, and an inner look
+      // object every single frame the gamepad was connected.
+      gamepadStateScratch.axes[0] = pad.axes[0] ?? 0;
+      gamepadStateScratch.axes[1] = pad.axes[1] ?? 0;
+      gamepadStateScratch.axes[2] = pad.axes[2] ?? 0;
+      gamepadStateScratch.axes[3] = pad.axes[3] ?? 0;
+      const padButtons = pad.buttons;
+      const buttonsScratch = gamepadStateScratch.buttons;
+      // Only the buttons we actually read are mapped (matches toIntent).
+      buttonsScratch[0] = padButtons[0]?.pressed ?? false;
+      buttonsScratch[6] = padButtons[6]?.pressed ?? false;
+      buttonsScratch[7] = padButtons[7]?.pressed ?? false;
+      buttonsScratch[10] = padButtons[10]?.pressed ?? false;
+      gamepadToIntentInto(gamepadStateScratch, gamepadIntentScratch);
+      const intent = gamepadIntentScratch;
       if (intent.forward !== 0 || intent.strafe !== 0) {
         fp.input.forward = intent.forward;
         fp.input.strafe = intent.strafe;
@@ -5796,43 +9901,131 @@ function frame(): void {
     }
   }
 
-  fp.update(dtSec, { isSolid, isFluid, isClimbable });
+  fp.update(dtSec, fpUpdateOpts);
+  // Hoist after fp.update so fp.position is final for the rest of the
+  // tick. Replaces ~28 redundant Math.floor calls (particle scans,
+  // fire/contact AABB sweeps, debug overlay) and ~5 effects.has Map
+  // hashes (fire-ignite + lava-walk + avatar visibility + mob ctx +
+  // night-vision ambient).
+  // Skip the 3 Map.has hashes when no effects are active (the dominant
+  // case — most frames the player is potion-free).
+  const hasAnyEffect = playerState.effects.size > 0;
+  const fireResistant = hasAnyEffect && playerState.effects.has('fire_resistance');
+  const playerInvisible = hasAnyEffect && playerState.effects.has('invisibility');
+  const hasNightVision = hasAnyEffect && playerState.effects.has('night_vision');
+  const playerBlockX = Math.floor(fp.position.x);
+  const playerBlockY = Math.floor(fp.position.y);
+  const playerBlockZ = Math.floor(fp.position.z);
+  // Foot-block Y (1.05 below the body center). Used by footstep
+  // material lookup, fall-damage surface classifier, and magma/soul-
+  // sand contact check — three identical Math.floor calls per tick.
+  const playerFootBlockY = Math.floor(fp.position.y - 1.05);
   if (touch) {
-    if (touch.state.primary) {
+    if (touch.state.primary && isSpectator) {
+      // Spectator can't attack/break — same gate as the desktop attack
+      // handler, otherwise tap-to-break would still work via the
+      // setHeld('break') fallback.
+      interaction.setHeld(null);
+    } else if (touch.state.primary) {
       if (!lastTouchPrimary) {
         const origin = camera.position;
-        const look = fp.lookVector();
+        const look = fp.lookVector(frameLookTmp);
         let bestId: number | null = null;
         let bestDist = Infinity;
         for (const mob of mobWorld.all()) {
-          const box = {
-            minX: mob.position.x - mob.def.aabb.halfX,
-            minY: mob.position.y - mob.def.aabb.halfY,
-            minZ: mob.position.z - mob.def.aabb.halfZ,
-            maxX: mob.position.x + mob.def.aabb.halfX,
-            maxY: mob.position.y + mob.def.aabb.halfY,
-            maxZ: mob.position.z + mob.def.aabb.halfZ,
-          };
-          const hit = intersectRayAABB(origin, look, box, 5);
+          mobAabbScratch.minX = mob.position.x - mob.def.aabb.halfX;
+          mobAabbScratch.minY = mob.position.y - mob.def.aabb.halfY;
+          mobAabbScratch.minZ = mob.position.z - mob.def.aabb.halfZ;
+          mobAabbScratch.maxX = mob.position.x + mob.def.aabb.halfX;
+          mobAabbScratch.maxY = mob.position.y + mob.def.aabb.halfY;
+          mobAabbScratch.maxZ = mob.position.z + mob.def.aabb.halfZ;
+          const hit = intersectRayAABB(origin, look, mobAabbScratch, 5);
           if (hit && hit.tMin < bestDist) {
             bestDist = hit.tMin;
             bestId = mob.id;
           }
         }
         if (bestId !== null) {
-          const result = mobWorld.damage(bestId, 2);
+          // Touch attacks used to deal a flat 2 damage no matter what — an
+          // iron sword tap and a bare-hand tap killed mobs at the same
+          // rate. Now match the desktop formula (weapon tier × charge ×
+          // strength/weakness/crit), but with charge=1 (no charge meter on
+          // mobile) and no critical (no falling/airborne tap on touch).
+          const heldName = heldNameLower();
+          const weaponBase = weaponBaseDamageFor(heldName);
+          const strengthEff = playerState.effects.get('strength');
+          const weaknessEff = playerState.effects.get('weakness');
+          const strengthBonus = strengthEff ? 3 * (strengthEff.amplifier + 1) : 0;
+          const weaknessReduce = weaknessEff ? -4 * (weaknessEff.amplifier + 1) : 0;
+          // Creative insta-kill (touch parity with desktop).
+          const dmg = isCreative ? 9999 : Math.max(0, weaponBase + strengthBonus + weaknessReduce);
+          const result = mobWorld.damage(bestId, dmg);
+          // Touch combat durability + exhaustion (parity with desktop).
+          if (vitalsActive) {
+            playerState.addExhaustion(0.1);
+            if (
+              heldName.includes('sword') ||
+              heldName.includes('mace') ||
+              heldName.includes('trident')
+            ) {
+              consumeHeldToolDurability(1);
+            } else if (
+              heldName.includes('pickaxe') ||
+              heldName.includes('axe') ||
+              heldName.includes('shovel') ||
+              heldName.includes('hoe')
+            ) {
+              consumeHeldToolDurability(2);
+            }
+          }
           sfx.play('hit');
           screenShake.pulse(0.15);
+          // Touch attacks were missing the hand swing animation that
+          // desktop's left-click attack path includes. Mobile players got
+          // no visual feedback when they tapped a mob.
+          hand.swing();
+          if (result)
+            damageNumbers.spawn(result.position.x, result.position.y + 0.8, result.position.z, dmg);
+          // Touch knockback was missing — mobs took damage but didn't
+          // get pushed back, so they could grind through the player
+          // without ever losing tempo.
+          const mobHit = mobWorld.byId(bestId);
+          if (mobHit) {
+            knockbackAttackerPos.x = fp.position.x;
+            knockbackAttackerPos.y = fp.position.y;
+            knockbackAttackerPos.z = fp.position.z;
+            knockbackTargetPos.x = mobHit.position.x;
+            knockbackTargetPos.y = mobHit.position.y;
+            knockbackTargetPos.z = mobHit.position.z;
+            knockbackQueryScratch.sprinting = fp.input.sprint;
+            knockbackQueryScratch.knockbackLevel = 0;
+            knockbackQueryScratch.knockbackResistance = 0;
+            const kb = computeKnockback(knockbackQueryScratch);
+            const KB_SCALE = 12;
+            mobHit.velocity.x += kb.x * KB_SCALE;
+            mobHit.velocity.z += kb.z * KB_SCALE;
+            mobHit.velocity.y = Math.max(mobHit.velocity.y, kb.y * KB_SCALE);
+          }
           if (result?.killed) {
             spawnMobDrops(result.kind, result.position);
-            for (let k = 0; k < 3; k++)
-              xpOrbs.spawn(result.position.x, result.position.y + 0.8, result.position.z, 1);
+            // Touch kills used to drop a flat 3 × 1-XP orbs instead of
+            // the per-mob XP roll + chunked split that desktop uses.
+            const xpAmount = rollMobXpFor(result.kind, Math.random);
+            for (const chunk of splitXp(xpAmount)) {
+              xpOrbs.spawn(
+                result.position.x + (Math.random() - 0.5) * 0.3,
+                result.position.y + 0.8,
+                result.position.z + (Math.random() - 0.5) * 0.3,
+                chunk,
+              );
+            }
             blockParticles.emitBreak(
               Math.floor(result.position.x),
               Math.floor(result.position.y),
               Math.floor(result.position.z),
               [180, 40, 40],
             );
+            playerStats.mobsKilled++;
           }
         } else {
           interaction.setHeld('break');
@@ -5853,22 +10046,24 @@ function frame(): void {
   torchEmberAccum += dtSec;
   if (torchEmberAccum > 0.3) {
     torchEmberAccum = 0;
-    const torchId = registry.byName('webmc:torch');
-    const glowId = registry.byName('webmc:glowstone');
+    const torchId = torchIdCached;
+    const glowId = glowstoneIdCached;
     if (torchId !== undefined || glowId !== undefined) {
-      const px = Math.floor(fp.position.x);
-      const py = Math.floor(fp.position.y);
-      const pz = Math.floor(fp.position.z);
       let emitted = 0;
       for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
         for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
           for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
-            const s = world.get(px + dx, py + dy, pz + dz);
+            const s = world.get(playerBlockX + dx, playerBlockY + dy, playerBlockZ + dz);
             if (s === AIR) continue;
             const id = stateId(s);
             if (id !== torchId && id !== glowId) continue;
             if (Math.random() > 0.12) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 0.9, pz + dz + 0.5, [255, 235, 140]);
+            blockParticles.emitPlace(
+              playerBlockX + dx + 0.5,
+              playerBlockY + dy + 0.9,
+              playerBlockZ + dz + 0.5,
+              TORCH_EMBER_COLOR,
+            );
             emitted++;
           }
         }
@@ -5879,43 +10074,30 @@ function frame(): void {
   lavaEmberAccum += dtSec;
   if (lavaEmberAccum > 0.18) {
     lavaEmberAccum = 0;
-    const lavaId = registry.byName('webmc:lava');
     if (lavaId !== undefined) {
-      const px = Math.floor(fp.position.x);
-      const py = Math.floor(fp.position.y);
-      const pz = Math.floor(fp.position.z);
       let emitted = 0;
       for (let dx = -3; dx <= 3 && emitted < 2; dx++) {
         for (let dz = -3; dz <= 3 && emitted < 2; dz++) {
           for (let dy = -2; dy <= 2 && emitted < 2; dy++) {
-            const s = world.get(px + dx, py + dy, pz + dz);
+            const s = world.get(playerBlockX + dx, playerBlockY + dy, playerBlockZ + dz);
             if (s === AIR) continue;
             if (stateId(s) !== lavaId) continue;
             if (Math.random() > 0.05) continue;
-            blockParticles.emitPlace(px + dx + 0.5, py + dy + 1.1, pz + dz + 0.5, [255, 160, 60]);
+            blockParticles.emitPlace(
+              playerBlockX + dx + 0.5,
+              playerBlockY + dy + 1.1,
+              playerBlockZ + dz + 0.5,
+              LAVA_EMBER_COLOR,
+            );
             emitted++;
           }
         }
       }
     }
   }
-  if (autoWeatherEnabled) {
-    weatherTimer -= dtSec;
-    if (weatherTimer <= 0) {
-      const r = Math.random();
-      const next: 'clear' | 'rain' | 'thunder' = r < 0.6 ? 'clear' : r < 0.9 ? 'rain' : 'thunder';
-      if (next !== currentWeather) {
-        setWeather(next);
-        toast.show(
-          next === 'clear' ? 'Weather clears' : next === 'rain' ? 'Rain begins' : 'Thunderstorm',
-          '#a0d0ff',
-          1500,
-        );
-      }
-      weatherTimer = 180 + Math.random() * 240;
-    }
-  }
-  // Auto weather cycle (gated by gamerule).
+  // Auto weather cycle (gated by gamerule). The old parallel
+  // autoWeatherEnabled / weatherTimer block was removed — it raced with
+  // weatherCycle.tick below, picking conflicting weather every few minutes.
   if (gameRules.doWeatherCycle) {
     const weatherChanged = weatherCycle.tick(dtSec);
     if (weatherChanged && currentWeather !== weatherChanged) {
@@ -5924,7 +10106,7 @@ function frame(): void {
     }
   }
 
-  if (currentWeather === 'thunder') {
+  if (isThunder) {
     lightningTimer -= dtSec;
     if (lightningTimer <= 0) {
       lightningFlash();
@@ -5946,10 +10128,23 @@ function frame(): void {
               /* zombified_piglin not registered */
             }
           } else if (target.def.kind === 'creeper') {
-            // Mark for charged behavior; webmc doesn't track charged state, so just damage as visual.
-            mobWorld.damage(target.id, 5);
+            // Wiki: lightning on a creeper turns it into a charged
+            // creeper and deals NO damage. webmc doesn't yet track
+            // charged state, so this is a visual-only flash. Damaging
+            // the creeper (prior behavior) was a wiki violation —
+            // unlucky lightning could one-shot creepers below 5 HP.
+            subtitles.push('Charged creeper!');
+          } else if (target.def.kind === 'villager') {
+            // Wiki: lightning on a villager converts it to a witch.
+            try {
+              mobWorld.spawn('witch', target.position);
+              mobWorld.remove(target.id);
+            } catch {
+              /* witch not registered */
+            }
           } else {
-            mobWorld.damage(target.id, 5);
+            const r = mobWorld.damage(target.id, 5);
+            if (r?.killed) spawnLightningKillRewards(r.kind, r.position);
           }
         }
       }
@@ -5961,50 +10156,36 @@ function frame(): void {
   clouds.update(dtSec, fp.position.x, fp.position.z, currentWeather);
   sky.update(fp.position, dayNight.sunDir);
   stars.update(fp.position, dayNight.sunDir.y);
-  const horizSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
+  // Math.sqrt(x²+z²) replaces Math.hypot which does range-checks for
+  // overflow at MAX_VALUE. Game velocity components are always in
+  // normal range, so the safety margin is wasted CPU per frame.
+  const fpVx = fp.velocity.x;
+  const fpVz = fp.velocity.z;
+  const horizSpeed = Math.sqrt(fpVx * fpVx + fpVz * fpVz);
+  // Cache fluid-state booleans for the rest of the frame. fp.inFluid +
+  // fp.inFluidEyes are sampled once in fp.update and stay stable for
+  // the remainder of frame() — was being string-equality-compared 14+
+  // times for swim/footstep/break-speed/fog/HUD/etc. gates.
+  const inWaterBody = fp.inFluid === 'water';
+  const inLavaBody = fp.inFluid === 'lava';
+  const inWaterEyes = fp.inFluidEyes === 'water';
   // Surface-aware footsteps: pick material from block under feet.
-  let stepMat:
-    | 'wood'
-    | 'stone'
-    | 'gravel'
-    | 'grass'
-    | 'sand'
-    | 'snow'
-    | 'wool'
-    | 'metal'
-    | 'water'
-    | undefined;
+  // Hoist the foot-block id once — was being computed twice per frame
+  // (here for footstep material, again below for magma/soul_sand/
+  // friction surface contact). Both call sites are fp.onGround-gated.
+  let footBlockId = -1;
   if (fp.onGround) {
-    const fname = registry.get(
-      stateId(
-        world.get(
-          Math.floor(fp.position.x),
-          Math.floor(fp.position.y - 1.05),
-          Math.floor(fp.position.z),
-        ),
-      ),
-    ).name;
-    if (fname.includes('log') || fname.includes('plank')) stepMat = 'wood';
-    else if (fname.includes('stone') || fname.includes('cobble') || fname.includes('brick'))
-      stepMat = 'stone';
-    else if (fname.includes('gravel')) stepMat = 'gravel';
-    else if (fname.includes('sand')) stepMat = 'sand';
-    else if (fname.includes('snow')) stepMat = 'snow';
-    else if (fname.includes('wool')) stepMat = 'wool';
-    else if (fname.includes('iron') || fname.includes('gold') || fname.includes('copper'))
-      stepMat = 'metal';
-    else if (fname.includes('grass') || fname.includes('dirt')) stepMat = 'grass';
-  } else if (fp.inFluid === 'water') {
+    footBlockId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
+  }
+  let stepMat: FootStepMat | 'water';
+  if (fp.onGround) {
+    stepMat = footStepMatForStateId(footBlockId);
+  } else if (inWaterBody) {
     stepMat = 'water';
   }
   sfx.footstepIfMoving(fp.onGround && horizSpeed > 1.2 && !fp.input.fly, dtSec, stepMat);
   // MC-style jump exhaustion: 0.05 normal, 0.2 sprint-jump.
-  if (
-    prevOnGround &&
-    !fp.onGround &&
-    fp.velocity.y > 0 &&
-    (gameMode === 'survival' || gameMode === 'adventure')
-  ) {
+  if (prevOnGround && !fp.onGround && fp.velocity.y > 0 && vitalsActive) {
     playerState.addExhaustion(fp.input.sprint ? 0.2 : 0.05);
   }
   // Track airborne peak Y for mace smash damage calc.
@@ -6012,26 +10193,29 @@ function frame(): void {
   else if (fp.position.y > maceFallStartY) maceFallStartY = fp.position.y;
   prevOnGround = fp.onGround;
   // Swim exhaustion: 0.01 per meter swum.
-  if (fp.inFluid === 'water' && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (inWaterBody && vitalsActive) {
     playerState.addExhaustion(0.01 * horizSpeed * dtSec);
   }
   // Turtle Shell helmet: 10s of Water Breathing on emerging from water.
-  const inWater = fp.inFluid === 'water';
-  if (prevInWater && !inWater) {
+  if (prevInWater && !inWaterBody) {
     const helmetItem = inventory.armor[0];
-    if (helmetItem && itemRegistry.get(helmetItem.itemId).name === 'webmc:turtle_shell') {
+    if (helmetItem && helmetItem.itemId === turtleShellItemIdCached) {
       playerState.applyEffect('water_breathing', 0, 10);
     }
   }
-  prevInWater = inWater;
+  prevInWater = inWaterBody;
   {
     const dpx = fp.position.x - lastStatsPos.x;
     const dpz = fp.position.z - lastStatsPos.z;
     if (fp.onGround && !fp.input.fly) {
-      const moved = Math.hypot(dpx, dpz);
+      // Per-frame distance-walked sample. Math.sqrt avoids the
+      // overflow-safe Math.hypot path; deltas here are < 1 m/frame.
+      const moved = Math.sqrt(dpx * dpx + dpz * dpz);
       if (moved > 0 && moved < 2) playerStats.distanceWalked += moved;
     }
-    lastStatsPos = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
+    lastStatsPos.x = fp.position.x;
+    lastStatsPos.y = fp.position.y;
+    lastStatsPos.z = fp.position.z;
     playerStats.playtimeSec += dtSec;
     statsSaveAccum += dtSec;
     if (statsSaveAccum > 30) {
@@ -6046,7 +10230,7 @@ function frame(): void {
     if (sprintDustAccum > 0.15) {
       sprintDustAccum = 0;
       const groundY = Math.floor(fp.position.y - 0.95);
-      const groundBlock = world.get(Math.floor(fp.position.x), groundY, Math.floor(fp.position.z));
+      const groundBlock = world.get(playerBlockX, groundY, playerBlockZ);
       if (groundBlock !== AIR) {
         const gDef = registry.get(stateId(groundBlock));
         blockParticles.emitPlace(fp.position.x, fp.position.y - 0.85, fp.position.z, gDef.color);
@@ -6058,63 +10242,85 @@ function frame(): void {
   if (timeSaveAccum > 10) {
     timeSaveAccum = 0;
     void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    saveHotbarIfChanged();
   }
   if (lightningFlashSec > 0) lightningFlashSec = Math.max(0, lightningFlashSec - dtSec);
   const flashBoost = lightningFlashSec > 0 ? Math.min(1, lightningFlashSec / 0.18) * 0.7 : 0;
-  const weatherDimming =
-    (currentWeather === 'thunder' ? 0.5 : currentWeather === 'rain' ? 0.7 : 1.0) + flashBoost;
+  const weatherDimming = (isThunder ? 0.5 : isRain ? 0.7 : 1.0) + flashBoost;
   tmpSkyColor.copy(dayNight.skyColor).multiplyScalar(weatherDimming);
   tmpFogColor.copy(dayNight.fogColor).multiplyScalar(weatherDimming);
   // Biome sky/fog tint: subtle blend of biome palette toward the day-night base.
-  const biomeId = generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z));
-  const biomeName = biomeId === 1 ? 'forest' : 'plains';
-  const biomePalette = skyOf(biomeName);
-  const TINT = 0.18;
-  tmpSkyColor.r = tmpSkyColor.r * (1 - TINT) + (biomePalette.sky[0] / 255) * TINT;
-  tmpSkyColor.g = tmpSkyColor.g * (1 - TINT) + (biomePalette.sky[1] / 255) * TINT;
-  tmpSkyColor.b = tmpSkyColor.b * (1 - TINT) + (biomePalette.sky[2] / 255) * TINT;
-  tmpFogColor.r = tmpFogColor.r * (1 - TINT) + (biomePalette.fog[0] / 255) * TINT;
-  tmpFogColor.g = tmpFogColor.g * (1 - TINT) + (biomePalette.fog[1] / 255) * TINT;
-  tmpFogColor.b = tmpFogColor.b * (1 - TINT) + (biomePalette.fog[2] / 255) * TINT;
+  // Cache the pre-scaled tint contribution per biome — was running 6
+  // divides + 6 multiplies per frame on stable per-biome RGB palette
+  // values. biomeId rarely changes (player crosses a column boundary).
+  const biomeId = biomeIdAtPlayerColumn();
+  if (biomeId !== cachedBiomeTintId) {
+    const biomePalette = skyOf(biomeId === 1 ? 'forest' : 'plains');
+    cachedBiomeTintId = biomeId;
+    biomeSkyTintR = (biomePalette.sky[0] / 255) * BIOME_TINT;
+    biomeSkyTintG = (biomePalette.sky[1] / 255) * BIOME_TINT;
+    biomeSkyTintB = (biomePalette.sky[2] / 255) * BIOME_TINT;
+    biomeFogTintR = (biomePalette.fog[0] / 255) * BIOME_TINT;
+    biomeFogTintG = (biomePalette.fog[1] / 255) * BIOME_TINT;
+    biomeFogTintB = (biomePalette.fog[2] / 255) * BIOME_TINT;
+  }
+  tmpSkyColor.r = tmpSkyColor.r * BIOME_TINT_INV + biomeSkyTintR;
+  tmpSkyColor.g = tmpSkyColor.g * BIOME_TINT_INV + biomeSkyTintG;
+  tmpSkyColor.b = tmpSkyColor.b * BIOME_TINT_INV + biomeSkyTintB;
+  tmpFogColor.r = tmpFogColor.r * BIOME_TINT_INV + biomeFogTintR;
+  tmpFogColor.g = tmpFogColor.g * BIOME_TINT_INV + biomeFogTintG;
+  tmpFogColor.b = tmpFogColor.b * BIOME_TINT_INV + biomeFogTintB;
   const skyColor = tmpSkyColor;
   const fogColor = tmpFogColor;
-  const uniforms = chunkRenderer.material.uniforms;
-  (uniforms['uSunDir'] as { value: THREE.Vector3 }).value.copy(dayNight.sunDir);
-  (uniforms['uSkyColor'] as { value: THREE.Color }).value.copy(skyColor);
-  const nightVision = playerState.effects.has('night_vision') ? 0.5 : 0;
-  (uniforms['uAmbient'] as { value: number }).value =
-    (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
-  // Speed effect adjusts walk speed (amplifier 0 = +20%, 1 = +40%, ...)
-  const speedEff = playerState.effects.get('speed');
-  const slowEff = playerState.effects.get('slowness');
-  let mul = 1;
-  if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
-  if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
-  fp.speedMultiplier = mul;
-  // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
-  const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
-  const speedLevel =
-    (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
-  fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
-  const jumpEff = playerState.effects.get('jump_boost');
-  fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
-  // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).
-  const levitation = playerState.effects.get('levitation');
-  if (levitation) {
-    fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
+  uSunDirRef.value.copy(dayNight.sunDir);
+  uSkyColorRef.value.copy(skyColor);
+  const nightVision = hasNightVision ? 0.5 : 0;
+  uAmbientRef.value = (dayNight.ambient + nightVision) * weatherDimming * brightnessMul;
+  // Effect-driven multipliers. The common case is `effects.size === 0`
+  // (player not under any potion), and the cluster of 5 Map.get hashes
+  // + dependent ifs all collapse to the defaults. Short-circuit so a
+  // toxin-free player skips the entire block.
+  if (hasAnyEffect) {
+    const speedEff = playerState.effects.get('speed');
+    const slowEff = playerState.effects.get('slowness');
+    let mul = 1;
+    if (speedEff) mul *= 1 + 0.2 * (speedEff.amplifier + 1);
+    if (slowEff) mul *= Math.max(0.15, 1 - 0.15 * (slowEff.amplifier + 1));
+    fp.speedMultiplier = mul;
+    // Speed/Slowness FOV bonus: ±~5° per amplifier level (multiplicative on baseFov).
+    const baseFovDeg = (fp.camera.userData['baseFov'] as number | undefined) ?? 70;
+    const speedLevel =
+      (speedEff ? speedEff.amplifier + 1 : 0) - (slowEff ? slowEff.amplifier + 1 : 0);
+    fp.setEffectFovBoost(baseFovDeg * 0.05 * speedLevel);
+    const jumpEff = playerState.effects.get('jump_boost');
+    fp.jumpVelocityMultiplier = jumpEff ? 1 + 0.4 * (jumpEff.amplifier + 1) : 1;
+    // Levitation: forces player upward at 0.9 m/s per level (MC: 0.9 blocks/sec).
+    const levitation = playerState.effects.get('levitation');
+    if (levitation) {
+      fp.velocity.y = Math.max(fp.velocity.y, 0.9 * (levitation.amplifier + 1));
+    }
+    // Nausea: FOV wobble for visual disorientation. Reuse `now` so the
+    // wobble phase is consistent with other per-frame time-based effects
+    // (and skips one performance.now() syscall).
+    const nausea = playerState.effects.get('nausea');
+    if (nausea) {
+      const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
+      const wobble = Math.sin(now / 200) * 0.1 * intensity;
+      fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
+      fp.camera.updateProjectionMatrix();
+    }
+  } else {
+    // No active effects → defaults. These setters are cheap and the
+    // values rarely change once cleared, so the cumulative cost is
+    // tiny vs the 5 Map.get hashes we'd otherwise pay every frame.
+    fp.speedMultiplier = 1;
+    fp.setEffectFovBoost(0);
+    fp.jumpVelocityMultiplier = 1;
   }
-  // Nausea: FOV wobble for visual disorientation.
-  const nausea = playerState.effects.get('nausea');
-  if (nausea) {
-    const intensity = Math.min(1, 0.4 * (nausea.amplifier + 1));
-    const wobble = Math.sin(performance.now() / 200) * 0.1 * intensity;
-    fp.camera.fov = Math.max(30, Math.min(179, fp.camera.fov * (1 + wobble)));
-    fp.camera.updateProjectionMatrix();
-  }
-  (uniforms['uFogColor'] as { value: THREE.Color }).value.copy(fogColor);
-  (uniforms['uCameraPosW'] as { value: THREE.Vector3 }).value.copy(fp.position);
+  uFogColorRef.value.copy(fogColor);
+  uCameraPosWRef.value.copy(fp.position);
   scene.background = skyColor;
-  if (scene.fog instanceof THREE.Fog) scene.fog.color.copy(fogColor);
+  sceneFog.color.copy(fogColor);
 
   const loaderStats = loader.update(
     fp.position.x,
@@ -6125,55 +10331,37 @@ function frame(): void {
     fp.velocity.z,
   );
 
-  const sel = hotbar.selected;
-  if (sel) {
-    interaction.selectedBlock = sel.state;
-    hand.setHeldBlockColor(sel.color);
+  syncVisibleHotbarFromInventory();
+  const placeable = placeableFromSlot(hotbar.selectedIndex);
+  if (placeable) {
+    interaction.selectedBlock = placeable.state;
+    hand.setHeldBlockColor(registry.get(placeable.blockId).color);
+  } else {
+    interaction.selectedBlock = AIR;
+    // Holding a tool/food in survival — neutral hand color so the cube
+    // doesn't visually lie about being something placeable.
+    hand.setHeldBlockColor(NEUTRAL_HAND_COLOR);
   }
   hand.update(dtSec);
   interaction.tick(now);
 
-  if (gameMode === 'creative') {
-    hotbar.setCounts([], 'infinite');
+  if (isCreative) {
+    hotbar.setCounts(hotbarCountsEmpty, 'infinite');
   } else {
-    const counts: number[] = [];
-    for (let i = 0; i < 9; i++) {
-      const entry = hotbar.getEntry(i);
-      if (!entry) {
-        counts.push(0);
-        continue;
-      }
-      const def = registry.get(stateId(entry.state));
-      const itemId = itemRegistry.byName(def.name);
-      counts.push(itemId === undefined ? 0 : countInventoryItem(itemId));
-    }
-    hotbar.setCounts(counts);
+    // Visible hotbar mirrors inventory.hotbar in survival/adventure, so the
+    // count under each slot is just that slot's stack count, not the all-
+    // inventory total of the entry's name (which used to double-count).
+    for (let i = 0; i < 9; i++) hotbarCountsScratch[i] = inventory.hotbar[i]?.count ?? 0;
+    hotbar.setCounts(hotbarCountsScratch);
   }
 
   interaction.tickBreak(dtSec);
   if (interaction.breaking && !hand.isSwinging) hand.swing();
 
-  // Crosshair tint: red when aiming at a mob in range
-  {
-    const originP = camera.position;
-    const lookP = fp.lookVector();
-    let hitMob = false;
-    for (const mob of mobWorld.all()) {
-      const box = {
-        minX: mob.position.x - mob.def.aabb.halfX,
-        minY: mob.position.y - mob.def.aabb.halfY,
-        minZ: mob.position.z - mob.def.aabb.halfZ,
-        maxX: mob.position.x + mob.def.aabb.halfX,
-        maxY: mob.position.y + mob.def.aabb.halfY,
-        maxZ: mob.position.z + mob.def.aabb.halfZ,
-      };
-      if (intersectRayAABB(originP, lookP, box, 5)) {
-        hitMob = true;
-        break;
-      }
-    }
-    crosshair.setTint(hitMob ? '#ff6060cc' : null);
-  }
+  // (The crosshair-tint mob raycast lives further down at the
+  // hostile/passive aim-tint loop. The earlier AABB-precise loop here
+  // was dead code — its setTint output was always overwritten by the
+  // second loop's setTint call a few hundred lines later.)
   const aim = interaction.castRay();
   if (aim && aim.distance > 0) {
     const progress =
@@ -6191,13 +10379,23 @@ function frame(): void {
 
   // Third-person camera modes orbit around the player's eye position.
   // Avatar group center + 0.18 puts its feet (y=-1.08 local) at fp.position.y - 0.9.
-  playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
-  const invisible = playerState.effects.has('invisibility');
-  playerAvatar.setVisible(cameraMode !== 'fp' && !invisible);
-  const avatarSpeed = Math.hypot(fp.velocity.x, fp.velocity.z);
-  playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? avatarSpeed : 0);
+  // Spectators are invisible in vanilla — without this, the third-person
+  // body still rendered while in spectator mode, which broke the ghost
+  // illusion (you could see your own body floating through walls).
+  // playerInvisible is hoisted at the top of frame() — reuse here.
+  const avatarVisible = cameraMode !== 'fp' && !playerInvisible && !isSpectator;
+  playerAvatar.setVisible(avatarVisible);
+  // Skip pose + animate per-frame writes when the avatar isn't being
+  // rendered. First-person + spectator are the dominant cases, and
+  // both leave the avatar hidden.
+  if (avatarVisible) {
+    playerAvatar.setPose(fp.position.x, fp.position.y + 0.18, fp.position.z, fp.yaw + Math.PI);
+    // horizSpeed (Math.hypot of velocity.xz) was already computed for
+    // footstep + exhaustion above; no need to redo the hypot per frame.
+    playerAvatar.animate(dtSec, fp.onGround && !fp.input.fly ? horizSpeed : 0);
+  }
   if (cameraMode !== 'fp') {
-    const look = fp.lookVector();
+    const look = fp.lookVector(frameLookTmp);
     const back = cameraMode === 'tp_back' ? -3 : 3;
     camera.position.x += look.x * back;
     camera.position.y += look.y * back;
@@ -6216,28 +10414,46 @@ function frame(): void {
     if (playerState.health < 20) playerState.heal(1 * dtSec);
     if (playerState.hunger < 20) playerState.eat(1 * dtSec, 0.1 * dtSec);
   }
-  playerState.tick(dtSec, { inFluid: fp.inFluid });
+  // Drowning is gated by what's at eye level, not the body center —
+  // walking through 1-deep water shouldn't drain breath. Creative +
+  // spectator skip vital drains (hunger, breath) entirely.
+  // vitalsActive is now a module-scope cache updated whenever gameMode
+  // changes — see applyGameMode.
+  playerTickEnv.inFluid = fp.inFluidEyes;
+  playerTickEnv.drainHunger = vitalsActive;
+  playerState.tick(dtSec, playerTickEnv);
   // Elytra glide: chestplate slot has elytra + falling + jump held → slow descent + forward thrust.
   {
     const chest = inventory.armor[1];
-    const chestName = chest ? itemRegistry.get(chest.itemId).name : '';
-    const wearingElytra = chestName === 'webmc:elytra';
-    isGliding =
+    const wearingElytra = chest != null && chest.itemId === elytraItemIdCached;
+    // Compute once instead of evaluating the same 5-term condition
+    // twice (once for `isGliding` assignment, once for the if-gate).
+    const glidingNow =
       wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump;
-    if (wearingElytra && !fp.onGround && !fp.input.fly && fp.velocity.y < 0 && fp.input.jump) {
-      const look = fp.lookVector();
+    isGliding = glidingNow;
+    if (glidingNow) {
+      const look = fp.lookVector(frameLookTmp);
       // Slow descent: clamp downward velocity.
       const minFallY = -3 + look.y * 8;
       if (fp.velocity.y < minFallY) fp.velocity.y = fp.velocity.y * 0.7 + minFallY * 0.3;
-      // Forward thrust along look horizontal.
-      const horiz = Math.hypot(look.x, look.z);
+      // Forward thrust along look horizontal. sqrt over hypot — look is
+      // a normalized direction, hypot's overflow safety is wasted CPU
+      // per frame while gliding.
+      const lookX = look.x;
+      const lookZ = look.z;
+      const horiz = Math.sqrt(lookX * lookX + lookZ * lookZ);
       if (horiz > 0.001) {
         const speedFactor = 8 + Math.max(0, -look.y) * 12;
-        fp.velocity.x = fp.velocity.x * 0.85 + (look.x / horiz) * speedFactor * 0.15;
-        fp.velocity.z = fp.velocity.z * 0.85 + (look.z / horiz) * speedFactor * 0.15;
+        // Hoist (speedFactor * 0.15) / horiz so the two velocity writes
+        // do one division then two multiplies (vs. two divisions in the
+        // prior `(look.x / horiz) * speedFactor * 0.15` form).
+        const thrust = (speedFactor * 0.15) / horiz;
+        fp.velocity.x = fp.velocity.x * 0.85 + lookX * thrust;
+        fp.velocity.z = fp.velocity.z * 0.85 + lookZ * thrust;
       }
-      // Drain durability ~1/sec.
-      if (Math.random() < dtSec) {
+      // Drain durability ~1/sec. Skip in creative — vanilla creative
+      // elytra never wears out so unlimited cosmetic gliding works.
+      if (!isCreative && Math.random() < dtSec) {
         const newDamage = (chest?.damage ?? 0) + 1;
         const def = itemRegistry.get(inventory.armor[1]!.itemId);
         if (newDamage >= def.durability) {
@@ -6250,89 +10466,193 @@ function frame(): void {
     }
   }
   // Walking through fire ignites the player (8s burn).
-  if (
-    (gameMode === 'survival' || gameMode === 'adventure') &&
-    !playerState.effects.has('fire_resistance')
-  ) {
-    const fpx = Math.floor(fp.position.x);
-    const fpz = Math.floor(fp.position.z);
+  if (vitalsActive && !fireResistant) {
     for (let dy = 0; dy <= 1; dy++) {
-      const s = world.get(fpx, Math.floor(fp.position.y) + dy, fpz);
-      if (s !== AIR && registry.get(stateId(s)).name === 'webmc:fire') {
+      const s = world.get(playerBlockX, playerBlockY + dy, playerBlockZ);
+      if (s !== AIR && stateId(s) === fireIdCached) {
         playerState.fireRemainingSec = Math.max(playerState.fireRemainingSec, 8);
         break;
       }
     }
   }
 
-  if (
-    fp.lastLandFallBlocks > 3 &&
-    (gameMode === 'survival' || gameMode === 'adventure') &&
-    gameRules.fallDamage
-  ) {
+  if (fp.lastLandFallBlocks > 3 && vitalsActive && gameRules.fallDamage) {
     const slowFalling = playerState.effects.has('slow_falling');
-    let dmg = slowFalling ? 0 : fp.lastLandFallBlocks - 3;
+    // Jump Boost reduces fall damage by amplifier+1 blocks per wiki.
+    // The standard 3-block damage-free buffer extends to 3 + (amp+1)
+    // so Jump Boost I makes you immune up to 4 blocks, II up to 5,
+    // etc. Was unwired — players with leaping potions still took
+    // full fall damage.
+    const jumpBoost = playerState.effects.get('jump_boost');
+    const jumpBuffer = jumpBoost ? jumpBoost.amplifier + 1 : 0;
+    let dmg = slowFalling ? 0 : Math.max(0, fp.lastLandFallBlocks - 3 - jumpBuffer);
+    // Vanilla MC: landing in water (or while underwater) cancels all
+    // fall damage. fp.inFluid is sampled at body center, so even shallow
+    // water counts. Without this, jumping into a 1-block pool from a
+    // 30-block tower still killed the player.
+    if (inWaterBody) dmg = 0;
     // Surface mitigation: hay bale and honey block reduce fall damage to 20% (slime to 0).
-    const fx = Math.floor(fp.position.x);
-    const fy = Math.floor(fp.position.y - 1.05);
-    const fz = Math.floor(fp.position.z);
-    const landDef = registry.get(stateId(world.get(fx, fy, fz)));
-    if (landDef.name === 'webmc:hay_block' || landDef.name === 'webmc:honey_block') {
+    const landId = stateId(world.get(playerBlockX, playerFootBlockY, playerBlockZ));
+    if (landId === hayBlockIdCached || landId === honeyBlockIdCached) {
       dmg = Math.floor(dmg * 0.2);
-    } else if (landDef.name === 'webmc:slime_block') {
+    } else if (landId === slimeBlockIdCached) {
       dmg = 0;
+      // Vanilla bounces the player upward proportional to fall velocity
+      // (unless they're sneaking, which absorbs the bounce). Without
+      // this, slime blocks were just hay-bale-tier — fall reduction but
+      // no jumping mechanic. Bounce velocity = -velocity.y * 0.8.
+      if (!fp.input.sneak && fp.velocity.y < 0) {
+        fp.velocity.y = -fp.velocity.y * 0.8;
+      }
     }
-    if (dmg > 0) playerState.takeDamage({ amount: dmg, source: 'fall' });
+    if (dmg > 0) envTakeDamage(dmg, 'fall');
   }
   fp.lastLandFallBlocks = 0;
 
-  if (fp.position.y < -64 && (gameMode === 'survival' || gameMode === 'adventure')) {
-    playerState.takeDamage({ amount: 4, source: 'void' });
+  if (fp.position.y < -64 && vitalsActive) {
+    // Vanilla: 4 dmg per game tick (20Hz) ≈ 80 dmg/s. takeDamage's
+    // i-frame bypass for 'void' was firing every render frame instead,
+    // so at 60FPS we were applying 240 dmg/s — enough to instantly
+    // erase totem-of-undying revivals via the same-frame re-damage.
+    envTakeDamage(80 * dtSec, 'void');
   }
 
-  if (gameMode === 'survival' || gameMode === 'adventure') {
+  if (vitalsActive) {
     const wb = checkWorldBorder(worldBorder, fp.position.x, fp.position.z);
     if (!wb.insideBorder && wb.damagePerSec > 0) {
-      playerState.takeDamage({ amount: wb.damagePerSec * dtSec, source: 'void' });
+      envTakeDamage(wb.damagePerSec * dtSec, 'void');
     }
   }
 
-  if (gameMode === 'survival' || gameMode === 'adventure') {
-    const headX = Math.floor(fp.position.x);
-    const headY = Math.floor(fp.position.y + 1.55);
-    const headZ = Math.floor(fp.position.z);
-    if (isSolid(headX, headY, headZ)) {
-      playerState.takeDamage({ amount: 1 * dtSec, source: 'suffocation' });
+  if (vitalsActive) {
+    // Suffocation when the head cell is solid. position.y is the body
+    // center (halfY=0.9), eyes ~0.72 above (eyeHeight 1.62 from feet).
+    // The previous +1.55 was a full cell ABOVE the head — suffocation
+    // never fired when a block was placed where the player's head was.
+    if (isSolid(playerBlockX, Math.floor(fp.position.y + 0.72), playerBlockZ)) {
+      envTakeDamage(1 * dtSec, 'suffocation');
     }
     // Surface contact effects: magma damage, soul sand slowness.
     if (fp.onGround) {
-      const fx = Math.floor(fp.position.x);
-      const fy = Math.floor(fp.position.y - 1.05);
-      const fz = Math.floor(fp.position.z);
-      const belowDef = registry.get(stateId(world.get(fx, fy, fz)));
-      if (
-        belowDef.name === 'webmc:magma_block' &&
-        !fp.input.sneak &&
-        !playerState.effects.has('fire_resistance')
-      ) {
-        playerState.takeDamage({ amount: 1 * dtSec, source: 'fire' });
+      // Reuse the footBlockId computed above (same world.get).
+      const belowBlockId = footBlockId;
+      if (belowBlockId === magmaBlockIdCached && !fp.input.sneak && !fireResistant) {
+        envTakeDamage(1 * dtSec, 'fire');
       }
-      // Soul sand slows player to 60% horizontal velocity (matches MC).
-      if (belowDef.name === 'webmc:soul_sand') {
-        fp.velocity.x *= 0.6;
-        fp.velocity.z *= 0.6;
+      // Campfire / soul campfire stand-on damage (1 / 2 dmg per tick
+      // respectively, per wiki). Both modules shipped (campfire ignite
+      // + soul-campfire-repel + damagePerTick spec) but main.ts only
+      // damaged from magma_block. Sneak doesn't bypass campfire damage
+      // in vanilla — only fire-resistance does.
+      if (belowBlockId === campfireIdCached && !fireResistant) {
+        envTakeDamage(CAMPFIRE_DAMAGE * dtSec, 'fire');
       }
-      // Surface friction (ice slippery, honey sticky) via ground response multiplier.
-      const blockId = belowDef.name.replace(/^webmc:/, '');
-      const f = blockFriction(blockId);
+      if (belowBlockId === soulCampfireIdCached && !fireResistant) {
+        envTakeDamage(SOUL_CAMPFIRE_DAMAGE * dtSec, 'fire');
+      }
+      // Soul sand slows player to 40% horizontal velocity (wiki: walking
+      // on soul sand reduces movement to 40% of normal). Was 60% — too
+      // fast vs vanilla. Soul Speed enchant would negate this but isn't
+      // wired yet.
+      if (belowBlockId === soulSandIdCached) {
+        fp.velocity.x *= 0.4;
+        fp.velocity.z *= 0.4;
+      }
+      // Surface friction (ice slippery, honey sticky) via ground response
+      // multiplier. Use the memoized short name — was a fresh
+      // .replace(/^webmc:/, '') alloc per frame on ground.
+      const f = blockFriction(blockShortNameFn(belowBlockId));
       // Default friction 0.6 → mult 1; ice 0.98 → mult ~5 (slippery); honey 0.4 → mult ~0.5 (sticky).
       fp.groundResponseMultiplier = f >= 0.95 ? 5 : f <= 0.5 ? 0.5 : 1;
     } else {
       fp.groundResponseMultiplier = 1;
     }
+    // Cactus + sweet berry bush contact damage. Hit-immune frame throttles
+    // the apparent damage to 1 HP per 0.5s (vanilla cactus rate), so the
+    // per-frame loop doesn't burn down a heart in a single tick. We sweep
+    // the player AABB across the 8 corner blocks since a 0.6×2.52 player
+    // can occupy up to 2x1x2 blocks straddling boundaries.
+    const minX = Math.floor(fp.position.x - 0.3);
+    const maxX = Math.floor(fp.position.x + 0.3);
+    const minZ = Math.floor(fp.position.z - 0.3);
+    const maxZ = Math.floor(fp.position.z + 0.3);
+    const minY = Math.floor(fp.position.y - 1.62);
+    const maxY = Math.floor(fp.position.y + 0.9);
+    let touchedCactus = false;
+    let touchedBerry = false;
+    let touchedCobweb = false;
+    let touchedPowderSnow = false;
+    for (let by2 = minY; by2 <= maxY; by2++) {
+      for (let bz2 = minZ; bz2 <= maxZ; bz2++) {
+        for (let bx2 = minX; bx2 <= maxX; bx2++) {
+          const s = world.get(bx2, by2, bz2);
+          if (s === AIR) continue;
+          const id = stateId(s);
+          if (id === cactusIdCached) touchedCactus = true;
+          else if (id === sweetBerryBushIdCached) touchedBerry = true;
+          else if (id === cobwebIdCached) touchedCobweb = true;
+          else if (id === powderSnowIdCached) touchedPowderSnow = true;
+        }
+      }
+    }
+    if (touchedCactus) {
+      envTakeDamage(1, 'cactus');
+    } else if (touchedBerry) {
+      // Berry bushes only damage on movement (vanilla: when entity moves
+      // while inside). Reuse horizSpeed from the footstep block above
+      // instead of a third Math.hypot on the same velocity per frame.
+      if (horizSpeed > 0.05) envTakeDamage(1, 'sweet_berry');
+    }
+    // Cobweb: vanilla slows entities to 1/8 horizontal speed and slows
+    // gravity. Was unwired — cobweb was just an air block visually.
+    if (touchedCobweb) {
+      fp.velocity.x *= 0.25;
+      fp.velocity.z *= 0.25;
+      // Slow gravity (vanilla makes you float-fall in cobweb).
+      if (fp.velocity.y < 0) fp.velocity.y *= 0.5;
+    }
+    // Powder snow: slow + sink unless wearing leather boots, plus
+    // wiki-spec freeze ticks/damage. Was movement-only; now properly
+    // accumulates freeze and applies 1 damage every 40 ticks once
+    // fully frozen (≥ 140 ticks). Leather boots stop accumulation
+    // (and let the player walk on top, which is handled separately
+    // by the AABB sink logic).
+    const dtTicks = dtSec * 20;
+    if (touchedPowderSnow) {
+      const boots = inventory.armor[3];
+      const wearingLeather = boots != null && boots.itemId === leatherBootsItemIdCached;
+      if (!wearingLeather) {
+        fp.velocity.x *= 0.5;
+        fp.velocity.z *= 0.5;
+        if (fp.velocity.y < 0) fp.velocity.y *= 0.4;
+        playerFreezeTicks = Math.min(FREEZE_TICKS_MAX, playerFreezeTicks + dtTicks);
+        if (playerFreezeTicks >= FREEZE_TICKS_MAX) {
+          playerFreezeSinceDamageTicks += dtTicks;
+          if (playerFreezeSinceDamageTicks >= FREEZE_DAMAGE_INTERVAL_TICKS && vitalsActive) {
+            playerFreezeSinceDamageTicks -= FREEZE_DAMAGE_INTERVAL_TICKS;
+            envTakeDamage(FREEZE_DAMAGE_PER_INTERVAL, 'freeze');
+          }
+        } else {
+          // Resetting the inter-damage clock when not yet fully frozen
+          // mirrors vanilla — damage cadence starts fresh on full
+          // freeze, not from accumulated time.
+          playerFreezeSinceDamageTicks = 0;
+        }
+      } else {
+        // Leather boots: thaw at the same rate as standing in normal
+        // air. (Wiki has boots prevent accumulation; thawing rate is
+        // unchanged from no-boots-out-of-snow.)
+        playerFreezeTicks = Math.max(0, playerFreezeTicks - 2 * dtTicks);
+        if (playerFreezeTicks < FREEZE_TICKS_MAX) playerFreezeSinceDamageTicks = 0;
+      }
+    } else {
+      // Out of powder snow: thaw at -2 ticks/tick.
+      playerFreezeTicks = Math.max(0, playerFreezeTicks - 2 * dtTicks);
+      if (playerFreezeTicks < FREEZE_TICKS_MAX) playerFreezeSinceDamageTicks = 0;
+    }
   }
 
-  if (playerState.hunger <= 0 && (gameMode === 'survival' || gameMode === 'adventure')) {
+  if (playerState.hunger <= 0 && vitalsActive) {
     if (!starvingShown) {
       starvingShown = true;
       toast.show('Starving!', '#ff6060', 2000);
@@ -6341,13 +10661,39 @@ function frame(): void {
     starvingShown = false;
   }
   if (playerState.justDied && !playerState.invulnerable) {
-    // Totem of Undying: if held in hotbar, consume to revive at 1 HP + Regen II + Absorption II.
-    const totemId = itemRegistry.byName('webmc:totem_of_undying');
-    if (totemId !== undefined && countInventoryItem(totemId) > 0) {
-      consumeInventoryItem(totemId, 1);
+    // Cancel any in-progress eat — corpse shouldn't be munching.
+    if (eatState.itemId !== null) {
+      cancelEating(eatState);
+      rightClickHeldForEat = false;
+    }
+    // Totem of Undying: vanilla checks ONLY mainhand (selected hotbar
+    // slot) and offhand — a totem stored in the main inventory grid
+    // does NOT activate. The prior impl used countInventoryItem which
+    // scanned hotbar + main, so a totem buried in storage incorrectly
+    // saved you. Offhand has priority over mainhand per wiki.
+    const totemId = totemItemIdCached;
+    const totemInOffhand = totemId !== undefined && inventory.offhand?.itemId === totemId;
+    const mainhandStack = inventory.hotbar[inventory.selectedHotbar];
+    const totemInMainhand =
+      totemId !== undefined && mainhandStack?.itemId === totemId && mainhandStack.count > 0;
+    if (totemId !== undefined && (totemInOffhand || totemInMainhand)) {
+      if (totemInOffhand) {
+        const off = inventory.offhand!;
+        const after = off.count - 1;
+        inventory.offhand = after > 0 ? { ...off, count: after } : null;
+      } else {
+        // Mainhand: decrement just the selected hotbar slot, not any
+        // other matching stacks in the inventory.
+        const slot = mainhandStack!;
+        const after = slot.count - 1;
+        inventory.hotbar[inventory.selectedHotbar] = after > 0 ? { ...slot, count: after } : null;
+      }
       playerState.health = 1;
       playerState.justDied = false;
-      playerState.applyEffect('regeneration', 1, 45);
+      // Wiki-spec totem effect durations (regen 40s, absorption 5s,
+      // fire-resist 40s — totem_self_save.tryTotem returns 800/100/800
+      // ticks). Was 45s regen — 5 seconds longer than vanilla.
+      playerState.applyEffect('regeneration', 1, 40);
       playerState.applyEffect('absorption', 1, 5);
       playerState.applyEffect('fire_resistance', 0, 40);
       toast.show('✦ Totem of Undying ✦', '#ffd040', 3500);
@@ -6363,9 +10709,18 @@ function frame(): void {
         playerState.health = 20;
         playerState.justDied = false;
       } else if (gameRules.doImmediateRespawn) {
+        // doImmediateRespawn skips the death screen, so respawn here.
+        playerState.respawn();
         toast.show('Respawned', '#80ffa0', 1200);
-        playerState.justDied = false;
       } else if (!deathScreen.isVisible()) {
+        // Close any open inventory / chest / settings overlays before
+        // showing the death screen — otherwise dying with chest UI open
+        // stacked the death screen on top and the player couldn't reach
+        // either's button.
+        if (chestUI.isVisible()) chestUI.hide();
+        if (creativeInv.isVisible()) creativeInv.hide();
+        if (survivalInv.isVisible()) survivalInv.hide();
+        if (settingsPanel.isVisible()) settingsPanel.hide();
         const score = playerState.xpLevel * 7 + Math.floor(playerState.xpProgress * 7);
         deathScreen.setCause(currentPlayerName, playerState.lastDeathCause, score);
         deathScreen.show();
@@ -6382,8 +10737,29 @@ function frame(): void {
     screenShake.pulse(Math.min(1, 0.2 + delta * 0.1));
     sfx.play('hit');
     subtitles.push('Player hurt');
-    if (typeof navigator.getGamepads === 'function') {
-      const pad = (navigator.getGamepads() ?? []).find((p) => p && p.connected);
+    // Damage cancels eating (vanilla — getting hit interrupts the bite).
+    // Without this, you could keep eating bread while a zombie chewed
+    // through your face. The held-right-click and hotbar-swap paths
+    // already cancel; this covers the take-damage path that didn't.
+    if (eatState.itemId !== null) {
+      cancelEating(eatState);
+      rightClickHeldForEat = false;
+    }
+    if (hasGamepadApi && anyGamepadEverConnected) {
+      // Walk the GamepadList directly; .find allocates a closure per
+      // damage event, and the `?? []` allocation is wasted whenever
+      // getGamepads returns null on platforms without the API.
+      const pads = navigator.getGamepads();
+      let pad: Gamepad | null = null;
+      if (pads) {
+        for (let i = 0; i < pads.length; i++) {
+          const p = pads[i];
+          if (p?.connected) {
+            pad = p;
+            break;
+          }
+        }
+      }
       const actuator = (
         pad as
           | (Gamepad & {
@@ -6405,24 +10781,44 @@ function frame(): void {
   }
   subtitles.tick();
   achievementToast.tick();
-  activeEffectsHud.render(
-    Array.from(playerState.effects, ([id, e]) => ({
-      id,
-      amplifier: e.amplifier,
-      remainingSec: e.remainingSec,
-    })),
-  );
+  if (!hasAnyEffect) {
+    activeEffectsHud.render(ACTIVE_EFFECTS_EMPTY);
+  } else {
+    const entries = activeEffectsScratch;
+    // Recycle previous-frame entries.
+    for (let i = 0; i < entries.length; i++) activeEffectsPool.push(entries[i]!);
+    entries.length = 0;
+    // Iterate keys + lookup vs entries — destructuring `[id, e]`
+    // allocates a 2-tuple per effect per frame. Player effects can be
+    // 0-3 typically, but this code runs on every frame whenever any
+    // effect is active.
+    for (const id of playerState.effects.keys()) {
+      const e = playerState.effects.get(id);
+      if (e === undefined) continue;
+      const slot = activeEffectsPool.pop() ?? { id: '', amplifier: 0, remainingSec: 0 };
+      slot.id = id;
+      slot.amplifier = e.amplifier;
+      slot.remainingSec = e.remainingSec;
+      entries.push(slot);
+    }
+    activeEffectsHud.render(entries);
+  }
 
   // Crosshair tint hints what's targeted: red=hostile, green=passive, default=block.
   let aimTint: string | null = null;
   const aimReach = 5.5;
-  const aimLook2 = fp.lookVector();
+  const aimLook2 = fp.lookVector(frameLookTmp);
+  // Square the cull distance once so the inner test is integer-vs-FP
+  // compare without a per-mob Math.hypot. The sqrt only runs for mobs
+  // that actually pass the range check.
+  const aimCullSq = (aimReach + 1) * (aimReach + 1);
   for (const m of mobWorld.all()) {
     const dx = m.position.x - camera.position.x;
     const dy = m.position.y - camera.position.y;
     const dz = m.position.z - camera.position.z;
-    const d = Math.hypot(dx, dy, dz);
-    if (d > aimReach + 1) continue;
+    const dSq = dx * dx + dy * dy + dz * dz;
+    if (dSq > aimCullSq) continue;
+    const d = Math.sqrt(dSq);
     const dot = (dx * aimLook2.x + dy * aimLook2.y + dz * aimLook2.z) / Math.max(0.001, d);
     if (dot > 0.97) {
       const beh = m.def.behavior;
@@ -6456,28 +10852,39 @@ function frame(): void {
   }
 
   // Cave-mood ambient: when player has no sky access above and it's dark.
+  // O(1) sky-light lookup (skyLight=15 means clear path to sky) instead of
+  // scanning every Y up to CHUNK_HEIGHT every frame.
   let skyBlocked = false;
-  const px = Math.floor(fp.position.x);
-  const py = Math.floor(fp.position.y);
-  const pz = Math.floor(fp.position.z);
-  for (let yy = py + 2; yy < CHUNK_HEIGHT; yy++) {
-    if (isSolid(px, yy, pz)) {
-      skyBlocked = true;
-      break;
+  {
+    const cx = playerBlockX >> 4;
+    const cz = playerBlockZ >> 4;
+    const lt = lightCache.get(lightKey(cx, cz));
+    if (lt) {
+      const lb = getLightByte(lt, playerBlockX & 0xf, playerBlockY + 2, playerBlockZ & 0xf);
+      skyBlocked = ((lb >>> 4) & 0xf) !== 15;
+    } else {
+      for (let yy = playerBlockY + 2; yy < CHUNK_HEIGHT; yy++) {
+        if (isSolid(playerBlockX, yy, playerBlockZ)) {
+          skyBlocked = true;
+          break;
+        }
+      }
     }
   }
-  const m = tickMood(moodState, {
-    skyLight: skyBlocked ? 0 : 15,
-    blockLight: nowPhase === 'night' && skyBlocked ? 4 : 12,
-    dtMs: dtSec * 1000,
-  });
+  // Reused per-frame ctx — was a fresh literal each call.
+  moodCtx.skyLight = skyBlocked ? 0 : 15;
+  moodCtx.blockLight = nowPhase === 'night' && skyBlocked ? 4 : 12;
+  moodCtx.dtMs = dtSec * 1000;
+  const m = tickMood(moodState, moodCtx);
   if (m.triggered) {
     sfx.play('cave');
     subtitles.push('Cave ambience');
   }
 
   // Underwater ambient — runs once per real-time tick equivalent.
-  underwaterAmbient = { ...underwaterAmbient, submerged: fp.inFluid === 'water' };
+  // Use eye-level fluid: ambient kicks in when head is submerged. Mutate
+  // in place to skip the per-frame spread {...underwaterAmbient}.
+  underwaterAmbient.submerged = inWaterEyes;
   const ua = tickUnderwater(underwaterAmbient, Math.random);
   underwaterAmbient = ua.state;
   if (ua.play) {
@@ -6486,71 +10893,90 @@ function frame(): void {
   }
 
   // Per-block break duration: hardness * tool factor (break_speed helper).
-  if (gameMode !== 'creative') {
-    const aim2 = interaction.castRay();
-    if (aim2) {
-      const def2 = registry.get(stateId(world.get(aim2.bx, aim2.by, aim2.bz)));
-      const hasteAmp = playerState.effects.get('haste')?.amplifier ?? 0;
-      const fatigueAmp = playerState.effects.get('mining_fatigue')?.amplifier ?? 0;
-      // Aqua Affinity: helmet item with name including "turtle" gives free aqua affinity (turtle shell).
+  // Reuse `aim` from the block-outline raycast above — fp.position
+  // doesn't move between the two casts so the result is identical.
+  if (!isCreative) {
+    if (aim) {
+      const def2 = registry.get(stateId(world.get(aim.bx, aim.by, aim.bz)));
+      // Skip the 2 Map.get hashes when no effects are active.
+      const hasteAmp = hasAnyEffect ? (playerState.effects.get('haste')?.amplifier ?? 0) : 0;
+      const fatigueAmp = hasAnyEffect
+        ? (playerState.effects.get('mining_fatigue')?.amplifier ?? 0)
+        : 0;
+      // Aqua Affinity: turtle_shell helmet grants the free water mining
+      // boost. Compare cached itemId — was a Map.get + property read +
+      // .includes() string scan per frame the player was mining.
       const helmet = inventory.armor[0];
-      const helmetName = helmet ? itemRegistry.get(helmet.itemId).name : '';
-      const aquaAffinity = helmetName.includes('turtle');
-      const t = breakTicksFor({
-        hardness: Math.max(0.1, def2.hardness),
-        correctTool: true,
-        toolSpeed: 1,
-        onGround: fp.onGround,
-        underwater: fp.inFluid === 'water',
-        hasAquaAffinity: aquaAffinity,
-        hasteLevel: hasteAmp + (hasteAmp > 0 ? 1 : 0),
-        fatigueLevel: fatigueAmp + (fatigueAmp > 0 ? 1 : 0),
-        efficiencyBonus: 0,
-      });
+      const aquaAffinity = helmet != null && helmet.itemId === turtleShellItemIdCached;
+      breakTicksCtxScratch.hardness = Math.max(0.1, def2.hardness);
+      breakTicksCtxScratch.correctTool = true;
+      breakTicksCtxScratch.toolSpeed = 1;
+      breakTicksCtxScratch.onGround = fp.onGround;
+      // Mining-speed underwater penalty applies when the head is in
+      // water (vanilla rule); aquaAffinity removes it.
+      breakTicksCtxScratch.underwater = inWaterEyes;
+      breakTicksCtxScratch.hasAquaAffinity = aquaAffinity;
+      breakTicksCtxScratch.hasteLevel = hasteAmp + (hasteAmp > 0 ? 1 : 0);
+      breakTicksCtxScratch.fatigueLevel = fatigueAmp + (fatigueAmp > 0 ? 1 : 0);
+      breakTicksCtxScratch.efficiencyBonus = 0;
+      const t = breakTicksFor(breakTicksCtxScratch);
       interaction.breakDurationSec = Math.min(5, Math.max(0.1, t / 20));
     }
   }
 
   // Autosave debouncer: 30s interval OR 64-edit threshold OR forced.
-  const nowSaveMs = performance.now();
+  // Old impl only flushed chunkStore — player position, vitals, inventory,
+  // time of day, etc. relied on visibilitychange / beforeunload, so a
+  // browser crash mid-session would lose them. Now flushes the full set
+  // every autosave window (matching what /save does). Reuse `now` from
+  // the top of frame — the few-tens-of-microseconds drift is well under
+  // the 30s autosave threshold, and it saves a syscall.
+  shouldSaveTimerArg.nowMs = now;
+  shouldSaveThresholdArg.nowMs = now;
   if (
-    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'timer' }) ||
-    shouldSave(autosaveState, { nowMs: nowSaveMs, trigger: 'threshold' })
+    shouldSave(autosaveState, shouldSaveTimerArg) ||
+    shouldSave(autosaveState, shouldSaveThresholdArg)
   ) {
-    beginSave(autosaveState, nowSaveMs);
+    beginSave(autosaveState, now);
+    void savePlayerNow();
+    void saveAllChestStorages();
+    void persistDB.setMeta('playerStats', playerStats);
+    void persistDB.setMeta('timeOfDay', dayNight.timeOfDay);
+    void persistDB.setMeta('dayCounter', dayCounter);
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+    saveHotbarIfChanged();
     void chunkStore.flush().finally(() => {
       endSave(autosaveState);
     });
   }
-  crosshair.setCooldown(
-    (performance.now() - lastPlayerAttackAt) /
-      heldAttackFullChargeMs(hotbar.selected?.name.toLowerCase() ?? ''),
-  );
+  crosshair.setCooldown((now - lastPlayerAttackAt) / heldAttackFullChargeMs(heldNameLower()));
 
-  // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks
-  let bossM: typeof bossCandidate | null = null;
-  let bossDistSq = 32 * 32;
-  interface BossCandidate {
-    name: string;
-    health: number;
-    maxHealth: number;
-    kind: string;
-  }
-  let bossCandidate: BossCandidate | null = null;
-  for (const m of mobWorld.all()) {
-    if (m.def.maxHealth < 40) continue;
-    const dx = m.position.x - fp.position.x;
-    const dz = m.position.z - fp.position.z;
-    const d2 = dx * dx + dz * dz;
-    if (d2 > bossDistSq) continue;
-    bossDistSq = d2;
-    bossCandidate = {
-      name: m.def.kind,
-      health: m.health,
-      maxHealth: m.def.maxHealth,
-      kind: m.def.kind,
-    };
-    bossM = bossCandidate;
+  // Boss bar: nearest mob with maxHealth >= 40 within 32 blocks. Reuse
+  // a scratch object — bossBar.set() copies fields into bossBarPayload
+  // synchronously and never retains the reference, so a single shared
+  // scratch is safe and saves one fresh literal allocation per frame
+  // for every frame a boss is in range (e.g. the entire ender dragon /
+  // warden / wither fight).
+  let bossM: typeof bossCandidateScratch | null = null;
+  // Skip the per-frame mob walk entirely when no boss-class mob exists
+  // (the dominant case — bosses are rare, this loop fired 60Hz over
+  // every mob in the world for nothing). MobWorld now tracks the count
+  // incrementally in spawn/remove.
+  if (mobWorld.bossCount > 0) {
+    let bossDistSq = 32 * 32;
+    for (const m of mobWorld.all()) {
+      if (m.def.maxHealth < 40) continue;
+      const dx = m.position.x - fp.position.x;
+      const dz = m.position.z - fp.position.z;
+      const d2 = dx * dx + dz * dz;
+      if (d2 > bossDistSq) continue;
+      bossDistSq = d2;
+      bossCandidateScratch.name = m.def.kind;
+      bossCandidateScratch.health = m.health;
+      bossCandidateScratch.maxHealth = m.def.maxHealth;
+      bossCandidateScratch.kind = m.def.kind;
+      bossM = bossCandidateScratch;
+    }
   }
   if (bossM) {
     const color =
@@ -6569,71 +10995,80 @@ function frame(): void {
           : bossM.kind === 'wither'
             ? 'notched_6'
             : 'progress';
-    bossBar.set({
-      name: bossM.name,
-      hp: bossM.health,
-      maxHp: bossM.maxHealth,
-      color,
-      style,
-      visible: true,
-    });
+    bossBarPayload.name = bossM.name;
+    bossBarPayload.hp = bossM.health;
+    bossBarPayload.maxHp = bossM.maxHealth;
+    bossBarPayload.color = color;
+    bossBarPayload.style = style;
+    bossBarPayload.visible = true;
+    bossBar.set(bossBarPayload);
   } else if (customBossBar) {
-    bossBar.set({
-      name: customBossBar.name,
-      hp: customBossBar.hp,
-      maxHp: customBossBar.maxHp,
-      color: customBossBar.color,
-      style: customBossBar.style,
-      visible: true,
-    });
+    bossBarPayload.name = customBossBar.name;
+    bossBarPayload.hp = customBossBar.hp;
+    bossBarPayload.maxHp = customBossBar.maxHp;
+    bossBarPayload.color = customBossBar.color;
+    bossBarPayload.style = customBossBar.style;
+    bossBarPayload.visible = true;
+    bossBar.set(bossBarPayload);
   } else {
     bossBar.hide();
   }
 
   if (scoreboard.isVisible()) {
-    scoreboard.render([
-      { name: 'Broken', score: playerStats.blocksBroken },
-      { name: 'Placed', score: playerStats.blocksPlaced },
-      { name: 'Killed', score: playerStats.mobsKilled },
-      { name: 'Walked', score: Math.floor(playerStats.distanceWalked) },
-      { name: 'Time', score: Math.floor(playerStats.playtimeSec) },
-      { name: 'Level', score: playerState.xpLevel },
-    ]);
+    // Reused entries — was a fresh array of 6 literals per frame.
+    scoreboardRows[0]!.score = playerStats.blocksBroken;
+    scoreboardRows[1]!.score = playerStats.blocksPlaced;
+    scoreboardRows[2]!.score = playerStats.mobsKilled;
+    scoreboardRows[3]!.score = Math.floor(playerStats.distanceWalked);
+    scoreboardRows[4]!.score = Math.floor(playerStats.playtimeSec);
+    scoreboardRows[5]!.score = playerState.xpLevel;
+    scoreboard.render(scoreboardRows);
   }
   lastPlayerHealth = playerState.health;
   hurtVignette.tick(dtSec);
-  fluidOverlay.set(fp.inFluid);
+  // Visual overlays follow what the EYES see, not the body — wading
+  // through ankle-deep water shouldn't blue-tint the screen.
+  fluidOverlay.set(fp.inFluidEyes);
 
   // Underwater fog: shorten render distance and tint when submerged.
-  if (scene.fog instanceof THREE.Fog) {
-    if (fp.inFluid === 'water') {
-      scene.fog.color.setRGB(0.24, 0.4, 0.6);
-      scene.fog.near = 1;
-      scene.fog.far = 20;
-    } else {
-      // Restore based on view distance, with weather-aware tightening.
-      const baseFar = (loader.viewRadius ?? 6) * 16;
-      let mul = 1;
-      if (currentWeather === 'thunder') mul = 0.55;
-      else if (currentWeather === 'rain') mul = 0.75;
-      const targetFar = baseFar * mul;
-      if (Math.abs(scene.fog.far - targetFar) > 1) {
-        scene.fog.near = targetFar * 0.6;
-        scene.fog.far = targetFar;
-      }
+  if (inWaterEyes) {
+    // Skip the per-frame setRGB / fog.near / fog.far writes when
+    // we're already in the underwater state. Each setter triggers
+    // three.js material/scene invalidation; cumulative cost adds
+    // up across underwater traversals.
+    if (!lastUnderwaterFog) {
+      sceneFog.color.setRGB(0.24, 0.4, 0.6);
+      sceneFog.near = 1;
+      sceneFog.far = 20;
+      lastUnderwaterFog = true;
     }
+  } else {
+    // Restore based on view distance, with weather-aware tightening.
+    const baseFar = (loader.viewRadius ?? 6) * 16;
+    let mul = 1;
+    if (isThunder) mul = 0.55;
+    else if (isRain) mul = 0.75;
+    const targetFar = baseFar * mul;
+    if (Math.abs(sceneFog.far - targetFar) > 1) {
+      sceneFog.near = targetFar * 0.6;
+      sceneFog.far = targetFar;
+    }
+    // Edge-trigger the flag-flip — was writing `false = false` every
+    // frame the player wasn't underwater (the dominant case).
+    if (lastUnderwaterFog) lastUnderwaterFog = false;
   }
-  // Drowning feedback: breath < 2s → slight hurt vignette pulse
-  if (fp.inFluid === 'water' && playerState.breath < 2) {
+  // Drowning feedback: breath < 2s → slight hurt vignette pulse.
+  // Eye-level water: vignette only fires when head is actually submerged.
+  if (inWaterEyes && playerState.breath < 2) {
     hurtVignette.pulse(0.15);
   }
   // Residual lava fire: orange vignette while burning outside lava
-  if (playerState.fireRemainingSec > 0 && fp.inFluid !== 'lava') {
+  if (playerState.fireRemainingSec > 0 && !inLavaBody) {
     hurtVignette.pulse(Math.min(0.4, playerState.fireRemainingSec * 0.08));
   }
   if (fp.inFluid !== lastInFluid) {
-    if (fp.inFluid === 'water') sfx.play('step');
-    else if (fp.inFluid === 'lava') sfx.play('hit');
+    if (inWaterBody) sfx.play('step');
+    else if (inLavaBody) sfx.play('hit');
     lastInFluid = fp.inFluid;
   }
   compassBar.setYaw(fp.yaw);
@@ -6657,31 +11092,23 @@ function frame(): void {
       compassBar.setDeathDir(null, fp.yaw);
     }
   }
-  if (gameMode === 'survival' || gameMode === 'adventure') {
-    survivalHud.render({
-      health: playerState.health,
-      maxHealth: 20,
-      hunger: playerState.hunger,
-      maxHunger: 20,
-      breathSec: playerState.breath,
-      maxBreathSec: BREATH_MAX_SEC,
-      underwater: fp.inFluid === 'water',
-      xpLevel: playerState.xpLevel,
-      xpProgress: playerState.xpProgress,
-      xpToNext: xpToNext(playerState.xpLevel),
-      armorPoints: computeArmorPoints(),
-    });
+  if (vitalsActive) {
+    // Reuse a stable frame object — was a fresh literal per frame.
+    survivalHudFrame.health = playerState.health;
+    survivalHudFrame.hunger = playerState.hunger;
+    survivalHudFrame.breathSec = playerState.breath;
+    survivalHudFrame.underwater = inWaterBody;
+    survivalHudFrame.xpLevel = playerState.xpLevel;
+    survivalHudFrame.xpProgress = playerState.xpProgress;
+    survivalHudFrame.xpToNext = xpToNext(playerState.xpLevel);
+    survivalHudFrame.armorPoints = computeArmorPoints();
+    survivalHud.render(survivalHudFrame);
   }
 
-  // Per-category mob cap (MC-style WORLD_CAPS).
-  let hostileCount = 0;
-  let passiveCount = 0;
-  for (const m of mobWorld.all()) {
-    if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') hostileCount++;
-    else if (m.def.behavior === 'passive') passiveCount++;
-  }
-  const overHostileCap = hostileCount >= WORLD_MOB_CAPS.hostile;
-  const overPassiveCap = passiveCount >= WORLD_MOB_CAPS.passive;
+  // Per-category mob cap (MC-style WORLD_CAPS). Was iterating all mobs
+  // every frame to recount; MobWorld now maintains incremental counters.
+  const overHostileCap = mobWorld.hostileCount >= WORLD_MOB_CAPS.hostile;
+  const overPassiveCap = mobWorld.passiveCount >= WORLD_MOB_CAPS.passive;
   if (
     chunkRenderer.meshCount > 20 &&
     mobDamageMultiplier > 0 &&
@@ -6689,27 +11116,48 @@ function frame(): void {
     !(overHostileCap && overPassiveCap)
   ) {
     // Despawn mobs >128 blocks away from player to bound entity count.
-    const farMobs: number[] = [];
+    // Tamed pets, leashed mobs, name-tagged mobs, and saddled mounts get
+    // a free pass — vanilla MC keeps these loaded indefinitely; otherwise
+    // your wolf would vanish the moment you walked across a chunk.
+    const farMobs = farMobsScratch;
+    farMobs.length = 0;
     for (const m of mobWorld.all()) {
       const dx = m.position.x - fp.position.x;
       const dz = m.position.z - fp.position.z;
-      if (dx * dx + dz * dz > 128 * 128) farMobs.push(m.id);
+      if (dx * dx + dz * dz <= 128 * 128) continue;
+      const tame = tamedMobs.get(m.id);
+      if (tame && tame.ownerId !== null) continue;
+      if (leashedMobs.has(m.id)) continue;
+      if (saddledMobs.has(m.id)) continue;
+      farMobs.push(m.id);
     }
-    for (const id of farMobs) mobWorld.remove(id);
+    for (const id of farMobs) {
+      // Clean up companion state for the despawned id. Without this,
+      // baby growth timers, drown timers, and egg timers all kept
+      // ticking against ids that no longer exist — slow leak via Map
+      // grow-only over a long session.
+      mobWorld.remove(id);
+      babyMobs.delete(id);
+      chickenEggTimers.delete(id);
+      zombieDrownTimers.delete(id);
+      tamedMobs.delete(id);
+      lovingMobs.delete(id);
+    }
 
-    spawnSystem.tick(dtSec, mobWorld, {
-      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      isDay: dayNight.isDay,
-      surfaceAt: (x, z) => generator.surfaceAt(x, z),
-      isSolid,
-      biomeAt: (x, z) => (generator.biomeAt(x, z) === 1 ? 'forest' : 'plains'),
-    });
+    spawnSystemCtx.playerPos.x = fp.position.x;
+    spawnSystemCtx.playerPos.y = fp.position.y;
+    spawnSystemCtx.playerPos.z = fp.position.z;
+    spawnSystemCtx.isDay = dayNight.isDay;
+    spawnSystem.tick(dtSec, mobWorld, spawnSystemCtx);
 
     // Chicken egg laying: every 5–10 min per chicken, drop an egg item.
-    const nowEggMs = performance.now();
+    // Reuse `now` sampled once at the top of frame() — within-frame
+    // drift (a few ms) is irrelevant for >1000ms gates and saves a
+    // performance.now() syscall.
+    const nowEggMs = now;
     if (nowEggMs - lastEggCheckMs > 1000) {
       lastEggCheckMs = nowEggMs;
-      const eggItemId = itemRegistry.byName('webmc:egg');
+      const eggItemId = eggItemIdCached;
       if (eggItemId !== undefined) {
         for (const m of mobWorld.all()) {
           if (m.def.kind !== 'chicken') continue;
@@ -6723,20 +11171,21 @@ function frame(): void {
             droppedItems.spawn(m.position.x, m.position.y + 0.4, m.position.z, {
               itemId: eggItemId,
               count: 1,
-              color: [240, 230, 200],
+              color: EGG_COLOR,
             });
             chickenEggTimers.set(m.id, nowEggMs + 300_000 + Math.random() * 300_000);
           }
         }
         // Drop stale entries.
         for (const id of chickenEggTimers.keys()) {
-          if (!Array.from(mobWorld.all()).some((m) => m.id === id)) chickenEggTimers.delete(id);
+          if (mobWorld.byId(id) === null) chickenEggTimers.delete(id);
         }
       }
     }
 
     // Zombie → drowned conversion after ~30s underwater.
-    const nowDrownMs = performance.now();
+    // Reuse `now` (see chicken-egg comment).
+    const nowDrownMs = now;
     if (nowDrownMs - lastDrownCheckMs > 1000) {
       const dt = nowDrownMs - lastDrownCheckMs;
       lastDrownCheckMs = nowDrownMs;
@@ -6745,8 +11194,9 @@ function frame(): void {
         if (m.def.kind !== 'zombie') continue;
         const headY = Math.floor(m.position.y + m.def.aabb.halfY);
         const headBlock = world.get(Math.floor(m.position.x), headY, Math.floor(m.position.z));
-        const headDef = registry.get(stateId(headBlock));
-        const inWater = headDef.name === 'webmc:water';
+        // Numeric id compare against the cached waterId — was running
+        // registry.get + .name string equality per zombie per drown check.
+        const inWater = headBlock !== AIR && stateId(headBlock) === waterId;
         if (inWater) {
           const cur = (zombieDrownTimers.get(m.id) ?? 0) + dt;
           zombieDrownTimers.set(m.id, cur);
@@ -6771,18 +11221,173 @@ function frame(): void {
       }
     }
 
+    // Natural hostile mob spawning: every ~5s, attempt to place a hostile
+    // mob 24-48 blocks from the player at a dark spot. Tries surface first,
+    // then random Y for cave spawning. Without this, survival had no
+    // naturally-spawned mobs (only /summon).
+    // Reuse `now` (see chicken-egg comment).
+    const nowSpawnMs = now;
+    if (
+      vitalsActive &&
+      // Peaceful difficulty (mobDamageMultiplier === 0) suppresses hostile
+      // spawning entirely. Vanilla MC behaviour. Without this gate,
+      // peaceful players still got zombies spawning around them at night
+      // — the spawn-gen cycle was independent of difficulty.
+      mobDamageMultiplier > 0 &&
+      nowSpawnMs - lastNaturalSpawnAttemptMs > 5000
+    ) {
+      lastNaturalSpawnAttemptMs = nowSpawnMs;
+      // Use the incremental hostile counter MobWorld maintains in
+      // spawn/remove. Skips the per-attempt O(N) walk over all mobs
+      // (was 50+ iterations every 5s for nothing). The incremental
+      // count omits neutral-provoked mobs, but those are a small
+      // fraction of typical worlds — close enough for spawn gating.
+      if (mobWorld.hostileCount < WORLD_MOB_CAPS.hostile) {
+        for (let attempt = 0; attempt < 6; attempt++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 24 + Math.random() * 24;
+          const sx = Math.floor(fp.position.x + Math.cos(angle) * dist);
+          const sz = Math.floor(fp.position.z + Math.sin(angle) * dist);
+          // Half attempts target surface (covers night), half pick a random Y
+          // between 5 and surface for cave spawning. Caves stay dark even
+          // during the day so this gives the player something to fight when
+          // they're spelunking.
+          let sy = -1;
+          if (attempt < 3) {
+            // Surface scan.
+            for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
+              if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
+                sy = y + 1;
+                break;
+              }
+            }
+          } else {
+            // Random Y. Probe for a solid floor with 2 air above.
+            const probeY = 5 + Math.floor(Math.random() * 60);
+            if (
+              isSolid(sx, probeY - 1, sz) &&
+              !isSolid(sx, probeY, sz) &&
+              !isSolid(sx, probeY + 1, sz)
+            ) {
+              sy = probeY;
+            }
+          }
+          if (sy < 0) continue;
+          // Light gate: don't spawn in a torch-lit area. Cheap heuristic — if
+          // we have lighting data for the chunk, require sky+block <= 7 (caves
+          // and night both fit). Without lighting data (chunk unloaded?),
+          // skip rather than spam-spawn at default-bright fallback.
+          const cx = sx >> 4;
+          const cz = sz >> 4;
+          const lx = sx & 0xf;
+          const lz = sz & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          if (!light) continue;
+          const lb = getLightByte(light, lx, sy, lz);
+          const sky = (lb >>> 4) & 0xf;
+          const block = lb & 0xf;
+          if (Math.max(sky, block) > 7) continue;
+          // Skip when it's broad daylight AND we're spawning at the surface
+          // (sky light max). Caves stay dark so still spawn there.
+          if (dayNight.isDay && sky > 7) continue;
+          // Hoisted at module scope (HOSTILE_SPAWN_CHOICES) — was a
+          // fresh tuple-typed array per spawn attempt × 6 attempts per
+          // 5s cycle. Now reused.
+          const kind =
+            HOSTILE_SPAWN_CHOICES[Math.floor(Math.random() * HOSTILE_SPAWN_CHOICES.length)];
+          if (!kind) continue;
+          try {
+            mobSpawnPosScratch.x = sx + 0.5;
+            mobSpawnPosScratch.y = sy;
+            mobSpawnPosScratch.z = sz + 0.5;
+            mobWorld.spawn(kind, mobSpawnPosScratch);
+          } catch {
+            /* mob kind not registered */
+          }
+          break;
+        }
+      }
+    }
+
+    // Passive mob spawning. Vanilla scatters cow / pig / sheep / chicken
+    // at chunkgen but webmc has no chunkgen-time spawner — without an
+    // active loop, the world never had any livestock once the original
+    // herds were killed. Slow cycle (~20s) at high light level only.
+    if (vitalsActive && nowSpawnMs - lastPassiveSpawnAttemptMs > 20000) {
+      lastPassiveSpawnAttemptMs = nowSpawnMs;
+      if (mobWorld.passiveCount < WORLD_MOB_CAPS.passive) {
+        for (let attempt = 0; attempt < 4; attempt++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 24 + Math.random() * 32;
+          const sx = Math.floor(fp.position.x + Math.cos(angle) * dist);
+          const sz = Math.floor(fp.position.z + Math.sin(angle) * dist);
+          let sy = -1;
+          for (let y = CHUNK_HEIGHT - 1; y >= 1; y--) {
+            if (isSolid(sx, y, sz) && !isSolid(sx, y + 1, sz) && !isSolid(sx, y + 2, sz)) {
+              sy = y + 1;
+              break;
+            }
+          }
+          if (sy < 0) continue;
+          // Vanilla: passives need light >= 9 AND a grass block beneath.
+          const cx = sx >> 4;
+          const cz = sz >> 4;
+          const lx = sx & 0xf;
+          const lz = sz & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          if (!light) continue;
+          const lb = getLightByte(light, lx, sy, lz);
+          const sky = (lb >>> 4) & 0xf;
+          const block = lb & 0xf;
+          if (Math.max(sky, block) < 9) continue;
+          // Numeric id compare against cached grass-block id — was
+          // registry.get + name-string equality per spawn attempt.
+          const groundState = world.get(sx, sy - 1, sz);
+          if (groundState === AIR) continue;
+          const groundId = stateId(groundState);
+          if (groundId !== grassBlockIdCached) continue;
+          // Hoisted at module scope (PASSIVE_SPAWN_CHOICES).
+          const kind =
+            PASSIVE_SPAWN_CHOICES[Math.floor(Math.random() * PASSIVE_SPAWN_CHOICES.length)];
+          if (!kind) continue;
+          try {
+            // Spawn a small herd (2-4) of the same kind, vanilla style.
+            const herd = 2 + Math.floor(Math.random() * 3);
+            for (let h = 0; h < herd; h++) {
+              mobSpawnPosScratch.x = sx + 0.5 + (Math.random() - 0.5) * 2;
+              mobSpawnPosScratch.y = sy;
+              mobSpawnPosScratch.z = sz + 0.5 + (Math.random() - 0.5) * 2;
+              mobWorld.spawn(kind, mobSpawnPosScratch);
+            }
+          } catch {
+            /* mob kind not registered */
+          }
+          break;
+        }
+      }
+    }
+
     // Phantom spawning: 3+ days without sleep, at night, sky-exposed.
-    const nowPhantomMs = performance.now();
+    // Reuse `now` (see chicken-egg comment).
+    const nowPhantomMs = now;
     if (nowPhantomMs - lastPhantomCheckMs > 8000) {
       lastPhantomCheckMs = nowPhantomMs;
       const daysSinceSleep = dayCounter - lastSleepDay;
-      const px2 = Math.floor(fp.position.x);
-      const pz2 = Math.floor(fp.position.z);
       let inSky = true;
-      for (let yy = Math.floor(fp.position.y) + 2; yy < CHUNK_HEIGHT; yy++) {
-        if (isSolid(px2, yy, pz2)) {
-          inSky = false;
-          break;
+      {
+        const cx = playerBlockX >> 4;
+        const cz = playerBlockZ >> 4;
+        const lt = lightCache.get(lightKey(cx, cz));
+        if (lt) {
+          const lb = getLightByte(lt, playerBlockX & 0xf, playerBlockY + 2, playerBlockZ & 0xf);
+          inSky = ((lb >>> 4) & 0xf) === 15;
+        } else {
+          for (let yy = playerBlockY + 2; yy < CHUNK_HEIGHT; yy++) {
+            if (isSolid(playerBlockX, yy, playerBlockZ)) {
+              inSky = false;
+              break;
+            }
+          }
         }
       }
       if (
@@ -6794,11 +11399,10 @@ function frame(): void {
         })
       ) {
         try {
-          mobWorld.spawn('phantom', {
-            x: fp.position.x + (Math.random() - 0.5) * 30,
-            y: fp.position.y + 14,
-            z: fp.position.z + (Math.random() - 0.5) * 30,
-          });
+          mobSpawnPosScratch.x = fp.position.x + (Math.random() - 0.5) * 30;
+          mobSpawnPosScratch.y = fp.position.y + 14;
+          mobSpawnPosScratch.z = fp.position.z + (Math.random() - 0.5) * 30;
+          mobWorld.spawn('phantom', mobSpawnPosScratch);
           subtitles.push('Phantom screech');
         } catch {
           /* phantom not registered, non-fatal */
@@ -6807,26 +11411,693 @@ function frame(): void {
     }
   }
 
+  // Crop random tick. The crop_growth_random_tick module + its tests have
+  // existed since M3 but were never invoked — wheat / carrots / potatoes /
+  // beetroots / sweet_berry / nether_wart you planted just sat at age 0
+  // forever. Now ticks every CROP_TICK_SEC: scans a small radius around
+  // the player for crop blocks, picks ~ randomTickSpeed per chunk-section,
+  // advances age by 1 if the growth roll succeeds.
+  cropTickAccum += dtSec;
+  if (cropTickAccum >= CROP_TICK_SEC) {
+    cropTickAccum -= CROP_TICK_SEC;
+    if (!isSpectator) {
+      // Reuse the hoisted block-coords from the top of frame() instead
+      // of Math.floor-ing fp.position again. The crop tick samples
+      // around playerBlockX/Y/Z anyway.
+      const px = playerBlockX;
+      const py = playerBlockY;
+      const pz = playerBlockZ;
+      const RADIUS = 24;
+      const SAMPLES = 80;
+      const farmlandId = farmlandIdCached;
+      for (let i = 0; i < SAMPLES; i++) {
+        const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const dy = Math.floor((Math.random() - 0.5) * 8);
+        const dz = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const x = px + dx;
+        const y = py + dy;
+        const z = pz + dz;
+        const s = world.get(x, y, z);
+        if (s === AIR) continue;
+        const id = stateId(s);
+        // Numeric-id lookup avoids the per-sample registry.get(id).name
+        // string fetch + string-keyed Record dispatch. 80 samples/sec
+        // × full registry hit replaced by a single Map.get.
+        const cropKind = CROP_KIND_BY_BLOCK_ID.get(id);
+        if (!cropKind) continue;
+        const age = stateProps(s);
+        const cx = x >> 4;
+        const cz = z >> 4;
+        const lx = x & 0xf;
+        const lz = z & 0xf;
+        const light = lightCache.get(lightKey(cx, cz));
+        const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
+        const skyL = (lb >>> 4) & 0xf;
+        const blockL = lb & 0xf;
+        const lightAbove = Math.max(skyL, blockL);
+        // Hydrated when on farmland with water within 4 horizontally.
+        let hydrated = false;
+        if (farmlandId !== undefined) {
+          const groundId = stateId(world.get(x, y - 1, z));
+          if (groundId === farmlandId) {
+            // Vanilla farmland tracks moisture in props; webmc just checks
+            // adjacent water as a coarse heuristic. waterId is cached at
+            // module scope.
+            outer: for (let wdx = -4; wdx <= 4; wdx++) {
+              for (let wdz = -4; wdz <= 4; wdz++) {
+                const ws = world.get(x + wdx, y - 1, z + wdz);
+                if (ws !== AIR && stateId(ws) === waterId) {
+                  hydrated = true;
+                  break outer;
+                }
+              }
+            }
+          }
+        }
+        cropQueryScratch.crop = cropKind;
+        cropQueryScratch.age = age;
+        cropQueryScratch.lightAbove = lightAbove;
+        cropQueryScratch.hydrated = hydrated;
+        cropQueryScratch.inRowWithSameCrop = false;
+        cropQueryScratch.rand = Math.random;
+        const result = cropRandomTick(cropQueryScratch);
+        if (result === 'grew') {
+          world.set(x, y, z, makeState(id, age + 1));
+          touchWorldEdit(x, y, z, id);
+        }
+      }
+      // Sapling growth: same scan, separate registry. Was the other gap
+      // — saplings just sat as decorative foliage forever unless bone-mealed.
+      const sugarCaneId = sugarCaneIdCached;
+      for (let i = 0; i < SAMPLES; i++) {
+        const dx = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const dy = Math.floor((Math.random() - 0.5) * 8);
+        const dz = Math.floor((Math.random() - 0.5) * RADIUS * 2);
+        const x = px + dx;
+        const y = py + dy;
+        const z = pz + dz;
+        const s = world.get(x, y, z);
+        if (s === AIR) continue;
+        const id = stateId(s);
+        // ID-based dispatch — was fetching `registry.get(id).name` per
+        // sample then comparing against 7+ string literals. With 80
+        // samples per crop tick (1Hz) every survival session, that's
+        // ~560 string ops/sec for branches that mostly aren't taken.
+        // Pre-resolved Set/numeric checks first; fetch name only inside
+        // branches that actually need it (sapling growTreeAt).
+        if (IS_SAPLING[id] === 1) {
+          const name = registry.get(id).name;
+          const stage = stateProps(s) & 1;
+          const cx = x >> 4;
+          const cz = z >> 4;
+          const lx = x & 0xf;
+          const lz = z & 0xf;
+          const light = lightCache.get(lightKey(cx, cz));
+          const lb = light ? getLightByte(light, lx, y, lz) : 0xff;
+          const skyL = (lb >>> 4) & 0xf;
+          const blockL = lb & 0xf;
+          const lightLevel = Math.max(skyL, blockL);
+          let clearance = 0;
+          for (let h = 1; h <= 8; h++) {
+            if (world.get(x, y + h, z) !== AIR) break;
+            clearance++;
+          }
+          saplingQueryScratch.stage = stage as 0 | 1;
+          saplingQueryScratch.lightLevel = lightLevel;
+          saplingQueryScratch.verticalClearance = clearance;
+          const result = saplingRandomTick(saplingQueryScratch, Math.random);
+          if (result === 'grow_tree') {
+            growTreeAt(x, y, z, name);
+          } else if (result.stage !== stage) {
+            world.set(x, y, z, makeState(id, result.stage));
+          }
+        } else if (id === bambooIdCached) {
+          // Bamboo column growth — same upward-stack pattern as sugar
+          // cane but max 16 tall (vs 3) and slower per-tick chance.
+          // Was unwired despite the bamboo_plant_growth module shipping.
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          let totalHeight = 1;
+          for (let dyDown = 1; dyDown <= 16; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            // Numeric id compare against cached bamboo id — was registry.get
+            // + name-string per cell of the downward bamboo-stack count.
+            if (below === AIR || stateId(below) !== bambooIdCached) break;
+            totalHeight++;
+          }
+          if (totalHeight >= BAMBOO_MAX_H) continue;
+          bambooCtxScratch.totalHeight = totalHeight;
+          bambooCtxScratch.ageBoost = false;
+          if (bambooGrow(bambooCtxScratch, Math.random)) {
+            world.set(x, y + 1, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, id);
+          }
+        } else if (sugarCaneId !== undefined && id === sugarCaneId) {
+          // Sugar cane grows up to 3 stalks tall when air is above.
+          // Count current height from this position upward (this stalk
+          // is the topmost only when air is above).
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          // Count height down: this stalk + however many stalks below.
+          let currentHeight = 1;
+          for (let dyDown = 1; dyDown <= 3; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            if (below === AIR || stateId(below) !== sugarCaneId) break;
+            currentHeight++;
+          }
+          const age = stateProps(s);
+          caneTickStateScratch.age = age;
+          caneCtxScratch.currentHeight = currentHeight;
+          const result = caneRandomTick(caneCtxScratch);
+          if (result === 'grow_up' && currentHeight < CANE_MAX_H) {
+            world.set(x, y + 1, z, makeState(sugarCaneId, 0));
+            world.set(x, y, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, sugarCaneId);
+          } else if (result === 'age_inc') {
+            world.set(x, y, z, makeState(id, caneTickStateScratch.age));
+          }
+        } else if (id === cactusIdCached) {
+          // Cactus growth — wiki-spec age-based: each random tick
+          // advances age 0..15. At MAX_AGE, attempts to grow another
+          // stalk above (within MAX_HEIGHT and only if no horizontal
+          // solid neighbor). Was unwired despite cactus_grow_damage
+          // shipping in M3.
+          if (world.get(x, y + 1, z) !== AIR) continue;
+          let currentHeight = 1;
+          for (let dyDown = 1; dyDown <= CACTUS_MAX_H; dyDown++) {
+            const below = world.get(x, y - dyDown, z);
+            if (below === AIR || stateId(below) !== cactusIdCached) break;
+            currentHeight++;
+          }
+          const age = stateProps(s);
+          cactusGrowStateScratch.age = age;
+          cactusGrowStateScratch.adjacentToBlock =
+            SOLID_BY_ID[stateId(world.get(x - 1, y, z))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x + 1, y, z))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x, y, z - 1))] === 1 ||
+            SOLID_BY_ID[stateId(world.get(x, y, z + 1))] === 1;
+          if (cactusCanGrow(cactusGrowStateScratch, currentHeight)) {
+            world.set(x, y + 1, z, makeState(cactusIdCached, 0));
+            world.set(x, y, z, makeState(id, 0));
+            touchWorldEdit(x, y + 1, z, cactusIdCached);
+          } else if (age < CACTUS_MAX_AGE && !cactusGrowStateScratch.adjacentToBlock) {
+            world.set(x, y, z, makeState(id, age + 1));
+          }
+        } else if (
+          (id === pumpkinStemIdCached || id === melonStemIdCached) &&
+          pumpkinStemIdCached !== undefined &&
+          melonStemIdCached !== undefined
+        ) {
+          // Pumpkin/melon stem growth — wiki spec: ages 0..7, advances
+          // ~12.5% per random tick. At age 7 with adjacent dirt/grass/
+          // farmland (air above) AND no fruit already adjacent, drops
+          // a pumpkin/melon at the empty neighbor with the same chance.
+          // Was unwired despite the pumpkin_stem_grow module shipping.
+          const fruitId = id === pumpkinStemIdCached ? pumpkinIdCached : melonIdCached;
+          if (fruitId === undefined) continue;
+          const stemAge = stateProps(s);
+          let validNx = 0;
+          let validNy = 0;
+          let validNz = 0;
+          let validFound = false;
+          let fruitAdjacent = false;
+          // 4 horizontal neighbors. We stop at the first valid empty
+          // ground but still scan the others to detect existing fruit.
+          for (let ni = 0; ni < 4; ni++) {
+            const dx = ni === 0 ? 1 : ni === 1 ? -1 : 0;
+            const dz = ni === 2 ? 1 : ni === 3 ? -1 : 0;
+            const nx = x + dx;
+            const nz = z + dz;
+            const at = world.get(nx, y, nz);
+            if (at !== AIR) {
+              const atId = stateId(at);
+              if (atId === pumpkinIdCached || atId === melonIdCached) fruitAdjacent = true;
+              continue;
+            }
+            // Air at neighbor — check ground below.
+            const groundBelow = world.get(nx, y - 1, nz);
+            if (groundBelow === AIR) continue;
+            const groundId = stateId(groundBelow);
+            if (
+              groundId === dirtIdCached ||
+              groundId === grassBlockIdCached ||
+              groundId === farmlandIdCached
+            ) {
+              if (!validFound) {
+                validNx = nx;
+                validNy = y;
+                validNz = nz;
+                validFound = true;
+              }
+            }
+          }
+          stemGrowCtxScratch.age = stemAge;
+          stemGrowCtxScratch.fruitSpawned = fruitAdjacent;
+          stemGrowCtxScratch.hasEmptyDirtNeighbor = validFound;
+          const result = pumpkinStemTryGrow(stemGrowCtxScratch, Math.random);
+          if (result.state.age !== stemAge) {
+            world.set(x, y, z, makeState(id, result.state.age));
+          }
+          if (result.fruitPlaced && validFound) {
+            world.set(validNx, validNy, validNz, makeState(fruitId, 0));
+            touchWorldEdit(validNx, validNy, validNz, fruitId);
+          }
+        } else if (id === sweetBerryBushIdCached) {
+          // Sweet berry bush growth — wiki spec: ages 0..3, ~20%
+          // chance per random tick. Was unwired despite the
+          // sweet_berry_growth module + walk-damage hookup; bushes
+          // planted from picked berries sat at the immature stage
+          // forever and never produced harvestable berries.
+          const berryAge = stateProps(s);
+          if (berryAge >= BERRY_MAX_AGE) continue;
+          berryGrowCtxScratch.age = berryAge as 0 | 1 | 2 | 3;
+          const next = berryTryGrow(berryGrowCtxScratch, Math.random);
+          if (next.age !== berryAge) {
+            world.set(x, y, z, makeState(id, next.age));
+          }
+        } else if (COPPER_NEXT_STAGE_BY_ID.has(id)) {
+          // Copper oxidation — wiki spec 1/7500 per random tick. Was
+          // unwired despite copper_aging_stages shipping; placed copper
+          // blocks would never weather.
+          if (Math.random() < 1 / 7500) {
+            const nextId = COPPER_NEXT_STAGE_BY_ID.get(id);
+            if (nextId !== undefined) {
+              world.set(x, y, z, makeState(nextId, 0));
+              touchWorldEdit(x, y, z, nextId);
+            }
+          }
+        } else if (AMETHYST_NEXT_STAGE_BY_ID.has(id)) {
+          // Amethyst bud growth — wiki spec: 20% chance per random
+          // tick to advance to the next stage (small → medium → large
+          // → cluster). The "must be attached to budding_amethyst"
+          // gate isn't enforced because budding_amethyst isn't a
+          // registered block in webmc yet.
+          if (Math.random() < 0.2) {
+            const nextId = AMETHYST_NEXT_STAGE_BY_ID.get(id);
+            if (nextId !== undefined) {
+              world.set(x, y, z, makeState(nextId, stateProps(s)));
+              touchWorldEdit(x, y, z, nextId);
+            }
+          }
+        } else if (CORAL_DRY_DEAD_BY_LIVE.has(id)) {
+          // Coral drying — wiki spec: a live coral block out of water
+          // dies on the next random tick. Live coral retains lush color
+          // only when at least one of the 6 neighbors is water. Was
+          // unwired despite coral_dry_convert + 5 live + 5 dead variants
+          // shipping in M3.
+          const wId = waterId;
+          if (wId === undefined) continue;
+          let hasWaterNeighbor = false;
+          for (let ni = 0; ni < 6; ni++) {
+            const dx = ni === 0 ? 1 : ni === 1 ? -1 : 0;
+            const dy = ni === 2 ? 1 : ni === 3 ? -1 : 0;
+            const dz = ni === 4 ? 1 : ni === 5 ? -1 : 0;
+            const ns = world.get(x + dx, y + dy, z + dz);
+            if (ns !== AIR && stateId(ns) === wId) {
+              hasWaterNeighbor = true;
+              break;
+            }
+          }
+          if (!hasWaterNeighbor) {
+            const deadId = CORAL_DRY_DEAD_BY_LIVE.get(id);
+            if (deadId !== undefined) {
+              world.set(x, y, z, makeState(deadId, 0));
+              touchWorldEdit(x, y, z, deadId);
+            }
+          }
+        } else if (id === cocoaIdCached) {
+          // Cocoa pod growth — wiki spec: ages 0..2, ~20% chance per
+          // random tick to advance. Was unwired despite cocoa_grow
+          // shipping; placed pods sat at age 0 forever and dropped
+          // only the immature 1-bean amount.
+          // Reuse the lower 2 bits of state props for age (the upper
+          // 2 bits encode facing; this branch only mutates age so
+          // facing is preserved by reading and rewriting in place).
+          const stateAll = stateProps(s);
+          const cocoaAge = stateAll & 0x3;
+          if (cocoaAge >= COCOA_MAX_AGE) continue;
+          cocoaGrowCtxScratch.age = cocoaAge;
+          if (cocoaTryGrow(cocoaGrowCtxScratch, Math.random)) {
+            const newProps = (stateAll & ~0x3) | (cocoaGrowCtxScratch.age & 0x3);
+            world.set(x, y, z, makeState(id, newProps));
+          }
+        } else if (id === grassBlockIdCached || id === dirtIdCached) {
+          // Grass spreads to adjacent dirt (light >= 9, no opaque
+          // above), grass with opaque above reverts to dirt. Was
+          // unwired — broken trees stayed dirt forever, mowed grass
+          // never re-grew.
+          grassCtxCenter.x = x;
+          grassCtxCenter.y = y;
+          grassCtxCenter.z = z;
+          const placements = tickGrassBlock(grassCtxScratch);
+          for (const p of placements) {
+            // tickGrassBlock returns either 'webmc:grass_block' or
+            // 'webmc:dirt'; both ids are pre-cached at module scope so
+            // we skip the registry.byName Map.get per placement.
+            const blockId = p.block === 'webmc:grass_block' ? grassBlockIdCached : dirtIdCached;
+            if (blockId !== undefined) {
+              world.set(p.pos.x, p.pos.y, p.pos.z, makeState(blockId, 0));
+              touchWorldEdit(p.pos.x, p.pos.y, p.pos.z, blockId);
+            }
+          }
+        } else if (id === fireIdCached && gameRules.doFireTick) {
+          // Fire spread + age. The fire_spread module + tests have
+          // shipped since M2 but were never invoked — fire just sat
+          // there forever, never spreading, never burning out. Now
+          // ages on each random tick, ignites flammable neighbors.
+          const fireId = id;
+          const age = stateProps(s);
+          fireCtxPos.x = x;
+          fireCtxPos.y = y;
+          fireCtxPos.z = z;
+          fireCtxScratch.age = age;
+          fireCtxScratch.fireTickAllowed = true;
+          fireCtxScratch.humidity = 0.4;
+          const r = tickFire(fireCtxScratch);
+          if (r.extinguish) {
+            world.set(x, y, z, AIR);
+            touchWorldEdit(x, y, z, 0);
+          } else if (r.newAge !== age) {
+            world.set(x, y, z, makeState(fireId, r.newAge));
+          }
+          for (const ig of r.ignitions) {
+            const nx = x + ig.offset.x;
+            const ny = y + ig.offset.y;
+            const nz = z + ig.offset.z;
+            // Only ignite into air cells adjacent to the burned block
+            // — the actual ignition point is the air next to the
+            // flammable. But a simpler model: just light the flammable
+            // block directly.
+            const target = world.get(nx, ny, nz);
+            if (target === AIR) continue;
+            const targetName = registry.get(stateId(target)).name;
+            if (!isFlammable(targetName)) continue;
+            // TNT ignited by fire: prime it instead of just replacing
+            // with fire (vanilla — fire-on-TNT detonates after fuse).
+            // Without this, fire just deleted TNT silently.
+            if (targetName === 'webmc:tnt') {
+              igniteTnt(nx, ny, nz);
+              continue;
+            }
+            world.set(nx, ny, nz, makeState(fireId, 0));
+            touchWorldEdit(nx, ny, nz, fireId);
+          }
+        } else if (LEAF_BFS_LEAVES[id] === 1) {
+          // Leaf decay: BFS up to LEAF_MAX_DIST-1 looking for any log.
+          // If none found within that radius, the leaf is "disconnected"
+          // — it falls (drops + becomes air). Was unwired since M3, so
+          // chopped trees left their leaf canopies floating forever.
+          // 1-in-8 chance per scan to keep the cost bounded.
+          if (Math.random() < 1 / 8) {
+            let found = false;
+            const visited = leafBfsVisitedScratch;
+            visited.clear();
+            const stackX = leafBfsStackX;
+            const stackY = leafBfsStackY;
+            const stackZ = leafBfsStackZ;
+            const stackD = leafBfsStackD;
+            stackX.length = 0;
+            stackY.length = 0;
+            stackZ.length = 0;
+            stackD.length = 0;
+            stackX.push(x);
+            stackY.push(y);
+            stackZ.push(z);
+            stackD.push(0);
+            while (stackX.length > 0) {
+              const cx2 = stackX.pop()!;
+              const cy2 = stackY.pop()!;
+              const cz2 = stackZ.pop()!;
+              const cd2 = stackD.pop()!;
+              const k = leafBfsKey(cx2, cy2, cz2);
+              if (visited.has(k)) continue;
+              visited.add(k);
+              const ss = world.get(cx2, cy2, cz2);
+              if (ss === AIR) continue;
+              // Numeric-id Set.has avoids the per-visit registry.get
+              // + .name string fetch + 2-3 .endsWith string ops.
+              const sId = stateId(ss);
+              if (LEAF_BFS_LOG_OR_WOOD[sId] === 1) {
+                found = true;
+                break;
+              }
+              if (cd2 >= LEAF_MAX_DIST - 1) continue;
+              if (cd2 > 0 && LEAF_BFS_LEAVES[sId] !== 1) continue;
+              for (let ni = 0; ni < 6; ni++) {
+                stackX.push(cx2 + NEIGHBOR_OFFSETS_DX_6[ni]!);
+                stackY.push(cy2 + NEIGHBOR_OFFSETS_DY_6[ni]!);
+                stackZ.push(cz2 + NEIGHBOR_OFFSETS_DZ_6[ni]!);
+                stackD.push(cd2 + 1);
+              }
+            }
+            leafDecayScratch.persistent = false;
+            leafDecayScratch.distance = found ? 0 : LEAF_MAX_DIST;
+            if (leafShouldDecay(leafDecayScratch)) {
+              const def2 = registry.get(id);
+              // Spawn drops directly — was collecting into an
+              // intermediate `drops[]` then iterating to spawn.
+              // droppedItems.spawn stores its data arg by reference, so
+              // each spawn call still needs a fresh literal, but
+              // skipping the intermediate array + {itemId, count}
+              // wrappers cuts ~3 throwaway objects per decay event.
+              if (Math.random() < 0.05) {
+                // Numeric-id parallel map — was indexed by leaf-block
+                // name (string lookup per drop event).
+                const sId = LEAF_TO_SAPLING_BY_ID[id];
+                if (sId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: sId,
+                    count: 1,
+                    color: def2.color,
+                  });
+                }
+              }
+              if (Math.random() < 0.02) {
+                const stickId = stickItemIdCached;
+                if (stickId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: stickId,
+                    count: 1,
+                    color: def2.color,
+                  });
+                }
+              }
+              if (id === OAK_LEAVES_ID && Math.random() < 0.005) {
+                const aId = appleItemIdCached;
+                if (aId !== undefined) {
+                  droppedItems.spawn(x + 0.5, y + 0.5, z + 0.5, {
+                    itemId: aId,
+                    count: 1,
+                    color: def2.color,
+                  });
+                }
+              }
+              world.set(x, y, z, AIR);
+              touchWorldEdit(x, y, z, 0);
+            }
+          }
+        } else if (id === iceIdCached) {
+          // Ice melt: light > 11 and no solid above. Was unwired —
+          // ice in well-lit caves never melted to water.
+          const above = world.get(x, y + 1, z);
+          const hasSolidAbove = above !== AIR && OPAQUE_BY_ID[stateId(above)] === 1;
+          const cxIce = x >> 4;
+          const czIce = z >> 4;
+          const ltIce = lightCache.get(lightKey(cxIce, czIce));
+          const lbIce = ltIce ? getLightByte(ltIce, x & 0xf, y, z & 0xf) : 0xff;
+          const lightHere = Math.max((lbIce >>> 4) & 0xf, lbIce & 0xf);
+          const biomeIdIce = generator.biomeAt(x, z);
+          const biomeNameIce = biomeIdIce === 1 ? 'forest' : 'plains';
+          iceCtxScratch.biomeTemperature = biomeTemperature(biomeNameIce);
+          iceCtxScratch.isNight = dayNight.timeOfDay > 0.5;
+          iceCtxScratch.hasSkyLight = true;
+          iceCtxScratch.nearbyWarmBlock = false;
+          iceCtxScratch.lightLevel = lightHere;
+          if (!hasSolidAbove && shouldMeltIce(iceCtxScratch)) {
+            if (waterId !== undefined) {
+              world.set(x, y, z, makeState(waterId, 0));
+              touchWorldEdit(x, y, z, waterId);
+            }
+          }
+        } else if (id === waterId) {
+          // Ice form: cold biome + night + sky exposed + low light.
+          // No-op in plains/forest (temperatures too warm); wired so
+          // it just works when cold biome generator ships in M10.
+          if (Math.random() < FREEZE_RANDOM_TICK_CHANCE) {
+            const above = world.get(x, y + 1, z);
+            const hasSky = above === AIR;
+            const cxFr = x >> 4;
+            const czFr = z >> 4;
+            const ltFr = lightCache.get(lightKey(cxFr, czFr));
+            const lbFr = ltFr ? getLightByte(ltFr, x & 0xf, y, z & 0xf) : 0xff;
+            const lightHereFr = Math.max((lbFr >>> 4) & 0xf, lbFr & 0xf);
+            const biomeIdFr = generator.biomeAt(x, z);
+            const biomeNameFr = biomeIdFr === 1 ? 'forest' : 'plains';
+            iceCtxScratch.biomeTemperature = biomeTemperature(biomeNameFr);
+            iceCtxScratch.isNight = dayNight.timeOfDay > 0.5;
+            iceCtxScratch.hasSkyLight = true;
+            iceCtxScratch.nearbyWarmBlock = false;
+            iceCtxScratch.lightLevel = lightHereFr;
+            if (hasSky && shouldFreezeWater(iceCtxScratch)) {
+              if (iceIdCached !== undefined) {
+                world.set(x, y, z, makeState(iceIdCached, 0));
+                touchWorldEdit(x, y, z, iceIdCached);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   fluidTickAccum += dtSec;
+  // Restore persisted cells once chunks have had ~3s to load. deserialize
+  // skips cells whose world block isn't the matching fluid, so unloaded
+  // chunks just silently miss out — re-attempt periodically while the
+  // queue is non-empty.
+  if (pendingFluidCells.length > 0) {
+    fluidRestoreAccum += dtSec;
+    if (fluidRestoreAccum > 3) {
+      fluidRestoreAccum = 0;
+      const before = fluidWorld.size();
+      fluidWorld.deserialize(pendingFluidCells);
+      if (fluidWorld.size() > before || pendingFluidCells.length === 0) {
+        // Either we restored some or the queue drained; clear it so we
+        // don't re-deserialize the same blob forever.
+        pendingFluidCells.length = 0;
+      }
+    }
+  }
+  // Persist cells every 30s. Sources + flowing tips both — covers
+  // bucket placements that need to survive chunk reloads.
+  fluidSaveAccum += dtSec;
+  if (fluidSaveAccum > 30) {
+    fluidSaveAccum = 0;
+    void persistDB.setMeta('fluidCells', fluidWorld.serialize());
+  }
   while (fluidTickAccum >= FLUID_TICK_SEC) {
     fluidTickAccum -= FLUID_TICK_SEC;
     const { changed } = fluidWorld.tick();
-    for (const p of changed) {
-      const cx = Math.floor(p.x / 16);
-      const cz = Math.floor(p.z / 16);
-      const chunk = world.getChunk(cx, cz);
-      if (chunk) {
-        const light = lightCache.get(lightKey(cx, cz)) ?? null;
-        chunkStore.markDirty(chunk, light);
+    if (changed.length > 0) {
+      // Per-chunk: rebuild light once. Per-section (cy): mark mesh dirty
+      // — markChunkAllDirty was rebuilding all 24 sections of every
+      // touched chunk every fluid tick, costing 24x what it should.
+      // Numeric packed key avoids per-update string alloc + split-back.
+      // Recycle the per-tick Set + Map across calls; the inner per-chunk
+      // Sets go back into a small pool to avoid re-allocating them at
+      // active lava lakes.
+      const chunksToRelight = fluidChunksToRelightScratch;
+      chunksToRelight.clear();
+      const sectionsToRemesh = fluidSectionsToRemeshScratch;
+      for (const inner of sectionsToRemesh.values()) {
+        inner.clear();
+        fluidSectionSetPool.push(inner);
+      }
+      sectionsToRemesh.clear();
+      for (const p of changed) {
+        // p.{x,y,z} are integer world coords; `>> 4` matches
+        // Math.floor(_/16) for ints (sign-correct) and skips the divide.
+        const cx = p.x >> 4;
+        const cz = p.z >> 4;
+        const cy = p.y >> 4;
+        const ck = lightKey(cx, cz);
+        chunksToRelight.add(ck);
+        let s = sectionsToRemesh.get(ck);
+        if (!s) {
+          s = fluidSectionSetPool.pop() ?? new Set<number>();
+          sectionsToRemesh.set(ck, s);
+        }
+        s.add(cy);
+      }
+      for (const k of chunksToRelight) {
+        // Unpack the numeric key back into (cx, cz). `>>> 16` matches
+        // Math.floor(k/65536) for valid lightKey values (bounded to
+        // 32 bits) and skips the divide.
+        const cxN = (k >>> 16) - 32768;
+        const czN = (k & 0xffff) - 32768;
+        const chunk = world.getChunk(cxN, czN);
+        if (!chunk) continue;
+        const newLight = buildLight(chunk, lightOracle);
+        lightCache.set(k, newLight);
+        // Save the freshly-built light, not the stale pre-tick version.
+        chunkStore.markDirty(chunk, newLight);
+        const sections = sectionsToRemesh.get(k);
+        if (!sections) continue;
+        for (const cy of sections) {
+          if (chunk.section(cy)) chunk.markMeshDirty(cy);
+        }
       }
     }
   }
 
   if (!tickFrozen) {
     worldTick += Math.max(1, Math.round(dtSec * 20));
+    // Advance hold-to-eat. Tick at 20 Hz to match PlayerState; complete
+    // after totalTicks (32 = 1.6s default). On completion: apply hunger,
+    // saturation, side effects, consume one item, re-arm if still holding
+    // right-click and still have the same food (lets you eat a stack).
+    if (eatState.itemId !== null) {
+      const eatTicks = Math.max(1, Math.round(dtSec * 20));
+      for (let i = 0; i < eatTicks; i++) {
+        const result = tickEating(eatState);
+        if (!result.completed) continue;
+        const consumedName = result.itemConsumed;
+        if (consumedName === null) break;
+        const itemId = itemRegistry.byName(consumedName);
+        if (itemId === undefined) break;
+        const itemDef = itemRegistry.get(itemId);
+        consumeFoodItem(itemId, itemDef.hungerRestore ?? 0, itemDef.saturation ?? 0);
+        // Creative players don't lose food when eating (vanilla parity).
+        // Was unconditional — eating in creative still depleted hotbar.
+        if (vitalsActive) {
+          consumeInventoryItem(itemId, 1);
+          // Wiki: stews + soups return an empty bowl on eat. Was
+          // unwired — players ate mushroom/rabbit stew + beetroot
+          // soup and silently lost the bowl.
+          if (
+            consumedName === 'webmc:mushroom_stew' ||
+            consumedName === 'webmc:rabbit_stew' ||
+            consumedName === 'webmc:beetroot_soup' ||
+            consumedName === 'webmc:suspicious_stew'
+          ) {
+            const bowlId = itemRegistry.byName('webmc:bowl');
+            if (bowlId !== undefined) addOneToInventory(bowlId);
+          }
+        }
+        // Re-arm: if the player is still holding right-click and still has
+        // the same food in the held slot, start the next bite. Vanilla MC
+        // does the same — you can graze a stack of bread without re-clicking.
+        if (rightClickHeldForEat) {
+          const stk = inventory.hotbar[inventory.selectedHotbar];
+          if (stk?.itemId === itemId) {
+            const restore = itemDef.hungerRestore ?? 0;
+            const alwaysEdible =
+              consumedName === 'webmc:golden_apple' ||
+              consumedName === 'webmc:enchanted_golden_apple' ||
+              consumedName === 'webmc:chorus_fruit' ||
+              consumedName === 'webmc:honey_bottle' ||
+              consumedName.includes('potion_') ||
+              consumedName === 'webmc:awkward_potion';
+            // Milk bucket is drinkable for the cure-effect even with
+            // hungerRestore=0; the eat-re-arm gate was missing it, so
+            // holding right-click only drank 1 bucket then stopped.
+            const drinkable = restore > 0 || consumedName === 'webmc:milk_bucket';
+            if (drinkable && (playerState.hunger < 20 || alwaysEdible)) {
+              startEating(eatState, { itemId: consumedName });
+              continue;
+            }
+          }
+          rightClickHeldForEat = false;
+        }
+        break;
+      }
+    }
     if (babyMobs.size > 0) {
       const ticksThisFrame = Math.max(1, Math.round(dtSec * 20));
-      for (const [id, st] of babyMobs) {
+      // keys()+get() avoids tuple alloc per baby mob. Babies are rare
+      // (player has to actively breed two animals), but the loop runs
+      // per frame whenever any baby is growing.
+      for (const id of babyMobs.keys()) {
+        const st = babyMobs.get(id);
+        if (st === undefined) continue;
         let next = st;
         for (let i = 0; i < ticksThisFrame; i++) next = babyTick(next);
         if (!next.isBaby) {
@@ -6839,16 +12110,19 @@ function frame(): void {
       }
     }
     if (leashedMobs.size > 0) {
-      const anchor = { x: fp.position.x, y: fp.position.y, z: fp.position.z };
-      const allMobs = [...mobWorld.all()];
-      const broken: number[] = [];
+      leashAnchorScratch.x = fp.position.x;
+      leashAnchorScratch.y = fp.position.y;
+      leashAnchorScratch.z = fp.position.z;
+      const broken = leashBrokenScratch;
+      broken.length = 0;
       for (const id of leashedMobs) {
-        const m = allMobs.find((mm) => mm.id === id);
+        const m = mobWorld.byId(id);
         if (!m) {
           broken.push(id);
           continue;
         }
-        const r = tensionStep({ anchorPos: anchor, mobPos: m.position });
+        leashCtxScratch.mobPos = m.position;
+        const r = tensionStep(leashCtxScratch);
         if (r.broken) {
           broken.push(id);
           mobRenderer.setMobName(id, m.def.kind);
@@ -6862,11 +12136,15 @@ function frame(): void {
       for (const id of broken) leashedMobs.delete(id);
     }
     if ((worldTick & 0x3f) === 0 && lovingMobs.size > 0) {
-      const allMobs = [...mobWorld.all()];
-      const mobById = new Map(allMobs.map((m) => [m.id, m] as const));
-      const lovers: { mob: (typeof allMobs)[number]; love: AnimalLove }[] = [];
-      for (const [id, love] of lovingMobs) {
-        const m = mobById.get(id);
+      const lovers: { mob: NonNullable<ReturnType<typeof mobWorld.byId>>; love: AnimalLove }[] = [];
+      // keys()+get() avoids destructuring `[id, love]` tuple alloc per
+      // loving mob. Gated to every 64 worldticks (~3.2s), so per-tick
+      // savings are minimal but matches the keys+get pattern used
+      // across other Map iterations in this file.
+      for (const id of lovingMobs.keys()) {
+        const love = lovingMobs.get(id);
+        if (love === undefined) continue;
+        const m = mobWorld.byId(id);
         if (m && isInLove(love, worldTick)) lovers.push({ mob: m, love });
       }
       const consumed = new Set<number>();
@@ -6891,7 +12169,10 @@ function frame(): void {
           const midx = (a.mob.position.x + b.mob.position.x) * 0.5;
           const midy = (a.mob.position.y + b.mob.position.y) * 0.5;
           const midz = (a.mob.position.z + b.mob.position.z) * 0.5;
-          const baby = mobWorld.spawn(a.mob.def.kind, { x: midx, y: midy, z: midz });
+          mobSpawnPosScratch.x = midx;
+          mobSpawnPosScratch.y = midy;
+          mobSpawnPosScratch.z = midz;
+          const baby = mobWorld.spawn(a.mob.def.kind, mobSpawnPosScratch);
           babyMobs.set(baby.id, { ageTicks: 0, isBaby: true });
           mobRenderer.setMobScale(baby.id, 0.5);
           xpOrbs.spawn(midx, midy + 0.5, midz, 1 + Math.floor(Math.random() * 7));
@@ -6899,123 +12180,89 @@ function frame(): void {
           break;
         }
       }
-      for (const [mobId, love] of lovingMobs) {
+      for (const mobId of lovingMobs.keys()) {
+        const love = lovingMobs.get(mobId);
+        if (love === undefined) continue;
         if (!isInLove(love, worldTick) && worldTick >= love.breedCooldownUntilTick) {
           lovingMobs.delete(mobId);
-          const m = mobById.get(mobId);
+          const m = mobWorld.byId(mobId);
           if (m) mobRenderer.setMobName(mobId, m.def.kind);
         }
       }
     }
   }
-  if (!tickFrozen)
-    mobWorld.tick(dtSec * tickRateMultiplier, {
-      isSolid,
-      playerPos: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      damagePlayer: (amt, attackerPos) => {
-        const scaled = amt * mobDamageMultiplier;
-        const armorPts = computeArmorPoints();
-        const toughnessPts = computeArmorToughness();
-        const finalDmg = armorPts > 0 ? armorReducedDamage(scaled, armorPts, toughnessPts) : scaled;
-        if (finalDmg > 0) {
-          playerState.takeDamage({ amount: finalDmg, source: 'mob' });
-          if (armorPts > 0) consumeArmorDurability(scaled);
-          if (attackerPos) {
-            const angle = damageTiltAngle({
-              attackerX: attackerPos.x,
-              attackerZ: attackerPos.z,
-              playerX: fp.position.x,
-              playerZ: fp.position.z,
-              playerYaw: fp.yaw,
-            });
-            fp.pulseDamageTilt(angle);
-          }
-        }
-        if (!playerState.invulnerable && scaled > 0) sfx.play('hit');
-      },
-      onCreeperExplode: (x, y, z) => {
-        // mobGriefing=false: creepers explode but don't break terrain.
-        if (gameRules.mobGriefing) {
-          explodeAt(Math.floor(x), Math.floor(y), Math.floor(z), 3);
-        } else {
-          // Visual-only burst.
-          for (let i = 0; i < 12; i++)
-            blockParticles.emitBreak(Math.floor(x), Math.floor(y), Math.floor(z), [220, 220, 220]);
-          screenShake.pulse(0.4);
-        }
-      },
-      isSunlit: (x, y, z) => {
-        if (!dayNight.isDay) return false;
-        if (currentWeather === 'thunder') return false;
-        // Check nothing opaque above the mob's head out to the top of the world.
-        const bx = Math.floor(x);
-        const bz = Math.floor(z);
-        const startY = Math.floor(y + 0.5);
-        for (let yy = startY; yy < CHUNK_HEIGHT; yy++) {
-          const s = world.get(bx, yy, bz);
-          if (s === AIR) continue;
-          if (registry.get(stateId(s)).opaque) return false;
-        }
-        return true;
-      },
-    });
-  mobRenderer.sync(mobWorld.all(), camera.position);
+  if (!tickFrozen) {
+    // Mutate the hoisted context fields. The whole literal + 5 closures
+    // were being allocated every frame previously — at 60Hz that's
+    // 360 closures/sec just for the mob tick.
+    if (isSpectator) {
+      mobTickCtx.playerPos = null;
+    } else {
+      if (mobTickCtx.playerPos === null) mobTickCtx.playerPos = { x: 0, y: 0, z: 0 };
+      mobTickCtx.playerPos.x = fp.position.x;
+      mobTickCtx.playerPos.y = fp.position.y;
+      mobTickCtx.playerPos.z = fp.position.z;
+    }
+    mobTickCtx.playerSneaking = fp.input.sneak;
+    mobTickCtx.playerInvisible = playerInvisible;
+    mobWorld.tick(dtSec * tickRateMultiplier, mobTickCtx);
+  }
+  // Skip the sync entirely when there are no mobs AND no visuals to
+  // clean up. Saves the iterator construction + seenScratch.clear()
+  // + performance.now() syscall in fully-empty mob worlds.
+  if (mobWorld.size > 0 || mobRenderer.count > 0) {
+    mobRenderer.sync(mobWorld.all(), camera.position);
+  }
 
-  damageNumbers.tick(dtSec, (wx, wy, wz) => {
-    const v = new THREE.Vector3(wx, wy, wz);
-    v.project(camera);
-    if (v.z > 1) return { sx: 0, sy: 0, visible: false };
-    const sx = (v.x + 1) * 0.5 * window.innerWidth;
-    const sy = (-v.y + 1) * 0.5 * window.innerHeight;
-    return { sx, sy, visible: true };
-  });
+  damageNumbers.tick(dtSec, projectWorldToScreen);
 
-  const markers: { x: number; z: number; color: string; size?: number }[] = [];
-  for (const m of mobWorld.all()) {
-    const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
-    markers.push({ x: m.position.x, z: m.position.z, color: isHostile ? '#ff5050' : '#a0ffa0' });
+  // Minimap is throttled to 2Hz internally — skip building the full
+  // marker list (mobs + dropped items + xp orbs + waypoints) on the
+  // ~28/30 frames where it's a no-op. Saves ~200 object allocs per
+  // frame at typical mob/item density.
+  if (minimap.willRedraw(dtSec)) {
+    const markers = minimapMarkersScratch;
+    // Recycle previous-frame markers back into the pool.
+    for (let i = 0; i < markers.length; i++) minimapMarkerPool.push(markers[i]!);
+    markers.length = 0;
+    for (const m of mobWorld.all()) {
+      const isHostile = m.def.behavior === 'hostile' || m.def.behavior === 'creeper';
+      markers.push(minimapMarker(m.position.x, m.position.z, isHostile ? '#ff5050' : '#a0ffa0'));
+    }
+    for (const p of droppedItems.positions()) {
+      markers.push(minimapMarker(p.x, p.z, '#e0e0a0', 1));
+    }
+    for (const p of xpOrbs.positions()) {
+      markers.push(minimapMarker(p.x, p.z, '#80ff40', 1));
+    }
+    if (playerSpawnPoint) {
+      markers.push(minimapMarker(playerSpawnPoint.x, playerSpawnPoint.z, '#ffc0e0', 4));
+    }
+    for (const v of waypoints.values()) {
+      markers.push(minimapMarker(v.x, v.z, '#80c0ff', 3));
+    }
+    minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
+  } else {
+    minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator);
   }
-  for (const p of droppedItems.positions()) {
-    markers.push({ x: p.x, z: p.z, color: '#e0e0a0', size: 1 });
-  }
-  for (const p of xpOrbs.positions()) {
-    markers.push({ x: p.x, z: p.z, color: '#80ff40', size: 1 });
-  }
-  if (playerSpawnPoint) {
-    markers.push({ x: playerSpawnPoint.x, z: playerSpawnPoint.z, color: '#ffc0e0', size: 4 });
-  }
-  for (const v of waypoints.values()) {
-    markers.push({ x: v.x, z: v.z, color: '#80c0ff', size: 3 });
-  }
-  minimap.tick(dtSec, fp.position.x, fp.position.z, world, registry, generator, markers);
   droppedItems.tick(
     dtSec,
     isSolid,
-    fp.input.sneak ? { x: -9999, y: 0, z: 0 } : fp.position,
-    (out) => {
-      inventory.add({ itemId: out.itemId, count: out.count, damage: 0 });
-      sfx.play('click');
-      const def = itemRegistry.get(out.itemId);
-      chatInput.addLine(`+ ${String(out.count)} ${def.name.replace(/^webmc:/, '')}`, '#d2ff80');
-    },
+    // Sneak suppresses pickup (stand over an item without grabbing it).
+    // Spectator suppresses pickup entirely — vanilla spectators are
+    // observers, not collectors. Pass an unreachable far position so the
+    // tick treats the player as out of range for the magnetic grab.
+    // FAR_POS_BLOCK_PICKUP is reused across frames vs allocating
+    // {x:-9999,y:0,z:0} per frame.
+    fp.input.sneak || isSpectator ? FAR_POS_BLOCK_PICKUP : fp.position,
+    droppedItemPickupCallback,
   );
-  xpOrbs.tick(dtSec, isSolid, fp.position, (xp) => {
-    // Mending-style auto-repair: damaged held tool gets durability from XP first.
-    let remaining = xp;
-    const sel = inventory.hotbar[inventory.selectedHotbar];
-    if (sel && sel.damage > 0) {
-      const def = itemRegistry.get(sel.itemId);
-      if (def.durability > 0) {
-        const xpToFix = Math.min(remaining, Math.ceil(sel.damage / 2));
-        const repair = xpToFix * 2;
-        const newDamage = Math.max(0, sel.damage - repair);
-        inventory.hotbar[inventory.selectedHotbar] = { ...sel, damage: newDamage };
-        remaining -= xpToFix;
-      }
-    }
-    if (remaining > 0) playerState.addXP(remaining);
-    sfx.play('click');
-  });
+  xpOrbs.tick(
+    dtSec,
+    isSolid,
+    isSpectator ? FAR_POS_BLOCK_PICKUP : fp.position,
+    xpOrbPickupCallback,
+  );
   if (playerState.xpLevel > lastXpLevel) {
     sfx.play('place');
     chatInput.addLine(`Level up! Level ${String(playerState.xpLevel)}`, '#80ffa0');
@@ -7042,75 +12289,91 @@ function frame(): void {
     );
   }
 
-  if (now - lastPlayerSaveAt > 30000) {
+  // Player position saves every 5s. Was 30s; movement-only sessions
+  // (walking around without editing blocks) lost their position on tab
+  // close because the autosave debouncer requires dirty chunks. The
+  // chat-toast confirmation still throttles to 30s so the player isn't
+  // spammed with "World saved." every 5s.
+  if (now - lastPlayerSaveAt > 5000) {
     lastPlayerSaveAt = now;
+    const announce = now - lastWorldSaveAnnounceAt > 30000;
+    if (announce) lastWorldSaveAnnounceAt = now;
     void savePlayerNow().then(() => {
-      chatInput.addLine('World saved.', '#80a0ff');
+      if (announce) chatInput.addLine('World saved.', '#80a0ff');
     });
   }
 
-  if (debugOverlay.isEnabled()) {
-    debugOverlay.render({
-      fps: stats.fps,
-      frameMs: stats.frameMs,
-      position: { x: fp.position.x, y: fp.position.y, z: fp.position.z },
-      look: { yaw: fp.yaw, pitch: fp.pitch },
-      chunkPos: { cx: Math.floor(fp.position.x / 16), cz: Math.floor(fp.position.z / 16) },
-      meshCount: chunkRenderer.meshCount,
-      triangles: chunkRenderer.triangleCount,
-      pendingChunks: loaderStats.pending,
-      gameMode,
-      timeOfDay: dayNight.timeOfDay,
-      health: playerState.health,
-      hunger: playerState.hunger,
-      fly: fp.input.fly,
-      onGround: fp.onGround,
-      fluid: fp.inFluid,
-      viewDistance: loader.viewRadius,
-      rendererName: `${rendererInfo.gl}  ${rendererInfo.rend}`,
-      mobs: mobWorld.size,
-      hostile: (() => {
-        let n = 0;
-        for (const m of mobWorld.all())
-          if (m.def.behavior === 'hostile' || m.def.behavior === 'creeper') n++;
-        return n;
-      })(),
-      passive: (() => {
-        let n = 0;
-        for (const m of mobWorld.all()) if (m.def.behavior === 'passive') n++;
-        return n;
-      })(),
-      drops: droppedItems.size,
-      xpOrbs: xpOrbs.size,
-      seed: WORLD_SEED,
-      biome:
-        generator.biomeAt(Math.floor(fp.position.x), Math.floor(fp.position.z)) === 1
-          ? 'forest'
-          : 'plains',
-    });
+  // Tick HUD on real frame time (not the paused-zeroed dtSec) so the
+  // HUD still refreshes while the main menu / pause menu is up. Without
+  // this the HUD stays at the index.html "booting…" placeholder
+  // forever in e2e mode (which doesn't click "Play").
+  hudUpdateAccumSec += stats.frameMs / 1000;
+  const updateHudText = hudUpdateAccumSec >= 0.2;
+  if (updateHudText) hudUpdateAccumSec = 0;
+  if (debugOverlay.isEnabled() && updateHudText) {
+    debugFramePayload.fps = stats.fps;
+    debugFramePayload.frameMs = stats.frameMs;
+    debugFramePos.x = fp.position.x;
+    debugFramePos.y = fp.position.y;
+    debugFramePos.z = fp.position.z;
+    debugFrameLook.yaw = fp.yaw;
+    debugFrameLook.pitch = fp.pitch;
+    // playerBlockX/Z are already Math.floor(fp.position.{x,z}); chunk
+    // coord is just >> 4 (sign-correct for negative ints).
+    debugFrameChunkPos.cx = playerBlockX >> 4;
+    debugFrameChunkPos.cz = playerBlockZ >> 4;
+    debugFramePayload.meshCount = chunkRenderer.meshCount;
+    debugFramePayload.triangles = chunkRenderer.triangleCount;
+    debugFramePayload.pendingChunks = loaderStats.pending;
+    debugFramePayload.gameMode = gameMode;
+    debugFramePayload.timeOfDay = dayNight.timeOfDay;
+    debugFramePayload.health = playerState.health;
+    debugFramePayload.hunger = playerState.hunger;
+    debugFramePayload.fly = fp.input.fly;
+    debugFramePayload.onGround = fp.onGround;
+    debugFramePayload.fluid = fp.inFluid;
+    debugFramePayload.viewDistance = loader.viewRadius;
+    debugFramePayload.rendererName = rendererInfoDisplay;
+    debugFramePayload.mobs = mobWorld.size;
+    debugFramePayload.hostile = mobWorld.hostileCount;
+    debugFramePayload.passive = mobWorld.passiveCount;
+    debugFramePayload.drops = droppedItems.size;
+    debugFramePayload.xpOrbs = xpOrbs.size;
+    debugFramePayload.seed = WORLD_SEED;
+    debugFramePayload.biome = biomeIdAtPlayerColumn() === 1 ? 'forest' : 'plains';
+    debugOverlay.render(debugFramePayload);
     hud.textContent = '';
-  } else {
+  } else if (updateHudText) {
     const hour = Math.floor(((dayNight.timeOfDay + 0.25) * 24) % 24);
     const minute = Math.floor((((dayNight.timeOfDay + 0.25) * 24) % 1) * 60);
     const clock = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-    const aimedBlock = aim
-      ? registry.get(stateId(world.get(aim.bx, aim.by, aim.bz))).name.replace(/^webmc:/, '')
-      : '';
+    // Use the memoized short-name lookup (BLOCK_SHORT_NAME_BY_ID) — was
+    // re-running the /^webmc:/ regex per HUD tick.
+    const aimedBlock = aim ? blockShortNameFn(stateId(world.get(aim.bx, aim.by, aim.bz))) : '';
     let effectStr = '';
-    for (const [id, eff] of playerState.effects) {
+    for (const id of playerState.effects.keys()) {
+      const eff = playerState.effects.get(id);
+      if (eff === undefined) continue;
       effectStr += ` ${id}${eff.amplifier > 0 ? `+${String(eff.amplifier)}` : ''}(${eff.remainingSec.toFixed(0)}s)`;
     }
+    // Inline the spawn-distance formatter — was an IIFE arrow function
+    // allocated per frame just to compute one optional suffix.
+    let spawnSuffix = '';
+    if (worldMeta) {
+      const sdx = fp.position.x - worldMeta.spawn.x;
+      const sdz = fp.position.z - worldMeta.spawn.z;
+      spawnSuffix = `(${Math.hypot(sdx, sdz).toFixed(0)}m from spawn)`;
+    }
     hud.textContent =
-      `webmc — F3 debug · F5 cam · F1 help\n` +
-      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${phaseOfDay(Math.floor(dayNight.timeOfDay * 24000))}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
-      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${(() => {
-        if (!worldMeta) return '';
-        const dx = fp.position.x - worldMeta.spawn.x;
-        const dz = fp.position.z - worldMeta.spawn.z;
-        return `(${Math.hypot(dx, dz).toFixed(0)}m from spawn)`;
-      })()}\n` +
+      `webmc M5 — F3 debug · F5 cam · F1 help · ${rendererInfo.gl}\n` +
+      // nowPhase + the equivalent Math.floor(timeOfDay*24000) phaseOfDay
+      // are already computed at the top of frame() — reuse instead of
+      // duplicating the multiply + floor + 4-comparison phaseOfDay call
+      // every HUD tick.
+      `FPS ${stats.fps.toFixed(0).padStart(3)} (p95 ${p95Fps(fpsStats).toFixed(0)})  frame ${stats.frameMs.toFixed(1)}ms  ${clock} ${nowPhase}  d${String(dayCounter)} ${MOON_GLYPHS[moonPhase(dayCounter)] ?? ''}\n` +
+      `pos ${fp.position.x.toFixed(1)} ${fp.position.y.toFixed(1)} ${fp.position.z.toFixed(1)}  ${spawnSuffix}\n` +
       `HP ${playerState.health.toFixed(0)}/20${playerState.absorption > 0 ? `+${playerState.absorption.toFixed(0)}` : ''}  food ${playerState.hunger.toFixed(0)}/20  mobs ${mobWorld.size}${roomCode ? `  room ${roomCode}` : ''}\n` +
-      `${gameMode} · ${sel?.name ?? '?'} · chunks ${chunkRenderer.meshCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
+      `${gameMode} · ${hotbar.selected?.name ?? '?'} · chunks ${chunkRenderer.meshCount}  tris ${chunkRenderer.triangleCount}  pending ${loaderStats.pending}  seed ${WORLD_SEED.toString(16)}  save${sessionSaveCount}${aimedBlock ? `  → ${aimedBlock}` : ''}${effectStr ? `\nfx${effectStr}` : ''}`;
   }
   requestAnimationFrame(frame);
 }

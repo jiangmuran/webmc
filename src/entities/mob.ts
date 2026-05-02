@@ -251,7 +251,10 @@ export const MOB_DEFS: Record<MobKind, MobDef> = {
     walkSpeed: 0,
     maxHealth: 30,
     behavior: 'hostile',
-    attackDamage: 2,
+    // Wiki: shulker bullets deal 4 damage on direct hit + apply 10 seconds
+    // of Levitation. Was 2 (Easy-mode equivalent for other mobs), but
+    // shulker bullets are difficulty-independent at 4.
+    attackDamage: 4,
     attackRangeSq: 16 * 16,
     aggroRangeSq: 16 * 16,
   },
@@ -840,11 +843,79 @@ export interface Mob {
   airborneStartY: number | null;
   // Flee timer: passive mobs that took damage run away for this many seconds.
   fleeingSec: number;
+  // True once damage() has reported a kill — caller is responsible for
+  // drops/XP. The dyingSec timer uses this to decide whether to also
+  // fire onMobDeath, so player attacks don't double-drop.
+  dropsHandled: boolean;
 }
 
 const GRAVITY = 32;
 const TERMINAL_VELOCITY = 50;
 const ATTACK_COOLDOWN_SEC = 0.8;
+// Mob kinds that don't take fall damage (vanilla parity: flyers +
+// some passives). Per mob per landing event; Set lookup beats the
+// 9-way `||` chain.
+const NO_FALL_DAMAGE_MOB_KINDS: ReadonlySet<string> = new Set([
+  'chicken',
+  'parrot',
+  'bat',
+  'allay',
+  'bee',
+  'vex',
+  'phantom',
+  'ghast',
+  'blaze',
+]);
+// Sunlight-burn mob kinds (vanilla parity for undead). Per mob per
+// tick during daylight; Set.has beats the 6-way `||` chain for the
+// dominant non-undead case (zombies + skeletons are <30% of any mob
+// pop).
+const SUNLIGHT_BURN_KINDS: ReadonlySet<string> = new Set([
+  'zombie',
+  'skeleton',
+  'stray',
+  'zombie_villager',
+  'phantom',
+  'drowned',
+]);
+// Lava-immune mob kinds (vanilla parity). Hoisted to a Set so the
+// per-tick lava-burn check is one hash lookup instead of a 10-way
+// `||` chain that always had to walk all 10 string compares for the
+// dominant non-immune case.
+const FIRE_IMMUNE_MOB_KINDS: ReadonlySet<string> = new Set([
+  'blaze',
+  'ghast',
+  'magma_cube',
+  'strider',
+  'zombified_piglin',
+  'piglin',
+  'piglin_brute',
+  'wither',
+  'wither_skeleton',
+  'ender_dragon',
+]);
+
+// 16-step stepwise solidity check between two world positions. Used as a
+// cheap "can this mob see the player" gate so attacks don't pass through
+// walls. We sample at the entity heads (mob.y + halfY, player.y + 0.6)
+// rather than the feet, mirroring vanilla which casts from eye level.
+function hasLineOfSight(fromPos: Vec3, toPos: Vec3, isSolid: SolidSampler): boolean {
+  const fx = fromPos.x;
+  const fy = fromPos.y + 0.6;
+  const fz = fromPos.z;
+  const tx = toPos.x;
+  const ty = toPos.y + 0.6;
+  const tz = toPos.z;
+  const STEPS = 16;
+  for (let i = 1; i < STEPS; i++) {
+    const t = i / STEPS;
+    const x = Math.floor(fx + (tx - fx) * t);
+    const y = Math.floor(fy + (ty - fy) * t);
+    const z = Math.floor(fz + (tz - fz) * t);
+    if (isSolid(x, y, z)) return false;
+  }
+  return true;
+}
 
 export interface MobTickContext {
   isSolid: SolidSampler;
@@ -853,11 +924,50 @@ export interface MobTickContext {
   onCreeperExplode?: (x: number, y: number, z: number) => void;
   // True when the mob is in direct sunlight (day + top-of-world exposure).
   isSunlit?: (x: number, y: number, z: number) => boolean;
+  // Returns 'water' / 'lava' / null at a voxel position. Used for mob
+  // buoyancy — without it, mobs sank to the bottom of any water and
+  // walked along the floor like the seafloor was a road.
+  isFluid?: (x: number, y: number, z: number) => 'water' | 'lava' | null;
+  // Vanilla MC: sneaking reduces mob detection range by ~4 blocks (fully
+  // invisible at >16 blocks if sneaking). When true, aggroRangeSq is
+  // multiplied by ~0.5 to halve the detection distance.
+  playerSneaking?: boolean;
+  // Vanilla MC: invisible players are detected at ~1/8 the normal range
+  // (still ~2 blocks at default 16-block aggro). Wearing armor reduces
+  // the bonus, but the per-piece reduction isn't tracked here yet.
+  playerInvisible?: boolean;
+  // Fired exactly once when a mob's death animation finishes. Lets the
+  // host (main.ts) spawn drops + xp for environmental kills (sunburn,
+  // lava). Without this, a zombie that burned to death in the sun
+  // dropped no rotten flesh and no XP — only player-attack kills did.
+  onMobDeath?: (kind: MobKind, position: Vec3) => void;
 }
 
 export class MobWorld {
   private readonly mobs = new Map<MobId, Mob>();
   private nextId: MobId = 1;
+  // Per-behavior counters maintained on spawn/remove so the mob-cap
+  // check in main doesn't need to iterate all mobs every frame.
+  private _hostileCount = 0;
+  private _passiveCount = 0;
+  // Boss counter — mobs with maxHealth >= 40 (ender_dragon, wither,
+  // warden, elder_guardian). main.ts walks all mobs every frame to
+  // find the closest boss for the boss-bar HUD; with this counter it
+  // can early-return when no bosses exist (the common case).
+  private _bossCount = 0;
+  // Reused per-tick scratch list for despawn — was allocated fresh each
+  // call.
+  private readonly tickRemoveScratch: MobId[] = [];
+  // Reused per-mob movement-delta scratch for sweepMove. Was a fresh
+  // {x,y,z} literal per mob per tick; with 50 mobs that's 50 throwaway
+  // objects per tick.
+  private readonly mobDvScratch: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
+
+  private behaviorBucket(b: MobBehavior): 'hostile' | 'passive' | null {
+    if (b === 'hostile' || b === 'creeper') return 'hostile';
+    if (b === 'passive') return 'passive';
+    return null;
+  }
 
   spawn(kind: MobKind, position: Vec3): Mob {
     const def = MOB_DEFS[kind];
@@ -878,12 +988,27 @@ export class MobWorld {
       dyingSec: 0,
       airborneStartY: null,
       fleeingSec: 0,
+      dropsHandled: false,
     };
     this.mobs.set(mob.id, mob);
+    const bucket = this.behaviorBucket(def.behavior);
+    if (bucket === 'hostile') this._hostileCount++;
+    else if (bucket === 'passive') this._passiveCount++;
+    if (def.maxHealth >= 40) this._bossCount++;
     return mob;
   }
 
   remove(id: MobId): void {
+    this.removeInternal(id);
+  }
+
+  private removeInternal(id: MobId): void {
+    const m = this.mobs.get(id);
+    if (!m) return;
+    const bucket = this.behaviorBucket(m.def.behavior);
+    if (bucket === 'hostile') this._hostileCount--;
+    else if (bucket === 'passive') this._passiveCount--;
+    if (m.def.maxHealth >= 40) this._bossCount--;
     this.mobs.delete(id);
   }
 
@@ -891,9 +1016,41 @@ export class MobWorld {
     return this.mobs.values();
   }
 
+  byId(id: MobId): Mob | null {
+    return this.mobs.get(id) ?? null;
+  }
+
   get size(): number {
     return this.mobs.size;
   }
+
+  get hostileCount(): number {
+    return this._hostileCount;
+  }
+
+  get passiveCount(): number {
+    return this._passiveCount;
+  }
+
+  get bossCount(): number {
+    return this._bossCount;
+  }
+
+  // Shared mutable damage-result + nested position scratch. Per-call
+  // result wrapper + {...m.position} spread were allocated on every
+  // hit. Callers consume fields synchronously (drops, knockback, XP
+  // split, damage numbers) and don't keep the reference past their
+  // current attack handler.
+  private readonly damageResultPosition: Vec3 = { x: 0, y: 0, z: 0 };
+  private readonly damageResult: { killed: boolean; kind: MobKind; position: Vec3 } = {
+    killed: false,
+    kind: 'pig' as MobKind,
+    position: this.damageResultPosition,
+  };
+  // Shared scratch for the onMobDeath callback. Caller (main.ts)
+  // reads position.x/y/z synchronously (spawnMobDrops + xpOrbs.spawn
+  // loop) and doesn't retain the reference.
+  private readonly deathPosScratch: Vec3 = { x: 0, y: 0, z: 0 };
 
   damage(id: MobId, amount: number): { killed: boolean; kind: MobKind; position: Vec3 } | null {
     const m = this.mobs.get(id);
@@ -902,14 +1059,63 @@ export class MobWorld {
     m.hurtFlashSec = 0.18;
     if (m.def.behavior === 'neutral' || m.def.behavior === 'enderman') m.provoked = true;
     if (m.def.behavior === 'passive') m.fleeingSec = 5;
+    this.damageResultPosition.x = m.position.x;
+    this.damageResultPosition.y = m.position.y;
+    this.damageResultPosition.z = m.position.z;
+    this.damageResult.kind = m.def.kind;
     if (m.health <= 0) {
       m.dyingSec = 0.35;
-      return { killed: true, kind: m.def.kind, position: { ...m.position } };
+      // Caller (e.g. main.ts player attack handler) handles drops/XP for
+      // this kill. Setting dropsHandled prevents the dyingSec timer's
+      // onMobDeath callback from also firing drops.
+      m.dropsHandled = true;
+      this.damageResult.killed = true;
+    } else {
+      this.damageResult.killed = false;
     }
-    return { killed: false, kind: m.def.kind, position: { ...m.position } };
+    return this.damageResult;
   }
 
   tick(dtSec: number, ctx: MobTickContext): void {
+    // Skip the entire tick when no mobs exist (e.g. peaceful difficulty
+    // farms in a fully-cleared area). Both inner loops would be no-ops
+    // anyway but the early return saves the iterator construction.
+    if (this.mobs.size === 0) return;
+    // Vanilla mob despawn: mobs > 128 blocks from any player despawn instantly,
+    // mobs 32–128 blocks roll a small chance per tick. Without this, mobs
+    // accumulated forever as the player explored — every chunk the player
+    // visited contributed to a permanent population, and FPS slowly tanked.
+    if (ctx.playerPos !== null) {
+      const px = ctx.playerPos.x;
+      const py = ctx.playerPos.y;
+      const pz = ctx.playerPos.z;
+      const toRemove = this.tickRemoveScratch;
+      toRemove.length = 0;
+      for (const m of this.mobs.values()) {
+        if (m.dyingSec > 0) continue;
+        // Persistent mobs (named, tamed, baby, leashed, breeding) stay
+        // forever — same as vanilla. We don't track named/tamed here yet,
+        // so skip babies as the only persistent class for now.
+        const dx = m.position.x - px;
+        const dy = m.position.y - py;
+        const dz = m.position.z - pz;
+        const distSq = dx * dx + dy * dy + dz * dz;
+        if (distSq > 128 * 128) {
+          toRemove.push(m.id);
+        } else if (distSq > 32 * 32 && Math.random() < dtSec * 0.5) {
+          // Random chance ~ 1/120s at the 32-block boundary — half-life
+          // around 4 minutes for distant mobs.
+          toRemove.push(m.id);
+        } else if (m.position.y < -64) {
+          // Void cleanup. Mobs that fell off the world (player digs a 1-
+          // block hole, enemies fall in, world generates with caves to
+          // -64) used to live forever at y=-Infinity, ticking gravity
+          // every frame. Drop them immediately like vanilla void damage.
+          toRemove.push(m.id);
+        }
+      }
+      for (const id of toRemove) this.removeInternal(id);
+    }
     for (const mob of this.mobs.values()) this.tickMob(mob, dtSec, ctx);
   }
 
@@ -929,7 +1135,20 @@ export class MobWorld {
   private tickMob(mob: Mob, dtSec: number, ctx: MobTickContext): void {
     if (mob.dyingSec > 0) {
       mob.dyingSec = Math.max(0, mob.dyingSec - dtSec);
-      if (mob.dyingSec === 0) this.mobs.delete(mob.id);
+      if (mob.dyingSec === 0) {
+        // Fire onMobDeath only when no other code path has already
+        // handled drops (e.g. player attack — main.ts spawns those
+        // synchronously off of damage()'s killed=true return). Without
+        // this gate, environmental kills now get drops, but player kills
+        // would double-drop. dropsHandled is set true by damage() above.
+        if (!mob.dropsHandled) {
+          this.deathPosScratch.x = mob.position.x;
+          this.deathPosScratch.y = mob.position.y;
+          this.deathPosScratch.z = mob.position.z;
+          ctx.onMobDeath?.(mob.def.kind, this.deathPosScratch);
+        }
+        this.removeInternal(mob.id);
+      }
       return;
     }
     if (mob.attackCooldownSec > 0)
@@ -939,39 +1158,78 @@ export class MobWorld {
     if (mob.hurtFlashSec > 0) mob.hurtFlashSec = Math.max(0, mob.hurtFlashSec - dtSec);
     if (mob.fleeingSec > 0) mob.fleeingSec = Math.max(0, mob.fleeingSec - dtSec);
 
-    // Sunlight burn for undead hostile mobs (zombie/skeleton).
-    if (
-      ctx.isSunlit &&
-      (mob.def.kind === 'zombie' || mob.def.kind === 'skeleton') &&
-      ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)
-    ) {
-      mob.health -= 0.5 * dtSec;
-      if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
-      if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+    // Sunlight burn for undead hostile mobs. Vanilla list: zombie,
+    // skeleton, stray, zombie_villager, drowned (only out of water),
+    // phantom. Husks + zombified_piglin DON'T burn (their thing).
+    // Was only catching zombie + skeleton — strays/drowned/phantoms/zombie
+    // villagers all happily strolled around in noon sun unburnt.
+    if (ctx.isSunlit) {
+      const kind = mob.def.kind;
+      const drownedInWater =
+        kind === 'drowned' &&
+        ctx.isFluid?.(mob.position.x, mob.position.y, mob.position.z) === 'water';
+      // Set lookup vs the 6-way `||` chain: per mob per tick during
+      // daylight, the chain walked all 6 string compares for non-undead
+      // (the dominant case). Hoisted SUNLIGHT_BURN_KINDS at module
+      // scope.
+      const burns = !drownedInWater && SUNLIGHT_BURN_KINDS.has(kind);
+      if (burns && ctx.isSunlit(mob.position.x, mob.position.y, mob.position.z)) {
+        mob.health -= 0.5 * dtSec;
+        if (Math.random() < dtSec * 0.7) mob.hurtFlashSec = 0.15;
+        if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+      }
     }
 
     // Passive mobs flee from player while fleeingSec > 0.
     if (mob.fleeingSec > 0 && ctx.playerPos && mob.def.behavior === 'passive') {
       const dx = mob.position.x - ctx.playerPos.x;
       const dz = mob.position.z - ctx.playerPos.z;
-      const len = Math.hypot(dx, dz) || 1;
-      mob.velocity.x = (dx / len) * mob.def.walkSpeed * 1.4;
-      mob.velocity.z = (dz / len) * mob.def.walkSpeed * 1.4;
-      mob.yaw = Math.atan2(dx / len, dz / len);
+      // sqrt(x²+z²) avoids hypot's overflow-safe range-checks; mob/
+      // player coords are always in normal range. Per mob per tick on
+      // every fleeing passive. Hoist (walkSpeed*1.4)/len so the two
+      // velocity writes do one division then two multiplies (vs. two
+      // divisions in the prior form).
+      const len = Math.sqrt(dx * dx + dz * dz) || 1;
+      const invLenSpeed = (mob.def.walkSpeed * 1.4) / len;
+      mob.velocity.x = dx * invLenSpeed;
+      mob.velocity.z = dz * invLenSpeed;
+      // atan2(dx/len, dz/len) === atan2(dx, dz) — atan2 is angle-only,
+      // normalization doesn't affect the result.
+      mob.yaw = Math.atan2(dx, dz);
     }
 
     const aggro = this.isAggroTarget(mob);
     if (aggro && ctx.playerPos) {
       const dx = ctx.playerPos.x - mob.position.x;
+      const dy = ctx.playerPos.y - mob.position.y;
       const dz = ctx.playerPos.z - mob.position.z;
-      const distSq = dx * dx + dz * dz;
-      if (distSq <= mob.def.aggroRangeSq) {
-        const len = Math.sqrt(distSq) || 1;
-        const nx = dx / len;
-        const nz = dz / len;
-        mob.velocity.x = nx * mob.def.walkSpeed;
-        mob.velocity.z = nz * mob.def.walkSpeed;
-        const targetYaw = Math.atan2(nx, nz);
+      // 3D distance for aggro check — old code used horizontal-only, so a
+      // zombie 50 blocks below the player could still chase up through
+      // walls because horizontal dx² + dz² alone was within aggro range.
+      // Vanilla uses full 3D bounding-box distance.
+      const distSq = dx * dx + dy * dy + dz * dz;
+      // Sneak reduces aggro radius. Vanilla applies a ~0.5x factor on the
+      // detection range when the player is sneaking (effective ~half-radius
+      // squared); without this, sneaking through a cave was indistinguishable
+      // from sprinting in. Invisibility stacks: 1/8 base, then * sneak.
+      let effectiveAggroSq = mob.def.aggroRangeSq;
+      if (ctx.playerInvisible) effectiveAggroSq *= 0.0156; // (1/8)² ≈ 0.0156
+      if (ctx.playerSneaking) effectiveAggroSq *= 0.25;
+      if (distSq <= effectiveAggroSq) {
+        // Movement velocity uses horizontal-only direction so mobs don't
+        // crawl when the player is high above (e.g. on a 3-block tower).
+        // Aggro distSq above is 3D for vanilla parity, but the chase
+        // direction stays in the xz plane. sqrt(x²+z²) over hypot:
+        // hypot's overflow-safe range-check is wasted CPU on per-mob
+        // chase paths. Hoist walkSpeed/horizLen so the two velocity
+        // writes do one division then two multiplies (vs. two divs).
+        const horizLen = Math.sqrt(dx * dx + dz * dz) || 1;
+        const invLenSpeed = mob.def.walkSpeed / horizLen;
+        mob.velocity.x = dx * invLenSpeed;
+        mob.velocity.z = dz * invLenSpeed;
+        // atan2(nx, nz) === atan2(dx, dz) — angle-only, normalization
+        // factor cancels.
+        const targetYaw = Math.atan2(dx, dz);
         const twoPi = Math.PI * 2;
         let dYaw = targetYaw - mob.yaw;
         while (dYaw > Math.PI) dYaw -= twoPi;
@@ -979,18 +1237,32 @@ export class MobWorld {
         mob.yaw += dYaw * Math.min(1, dtSec * 6);
 
         if (mob.def.behavior === 'creeper') {
-          if (distSq <= mob.def.attackRangeSq) {
+          // Creepers need LOS too — without it they'd tick the fuse from
+          // around a wall and detonate against the wall. Path of least
+          // surprise: only fuse-up when the player is actually visible.
+          if (
+            distSq <= mob.def.attackRangeSq &&
+            hasLineOfSight(mob.position, ctx.playerPos, ctx.isSolid)
+          ) {
             mob.fuseSec += dtSec;
             if (mob.fuseSec >= 1.5) {
               ctx.damagePlayer(mob.def.attackDamage, mob.position);
               ctx.onCreeperExplode?.(mob.position.x, mob.position.y, mob.position.z);
-              this.mobs.delete(mob.id);
+              this.removeInternal(mob.id);
               return;
             }
           } else {
             mob.fuseSec = Math.max(0, mob.fuseSec - dtSec);
           }
-        } else if (distSq <= mob.def.attackRangeSq && mob.attackCooldownSec === 0) {
+        } else if (
+          distSq <= mob.def.attackRangeSq &&
+          mob.attackCooldownSec === 0 &&
+          // Line-of-sight gate: zombies were punching the player through
+          // a wall, skeletons were sniping through ceilings. Mobs only
+          // attack when there's a clear voxel path from their head to
+          // the player's head.
+          hasLineOfSight(mob.position, ctx.playerPos, ctx.isSolid)
+        ) {
           ctx.damagePlayer(mob.def.attackDamage, mob.position);
           mob.attackCooldownSec = ATTACK_COOLDOWN_SEC;
         }
@@ -1014,22 +1286,78 @@ export class MobWorld {
       mob.velocity.z *= 0.9;
     }
 
-    mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
+    // Buoyancy in water: gentle upward velocity + drag. Vanilla mobs
+    // bob up to the surface instead of sinking to the floor; without
+    // this, cows that walked into a river sat on the riverbed forever.
+    // Lava: same but slower (vanilla parity for mobs that don't burn).
+    // Hoist Math.floor of mob.position once — JIT can't fold the calls
+    // across the isFluid? optional-chain dispatch boundary.
+    const mobBlockX = Math.floor(mob.position.x);
+    const mobBlockY = Math.floor(mob.position.y);
+    const mobBlockZ = Math.floor(mob.position.z);
+    const inFluidHere = ctx.isFluid?.(mobBlockX, mobBlockY, mobBlockZ);
+    if (inFluidHere === 'water') {
+      mob.velocity.y = Math.min(mob.velocity.y + 12 * dtSec, 4);
+      mob.velocity.x *= Math.max(0, 1 - dtSec * 4);
+      mob.velocity.z *= Math.max(0, 1 - dtSec * 4);
+    } else if (inFluidHere === 'lava') {
+      mob.velocity.y = Math.min(mob.velocity.y + 6 * dtSec, 2);
+      mob.velocity.x *= Math.max(0, 1 - dtSec * 6);
+      mob.velocity.z *= Math.max(0, 1 - dtSec * 6);
+      // Lava burn damage. Vanilla MC: most mobs take 4 HP/sec in lava.
+      // Fire-immune mobs (nether natives + the wither / ender dragon)
+      // are unaffected. Without this, mobs walked through lava fields
+      // without harm — easy farming abuse if you funneled them in.
+      // Set.has is faster than the 10-way `||` chain for the dominant
+      // case (non-immune mob, all 10 string compares had to evaluate
+      // before returning false).
+      const fireImmune = FIRE_IMMUNE_MOB_KINDS.has(mob.def.kind);
+      if (!fireImmune) {
+        mob.health -= 4 * dtSec;
+        mob.hurtFlashSec = Math.max(mob.hurtFlashSec, 0.18);
+        if (mob.health <= 0 && mob.dyingSec === 0) mob.dyingSec = 0.35;
+      }
+    } else {
+      mob.velocity.y = Math.max(mob.velocity.y - GRAVITY * dtSec, -TERMINAL_VELOCITY);
+    }
 
-    const dv = {
-      x: mob.velocity.x * dtSec,
-      y: mob.velocity.y * dtSec,
-      z: mob.velocity.z * dtSec,
-    };
+    this.mobDvScratch.x = mob.velocity.x * dtSec;
+    this.mobDvScratch.y = mob.velocity.y * dtSec;
+    this.mobDvScratch.z = mob.velocity.z * dtSec;
     const wasOnGround = mob.onGround;
-    const result = sweepMove(mob.position, mob.def.aabb, dv, ctx.isSolid, 0.6);
+    // Mob step height was 0.6 (matched the player) so 1-block-tall walls
+    // brick-walled every hostile mob — zombies would just shove against
+    // the wall of a player's shelter forever. Vanilla mobs step up 1.0
+    // (vex/horse/etc. step higher; we use a flat 1 here for simplicity).
+    const result = sweepMove(mob.position, mob.def.aabb, this.mobDvScratch, ctx.isSolid, 1.0);
+    // Auto-jump when blocked by a wall while chasing. Step-up handles 1-
+    // block ledges, but anything taller (2-block fence, terrace, snow
+    // pile) needs an actual jump. Vanilla zombies/skeletons hop when
+    // pathing into a wall — without this they grind against the wall
+    // forever instead of trying to climb. Only fires when actively aggro
+    // so peaceful wandering mobs don't bunny-hop pointlessly.
     if (result.hitX) mob.velocity.x = 0;
     if (result.hitY) mob.velocity.y = 0;
     if (result.hitZ) mob.velocity.z = 0;
+    if (
+      (result.hitX || result.hitZ) &&
+      mob.onGround &&
+      this.isAggroTarget(mob) &&
+      ctx.playerPos !== null
+    ) {
+      // Jump after the wall-clear pass so hitY (if any) doesn't wipe the
+      // upward velocity we're about to set.
+      mob.velocity.y = 7.5;
+    }
     mob.onGround = result.onGround;
     if (!wasOnGround && mob.onGround && mob.airborneStartY !== null) {
       const fall = mob.airborneStartY - mob.position.y;
-      if (fall > 3) {
+      // Vanilla MC: chickens, parrots, bats, allay, bees, vexes don't
+      // take fall damage; cats take half. Hoisted NO_FALL_DAMAGE_MOB_KINDS
+      // — Set.has beats the 9-way `||` chain for the dominant
+      // non-immune case.
+      const noFall = NO_FALL_DAMAGE_MOB_KINDS.has(mob.def.kind);
+      if (fall > 3 && !noFall) {
         mob.health -= fall - 3;
         mob.hurtFlashSec = 0.18;
         if (mob.health <= 0) mob.dyingSec = 0.35;

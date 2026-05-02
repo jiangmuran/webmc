@@ -1,5 +1,8 @@
-// Pressure plate triggers. Wood: any entity incl. projectiles. Stone:
-// mobs. Polished blackstone: players only. Heavy/iron: entity count.
+// Pressure plate triggers per wiki:
+//   Wood: any entity incl. projectiles + items (most permissive).
+//   Stone, Polished Blackstone: living only (mobs + players, no items).
+//   Iron (heavy): weighted, signal = ceil(count/10).
+//   Gold (light): weighted, signal = min(count, 15).
 
 export type PlateKind = 'wood' | 'stone' | 'iron' | 'gold' | 'polished_blackstone';
 
@@ -15,15 +18,14 @@ export function signalStrength(q: TriggerQuery): number {
     const any = q.entities.some((e) => e.count > 0);
     return any ? 15 : 0;
   }
-  if (q.plate === 'polished_blackstone') {
-    const players = q.entities.filter((e) => e.kind === 'player').reduce((s, e) => s + e.count, 0);
-    return players > 0 ? 15 : 0;
-  }
-  if (q.plate === 'stone') {
-    const mobs = q.entities
+  // Stone + polished_blackstone: living entities only (mobs + players).
+  // Was treating polished_blackstone as "players only" — per wiki it
+  // matches stone, both trigger on any living entity.
+  if (q.plate === 'stone' || q.plate === 'polished_blackstone') {
+    const living = q.entities
       .filter((e) => e.kind === 'player' || e.kind === 'mob')
       .reduce((s, e) => s + e.count, 0);
-    return mobs > 0 ? 15 : 0;
+    return living > 0 ? 15 : 0;
   }
   // iron or gold: weighted
   const total = q.entities

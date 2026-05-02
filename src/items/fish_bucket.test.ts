@@ -14,8 +14,11 @@ describe('fish bucket', () => {
     expect(releasesAsEntity({ kind: 'tropical_fish', variantTag: 42 }).variantTag).toBe(42);
   });
 
-  it('release yields water bucket not empty', () => {
-    expect(returnsEmptyBucketAfterRelease()).toBe(false);
-    expect(returnsWaterBucketAfterRelease()).toBe(true);
+  it('release places water in world, leaves empty bucket (wiki)', () => {
+    // Wiki: "places a water source block, and spawns the cod back
+    // into the world, leaving an empty bucket in the player's
+    // inventory."
+    expect(returnsEmptyBucketAfterRelease()).toBe(true);
+    expect(returnsWaterBucketAfterRelease()).toBe(false);
   });
 });

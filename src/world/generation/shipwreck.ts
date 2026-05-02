@@ -44,16 +44,19 @@ export type TreasureLoot =
   | 'emerald'
   | 'iron_ingot'
   | 'gold_ingot'
-  | 'lapis'
+  | 'lapis_lazuli'
   | 'diamond'
   | 'experience_bottle';
+// Wiki (minecraft.wiki/w/Shipwreck#Loot) Supply chest pool — Java
+// uses leather_helmet (the Bedrock name 'leather_cap' doesn't exist
+// as an item ID). Same naming fix as buried_treasure / ocean_ruin.
 export type SupplyLoot =
   | 'suspicious_stew'
   | 'wheat'
   | 'carrot'
   | 'potato'
   | 'rotten_flesh'
-  | 'leather_cap'
+  | 'leather_helmet'
   | 'tnt'
   | 'gunpowder';
 
@@ -64,11 +67,15 @@ const MAP_POOL: readonly { item: MapLoot; weight: number }[] = [
   { item: 'book', weight: 5 },
 ];
 
+// Wiki (minecraft.wiki/w/Shipwreck#Treasure_loot): canonical Java
+// item ID is `lapis_lazuli`. The bare `lapis` name (used by some
+// pre-1.13 references) doesn't resolve in modern MC item registries
+// — same bug pattern as mineshaft loot table.
 const TREASURE_POOL: readonly { item: TreasureLoot; weight: number }[] = [
   { item: 'iron_ingot', weight: 90 },
   { item: 'gold_ingot', weight: 10 },
   { item: 'emerald', weight: 40 },
-  { item: 'lapis', weight: 20 },
+  { item: 'lapis_lazuli', weight: 20 },
   { item: 'diamond', weight: 5 },
   { item: 'experience_bottle', weight: 5 },
 ];
@@ -79,7 +86,7 @@ const SUPPLY_POOL: readonly { item: SupplyLoot; weight: number }[] = [
   { item: 'carrot', weight: 15 },
   { item: 'potato', weight: 15 },
   { item: 'rotten_flesh', weight: 10 },
-  { item: 'leather_cap', weight: 5 },
+  { item: 'leather_helmet', weight: 5 },
   { item: 'tnt', weight: 5 },
   { item: 'gunpowder', weight: 5 },
 ];

@@ -26,11 +26,10 @@ describe('barrel open close', () => {
     expect(onPlayerClose(open2).open).toBe(true);
   });
 
-  it('block above up-facing blocks', () => {
-    expect(blockedByBlockAbove(closed, 'stone')).toBe(true);
-  });
-
-  it('side-facing not blocked above', () => {
+  it('barrel never blocked by block above (wiki)', () => {
+    // Wiki: "Unlike chests, the action of opening a barrel is never
+    // prevented." Same answer regardless of facing or what's above.
+    expect(blockedByBlockAbove(closed, 'stone')).toBe(false);
     expect(blockedByBlockAbove({ ...closed, facing: 'north' }, 'stone')).toBe(false);
   });
 });

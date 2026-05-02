@@ -32,9 +32,15 @@ const HINTS: Hint[] = [
 
 export class TutorialState {
   shown = new Set<HintId>();
+  // Reused result array — caller iterates it synchronously inside
+  // fireTutorial and doesn't keep the reference. Most fire() calls
+  // return an empty array (event doesn't match any hint or all
+  // matching hints have been shown).
+  private readonly fireResult: HintId[] = [];
 
   fire(event: string): HintId[] {
-    const out: HintId[] = [];
+    const out = this.fireResult;
+    out.length = 0;
     for (const h of HINTS) {
       if (h.triggerEvent === event && !this.shown.has(h.id)) {
         this.shown.add(h.id);

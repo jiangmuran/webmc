@@ -26,14 +26,20 @@ describe('armadillo', () => {
     expect(a.rolled).toBe(false);
   });
 
-  it('projectile bounces off curled', () => {
+  it('curled damage = (raw - 1) / 2 for all sources (wiki)', () => {
     const a = { rolled: true, rollStartedMs: 0 };
-    expect(incomingDamage(a, 5, 'projectile')).toBe(0);
+    // 5 → (5-1)/2 = 2 — projectile is no longer immune
+    expect(incomingDamage(a, 5, 'projectile')).toBe(2);
+    // 10 → (10-1)/2 = 4.5 — melee no longer flat 50%
+    expect(incomingDamage(a, 10, 'melee')).toBe(4.5);
+    // 9 → (9-1)/2 = 4 — same uniform formula for 'other'
+    expect(incomingDamage(a, 9, 'other')).toBe(4);
   });
 
-  it('curled melee halved', () => {
+  it('curled clamps at 0 for ≤1 damage', () => {
     const a = { rolled: true, rollStartedMs: 0 };
-    expect(incomingDamage(a, 10, 'melee')).toBe(5);
+    expect(incomingDamage(a, 1, 'melee')).toBe(0);
+    expect(incomingDamage(a, 0, 'projectile')).toBe(0);
   });
 
   it('scute cooldown', () => {

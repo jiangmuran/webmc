@@ -42,9 +42,11 @@ describe('totem undying revive', () => {
     ).toBe(null);
   });
 
-  it('effects granted', () => {
+  it('effects match wiki: regen II 45s, fire resist 40s, abs II 5s', () => {
     const e = grantsEffects();
     expect(e.reviveHealth).toBe(1);
-    expect(e.fireResistance).toBeGreaterThan(0);
+    expect(e.regen).toBe(900); // 45s = 900 ticks
+    expect(e.fireResistance).toBe(800); // 40s = 800 ticks
+    expect(e.absorption).toBe(100); // 5s = 100 ticks
   });
 });

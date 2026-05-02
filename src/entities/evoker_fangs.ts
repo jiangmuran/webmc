@@ -1,6 +1,18 @@
-// Evoker fangs spell. An Evoker summons a line of 8 fangs in front of
-// itself; each fang waits 1 tick then strikes upward, dealing 6 HP on
-// whatever entity is standing over it.
+// Evoker fangs spell. An Evoker summons a line of 16 fangs toward
+// the target; each fang has a 1.25-second (25-tick) warmup before
+// striking, dealing 6 HP to whatever entity stands over it (ignores
+// armor).
+//
+// Wiki (minecraft.wiki/w/Evoker#Fang_attack):
+//   - "The evoker summons sixteen fangs in a straight line toward
+//     the target." (line count fixed at 16)
+//   - "Each fang individually rises out of the ground, charges for
+//     1.25 seconds (25 ticks), then strikes downward dealing 6 HP."
+//   - Fangs spawn sequentially along the line so the strikes cascade.
+//
+// Old WARMUP_BASE = 0.05 s gave fang 1 a 0.05 s strike time and fang
+// 16 only 0.8 s — both far below the wiki 1.25 s per-fang charge,
+// effectively turning the line into an instant 16-hit ribbon.
 
 export interface Vec3 {
   x: number;
@@ -15,9 +27,14 @@ export interface FangState {
   ownerId: number;
 }
 
-const WARMUP_BASE = 0.05;
+// Wiki: per-fang charge time is 1.25 s = 25 game ticks.
+export const FANG_CHARGE_SEC = 1.25;
+// Cascade: each subsequent fang spawns ~2 ticks (0.1 s) after the
+// previous, so the line of 16 unfurls over ~1.6 s while each fang
+// independently charges its 1.25 s warmup.
+const FANG_SPAWN_STAGGER_SEC = 0.1;
 
-// Summon 8 fangs in a straight line along the direction vector.
+// Summon a line of fangs along the direction vector toward the target.
 export function summonFangLine(
   origin: Vec3,
   direction: { x: number; z: number },
@@ -27,14 +44,14 @@ export function summonFangLine(
   const dx = direction.x;
   const dz = direction.z;
   const norm = Math.hypot(dx, dz) || 1;
-  for (let step = 1; step <= 8; step++) {
+  for (let step = 1; step <= FANG_LINE_COUNT; step++) {
     fangs.push({
       position: {
         x: Math.floor(origin.x + (dx / norm) * step),
         y: origin.y,
         z: Math.floor(origin.z + (dz / norm) * step),
       },
-      warmupSec: step * WARMUP_BASE,
+      warmupSec: FANG_CHARGE_SEC + (step - 1) * FANG_SPAWN_STAGGER_SEC,
       struck: false,
       ownerId,
     });
@@ -61,3 +78,4 @@ export function tickFang(state: FangState, ctx: FangTickCtx): FangStrike {
 }
 
 export const FANG_DAMAGE = 6;
+export const FANG_LINE_COUNT = 16;

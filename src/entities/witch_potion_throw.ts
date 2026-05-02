@@ -1,5 +1,12 @@
 // Witch behavior. Throws splash potions at targets; drinks self-buff
-// potions when hurt. Cooldown 2.5s between throws.
+// potions when hurt.
+//
+// Wiki (minecraft.wiki/w/Witch): "Each potion chosen by the witch
+// depends on the circumstance and is thrown within ten blocks and
+// in a three-second interval." So THROW_COOLDOWN_MS = 3000 (60
+// ticks). Drinking takes 1.6 seconds (32 ticks). Old throw cooldown
+// was 2500 ms — 17% faster than wiki, letting witches sustain ~30%
+// more thrown potions per minute.
 
 export type OffensivePotion = 'poison' | 'slowness' | 'weakness' | 'harming';
 export type DefensivePotion = 'healing' | 'fire_resistance' | 'water_breathing' | 'speed';
@@ -11,7 +18,7 @@ export interface WitchState {
   drinkingUntilMs: number;
 }
 
-export const THROW_COOLDOWN_MS = 2500;
+export const THROW_COOLDOWN_MS = 3000;
 export const DRINK_DURATION_MS = 1600;
 
 export function makeWitch(): WitchState {

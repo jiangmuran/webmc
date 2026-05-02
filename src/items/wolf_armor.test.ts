@@ -34,11 +34,12 @@ describe('wolf armor', () => {
     expect(r.overflowDamage).toBe(5);
   });
 
-  it('repair consumes scutes until full', () => {
+  it('repair consumes 8 scutes per full restore (wiki: 8 dur/scute)', () => {
+    // Wiki: each armadillo scute heals 8 durability points. 64 / 8 = 8.
     const a = makeWolfArmor();
     damageArmor(a, WOLF_ARMOR_MAX_DURABILITY);
-    const used = repairArmor(a, 10);
-    expect(used).toBe(4); // 4 * 16 = 64
+    const used = repairArmor(a, 16);
+    expect(used).toBe(8);
     expect(a.durability).toBe(WOLF_ARMOR_MAX_DURABILITY);
   });
 

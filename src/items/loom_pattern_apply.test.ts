@@ -36,4 +36,19 @@ describe('loom', () => {
     expect(b.layers.length).toBe(0);
     expect(undoLastLayer(b)).toBeNull();
   });
+
+  it('1.21 flow + guster require their banner_pattern items (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Banner_Pattern): flow + guster are the
+    // 1.21 Trial Chamber additions and require their pattern items.
+    const b = { base: 'white', layers: [] };
+    expect(
+      applyPattern({ banner: b, pattern: 'flow', dye: 'blue', patternItemPresent: false }),
+    ).toBe('missing_pattern_item');
+    expect(
+      applyPattern({ banner: b, pattern: 'flow', dye: 'blue', patternItemPresent: true }),
+    ).toBe('ok');
+    expect(
+      applyPattern({ banner: b, pattern: 'guster', dye: 'gray', patternItemPresent: true }),
+    ).toBe('ok');
+  });
 });

@@ -31,10 +31,18 @@ export class Chunk {
   );
   private readonly _meshDirty = new Set<number>();
   private _version = 0;
+  // Optional callback fired whenever this chunk's meshDirty set grows.
+  // World uses this to maintain a dirty-chunk set so the per-frame
+  // flush doesn't iterate every loaded chunk just to find dirty ones.
+  onMeshDirty: ((self: Chunk) => void) | null = null;
 
   constructor(cx: number, cz: number) {
     this.cx = cx;
     this.cz = cz;
+  }
+
+  private notifyDirty(): void {
+    this.onMeshDirty?.(this);
   }
 
   get sections(): readonly (SubChunk | null)[] {
@@ -52,6 +60,20 @@ export class Chunk {
   section(cy: number): SubChunk | null {
     if (cy < 0 || cy >= CHUNK_SECTIONS) return null;
     return this._sections[cy] ?? null;
+  }
+
+  // Bulk-install a pre-built SubChunk. Used by chunk-save restore to
+  // skip the per-cell palette + bitpack work — restoring a 4096-cell
+  // section via .set() takes ~50ms because each call walks the palette
+  // and rewrites the bit-packed indices. Direct swap-in is microseconds.
+  setSection(cy: number, sc: SubChunk | null): void {
+    if (cy < 0 || cy >= CHUNK_SECTIONS) {
+      throw new RangeError(`Chunk: section index out of range (${cy})`);
+    }
+    this._sections[cy] = sc;
+    this._meshDirty.add(cy);
+    this._version += 1;
+    this.notifyDirty();
   }
 
   ensureSection(cy: number): SubChunk {
@@ -79,15 +101,21 @@ export class Chunk {
     const sc = state === AIR && !this._sections[cy] ? null : this.ensureSection(cy);
     if (!sc) return;
     const localY = localYOf(y);
-    const prev = sc.get(lx, localY, lz);
-    if (prev === state) return;
+    // Use SubChunk._version as the change signal instead of an external
+    // sc.get() probe. The previous code did `sc.get + state-compare`
+    // before sc.set — duplicating the readIndex + palette.get that
+    // SubChunk.set already does internally for its own short-circuit.
+    // Now we let SubChunk.set decide and observe via its version bump.
+    const prevVersion = sc.version;
     sc.set(lx, localY, lz, state);
+    if (sc.version === prevVersion) return;
     this._meshDirty.add(cy);
     if (localY === 0 && cy > 0) this._meshDirty.add(cy - 1);
     if (localY === SUBCHUNK_DIM - 1 && cy < CHUNK_SECTIONS - 1) {
       this._meshDirty.add(cy + 1);
     }
     this._version += 1;
+    this.notifyDirty();
   }
 
   clearMeshDirty(cy?: number): void {
@@ -96,6 +124,9 @@ export class Chunk {
   }
 
   markMeshDirty(cy: number): void {
-    if (cy >= 0 && cy < CHUNK_SECTIONS) this._meshDirty.add(cy);
+    if (cy >= 0 && cy < CHUNK_SECTIONS) {
+      this._meshDirty.add(cy);
+      this.notifyDirty();
+    }
   }
 }

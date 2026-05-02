@@ -50,7 +50,12 @@ export function tickFallingBlock(state: FallingBlock, ctx: FallingTickCtx): Fall
   const by = Math.floor(state.position.y);
   const bz = Math.floor(state.position.z);
   if (ctx.isSolidBelow(bx, by, bz)) {
-    const damage = state.hurtEntities ? Math.min(20, Math.floor(state.fallDistance * 2)) : 0;
+    // Wiki (minecraft.wiki/w/Anvil#Falling_anvils): "The damage is
+    // capped at 40 hp." Wiki (minecraft.wiki/w/Pointed_Dripstone):
+    // falling stalactite damage `fall_dist * 2`, capped at 40. Old
+    // cap was 20 — half the wiki value, identical to the
+    // anvil_fall.ts bug already fixed.
+    const damage = state.hurtEntities ? Math.min(40, Math.floor(state.fallDistance * 2)) : 0;
     return {
       landed: true,
       landedPos: { x: bx, y: by + 1, z: bz },

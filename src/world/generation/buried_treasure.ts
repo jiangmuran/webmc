@@ -27,6 +27,16 @@ export interface TreasureLootEntry {
   guaranteed?: boolean;
 }
 
+// Wiki (minecraft.wiki/w/Buried_Treasure): the chest is the only
+// source of heart_of_the_sea (always 1) and contains a Java loot
+// table of iron/gold/TNT/emerald/diamond/prismarine_crystals,
+// leather_helmet + leather_chestplate, cooked_cod, cooked_salmon,
+// iron_sword, and a potion of Water Breathing.
+//
+// Old table used Bedrock names ('leather_cap' / 'leather_tunic') and
+// was missing iron_sword. AGENT_CHARTER targets Java Edition, so
+// canonicalised to leather_helmet/leather_chestplate and added the
+// missing iron_sword entry.
 export const TREASURE_LOOT: readonly TreasureLootEntry[] = [
   { item: 'webmc:heart_of_the_sea', weight: 1, min: 1, max: 1, guaranteed: true },
   { item: 'webmc:iron_ingot', weight: 20, min: 1, max: 4 },
@@ -35,8 +45,9 @@ export const TREASURE_LOOT: readonly TreasureLootEntry[] = [
   { item: 'webmc:emerald', weight: 5, min: 1, max: 4 },
   { item: 'webmc:diamond', weight: 5, min: 1, max: 2 },
   { item: 'webmc:prismarine_crystals', weight: 5, min: 1, max: 5 },
-  { item: 'webmc:leather_cap', weight: 10, min: 1, max: 1 },
-  { item: 'webmc:leather_tunic', weight: 10, min: 1, max: 1 },
+  { item: 'webmc:leather_helmet', weight: 10, min: 1, max: 1 },
+  { item: 'webmc:leather_chestplate', weight: 10, min: 1, max: 1 },
+  { item: 'webmc:iron_sword', weight: 5, min: 1, max: 1 },
   { item: 'webmc:cooked_cod', weight: 10, min: 2, max: 4 },
   { item: 'webmc:cooked_salmon', weight: 10, min: 2, max: 4 },
   { item: 'webmc:potion_water_breathing', weight: 5, min: 1, max: 1 },

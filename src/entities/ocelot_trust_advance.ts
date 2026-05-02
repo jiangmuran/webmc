@@ -20,7 +20,15 @@ export interface FeedQuery {
   rand: () => number;
 }
 
-const TRUST_FOOD = new Set<string>(['webmc:raw_cod', 'webmc:raw_salmon']);
+// Modern Java Edition (post-1.13) renamed `raw_cod` / `raw_salmon`
+// to just `cod` / `salmon`. The wiki text still says "raw cod /
+// raw salmon" in prose for clarity, but the canonical item IDs are
+// the short forms (matching webmc:cod / webmc:salmon used in
+// siblings ocelot_trust.ts and ocelot_breed_fish.ts). Old code used
+// the legacy IDs and silently rejected webmc:cod / webmc:salmon,
+// so the modern item the player is actually holding never trusted
+// the ocelot.
+const TRUST_FOOD = new Set<string>(['webmc:cod', 'webmc:salmon']);
 
 export function feed(o: Ocelot, q: FeedQuery): 'accepted' | 'rejected' | 'cooldown' | 'trusted' {
   if (!TRUST_FOOD.has(q.item)) return 'rejected';

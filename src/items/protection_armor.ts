@@ -9,11 +9,18 @@ export type ProtectionKind =
 
 export const MAX_EPF = 20;
 
+// Wiki (minecraft.wiki/w/Armor#Damage_protection): EPF per level —
+// Protection 1, Blast Protection 2, Fire Protection 2, Projectile
+// Protection 2, Feather Falling 3. Old per-piece coefficients
+// (1.5/1.25/1.5) under-counted the specialized protections by 25–50%
+// — a single Blast Protection IV chestplate gave 6 EPF here instead
+// of the wiki's 8. Sibling armor_protection.ts already used the
+// correct integer coefficients; this file was the outlier.
 const EPF_BASE: Record<ProtectionKind, number> = {
   protection: 1,
-  projectile_protection: 1.5,
-  fire_protection: 1.25,
-  blast_protection: 1.5,
+  projectile_protection: 2,
+  fire_protection: 2,
+  blast_protection: 2,
 };
 
 export function epf(kind: ProtectionKind, level: number): number {

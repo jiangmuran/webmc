@@ -10,11 +10,12 @@ describe('cake', () => {
     expect(c.bitesRemaining).toBe(FRESH_BITES - 1);
   });
 
-  it('full hunger blocks eat', () => {
+  it('full hunger still allows eat (wiki: cake bypasses fullness)', () => {
+    // Wiki: "Unlike most foods, cake can be eaten with a full hunger bar."
     const c = makeCake();
     const r = eat(c, 20);
-    expect(r.ate).toBe(false);
-    expect(c.bitesRemaining).toBe(FRESH_BITES);
+    expect(r.ate).toBe(true);
+    expect(c.bitesRemaining).toBe(FRESH_BITES - 1);
   });
 
   it('removes on last bite', () => {

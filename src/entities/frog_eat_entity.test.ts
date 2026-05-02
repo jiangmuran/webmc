@@ -10,11 +10,15 @@ describe('frog eat entity', () => {
     expect(canEat('slime')).toBe(false);
   });
 
-  it('warm frog drops pearlescent', () => {
+  it('warm frog drops pearlescent (wiki Froglight#Acquisition)', () => {
     expect(dropFromFrogEat('magma_cube_small', 'warm')).toBe('pearlescent_froglight');
   });
 
-  it('cold frog drops verdant', () => {
+  it('temperate frog drops ochre (wiki Froglight#Acquisition)', () => {
+    expect(dropFromFrogEat('magma_cube_small', 'temperate')).toBe('ochre_froglight');
+  });
+
+  it('cold frog drops verdant (wiki Froglight#Acquisition)', () => {
     expect(dropFromFrogEat('magma_cube_small', 'cold')).toBe('verdant_froglight');
   });
 

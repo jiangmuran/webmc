@@ -7,7 +7,8 @@ describe('banner pattern', () => {
     expect(l?.length).toBe(1);
   });
 
-  it('max 16 layers', () => {
+  it('max 6 layers (wiki)', () => {
+    expect(MAX_LAYERS).toBe(6);
     const full = Array.from({ length: MAX_LAYERS }, () => ({ pattern: 'x', color: 'y' }));
     expect(addLayer(full, { pattern: 'cross', color: 'red' })).toBeUndefined();
   });

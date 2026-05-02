@@ -22,7 +22,14 @@ export function harvestHoneycomb(s: BeehiveState): {
   return { newHive: { ...s, honeyLevel: 0 }, output: ['honeycomb', 'honeycomb', 'honeycomb'] };
 }
 
+// Wiki (minecraft.wiki/w/Bee): "Bees become hostile when their hive is
+// broken (without silk touch) or when honey is harvested without a
+// campfire / smoke beneath the hive." A full but undisturbed hive does
+// NOT anger bees on its own — old code returned true for any full
+// hive, anger-spawning bees while the player just walked past. Keep
+// `broken` as the single trigger here; sibling beehive_honey_harvest.ts
+// already handles the harvest-without-smoke branch in `harvest`.
 export function beesAngered(s: BeehiveState, broken: boolean): boolean {
   if (s.isSmoked) return false;
-  return broken || s.honeyLevel >= MAX_HONEY_LEVEL;
+  return broken;
 }

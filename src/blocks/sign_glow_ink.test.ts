@@ -28,11 +28,11 @@ describe('sign glow ink', () => {
     expect(applyRegularInk(glowing, 'front').frontGlowing).toBe(false);
   });
 
-  it('glowing face lights 8', () => {
-    expect(effectiveLightLevel({ ...base, frontGlowing: true }, 'front')).toBe(8);
-  });
-
-  it('non-glow 0', () => {
+  it('glow ink does NOT emit light from block (wiki)', () => {
+    // Wiki: glow ink only makes text more visible in darkness;
+    // the sign itself emits no light.
+    expect(effectiveLightLevel({ ...base, frontGlowing: true }, 'front')).toBe(0);
+    expect(effectiveLightLevel({ ...base, backGlowing: true }, 'back')).toBe(0);
     expect(effectiveLightLevel(base, 'back')).toBe(0);
   });
 });

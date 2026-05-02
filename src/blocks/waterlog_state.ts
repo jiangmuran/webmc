@@ -2,6 +2,13 @@
 // fences, glass panes, signs, trapdoors) can carry a water flag. The
 // water source acts like a waterlogged cell.
 
+// Wiki: each block's article lists "Waterloggable: yes" in its
+// infobox. minecraft.wiki/w/Waterlogging enumerates the canonical set.
+// Missing from the old set: lantern + soul_lantern (1.17), hanging
+// sign + wall hanging sign (1.20), scaffolding, light_block, coral
+// fans, pointed dripstone, amethyst cluster + buds, small/big
+// dripleaf, kelp/kelp_plant. Sibling waterlogged_state.ts already
+// listed these by full block id; harmonized to the same coverage.
 const WATERLOGGABLE = new Set<string>([
   'slab',
   'stairs',
@@ -12,6 +19,8 @@ const WATERLOGGABLE = new Set<string>([
   'iron_bars',
   'sign',
   'wall_sign',
+  'hanging_sign',
+  'wall_hanging_sign',
   'trapdoor',
   'ladder',
   'conduit',
@@ -24,6 +33,21 @@ const WATERLOGGABLE = new Set<string>([
   'hopper',
   'sea_pickle',
   'lightning_rod',
+  'lantern',
+  'soul_lantern',
+  'scaffolding',
+  'light_block',
+  'coral_fan',
+  'coral_wall_fan',
+  'pointed_dripstone',
+  'amethyst_cluster',
+  'small_amethyst_bud',
+  'medium_amethyst_bud',
+  'large_amethyst_bud',
+  'small_dripleaf',
+  'big_dripleaf',
+  'kelp',
+  'kelp_plant',
 ]);
 
 export function isWaterloggable(shapeTag: string): boolean {

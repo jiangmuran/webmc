@@ -34,9 +34,14 @@ function q(overrides: Partial<DustQuery> = {}): DustQuery {
 }
 
 describe('redstone dust connect', () => {
-  it('isolated dust = dot', () => {
+  it('isolated dust defaults to cross (wiki: + plus sign powers all sides)', () => {
     const c = allConnections(q());
-    expect(dustShape(c)).toBe('dot');
+    expect(dustShape(c)).toBe('cross');
+  });
+
+  it('isolated dust + right-clicked = dot (wiki: toggles, no power)', () => {
+    const c = allConnections(q());
+    expect(dustShape(c, true)).toBe('dot');
   });
 
   it('ns line', () => {

@@ -66,11 +66,30 @@ export class ScoreboardSidebarView {
   render(entries: readonly ScoreLine[]): void {
     if (!this.visible) return;
     const top = displayedEntries(entries);
-    const sig = top.map((e) => `${e.name}:${String(e.score)}`).join('|');
+    // Manual concat — was `.map((e) => ...).join('|')` which allocated
+    // a fresh closure + intermediate array every frame the scoreboard
+    // is visible (the dedup check happens after sig is built).
+    let sig = '';
+    for (let i = 0; i < top.length; i++) {
+      const e = top[i]!;
+      if (i > 0) sig += '|';
+      sig += `${e.name}:${String(e.score)}`;
+    }
     if (sig === this.lastSig) return;
     this.lastSig = sig;
     const nameW = widestName(top);
-    const scoreW = top.reduce((m, e) => Math.max(m, String(e.score).length), 0);
-    this.bodyEl.textContent = top.map((e) => formatLine(e, nameW, scoreW)).join('\n');
+    let scoreW = 0;
+    for (let i = 0; i < top.length; i++) {
+      const e = top[i]!;
+      const len = String(e.score).length;
+      if (len > scoreW) scoreW = len;
+    }
+    let body = '';
+    for (let i = 0; i < top.length; i++) {
+      const e = top[i]!;
+      if (i > 0) body += '\n';
+      body += formatLine(e, nameW, scoreW);
+    }
+    this.bodyEl.textContent = body;
   }
 }

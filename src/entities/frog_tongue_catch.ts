@@ -4,9 +4,18 @@
 export type FrogVariant = 'temperate' | 'warm' | 'cold';
 export type Froglight = 'pearlescent' | 'ochre' | 'verdant';
 
+// Wiki (minecraft.wiki/w/Froglight#Acquisition): canonical mapping is
+//   Warm      → Pearlescent
+//   Temperate → Ochre
+//   Cold      → Verdant
+// A previous "fix" swapped temperate↔warm based on a thematic guess
+// (orange frog ≈ ochre, white frog ≈ pearlescent) — the wiki table
+// reverses that intuition. Siblings frog_eat_entity.ts /
+// frog_light_produce.ts / frog_variant_biome.ts were already fixed
+// in an earlier session; this is the 4th and final sibling.
 export function froglightFor(variant: FrogVariant): Froglight {
-  if (variant === 'temperate') return 'ochre';
   if (variant === 'warm') return 'pearlescent';
+  if (variant === 'temperate') return 'ochre';
   return 'verdant';
 }
 

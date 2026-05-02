@@ -43,4 +43,16 @@ describe('wither rose', () => {
     expect(canPlantWitherRoseOn('webmc:soul_soil')).toBe(true);
     expect(canPlantWitherRoseOn('webmc:stone')).toBe(false);
   });
+
+  it('full canonical surface set (wiki: lush + nether + mangrove)', () => {
+    // Wiki (minecraft.wiki/w/Wither_Rose#Placement) lists 12+
+    // surfaces. Spot-check the ones the old set was missing.
+    expect(canPlantWitherRoseOn('webmc:coarse_dirt')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:mycelium')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:mud')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:rooted_dirt')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:muddy_mangrove_roots')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:moss_block')).toBe(true);
+    expect(canPlantWitherRoseOn('webmc:warped_wart_block')).toBe(true);
+  });
 });

@@ -32,9 +32,24 @@ export class ActiveEffectsHud {
   }
 
   render(effects: readonly EffectEntry[]): void {
-    const sig = effects
-      .map((e) => `${e.id}:${String(e.amplifier)}:${Math.ceil(e.remainingSec)}`)
-      .join('|');
+    // Fast path for the empty case: no .map() + .join() + closure
+    // allocations on every frame the player has no active effects.
+    if (effects.length === 0) {
+      if (this.lastSig === '') return;
+      this.lastSig = '';
+      this.root.replaceChildren();
+      return;
+    }
+    // Manual concat — was `.map((e) => ...).join('|')` which allocated
+    // a fresh closure + intermediate array on every call (and this
+    // fires every frame whenever any effect is active). Same string
+    // output, fewer intermediate allocations.
+    let sig = '';
+    for (let i = 0; i < effects.length; i++) {
+      const e = effects[i]!;
+      if (i > 0) sig += '|';
+      sig += `${e.id}:${String(e.amplifier)}:${Math.ceil(e.remainingSec)}`;
+    }
     if (sig === this.lastSig) return;
     this.lastSig = sig;
     const rows: HTMLDivElement[] = [];

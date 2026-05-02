@@ -1,6 +1,13 @@
-// Warden sonic boom. Charged for 3s when locked on a target, then emits a
-// long-range line attack that deals 30 HP through armor (ignores shields)
-// in a 5-wide beam up to 20 blocks.
+// Warden sonic boom. Charges briefly when locked on a target, then
+// emits a long-range line attack that ignores armor and shields.
+//
+// Wiki (minecraft.wiki/w/Warden#Sonic_boom): "A warden takes 1.7
+// seconds to charge and unleashes the attack ... The attack takes
+// an additional 1.3 seconds to cool down before the warden can use
+// melee attacks again for a total of 3 seconds." So COOLDOWN_SEC
+// is the 1.3 s POST-attack rest, not 5 — the prior 5 s value misread
+// the 10-second target-detect precondition (a separate timer that
+// gates whether sonic is even available) as the post-attack cooldown.
 
 export interface Vec3 {
   x: number;
@@ -18,8 +25,8 @@ export function makeSonicBoom(): SonicBoomState {
   return { chargingSec: 0, cooldownSec: 0, armed: false };
 }
 
-const CHARGE_DURATION = 3;
-const COOLDOWN_SEC = 7;
+const CHARGE_DURATION = 1.7;
+const COOLDOWN_SEC = 1.3;
 
 export interface SonicContext {
   hasTarget: boolean;
@@ -48,7 +55,12 @@ export function tickSonic(state: SonicBoomState, ctx: SonicContext): SonicResult
   return { fired: true, charging: false };
 }
 
-export const SONIC_BOOM_DAMAGE = 30;
+// Wiki (minecraft.wiki/w/Warden): "Ranged: (ignores armor and
+// Protection) Easy 6, Normal 10, Hard 15." Old constant was 30 —
+// that's the Normal MELEE damage, not the sonic ranged damage.
+// Default to the Normal value (10); difficulty scaling is applied
+// at the damage-pipeline boundary.
+export const SONIC_BOOM_DAMAGE = 10;
 export const SONIC_BOOM_RANGE = 20;
 export const SONIC_BOOM_WIDTH = 2; // half-width of beam
 

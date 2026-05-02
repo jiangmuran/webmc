@@ -9,8 +9,13 @@ export interface Shulker {
   lastTeleportMs: number;
 }
 
-export const TELEPORT_COOLDOWN_MS = 10_000;
-export const TELEPORT_RADIUS = 8;
+// Wiki (minecraft.wiki/w/Shulker): teleport range is up to 17 blocks
+// and the cooldown after teleporting is ~5 seconds. Old constants
+// were 8 blocks / 10 seconds — half the wiki range and twice the
+// wiki cooldown, both inconsistent with sibling shulker_teleport.ts
+// which already uses 17 / 5s.
+export const TELEPORT_COOLDOWN_MS = 5_000;
+export const TELEPORT_RADIUS = 17;
 
 export interface TpQuery {
   nowMs: number;

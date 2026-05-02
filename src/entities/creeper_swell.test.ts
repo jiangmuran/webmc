@@ -18,13 +18,27 @@ describe('creeper swell', () => {
     expect(tickSwell(c, 2).exploded).toBe(true);
   });
 
-  it('reverses when player leaves', () => {
+  it('reverses when player leaves cancel range (>7 blocks, wiki)', () => {
     const c = { swellTicks: 10, charged: false };
     tickSwell(c, 10);
     expect(c.swellTicks).toBe(9);
   });
 
-  it('charged swells faster', () => {
+  it('sustains swell within cancel range 3-7 (wiki)', () => {
+    // Already swelling, player at 5 blocks (between ignite=3 and cancel=7).
+    const c = { swellTicks: 10, charged: false };
+    tickSwell(c, 5);
+    expect(c.swellTicks).toBe(11);
+  });
+
+  it('does not start swell beyond ignite range (wiki: must be ≤3)', () => {
+    const c = { swellTicks: 0, charged: false };
+    tickSwell(c, 5); // 5 > IGNITE_RANGE (3) but < CANCEL_RANGE (7)
+    expect(c.swellTicks).toBe(0);
+  });
+
+  it('charged uses the same fuse timer as normal (wiki)', () => {
+    expect(SWELL_CHARGED_TICKS).toBe(SWELL_NORMAL_TICKS);
     const c = { swellTicks: 0, charged: true };
     for (let i = 0; i < SWELL_CHARGED_TICKS - 1; i++) tickSwell(c, 2);
     expect(tickSwell(c, 2).exploded).toBe(true);

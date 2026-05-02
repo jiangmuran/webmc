@@ -33,16 +33,25 @@ export interface MaceSmashQuery {
   base: number; // weapon base damage
 }
 
+// Wiki (minecraft.wiki/w/Mace#Damage): "A successful smash attack
+// causes a mace to deal 4 extra damage for each of the first 3
+// blocks fallen, 2 extra damage for each of the next 5 blocks
+// fallen, and 1 extra damage for each block fallen after that. The
+// Density enchantment can be used to increase smash attack damage
+// by 0.5 per level for each block fallen. The damage a mace smash
+// attack can accumulate from falling is unlimited."
+//
+// Old formula capped fall at 8 blocks (so falling 100 blocks dealt
+// the same bonus as falling 8) and applied Density only to the
+// capped value. Wiki says smash damage is unlimited and Density
+// applies to the full fall distance.
 export function maceSmash(q: MaceSmashQuery): { damage: number; burst: Omit<WindBurst, 'center'> } {
-  // MC formula: damage = base + 4 * fall for first 3 blocks, then 2 * fall.
-  let bonus = 0;
-  const capped = Math.min(q.fallDistance, 8);
-  if (capped <= 3) {
-    bonus = 4 * capped;
-  } else {
-    bonus = 12 + 2 * (capped - 3);
-  }
-  bonus += q.densityLevel * 0.5 * capped;
+  const f = Math.max(0, q.fallDistance);
+  const tier1 = Math.min(f, 3); // first 3 blocks: +4 each
+  const tier2 = Math.max(0, Math.min(f, 8) - 3); // next 5 blocks: +2 each
+  const tier3 = Math.max(0, f - 8); // 9+: +1 each
+  let bonus = tier1 * 4 + tier2 * 2 + tier3 * 1;
+  bonus += q.densityLevel * 0.5 * f;
   return {
     damage: q.base + bonus,
     burst: {

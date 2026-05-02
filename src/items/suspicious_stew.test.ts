@@ -23,11 +23,28 @@ describe('suspicious stew', () => {
     expect(STEW_EFFECTS.wither_rose.id).toBe('wither');
   });
 
-  it('eating restores hunger + saturation + effect', () => {
+  it('eating restores 6 hunger + 7.2 saturation + effect (wiki)', () => {
     const s = new Stub();
     eatSuspiciousStew('cornflower', s);
-    expect(s.hunger).toBeGreaterThan(10);
+    expect(s.hunger).toBe(16); // 10 starting + 6
+    expect(s.saturation).toBeCloseTo(7.2);
     expect(s.effects[0]?.id).toBe('jump_boost');
+  });
+
+  it('weakness duration is 7s per wiki 24w45a', () => {
+    expect(STEW_EFFECTS.tulip.durationSec).toBe(7);
+  });
+
+  it('blindness duration is 11s per wiki 24w45a', () => {
+    expect(STEW_EFFECTS.azure_bluet.durationSec).toBe(11);
+  });
+
+  it('poison duration is 11s per wiki 24w45a', () => {
+    expect(STEW_EFFECTS.lily_of_the_valley.durationSec).toBe(11);
+  });
+
+  it('fire_resistance is 3s per wiki 24w45a', () => {
+    expect(STEW_EFFECTS.allium.durationSec).toBe(3);
   });
 
   it('lily of the valley poisons', () => {

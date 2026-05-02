@@ -1,22 +1,27 @@
-// Farmland trample. Entities landing on farmland from > 0.5 blocks
-// have a chance to trample it back to dirt; crops drop as items.
+// Wiki (minecraft.wiki/w/Farmland): "Any entity that falls onto
+// farmland from a height of more than half a block (0.5 blocks)
+// turns it back into dirt." The trample is DETERMINISTIC at any
+// fall > 0.5 blocks; mass is NOT a wiki factor (a chicken trampling
+// is the same as a horse trampling). Old probabilistic check
+// (33%/66% based on mass) let half of all entity-landings pass
+// through unscathed, so a player jumping in a wheat farm got the
+// crops half the time instead of always-trampling like wiki canon.
+//
+// `entityMass` and `rand` parameters retained for back-compat with
+// existing callers but ignored.
 
 export interface FarmlandQuery {
-  entityMass: number; // kg
+  entityMass: number; // ignored; retained for back-compat
   fallDistance: number; // blocks
-  rand: () => number;
+  rand: () => number; // ignored; retained for back-compat
 }
 
 export const TRAMPLE_MIN_FALL = 0.5;
-export const TRAMPLE_CHANCE_MIN_MASS = 10;
 
 export function willTrample(q: FarmlandQuery): boolean {
-  if (q.fallDistance <= TRAMPLE_MIN_FALL) return false;
-  if (q.entityMass < TRAMPLE_CHANCE_MIN_MASS) {
-    // small entities only trample with falls > 1 block
-    return q.fallDistance > 1 && q.rand() < 0.33;
-  }
-  return q.rand() < 0.66;
+  void q.entityMass;
+  void q.rand;
+  return q.fallDistance > TRAMPLE_MIN_FALL;
 }
 
 // Hydration state: moisture 0..7 decays if no water within 4 blocks.

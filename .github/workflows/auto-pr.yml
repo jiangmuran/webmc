@@ -37,5 +37,5 @@ jobs:
             gh pr edit "$EXISTING" --body "$(printf 'Daily roll-up of dev → main (auto-generated)\n\n%s commits ahead.\n\nMost recent commits:\n%s' "$AHEAD" "$(git log --oneline origin/main..origin/dev | head -20)")"
           else
             BODY=$(printf 'Daily roll-up of dev → main (auto-generated)\n\n%s commits ahead.\n\nMost recent commits:\n%s' "$AHEAD" "$(git log --oneline origin/main..origin/dev | head -20)")
-            gh pr create --base main --head dev --title "Daily merge: dev → main ($AHEAD commits)" --body "$BODY" --label "auto-pr"
+            gh pr create --base main --head dev --title "Daily merge: dev → main ($AHEAD commits)" --body "$BODY"
           fi

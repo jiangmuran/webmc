@@ -8,7 +8,13 @@ export interface Breeze {
   charging: boolean;
 }
 
-export const CHARGE_COOLDOWN_MS = 3000;
+// Wiki (minecraft.wiki/w/Breeze#Wind_charge): "Breezes attempt to
+// shoot a wind charge at a player or enemy within a distance of 16
+// blocks, with a cooldown of 32 game ticks (1.6 seconds) between
+// attempts." Old 1500 ms (30 ticks) was 100 ms short of the wiki's
+// 32-tick window. Sibling breeze_attack.ts already uses 32 ticks
+// (1.6 s); harmonised.
+export const CHARGE_COOLDOWN_MS = 1600;
 export const MAX_HP = 30;
 
 export function makeBreeze(): Breeze {

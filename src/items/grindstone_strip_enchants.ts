@@ -7,6 +7,14 @@ export interface Tool {
 
 const KEEPS_CURSES = ['curse_of_binding', 'curse_of_vanishing'];
 
+// Wiki (minecraft.wiki/w/Grindstone): "Disenchanting a single item:
+// removes non-curse enchantments. Output durability equals input
+// durability." The 5% repair bonus applies ONLY when combining two
+// items in the grindstone (see combineTwoRepair).
+//
+// Old `grind` repaired 5% of max durability on single-item grinds —
+// non-vanilla. Players could double-grind for free repair without
+// needing the two-item combine.
 export function grind(tool: Tool): {
   result: Tool;
   xpDropped: number;
@@ -18,7 +26,7 @@ export function grind(tool: Tool): {
     result: {
       enchants: kept,
       priorWorkPenalty: 0,
-      damage: Math.max(0, tool.damage - Math.floor(tool.maxDurability * 0.05)),
+      damage: tool.damage,
       maxDurability: tool.maxDurability,
     },
     xpDropped: xp,

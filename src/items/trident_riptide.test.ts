@@ -26,8 +26,12 @@ describe('trident riptide', () => {
     );
   });
 
-  it('speed grows with level', () => {
-    expect(launchSpeed(3)).toBeGreaterThan(launchSpeed(1));
+  it('speed = (6 × level) + 3 (wiki: 9 / 15 / 21 for I / II / III)', () => {
+    // Wiki (minecraft.wiki/w/Riptide): trident throws user
+    // (6 × level) + 3 blocks. Old `3 + level * 1.8` was 47% of canon.
+    expect(launchSpeed(1)).toBe(9);
+    expect(launchSpeed(2)).toBe(15);
+    expect(launchSpeed(3)).toBe(21);
   });
 
   it('conflicts with loyalty', () => {

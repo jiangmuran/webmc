@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { canFeed, grantsRegenOnAttack, playDeadDuration } from './axolotl_tropical_food';
+import {
+  canFeed,
+  grantsRegenOnAttack,
+  clearsOnAttack,
+  playDeadDuration,
+} from './axolotl_tropical_food';
 
 describe('axolotl tropical food', () => {
   it('tropical fish feed ok', () => {
@@ -14,13 +19,20 @@ describe('axolotl tropical food', () => {
     expect(grantsRegenOnAttack().some((e) => e.id === 'regeneration')).toBe(true);
   });
 
-  it('mining fatigue also granted', () => {
-    expect(grantsRegenOnAttack().some((e) => e.id === 'mining_fatigue')).toBe(true);
+  it('regen-on-attack does NOT grant Resistance (wiki: Regeneration only)', () => {
+    expect(grantsRegenOnAttack().some((e) => e.id === 'resistance')).toBe(false);
   });
 
-  it('play dead 200-300 ticks', () => {
-    const d = playDeadDuration(() => 0.5);
-    expect(d).toBeGreaterThanOrEqual(200);
-    expect(d).toBeLessThanOrEqual(300);
+  it('mining fatigue is CLEARED, not granted (wiki)', () => {
+    expect(grantsRegenOnAttack().some((e) => e.id === 'mining_fatigue')).toBe(false);
+    expect(clearsOnAttack()).toContain('mining_fatigue');
+  });
+
+  it('play dead exactly 200 ticks (wiki: flat 10s)', () => {
+    // Wiki (minecraft.wiki/w/Axolotl#Behavior): play-dead duration is
+    // a flat 10 seconds (200 ticks). Siblings axolotl_play_dead.ts
+    // and axolotl_revive.ts use the same fixed value.
+    expect(playDeadDuration(() => 0)).toBe(200);
+    expect(playDeadDuration(() => 0.999)).toBe(200);
   });
 });

@@ -53,10 +53,16 @@ export function turnPage(state: LecternState, delta: number): boolean {
   return true;
 }
 
-// Comparator output: 0 when no book, else 1..15.
+// Wiki (minecraft.wiki/w/Lectern): comparator output is 0 with no
+// book, 15 for a 1-page book (the only page IS the last page), and
+// linearly 1..15 across pages of a multi-page book. Old code
+// returned 1 for a 1-page book, conflicting with siblings
+// lectern_book_signal.ts and lectern_eject_book.ts which both
+// special-case 1-page books to 15.
 export function comparatorSignal(state: LecternState): number {
   if (!state.heldBook) return 0;
-  const frac = state.currentPage / Math.max(1, state.heldBook.totalPages - 1);
+  if (state.heldBook.totalPages <= 1) return 15;
+  const frac = state.currentPage / (state.heldBook.totalPages - 1);
   return Math.floor(frac * 14) + 1;
 }
 

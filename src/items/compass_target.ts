@@ -15,7 +15,18 @@ export interface BearingQuery {
   lastDeathPos: { dim: string; x: number; y: number; z: number } | null;
 }
 
-// Returns angle in radians from +Z (north), or null if no valid target.
+// Returns angle in radians from +Z (north), or null if no valid target
+// (the compass spins).
+//
+// Wiki (minecraft.wiki/w/Compass): "A compass points to the world spawn
+// point. In the Nether and the End it spins randomly because there is
+// no world spawn in those dimensions."
+//
+// Old `regular` branch returned a coherent bearing toward overworld
+// spawn coords regardless of the player's dimension — a regular
+// compass in the Nether pointed at the (overworld-mapped) spawn x/z
+// instead of spinning. Sibling compass_needle.ts already encodes
+// `spinsInDimension(dim) = dim !== 'overworld'`.
 export function bearing(c: Compass, q: BearingQuery): number | null {
   let target: { dim: string; x: number; z: number } | null = null;
   if (c.kind === 'lodestone') {
@@ -31,6 +42,7 @@ export function bearing(c: Compass, q: BearingQuery): number | null {
       return null;
     }
   } else {
+    if (q.playerDim !== 'overworld') return null;
     target = { dim: q.playerDim, x: q.worldSpawn.x, z: q.worldSpawn.z };
   }
   const dx = target.x - q.playerPos.x;

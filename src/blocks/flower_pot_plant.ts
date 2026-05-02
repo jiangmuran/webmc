@@ -1,5 +1,10 @@
 // Flower pot. Holds a single plant; right-click with a plantable item
 // inserts it, right-click empty removes it.
+//
+// Wiki (minecraft.wiki/w/Flower_Pot): canonical 35+ pottable items.
+// Old set was missing torchflower (1.20), pale_oak_sapling (1.21),
+// and the eyeblossoms (1.22 pale garden) — three of the most
+// recently-added small plants. Aligned with sibling flower_pot.ts.
 
 const POTTABLE = new Set<string>([
   'webmc:oak_sapling',
@@ -10,6 +15,7 @@ const POTTABLE = new Set<string>([
   'webmc:dark_oak_sapling',
   'webmc:mangrove_propagule',
   'webmc:cherry_sapling',
+  'webmc:pale_oak_sapling',
   'webmc:fern',
   'webmc:dandelion',
   'webmc:poppy',
@@ -24,6 +30,9 @@ const POTTABLE = new Set<string>([
   'webmc:cornflower',
   'webmc:lily_of_the_valley',
   'webmc:wither_rose',
+  'webmc:torchflower',
+  'webmc:closed_eyeblossom',
+  'webmc:open_eyeblossom',
   'webmc:cactus',
   'webmc:bamboo',
   'webmc:crimson_fungus',

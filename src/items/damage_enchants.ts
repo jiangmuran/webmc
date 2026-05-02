@@ -34,21 +34,35 @@ export function mitigatedDamage(q: DamageReductionQuery): number {
   return q.incomingDamage * (1 - reduction);
 }
 
-// Thorns: each level gives a chance to reflect 1-4 damage when hit,
-// capped at 1 piece providing per hit. 15% chance per level.
+// Wiki (minecraft.wiki/w/Thorns): "Each piece independently has a
+// Level × 15% chance of the wearer inflicting 1 to 5 damage on
+// anyone who attacks them... Multiple worn armor items with the
+// Thorns enchantment do stack. Each piece confers an independent
+// chance to deal damage. However, due to the invulnerability
+// timer, the total damage is capped at the highest individual
+// amount of damage dealt this way."
+//
+// Old code:
+//   - took only the highest Thorns level for chance (rather than
+//     rolling each piece independently), so 4 pieces of Thorns III
+//     had the same activation chance as 1 piece (45%).
+//   - rolled 1..4 damage; wiki range is 1..5.
+// Now per-piece independent rolls with the i-frame max-of-rolls
+// cap and the wiki 1..5 damage range.
 export interface ThornsQuery {
   armor: readonly ArmorPiece[];
   rng: () => number;
 }
 
 export function thornsReflection(q: ThornsQuery): number {
-  let bestLevel = 0;
+  let best = 0;
   for (const piece of q.armor) {
     const lvl = hasEnchant(piece.stack, 'thorns');
-    if (lvl > bestLevel) bestLevel = lvl;
+    if (lvl <= 0) continue;
+    const chance = Math.min(1, 0.15 * lvl);
+    if (q.rng() >= chance) continue;
+    const dmg = 1 + Math.floor(q.rng() * 5);
+    if (dmg > best) best = dmg;
   }
-  if (bestLevel === 0) return 0;
-  const chance = 0.15 * bestLevel;
-  if (q.rng() >= chance) return 0;
-  return 1 + Math.floor(q.rng() * 4);
+  return best;
 }

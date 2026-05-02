@@ -18,6 +18,11 @@ export function availablePrimaries(c: BeaconCtx): PrimaryEffect[] {
   return [];
 }
 
+// Wiki: tier 1 → 20 blocks, tier 4 → 50 blocks. Formula: tier * 10 + 10.
+// Was `(tier - 1) * 10 + 10` which gave 10/20/30/40 — off by 10 across
+// all tiers. The other two beacon modules (beacon_effect_pyramid,
+// beacon_pyramid_levels) had it right.
 export function effectRangeBlocks(c: BeaconCtx): number {
-  return 10 + Math.max(0, c.tier - 1) * 10;
+  if (c.tier <= 0) return 0;
+  return c.tier * 10 + 10;
 }

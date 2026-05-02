@@ -3,7 +3,9 @@ export const GROW_CHANCE = 1 / 16;
 
 export interface Column {
   currentHeight: number;
-  supportedBy: 'dirt' | 'grass_block' | 'sand' | 'red_sand' | 'other';
+  // Wiki: sugar cane can be planted on dirt, grass_block, sand, red_sand,
+  // moss_block (1.17+), and mud (1.19+) — all need adjacent water.
+  supportedBy: 'dirt' | 'grass_block' | 'sand' | 'red_sand' | 'moss_block' | 'mud' | 'other';
   adjacentWater: boolean;
 }
 

@@ -56,10 +56,14 @@ describe('pillager patrol spawn rate', () => {
     ).toBe(false);
   });
 
-  it('patrol size 2-5', () => {
-    const s = patrolSize(() => 0.5);
-    expect(s).toBeGreaterThanOrEqual(2);
-    expect(s).toBeLessThanOrEqual(5);
+  it('patrol size 1-5 (wiki: Java Edition range)', () => {
+    expect(patrolSize(() => 0)).toBe(1);
+    expect(patrolSize(() => 0.99999)).toBe(5);
+    for (let i = 0; i < 50; i++) {
+      const s = patrolSize(Math.random);
+      expect(s).toBeGreaterThanOrEqual(1);
+      expect(s).toBeLessThanOrEqual(5);
+    }
   });
 
   it('captain always present', () => {

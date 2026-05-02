@@ -36,11 +36,18 @@ describe('crop', () => {
     ).toBe(false);
   });
 
-  it('beetroot bone meal small stages', () => {
+  it('beetroot bone meal: 0 or 1 with 75% chance of +1 (wiki)', () => {
+    // Wiki minecraft.wiki/w/Beetroot: "Bone meal has a 75% chance to
+    // advance growth by one stage." Outcome is 0 or 1, not 1-3.
+    expect(boneMealStages('beetroot', () => 0.1)).toBe(1); // below 0.75 → +1
+    expect(boneMealStages('beetroot', () => 0.9)).toBe(0); // above 0.75 → no-op
+  });
+
+  it('non-beetroot bone meal: 2-5 stages per wiki', () => {
     for (let i = 0; i < 20; i++) {
-      const n = boneMealStages('beetroot', () => i / 20);
-      expect(n).toBeGreaterThanOrEqual(1);
-      expect(n).toBeLessThanOrEqual(3);
+      const n = boneMealStages('wheat', () => i / 20);
+      expect(n).toBeGreaterThanOrEqual(2);
+      expect(n).toBeLessThanOrEqual(5);
     }
   });
 

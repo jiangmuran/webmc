@@ -11,16 +11,29 @@ export type WolfVariant =
   | 'striped'
   | 'snowy';
 
+// Wiki (minecraft.wiki/w/Wolf#Variants): biome → variant mapping —
+//   taiga                    → pale (default)
+//   forest                   → woods
+//   snowy_taiga              → ashen
+//   old_growth_pine_taiga    → black
+//   old_growth_spruce_taiga  → chestnut
+//   sparse_jungle            → rusty
+//   savanna_plateau          → spotted
+//   wooded_badlands          → striped
+//   grove                    → snowy
+// Old map had ashen ↔ striped, rusty ↔ spotted, ashen ↔ snowy
+// swapped, and used `savanna` (not a wolf biome) instead of
+// `sparse_jungle` for rusty.
 const BIOME_VARIANT: Record<string, WolfVariant> = {
   taiga: 'pale',
   forest: 'woods',
-  wooded_badlands: 'ashen',
+  snowy_taiga: 'ashen',
   old_growth_pine_taiga: 'black',
   old_growth_spruce_taiga: 'chestnut',
-  savanna_plateau: 'rusty',
-  savanna: 'spotted',
-  snowy_taiga: 'snowy',
-  grove: 'striped',
+  sparse_jungle: 'rusty',
+  savanna_plateau: 'spotted',
+  wooded_badlands: 'striped',
+  grove: 'snowy',
 };
 
 export function variantForBiome(biome: string): WolfVariant {

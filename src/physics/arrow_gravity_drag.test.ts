@@ -24,4 +24,11 @@ describe('arrow gravity drag', () => {
   it('tick preserves water flag', () => {
     expect(applyArrowTick({ vx: 0, vy: 0, vz: 0, inWater: true }).inWater).toBe(true);
   });
+
+  it('drag-first then gravity (wiki: V_1.y = 0.99·V_0.y − 0.05)', () => {
+    const a = applyArrowTick({ vx: 0, vy: 0, vz: 0, inWater: false });
+    expect(a.vy).toBeCloseTo(-0.05, 10);
+    const b = applyArrowTick({ vx: 0, vy: 2, vz: 0, inWater: false });
+    expect(b.vy).toBeCloseTo(0.99 * 2 - 0.05, 10);
+  });
 });

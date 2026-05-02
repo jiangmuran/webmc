@@ -8,9 +8,11 @@ import {
 } from './trial_spawner';
 
 describe('trial spawner', () => {
-  it('cap scales with players', () => {
+  it('cap scales 2/3/4 for 1/2/3 players (wiki default Spawning values)', () => {
     expect(activeMobCap(makeTrialSpawner(1))).toBe(2);
-    expect(activeMobCap(makeTrialSpawner(3))).toBe(6);
+    expect(activeMobCap(makeTrialSpawner(2))).toBe(3);
+    expect(activeMobCap(makeTrialSpawner(3))).toBe(4);
+    expect(activeMobCap(makeTrialSpawner(4))).toBe(5);
   });
 
   it('cap floor 1', () => {

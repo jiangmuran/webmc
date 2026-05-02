@@ -27,47 +27,80 @@ const DEFAULTS: PerfMonitorOptions = {
 
 export class PerfMonitor {
   private readonly opts: PerfMonitorOptions;
-  private readonly samples: number[] = []; // dtSec per frame, oldest first
-  private readonly times: number[] = []; // timestamp per frame, parallel array
+  // Ring buffer over a fixed window so we never shift() — shift on a
+  // 200-element array runs O(N) per frame, plus the per-frame
+  // [...samples].sort() is O(N log N) — together ~2K ops/frame just to
+  // know the p95 frame time. Replaced with O(1) push and an O(N log N)
+  // sort that runs only when we actually need a fresh p95 (every
+  // re-evaluation, throttled to 4 Hz).
+  private readonly samples: number[] = [];
+  private readonly times: number[] = [];
+  private head = 0;
+  private size = 0;
+  private cap: number;
+  private sortScratch: Float64Array;
   private _quality: number;
   private _cumulativeSec = 0;
   private conditionStartSec: number | null = null;
   private conditionKind: 'up' | 'down' | null = null;
+  private p95Cache = 0;
+  private p95CacheAt = -Infinity;
+  private static readonly P95_REFRESH_SEC = 0.25;
 
   constructor(opts: Partial<PerfMonitorOptions> = {}) {
     this.opts = { ...DEFAULTS, ...opts };
     this._quality = this.opts.startQuality;
+    // Cap = window/expected-frame-time, with 2x headroom for slow devices.
+    // 240 samples at 60fps = 4s of samples — covers 3s window + 33% slack.
+    this.cap = Math.max(60, Math.ceil(this.opts.windowSec * 120));
+    this.samples = new Array<number>(this.cap).fill(0);
+    this.times = new Array<number>(this.cap).fill(0);
+    this.sortScratch = new Float64Array(this.cap);
   }
 
   get quality(): number {
     return this._quality;
   }
 
-  // Returns the current p95 frame time; the 95th percentile of recorded
-  // samples, or 0 if none.
   p95(): number {
-    if (this.samples.length === 0) return 0;
-    const sorted = [...this.samples].sort((a, b) => a - b);
-    const idx = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
-    return sorted[idx] ?? 0;
+    if (this.size === 0) return 0;
+    // Cached p95 — fresh enough most frames (we only need quality decisions
+    // at human-perceptible cadence, not per-frame).
+    if (this._cumulativeSec - this.p95CacheAt < PerfMonitor.P95_REFRESH_SEC) {
+      return this.p95Cache;
+    }
+    // Evict aged-out samples first so they don't enter the sort.
+    while (this.size > 0) {
+      const oldestIdx = (this.head - this.size + this.cap) % this.cap;
+      // ring-buffer indices are always in range; `!` over `?? 0` for
+      // the TS narrowing artifact.
+      const oldestT = this.times[oldestIdx]!;
+      if (this._cumulativeSec - oldestT > this.opts.windowSec) {
+        this.size--;
+      } else break;
+    }
+    if (this.size === 0) return 0;
+    for (let i = 0; i < this.size; i++) {
+      const idx = (this.head - this.size + i + this.cap) % this.cap;
+      this.sortScratch[i] = this.samples[idx]!;
+    }
+    // Subarray view + in-place sort: avoids allocating a fresh sorted copy.
+    const view = this.sortScratch.subarray(0, this.size);
+    view.sort();
+    const idx = Math.min(this.size - 1, Math.floor(this.size * 0.95));
+    this.p95Cache = view[idx]!;
+    this.p95CacheAt = this._cumulativeSec;
+    return this.p95Cache;
   }
 
-  // Feed one frame. dtSec = actual frame time. Returns true if quality changed.
   tick(dtSec: number): boolean {
     this._cumulativeSec += dtSec;
-    this.samples.push(dtSec);
-    this.times.push(this._cumulativeSec);
-    // Drop samples older than windowSec.
-    while (
-      this.times.length > 0 &&
-      this._cumulativeSec - (this.times[0] ?? 0) > this.opts.windowSec
-    ) {
-      this.samples.shift();
-      this.times.shift();
-    }
+    this.samples[this.head] = dtSec;
+    this.times[this.head] = this._cumulativeSec;
+    this.head = (this.head + 1) % this.cap;
+    if (this.size < this.cap) this.size++;
     const p = this.p95();
-    const changed = this.evaluate(p);
-    return changed;
+    return this.evaluate(p);
   }
 
   private evaluate(p: number): boolean {
@@ -98,10 +131,14 @@ export class PerfMonitor {
   }
 
   reset(): void {
-    this.samples.length = 0;
-    this.times.length = 0;
+    this.samples.fill(0);
+    this.times.fill(0);
+    this.head = 0;
+    this.size = 0;
     this._cumulativeSec = 0;
     this.conditionStartSec = null;
     this.conditionKind = null;
+    this.p95Cache = 0;
+    this.p95CacheAt = -Infinity;
   }
 }

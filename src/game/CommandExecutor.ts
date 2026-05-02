@@ -1144,6 +1144,987 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
     ctx.broadcast('Natural HP regen enabled.', '#80ff80');
     return;
   }
+  if (head === 'zoo') {
+    if (!ctx.fillBlocks || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const KINDS = [
+      'pig',
+      'cow',
+      'sheep',
+      'chicken',
+      'wolf',
+      'horse',
+      'cat',
+      'rabbit',
+      'goat',
+      'fox',
+      'bee',
+      'parrot',
+    ];
+    for (let i = 0; i < KINDS.length; i++) {
+      const ox = (i % 4) * 8;
+      const oz = Math.floor(i / 4) * 8;
+      // Fenced 6×6 enclosure.
+      for (let dx = 0; dx <= 5; dx++) {
+        ctx.setBlock?.(px + ox + dx, py, pz + oz, 'oak_fence');
+        ctx.setBlock?.(px + ox + dx, py, pz + oz + 5, 'oak_fence');
+      }
+      for (let dz = 0; dz <= 5; dz++) {
+        ctx.setBlock?.(px + ox, py, pz + oz + dz, 'oak_fence');
+        ctx.setBlock?.(px + ox + 5, py, pz + oz + dz, 'oak_fence');
+      }
+      ctx.fillBlocks(
+        px + ox + 1,
+        py - 1,
+        pz + oz + 1,
+        px + ox + 4,
+        py - 1,
+        pz + oz + 4,
+        'grass_block',
+      );
+      const kind = KINDS[i] ?? 'pig';
+      for (let m = 0; m < 2; m++) ctx.summon(kind, px + ox + 2.5, py, pz + oz + 2.5);
+    }
+    ctx.broadcast(`Built zoo with ${String(KINDS.length)} enclosures`, '#80ff80');
+    return;
+  }
+  if (head === 'parkour') {
+    if (!ctx.setBlock) return;
+    const len = parseInt(args[0] ?? '20', 10);
+    if (!Number.isFinite(len) || len < 4 || len > 64) {
+      ctx.broadcast('Usage: /parkour <length=20>', '#ff8080');
+      return;
+    }
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let cy = py;
+    for (let i = 0; i < len; i++) {
+      const dz = i * 3;
+      const dx = (i % 3) - 1;
+      cy = py + Math.floor(Math.sin(i * 0.5) * 3);
+      ctx.setBlock(px + dx, cy, pz + dz, 'oak_planks');
+    }
+    ctx.broadcast(`Parkour course: ${String(len)} jumps along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'lighthouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone_brick base, 3×3 hollow tower 16 high, glass top + sea_lantern beacon.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py, pz + 2, 'stone_bricks');
+    for (let h = 1; h <= 16; h++) {
+      ctx.fillBlocks(px - 1, py + h, pz - 1, px + 1, py + h, pz + 1, 'stone_bricks');
+      ctx.setBlock(px, py + h, pz, 'air');
+    }
+    // Hollow top room with glass walls.
+    ctx.fillBlocks(px - 2, py + 17, pz - 2, px + 2, py + 19, pz + 2, 'glass');
+    ctx.fillBlocks(px - 1, py + 17, pz - 1, px + 1, py + 19, pz + 1, 'air');
+    ctx.setBlock(px, py + 18, pz, 'sea_lantern');
+    // Cap and door.
+    ctx.fillBlocks(px - 2, py + 20, pz - 2, px + 2, py + 20, pz + 2, 'stone_bricks');
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built lighthouse (20 high) with sea_lantern beacon', '#80ff80');
+    return;
+  }
+  if (head === 'igloo') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×7 ice/snow dome.
+    const r = 3;
+    for (let dy = 0; dy <= r; dy++) {
+      const ringR = Math.floor(Math.sqrt(r * r - dy * dy) + 0.5);
+      for (let dx = -ringR; dx <= ringR; dx++) {
+        for (let dz = -ringR; dz <= ringR; dz++) {
+          const d = Math.round(Math.sqrt(dx * dx + dy * dy + dz * dz));
+          if (d === ringR && dy === r && (dx !== 0 || dz !== 0)) continue;
+          if (Math.abs(d - r) <= 0.6) {
+            const block = dy < r - 1 ? 'snow_block' : 'ice';
+            ctx.setBlock(px + dx, py + dy, pz + dz, block);
+          }
+        }
+      }
+    }
+    // Hollow interior.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 2, pz + 2, 'air');
+    // Floor + door + furnace + bed.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'snow_block');
+    ctx.setBlock(px, py, pz - 3, 'air');
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px - 1, py, pz + 1, 'red_bed');
+    ctx.setBlock(px + 1, py, pz - 1, 'furnace');
+    ctx.setBlock(px, py + 2, pz, 'lantern');
+    ctx.broadcast('Built igloo with bed, furnace and lantern', '#80ff80');
+    return;
+  }
+  if (head === 'skyscraper') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const floors = Math.max(2, Math.min(20, parseInt(args[0] ?? '8', 10)));
+    const w = 7;
+    // Build floors of glass walls + iron pillar corners + smooth_stone floors.
+    for (let f = 0; f < floors; f++) {
+      const y = py + f * 4;
+      ctx.fillBlocks(px - w, y, pz - w, px + w, y, pz + w, 'smooth_stone');
+      // 4 walls of glass at each floor.
+      for (let h = 1; h <= 3; h++) {
+        ctx.fillBlocks(px - w, y + h, pz - w, px + w, y + h, pz - w, 'glass');
+        ctx.fillBlocks(px - w, y + h, pz + w, px + w, y + h, pz + w, 'glass');
+        ctx.fillBlocks(px - w, y + h, pz - w, px - w, y + h, pz + w, 'glass');
+        ctx.fillBlocks(px + w, y + h, pz - w, px + w, y + h, pz + w, 'glass');
+      }
+      // Corner iron pillars.
+      for (let h = 0; h <= 3; h++) {
+        ctx.setBlock(px - w, y + h, pz - w, 'iron_block');
+        ctx.setBlock(px + w, y + h, pz - w, 'iron_block');
+        ctx.setBlock(px - w, y + h, pz + w, 'iron_block');
+        ctx.setBlock(px + w, y + h, pz + w, 'iron_block');
+      }
+    }
+    ctx.fillBlocks(
+      px - w,
+      py + floors * 4,
+      pz - w,
+      px + w,
+      py + floors * 4,
+      pz + w,
+      'smooth_stone',
+    );
+    // Door at base.
+    ctx.setBlock(px, py + 1, pz - w, 'air');
+    ctx.setBlock(px, py + 2, pz - w, 'air');
+    ctx.broadcast(`Built ${String(floors)}-floor skyscraper`, '#80ff80');
+    return;
+  }
+  if (head === 'treehouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Tree trunk 8 high, spruce-like crown, then 5×5 oak_planks platform inside.
+    for (let h = 0; h < 12; h++) ctx.setBlock(px, py + h, pz, 'oak_log');
+    // Leaf canopy at top.
+    for (let dx = -3; dx <= 3; dx++) {
+      for (let dz = -3; dz <= 3; dz++) {
+        for (let dy = 0; dy <= 3; dy++) {
+          if (dx * dx + dz * dz + dy * dy <= 12) {
+            ctx.setBlock(px + dx, py + 9 + dy, pz + dz, 'oak_leaves');
+          }
+        }
+      }
+    }
+    // Platform at h=6.
+    ctx.fillBlocks(px - 2, py + 6, pz - 2, px + 2, py + 6, pz + 2, 'oak_planks');
+    ctx.fillBlocks(px - 2, py + 7, pz - 2, px + 2, py + 9, pz + 2, 'air');
+    ctx.setBlock(px, py + 6, pz, 'oak_log');
+    // Walls + door + roof.
+    for (let h = 7; h <= 8; h++) {
+      ctx.setBlock(px - 2, py + h, pz - 2, 'oak_planks');
+      ctx.setBlock(px + 2, py + h, pz - 2, 'oak_planks');
+      ctx.setBlock(px - 2, py + h, pz + 2, 'oak_planks');
+      ctx.setBlock(px + 2, py + h, pz + 2, 'oak_planks');
+    }
+    ctx.fillBlocks(px - 2, py + 9, pz - 2, px + 2, py + 9, pz + 2, 'oak_planks');
+    // Ladder up trunk.
+    for (let h = 0; h < 6; h++) ctx.setBlock(px + 1, py + h, pz, 'ladder');
+    ctx.setBlock(px + 1, py + 6, pz, 'air'); // entrance
+    ctx.broadcast('Built treehouse with ladder and leaf crown', '#80ff80');
+    return;
+  }
+  if (head === 'windmill') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Stone base (4×4) + oak shaft 8 high + 4 wool blades.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 1, py + 2, pz + 1, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz - 1, px, py + 1, pz, 'air');
+    for (let h = 3; h <= 10; h++) ctx.setBlock(px, py + h, pz, 'oak_log');
+    // 4 blades extending from hub.
+    for (let i = 1; i <= 4; i++) {
+      ctx.setBlock(px + i, py + 10, pz, 'wool_white');
+      ctx.setBlock(px - i, py + 10, pz, 'wool_white');
+      ctx.setBlock(px, py + 10, pz + i, 'wool_white');
+      ctx.setBlock(px, py + 10, pz - i, 'wool_white');
+    }
+    ctx.setBlock(px, py + 1, pz - 2, 'air'); // door
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built windmill (stone base + oak shaft + wool blades)', '#80ff80');
+    return;
+  }
+  if (head === 'bridge') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(80, parseInt(args[0] ?? '20', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Stone slab walkway 3 wide along +Z, oak fence rails.
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py, pz + len - 1, 'air');
+    for (let i = 0; i < len; i += 3) {
+      ctx.setBlock(px - 2, py, pz + i, 'oak_fence');
+      ctx.setBlock(px + 2, py, pz + i, 'oak_fence');
+      if (i % 6 === 0) {
+        ctx.setBlock(px - 2, py + 1, pz + i, 'lantern');
+        ctx.setBlock(px + 2, py + 1, pz + i, 'lantern');
+      }
+    }
+    ctx.broadcast(`Built ${String(len)}-block bridge along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'pillar') {
+    if (!ctx.setBlock) return;
+    const h = Math.max(2, Math.min(64, parseInt(args[0] ?? '10', 10)));
+    const block = args[1] ?? 'stone_bricks';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let i = 0; i < h; i++) ctx.setBlock(px, py + i, pz, block);
+    ctx.broadcast(`Pillar of ${String(h)} ${block}`, '#80ff80');
+    return;
+  }
+  if (head === 'road') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(120, parseInt(args[0] ?? '40', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Gravel path 3 wide with grass shoulder.
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'gravel');
+    ctx.fillBlocks(px - 2, py - 1, pz, px - 2, py - 1, pz + len - 1, 'grass_block');
+    ctx.fillBlocks(px + 2, py - 1, pz, px + 2, py - 1, pz + len - 1, 'grass_block');
+    // Lantern posts every 8 blocks.
+    for (let i = 4; i < len; i += 8) {
+      ctx.setBlock(px - 3, py, pz + i, 'oak_fence');
+      ctx.setBlock(px - 3, py + 1, pz + i, 'lantern');
+      ctx.setBlock(px + 3, py, pz + i, 'oak_fence');
+      ctx.setBlock(px + 3, py + 1, pz + i, 'lantern');
+    }
+    ctx.broadcast(`Built ${String(len)}-block road along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'tunnel') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const len = Math.max(4, Math.min(120, parseInt(args[0] ?? '40', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 3 wide × 3 tall opening with torch every 6 blocks.
+    ctx.fillBlocks(px - 1, py, pz, px + 1, py + 2, pz + len - 1, 'air');
+    ctx.fillBlocks(px - 1, py - 1, pz, px + 1, py - 1, pz + len - 1, 'cobblestone');
+    for (let i = 2; i < len; i += 6) ctx.setBlock(px - 1, py + 2, pz + i, 'torch');
+    ctx.broadcast(`Cleared ${String(len)}-block tunnel along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'aquarium') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×5×7 glass tank filled with water + a few coral.
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 4, pz + 3, 'glass');
+    ctx.fillBlocks(px - 2, py + 1, pz - 2, px + 2, py + 3, pz + 2, 'water');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py, pz + 2, 'sand');
+    if (ctx.summon) {
+      for (let i = 0; i < 4; i++) ctx.summon('cod', px - 1 + i, py + 2, pz);
+    }
+    ctx.setBlock(px - 1, py, pz - 1, 'tube_coral_block');
+    ctx.setBlock(px + 1, py, pz + 1, 'fire_coral_block');
+    ctx.setBlock(px + 1, py, pz - 1, 'horn_coral_block');
+    ctx.setBlock(px - 1, py, pz + 1, 'brain_coral_block');
+    ctx.broadcast('Built 7×5×7 aquarium with sand and coral', '#80ff80');
+    return;
+  }
+  if (head === 'spiralstaircase' || head === 'spiral') {
+    if (!ctx.setBlock) return;
+    const turns = Math.max(1, Math.min(10, parseInt(args[0] ?? '3', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const r = 3;
+    let h = 0;
+    for (let t = 0; t < turns; t++) {
+      for (let i = 0; i < 16; i++) {
+        const a = (i / 16) * Math.PI * 2;
+        const x = px + Math.round(Math.cos(a) * r);
+        const z = pz + Math.round(Math.sin(a) * r);
+        ctx.setBlock(x, py + h, z, 'stone_bricks');
+        ctx.setBlock(x, py + h + 1, z, 'air');
+        ctx.setBlock(x, py + h + 2, z, 'air');
+        h++;
+      }
+    }
+    ctx.broadcast(`Spiral staircase: ${String(turns)} turns up`, '#80ff80');
+    return;
+  }
+  if (head === 'platform') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(2, Math.min(20, parseInt(args[0] ?? '5', 10)));
+    const block = args[1] ?? 'stone_bricks';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx * dx + dz * dz <= r * r) {
+          ctx.setBlock(px + dx, py - 1, pz + dz, block);
+          n++;
+        }
+      }
+    }
+    ctx.broadcast(`Platform: ${String(n)} ${block} blocks (r=${String(r)})`, '#80ff80');
+    return;
+  }
+  if (head === 'clearfloor') {
+    if (!ctx.fillBlocks) return;
+    const r = Math.max(2, Math.min(16, parseInt(args[0] ?? '6', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Flatten the floor and clear up 3 blocks.
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx * dx + dz * dz <= r * r) {
+          ctx.setBlock?.(px + dx, py - 1, pz + dz, 'grass_block');
+          for (let h = 0; h < 3; h++) ctx.setBlock?.(px + dx, py + h, pz + dz, 'air');
+          n++;
+        }
+      }
+    }
+    ctx.broadcast(`Cleared floor (r=${String(r)}, ${String(n)} cells)`, '#80ff80');
+    return;
+  }
+  if (head === 'wall') {
+    if (!ctx.fillBlocks) return;
+    const len = Math.max(2, Math.min(80, parseInt(args[0] ?? '20', 10)));
+    const h = Math.max(2, Math.min(20, parseInt(args[1] ?? '4', 10)));
+    const block = args[2] ?? 'cobblestone';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px, py, pz, px, py + h - 1, pz + len - 1, block);
+    ctx.broadcast(`Wall: ${String(len)}×${String(h)} ${block} along +Z`, '#80ff80');
+    return;
+  }
+  if (head === 'dome') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(3, Math.min(16, parseInt(args[0] ?? '6', 10)));
+    const block = args[1] ?? 'glass';
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dy = 0; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        for (let dz = -r; dz <= r; dz++) {
+          const d = dx * dx + dy * dy + dz * dz;
+          if (d <= r * r && d >= (r - 1) * (r - 1)) {
+            ctx.setBlock(px + dx, py + dy, pz + dz, block);
+            n++;
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Dome: r=${String(r)} ${block} (${String(n)} cells)`, '#80ff80');
+    return;
+  }
+  if (head === 'barn') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×7 oak barn with hay loft + 4 stalls + animals.
+    ctx.fillBlocks(px - 4, py, pz - 3, px + 4, py + 5, pz + 3, 'oak_planks');
+    ctx.fillBlocks(px - 3, py, pz - 2, px + 3, py + 3, pz + 2, 'air'); // hollow ground floor
+    ctx.fillBlocks(px - 3, py + 4, pz - 2, px + 3, py + 4, pz + 2, 'oak_planks'); // loft floor
+    ctx.fillBlocks(px - 3, py + 5, pz - 2, px + 3, py + 5, pz + 2, 'air'); // loft space
+    // Hay loft.
+    ctx.fillBlocks(px - 3, py + 5, pz + 1, px + 3, py + 5, pz + 2, 'hay_block');
+    // Stall fences.
+    for (let i = -3; i <= 3; i += 2) {
+      ctx.setBlock(px + i, py + 1, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 2, pz - 1, 'oak_fence');
+    }
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    // Roof gable.
+    for (let i = 0; i <= 3; i++) {
+      ctx.fillBlocks(px - 4 + i, py + 6 + i, pz - 3, px + 4 - i, py + 6 + i, pz + 3, 'oak_planks');
+    }
+    // Animals.
+    const ANIMALS = ['cow', 'pig', 'sheep', 'chicken'];
+    for (let i = 0; i < ANIMALS.length; i++) {
+      const a = ANIMALS[i] ?? 'cow';
+      ctx.summon(a, px - 2 + i * 2, py + 1, pz);
+    }
+    ctx.broadcast('Built barn with hay loft and 4 animals', '#80ff80');
+    return;
+  }
+  if (head === 'watchtower') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 cobblestone tower 12 high with 4 archery slits + crenellations + ladder.
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 11, pz + 2, 'cobblestone');
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py + 11, pz + 1, 'air');
+    // Archery slits.
+    for (let h = 8; h <= 9; h++) {
+      ctx.setBlock(px - 2, py + h, pz, 'air');
+      ctx.setBlock(px + 2, py + h, pz, 'air');
+      ctx.setBlock(px, py + h, pz - 2, 'air');
+      ctx.setBlock(px, py + h, pz + 2, 'air');
+    }
+    // Crenellated top.
+    for (let i = -2; i <= 2; i++) {
+      if ((i + 2) % 2 === 0) continue;
+      ctx.setBlock(px + i, py + 12, pz - 2, 'cobblestone');
+      ctx.setBlock(px + i, py + 12, pz + 2, 'cobblestone');
+      ctx.setBlock(px - 2, py + 12, pz + i, 'cobblestone');
+      ctx.setBlock(px + 2, py + 12, pz + i, 'cobblestone');
+    }
+    // Door + ladder.
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    for (let h = 0; h < 11; h++) ctx.setBlock(px, py + h, pz + 1, 'ladder');
+    ctx.broadcast('Built watchtower with archery slits and crenellations', '#80ff80');
+    return;
+  }
+  if (head === 'rainbow_path' || head === 'rainbowpath') {
+    if (!ctx.setBlock) return;
+    const len = Math.max(7, Math.min(56, parseInt(args[0] ?? '14', 10)));
+    const COLORS = [
+      'wool_red',
+      'wool_orange',
+      'wool_yellow',
+      'wool_lime',
+      'wool_cyan',
+      'wool_blue',
+      'wool_magenta',
+    ];
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    for (let i = 0; i < len; i++) {
+      const c = COLORS[i % COLORS.length] ?? 'wool_white';
+      ctx.setBlock(px, py - 1, pz + i, c);
+    }
+    ctx.broadcast(`Rainbow path: ${String(len)} wool blocks`, '#80ff80');
+    return;
+  }
+  if (head === 'test_blocks' || head === 'blockgrid') {
+    if (!ctx.setBlock || !ctx.listBlocks) return;
+    const blocks = ctx.listBlocks();
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    const SIDE = Math.ceil(Math.sqrt(blocks.length));
+    let placed = 0;
+    for (let i = 0; i < blocks.length; i++) {
+      const dx = i % SIDE;
+      const dz = Math.floor(i / SIDE);
+      const name = blocks[i] ?? 'stone';
+      if (ctx.setBlock(px + dx, py - 1, pz + dz, name)) placed++;
+    }
+    ctx.broadcast(
+      `Block grid: ${String(placed)}/${String(blocks.length)} placed (${String(SIDE)}×${String(SIDE)})`,
+      '#80ff80',
+    );
+    return;
+  }
+  if (head === 'panic') {
+    if (!ctx.summon) return;
+    const n = Math.max(1, Math.min(40, parseInt(args[0] ?? '12', 10)));
+    const px = ctx.playerPos.x;
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = ctx.playerPos.z;
+    let summoned = 0;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const r = 6;
+      if (ctx.summon('zombie', px + Math.cos(a) * r, py, pz + Math.sin(a) * r)) summoned++;
+    }
+    ctx.broadcast(`PANIC: ${String(summoned)} zombies surround you`, '#ff6060');
+    return;
+  }
+  if (head === 'pets' || head === 'kittens') {
+    if (!ctx.summon) return;
+    const n = Math.max(1, Math.min(20, parseInt(args[0] ?? '8', 10)));
+    const px = ctx.playerPos.x;
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = ctx.playerPos.z;
+    const KINDS = ['cat', 'wolf', 'parrot', 'fox'];
+    let summoned = 0;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const r = 3;
+      const kind = KINDS[i % KINDS.length] ?? 'cat';
+      if (ctx.summon(kind, px + Math.cos(a) * r, py, pz + Math.sin(a) * r)) summoned++;
+    }
+    ctx.broadcast(`Pet circle: ${String(summoned)} (cat/wolf/parrot/fox)`, '#80ff80');
+    return;
+  }
+  if (head === 'carnival') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Ring of colored wool (8 segments) + center jack_o_lantern.
+    const COLORS = [
+      'wool_red',
+      'wool_orange',
+      'wool_yellow',
+      'wool_lime',
+      'wool_cyan',
+      'wool_blue',
+      'wool_magenta',
+      'wool_white',
+    ];
+    const r = 6;
+    for (let i = 0; i < 32; i++) {
+      const a = (i / 32) * Math.PI * 2;
+      const x = px + Math.round(Math.cos(a) * r);
+      const z = pz + Math.round(Math.sin(a) * r);
+      const c = COLORS[Math.floor((i / 32) * COLORS.length)] ?? 'wool_white';
+      ctx.setBlock(x, py, z, c);
+      ctx.setBlock(x, py + 1, z, c);
+    }
+    ctx.setBlock(px, py, pz, 'jack_o_lantern');
+    ctx.setBlock(px, py + 1, pz, 'jack_o_lantern');
+    ctx.setBlock(px, py + 2, pz, 'jack_o_lantern');
+    ctx.broadcast('Built carnival ring with jack_o_lantern column', '#80ff80');
+    return;
+  }
+  if (head === 'sky_island' || head === 'skyisland') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(4, Math.min(16, parseInt(args[0] ?? '8', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let cells = 0;
+    // Ellipsoid stone underbelly + grass top + 1 oak tree.
+    for (let dy = -3; dy <= 0; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        for (let dz = -r; dz <= r; dz++) {
+          const norm = (dx * dx + dz * dz) / (r * r) + (dy * dy) / 9;
+          if (norm <= 1) {
+            const block = dy === 0 ? 'grass_block' : dy <= -2 ? 'stone' : 'dirt';
+            ctx.setBlock(px + dx, py - 4 + dy, pz + dz, block);
+            cells++;
+          }
+        }
+      }
+    }
+    // Mini oak tree on top.
+    for (let h = 0; h < 5; h++) ctx.setBlock(px, py - 3 + h, pz, 'oak_log');
+    for (let dx = -2; dx <= 2; dx++) {
+      for (let dz = -2; dz <= 2; dz++) {
+        for (let dy = 0; dy < 3; dy++) {
+          if (dx * dx + dz * dz + dy * dy <= 7) {
+            ctx.setBlock(px + dx, py + 1 + dy, pz + dz, 'oak_leaves');
+          }
+        }
+      }
+    }
+    ctx.broadcast(`Sky island: r=${String(r)} (${String(cells)} cells) with oak tree`, '#80ff80');
+    return;
+  }
+  if (head === 'forge') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone_brick floor + anvil + furnace + crafting_table + chest.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'stone_bricks');
+    ctx.setBlock(px - 1, py, pz, 'anvil');
+    ctx.setBlock(px + 1, py, pz, 'furnace');
+    ctx.setBlock(px, py, pz - 1, 'crafting_table');
+    ctx.setBlock(px, py, pz + 1, 'chest');
+    ctx.setBlock(px - 2, py, pz - 2, 'lantern');
+    ctx.setBlock(px + 2, py, pz + 2, 'lantern');
+    ctx.broadcast('Built forge: anvil + furnace + crafting_table + chest', '#80ff80');
+    return;
+  }
+  if (head === 'kitchen') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'oak_planks');
+    ctx.setBlock(px, py, pz - 2, 'smoker');
+    ctx.setBlock(px - 2, py, pz, 'cauldron');
+    ctx.setBlock(px + 2, py, pz, 'blast_furnace');
+    ctx.setBlock(px - 2, py, pz - 2, 'barrel');
+    ctx.setBlock(px + 2, py, pz - 2, 'barrel');
+    ctx.setBlock(px - 1, py, pz + 2, 'chest');
+    ctx.setBlock(px + 1, py, pz + 2, 'chest');
+    ctx.setBlock(px, py, pz, 'crafting_table');
+    ctx.broadcast('Built kitchen: smoker, blast_furnace, cauldron, barrels, chests', '#80ff80');
+    return;
+  }
+  if (head === 'stable') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 11×7 oak stable with 4 stalls + 4 horses + hay_block troughs.
+    ctx.fillBlocks(px - 5, py, pz - 3, px + 5, py + 4, pz + 3, 'oak_planks');
+    ctx.fillBlocks(px - 4, py, pz - 2, px + 4, py + 3, pz + 2, 'air');
+    // 4 stalls, fence dividers every 2 blocks.
+    for (let i = -3; i <= 3; i += 2) {
+      ctx.setBlock(px + i, py + 1, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 2, pz - 1, 'oak_fence');
+      ctx.setBlock(px + i, py + 1, pz + 1, 'oak_fence');
+    }
+    // Hay troughs.
+    for (let i = -3; i <= 3; i += 2) ctx.setBlock(px + i, py, pz, 'hay_block');
+    // Horses.
+    for (let i = -3; i <= 3; i += 2) ctx.summon('horse', px + i + 1, py + 1, pz);
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    ctx.broadcast('Built stable: 4 stalls, 4 horses, hay troughs', '#80ff80');
+    return;
+  }
+  if (head === 'tavern' || head === 'inn') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×9 oak tavern with bar counter, stools, fireplace, chest, lanterns.
+    ctx.fillBlocks(px - 4, py, pz - 4, px + 4, py + 4, pz + 4, 'oak_planks');
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 3, pz + 3, 'air');
+    ctx.fillBlocks(px - 4, py - 1, pz - 4, px + 4, py - 1, pz + 4, 'oak_planks');
+    // Bar counter line.
+    ctx.fillBlocks(px - 3, py, pz + 1, px + 3, py, pz + 1, 'spruce_planks');
+    // Stools (oak slabs).
+    for (let i = -3; i <= 3; i += 2) ctx.setBlock(px + i, py, pz - 1, 'oak_slab');
+    // Fireplace.
+    ctx.setBlock(px - 3, py, pz + 3, 'campfire');
+    ctx.setBlock(px - 3, py + 1, pz + 3, 'air');
+    // Chest.
+    ctx.setBlock(px + 3, py, pz + 3, 'chest');
+    // Lanterns.
+    ctx.setBlock(px - 3, py + 3, pz - 3, 'lantern');
+    ctx.setBlock(px + 3, py + 3, pz - 3, 'lantern');
+    ctx.setBlock(px - 3, py + 3, pz + 3, 'lantern');
+    ctx.setBlock(px + 3, py + 3, pz + 3, 'lantern');
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 4, 'air');
+    ctx.setBlock(px, py + 2, pz - 4, 'air');
+    ctx.broadcast('Built tavern: bar, stools, fireplace, chest', '#80ff80');
+    return;
+  }
+  if (head === 'shop' || head === 'tradinghouse') {
+    if (!ctx.fillBlocks || !ctx.setBlock || !ctx.summon) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Small 7×5 shop with villager + counter + 3 chests + lectern.
+    ctx.fillBlocks(px - 3, py, pz - 2, px + 3, py + 3, pz + 2, 'oak_planks');
+    ctx.fillBlocks(px - 2, py, pz - 1, px + 2, py + 2, pz + 1, 'air');
+    ctx.fillBlocks(px - 3, py - 1, pz - 2, px + 3, py - 1, pz + 2, 'oak_planks');
+    // Counter.
+    ctx.fillBlocks(px - 2, py, pz, px + 2, py, pz, 'spruce_planks');
+    // Chests behind counter.
+    for (let i = -2; i <= 2; i += 2) ctx.setBlock(px + i, py, pz + 1, 'chest');
+    // Lectern.
+    ctx.setBlock(px, py + 1, pz, 'lectern');
+    // Villager.
+    ctx.summon('villager', px, py + 1, pz + 1);
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 2, 'air');
+    ctx.setBlock(px, py + 2, pz - 2, 'air');
+    ctx.broadcast('Built shop: 3 chests, lectern, villager', '#80ff80');
+    return;
+  }
+  if (head === 'library') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 9×9 stone_brick library with bookshelf walls + enchanting table + lectern.
+    ctx.fillBlocks(px - 4, py, pz - 4, px + 4, py + 4, pz + 4, 'stone_bricks');
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 3, pz + 3, 'air');
+    ctx.fillBlocks(px - 4, py - 1, pz - 4, px + 4, py - 1, pz + 4, 'oak_planks');
+    // Bookshelf walls (15-block enchanting power radius).
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 1, pz - 3, 'bookshelf');
+    ctx.fillBlocks(px - 3, py, pz + 3, px + 3, py + 1, pz + 3, 'bookshelf');
+    ctx.fillBlocks(px - 3, py, pz - 2, px - 3, py + 1, pz + 2, 'bookshelf');
+    ctx.fillBlocks(px + 3, py, pz - 2, px + 3, py + 1, pz + 2, 'bookshelf');
+    // Center enchanting table.
+    ctx.setBlock(px, py, pz, 'enchanting_table');
+    // Lectern at corner.
+    ctx.setBlock(px - 3, py, pz + 3, 'lectern');
+    ctx.setBlock(px + 3, py, pz + 3, 'lectern');
+    // Lanterns.
+    ctx.setBlock(px, py + 3, pz, 'lantern');
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 4, 'air');
+    ctx.setBlock(px, py + 2, pz - 4, 'air');
+    ctx.broadcast('Built library: enchanting table + bookshelf walls + lectern', '#80ff80');
+    return;
+  }
+  if (head === 'brewery' || head === 'apothecary') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 5×5 stone room with 3 brewing_stands + 1 cauldron + chest.
+    ctx.fillBlocks(px - 2, py - 1, pz - 2, px + 2, py - 1, pz + 2, 'stone_bricks');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 3, pz + 2, 'stone_bricks');
+    ctx.fillBlocks(px - 1, py, pz - 1, px + 1, py + 2, pz + 1, 'air');
+    ctx.setBlock(px - 1, py, pz + 2, 'air');
+    ctx.setBlock(px - 1, py + 1, pz + 2, 'air');
+    ctx.setBlock(px - 1, py, pz, 'brewing_stand');
+    ctx.setBlock(px, py, pz, 'brewing_stand');
+    ctx.setBlock(px + 1, py, pz, 'brewing_stand');
+    ctx.setBlock(px - 1, py, pz - 1, 'cauldron');
+    ctx.setBlock(px + 1, py, pz - 1, 'chest');
+    ctx.setBlock(px, py + 3, pz, 'lantern');
+    ctx.broadcast('Built brewery: 3 brewing_stands + cauldron + chest', '#80ff80');
+    return;
+  }
+  if (head === 'observatory') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 7×7 stone_brick base, 5 high tower, glass dome on top.
+    ctx.fillBlocks(px - 3, py, pz - 3, px + 3, py + 4, pz + 3, 'stone_bricks');
+    ctx.fillBlocks(px - 2, py, pz - 2, px + 2, py + 3, pz + 2, 'air');
+    // Glass dome.
+    for (let dy = 0; dy <= 3; dy++) {
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          const d2 = dx * dx + dy * dy + dz * dz;
+          if (d2 <= 9 && d2 >= 7) ctx.setBlock(px + dx, py + 5 + dy, pz + dz, 'glass');
+        }
+      }
+    }
+    // Telescope (anvil + chain pillar).
+    ctx.setBlock(px, py + 1, pz, 'anvil');
+    ctx.setBlock(px, py + 2, pz, 'iron_block');
+    // Lanterns + door.
+    ctx.setBlock(px - 3, py + 4, pz - 3, 'lantern');
+    ctx.setBlock(px + 3, py + 4, pz + 3, 'lantern');
+    ctx.setBlock(px, py + 1, pz - 3, 'air');
+    ctx.setBlock(px, py + 2, pz - 3, 'air');
+    ctx.broadcast('Built observatory: stone tower + glass dome + telescope', '#80ff80');
+    return;
+  }
+  if (head === 'oasis') {
+    if (!ctx.setBlock || !ctx.fillBlocks) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Sand around with small water pond and palm-like trees.
+    for (let dx = -8; dx <= 8; dx++) {
+      for (let dz = -8; dz <= 8; dz++) {
+        const d2 = dx * dx + dz * dz;
+        if (d2 <= 64) ctx.setBlock(px + dx, py - 1, pz + dz, 'sand');
+      }
+    }
+    // Pond.
+    for (let dx = -3; dx <= 3; dx++) {
+      for (let dz = -3; dz <= 3; dz++) {
+        if (dx * dx + dz * dz <= 9) {
+          ctx.setBlock(px + dx, py - 1, pz + dz, 'water');
+          ctx.setBlock(px + dx, py - 2, pz + dz, 'sand');
+        }
+      }
+    }
+    // Palm trees.
+    for (const [tx, tz] of [
+      [-7, 0],
+      [7, 0],
+      [0, -7],
+      [0, 7],
+      [-5, -5],
+      [5, 5],
+    ] as [number, number][]) {
+      for (let h = 0; h < 5; h++) ctx.setBlock(px + tx, py + h, pz + tz, 'jungle_log');
+      // Leaf crown.
+      for (let dx = -2; dx <= 2; dx++) {
+        for (let dz = -2; dz <= 2; dz++) {
+          if (dx * dx + dz * dz <= 4) {
+            ctx.setBlock(px + tx + dx, py + 5, pz + tz + dz, 'jungle_leaves');
+          }
+        }
+      }
+    }
+    ctx.broadcast('Built oasis: sand circle, pond, 6 palm trees', '#80ff80');
+    return;
+  }
+  if (head === 'desert_temple' || head === 'sandtemple') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Sandstone pyramid 9×9 base × 5 high with 4 chest niches.
+    for (let h = 0; h < 5; h++) {
+      const r = 4 - h;
+      ctx.fillBlocks(px - r, py + h, pz - r, px + r, py + h, pz + r, 'sandstone');
+    }
+    // Hollow center 1×3 chamber under the apex.
+    ctx.fillBlocks(px, py, pz, px, py + 2, pz, 'air');
+    // 4 chest niches around base.
+    for (const [cx, cz] of [
+      [-3, 0],
+      [3, 0],
+      [0, -3],
+      [0, 3],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py, pz + cz, 'chest');
+    }
+    ctx.setBlock(px, py + 4, pz, 'gold_block');
+    ctx.broadcast('Built desert_temple: 9×9 sandstone pyramid + 4 chests + gold apex', '#80ff80');
+    return;
+  }
+  if (head === 'pale_garden' || head === 'palegarden') {
+    if (!ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 4 pale_oak trees with creaking_heart core + scattered eyeblossom and firefly_bush.
+    const TREES: [number, number][] = [
+      [-6, -6],
+      [6, -6],
+      [-6, 6],
+      [6, 6],
+    ];
+    for (const [tx, tz] of TREES) {
+      // Trunk.
+      for (let h = 0; h < 8; h++) ctx.setBlock(px + tx, py + h, pz + tz, 'pale_oak_log');
+      // Creaking heart at base.
+      ctx.setBlock(px + tx + 1, py, pz + tz, 'creaking_heart');
+      // Leaf cap.
+      for (let dx = -3; dx <= 3; dx++) {
+        for (let dz = -3; dz <= 3; dz++) {
+          for (let dy = 0; dy <= 2; dy++) {
+            if (dx * dx + dz * dz + dy * dy <= 10) {
+              ctx.setBlock(px + tx + dx, py + 7 + dy, pz + tz + dz, 'pale_oak_leaves');
+            }
+          }
+        }
+      }
+    }
+    // Floor of eyeblossom + firefly_bush patches.
+    const flowers = ['eyeblossom', 'closed_eyeblossom', 'firefly_bush', 'pink_petals'];
+    for (let i = 0; i < 24; i++) {
+      const dx = Math.floor((Math.sin(i * 1.7) + 1) * 7) - 7;
+      const dz = Math.floor((Math.cos(i * 2.1) + 1) * 7) - 7;
+      const f = flowers[i % flowers.length] ?? 'eyeblossom';
+      ctx.setBlock(px + dx, py, pz + dz, f);
+    }
+    ctx.broadcast('Built pale_garden: 4 pale_oak trees + creaking hearts + flowers', '#80ff80');
+    return;
+  }
+  if (head === 'trial_chamber' || head === 'trialchamber') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // 11×7×11 tuff_brick chamber with trial_spawner center, vault corners, copper_bulb lights.
+    ctx.fillBlocks(px - 5, py, pz - 5, px + 5, py + 6, pz + 5, 'tuff_bricks');
+    ctx.fillBlocks(px - 4, py + 1, pz - 4, px + 4, py + 5, pz + 4, 'air');
+    ctx.fillBlocks(px - 5, py, pz - 5, px + 5, py, pz + 5, 'polished_tuff');
+    // Center trial_spawner.
+    ctx.setBlock(px, py + 1, pz, 'trial_spawner');
+    // 4 vault corners.
+    for (const [cx, cz] of [
+      [-4, -4],
+      [4, -4],
+      [-4, 4],
+      [4, 4],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py + 1, pz + cz, 'vault');
+    }
+    // Copper_bulb lights overhead.
+    for (const [cx, cz] of [
+      [-3, 0],
+      [3, 0],
+      [0, -3],
+      [0, 3],
+    ] as [number, number][]) {
+      ctx.setBlock(px + cx, py + 5, pz + cz, 'copper_bulb');
+    }
+    // Door.
+    ctx.setBlock(px, py + 1, pz - 5, 'air');
+    ctx.setBlock(px, py + 2, pz - 5, 'air');
+    ctx.broadcast('Built trial_chamber: trial_spawner + 4 vaults + copper bulbs', '#80ff80');
+    return;
+  }
+  if (head === 'chess' || head === 'checkerboard') {
+    if (!ctx.setBlock) return;
+    const r = Math.max(2, Math.min(12, parseInt(args[0] ?? '4', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    let n = 0;
+    for (let dx = -r; dx <= r; dx++) {
+      for (let dz = -r; dz <= r; dz++) {
+        const c = ((dx + dz) % 2 === 0 ? 'wool_white' : 'wool_black') as string;
+        ctx.setBlock(px + dx, py - 1, pz + dz, c);
+        n++;
+      }
+    }
+    ctx.broadcast(`Chessboard: ${String((2 * r + 1) ** 2)} cells (${String(n)} placed)`, '#80ff80');
+    return;
+  }
+  if (head === 'fortress' || head === 'castle_walls') {
+    if (!ctx.fillBlocks || !ctx.setBlock) return;
+    const r = Math.max(6, Math.min(20, parseInt(args[0] ?? '12', 10)));
+    const px = Math.floor(ctx.playerPos.x);
+    const py = Math.floor(ctx.playerPos.y);
+    const pz = Math.floor(ctx.playerPos.z);
+    // Square cobblestone walls 5 high with crenellations.
+    for (let dx = -r; dx <= r; dx++) {
+      ctx.fillBlocks(px + dx, py, pz - r, px + dx, py + 4, pz - r, 'cobblestone');
+      ctx.fillBlocks(px + dx, py, pz + r, px + dx, py + 4, pz + r, 'cobblestone');
+    }
+    for (let dz = -r; dz <= r; dz++) {
+      ctx.fillBlocks(px - r, py, pz + dz, px - r, py + 4, pz + dz, 'cobblestone');
+      ctx.fillBlocks(px + r, py, pz + dz, px + r, py + 4, pz + dz, 'cobblestone');
+    }
+    // Crenellations every 2 blocks.
+    for (let i = -r; i <= r; i += 2) {
+      ctx.setBlock(px + i, py + 5, pz - r, 'cobblestone');
+      ctx.setBlock(px + i, py + 5, pz + r, 'cobblestone');
+      ctx.setBlock(px - r, py + 5, pz + i, 'cobblestone');
+      ctx.setBlock(px + r, py + 5, pz + i, 'cobblestone');
+    }
+    // 4 corner watchtowers.
+    for (const [cx, cz] of [
+      [-r, -r],
+      [r, -r],
+      [-r, r],
+      [r, r],
+    ] as [number, number][]) {
+      ctx.fillBlocks(px + cx - 1, py, pz + cz - 1, px + cx + 1, py + 7, pz + cz + 1, 'cobblestone');
+      ctx.fillBlocks(px + cx, py, pz + cz, px + cx, py + 6, pz + cz, 'air');
+      ctx.setBlock(px + cx, py + 7, pz + cz, 'lantern');
+    }
+    // Gate at -Z.
+    ctx.fillBlocks(px - 1, py, pz - r, px + 1, py + 2, pz - r, 'air');
+    ctx.broadcast(
+      `Built fortress: ${String(2 * r + 1)}×${String(2 * r + 1)} walls + 4 towers`,
+      '#80ff80',
+    );
+    return;
+  }
   if (head === 'beacon_pyramid' || head === 'beaconbase') {
     if (!ctx.fillBlocks) return;
     const tier = parseInt(args[0] ?? '4', 10);
@@ -3209,12 +4190,30 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       iron_ore: 'iron_ingot',
       gold_ore: 'gold_ingot',
       copper_ore: 'copper_ingot',
+      deepslate_iron_ore: 'iron_ingot',
+      deepslate_gold_ore: 'gold_ingot',
+      deepslate_copper_ore: 'copper_ingot',
+      deepslate_diamond_ore: 'diamond',
+      diamond_ore: 'diamond',
+      deepslate_emerald_ore: 'emerald',
+      emerald_ore: 'emerald',
+      deepslate_redstone_ore: 'redstone',
+      redstone_ore: 'redstone',
+      deepslate_lapis_ore: 'lapis_lazuli',
+      lapis_ore: 'lapis_lazuli',
+      coal_ore: 'coal',
+      deepslate_coal_ore: 'coal',
       ancient_debris: 'netherite_scrap',
       sand: 'glass',
+      red_sand: 'red_glass',
       cobblestone: 'stone',
       stone: 'smooth_stone',
+      cobbled_deepslate: 'deepslate',
       clay_ball: 'brick',
-      netherrack: 'nether_brick_item',
+      clay: 'terracotta',
+      // 'nether_brick_item' is a vanilla NBT distinction (item vs block)
+      // that webmc doesn't separate — both are 'nether_brick' here.
+      netherrack: 'nether_brick',
       raw_beef: 'cooked_beef',
       raw_porkchop: 'cooked_porkchop',
       raw_chicken: 'cooked_chicken',
@@ -3226,7 +4225,17 @@ export function executeCommand(raw: string, ctx: CommandContext): void {
       kelp: 'dried_kelp',
       cactus: 'green_dye',
       nether_quartz_ore: 'nether_quartz',
+      // Was oak_log only — now any flammable log type cooks to charcoal
+      // (vanilla). Crimson + warped stems are non-flammable so excluded.
       oak_log: 'charcoal',
+      spruce_log: 'charcoal',
+      birch_log: 'charcoal',
+      jungle_log: 'charcoal',
+      acacia_log: 'charcoal',
+      dark_oak_log: 'charcoal',
+      cherry_log: 'charcoal',
+      mangrove_log: 'charcoal',
+      pale_oak_log: 'charcoal',
     };
     const out = SMELT[item];
     if (!out) {

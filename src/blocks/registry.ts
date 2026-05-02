@@ -129,7 +129,7 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 2,
     },
     { name: 'webmc:oak_planks', color: [176, 143, 86] as RGB, hardness: 2 },
-    { name: 'webmc:oak_leaves', color: [68, 135, 54] as RGB, hardness: 0.2 },
+    { name: 'webmc:oak_leaves', opaque: false, color: [68, 135, 54] as RGB, hardness: 0.2 },
     {
       name: 'webmc:spruce_log',
       top: [142, 104, 57] as RGB,
@@ -145,18 +145,26 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 2,
     },
     { name: 'webmc:sand', color: [219, 208, 160] as RGB, hardness: 0.5 },
+    // Red sand — desert biome variant. Recipe target for red_sandstone.
+    // Wiki: hardness 0.5, falls under gravity like regular sand.
+    { name: 'webmc:red_sand', color: [200, 110, 50] as RGB, hardness: 0.5 },
     { name: 'webmc:gravel', color: [143, 140, 134] as RGB, hardness: 0.6 },
     {
       name: 'webmc:water',
       solid: false,
-      opaque: true,
+      // Light propagates through water (with attenuation in vanilla; our
+      // BFS lighting is binary so we just let it pass) — opaque:true
+      // here was making everything underwater pitch black.
+      opaque: false,
       color: [64, 96, 200] as RGB,
       hardness: 100,
     },
     {
       name: 'webmc:lava',
       solid: false,
-      opaque: true,
+      // Lava emits light=15, so it lights its own cell either way; making
+      // it non-opaque lets sky light reach lava lakes from above.
+      opaque: false,
       color: [207, 86, 16] as RGB,
       lightEmission: 15,
       hardness: 100,
@@ -167,8 +175,38 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:coal_ore', color: [60, 60, 60] as RGB, hardness: 3 },
     { name: 'webmc:redstone_ore', color: [158, 55, 55] as RGB, lightEmission: 9, hardness: 3 },
     { name: 'webmc:lapis_ore', color: [52, 74, 155] as RGB, hardness: 3 },
+    // Overworld emerald_ore was missing — only deepslate_emerald_ore was
+    // registered. Per wiki, regular emerald ore exists in stone above
+    // deepslate level in mountains biomes. Hardness 3 matches other
+    // overworld ores; deepslate is 4.5 (already registered separately).
+    { name: 'webmc:emerald_ore', color: [80, 145, 95] as RGB, hardness: 3 },
     { name: 'webmc:glowstone', color: [255, 214, 138] as RGB, lightEmission: 15, hardness: 0.3 },
-    { name: 'webmc:glass', color: [220, 240, 250] as RGB, hardness: 0.3 },
+    // Glass: visible but lets light through — was defaulting to opaque:true
+    // which prevented skylight from reaching anything below a glass roof.
+    { name: 'webmc:glass', opaque: false, color: [220, 240, 250] as RGB, hardness: 0.3 },
+    // Tinted glass — 1.17 block. Wiki: hardness 0.3, partially transparent
+    // visually but blocks light propagation (the only block in vanilla
+    // with this property). Drops itself when broken (unlike regular glass).
+    // Without registration the DROP_NOTHING list silently failed to mark
+    // tinted_glass — it would have dropped its block-item with bare hands.
+    { name: 'webmc:tinted_glass', opaque: true, color: [55, 30, 70] as RGB, hardness: 0.3 },
+    // Glass pane and iron bars — referenced by default recipes as targets,
+    // but missing from registry. Both are partial-tile blocks visually but
+    // for collision/raycast we treat them as solid:false to allow light.
+    {
+      name: 'webmc:glass_pane',
+      solid: false,
+      opaque: false,
+      color: [220, 240, 250] as RGB,
+      hardness: 0.3,
+    },
+    {
+      name: 'webmc:iron_bars',
+      solid: false,
+      opaque: false,
+      color: [180, 180, 180] as RGB,
+      hardness: 5,
+    },
     { name: 'webmc:brick', color: [152, 94, 70] as RGB, hardness: 2 },
     { name: 'webmc:bookshelf', color: [124, 102, 63] as RGB, hardness: 1.5 },
     {
@@ -189,7 +227,11 @@ export function createDefaultRegistry(): BlockRegistry {
     {
       name: 'webmc:torch',
       solid: false,
-      opaque: true,
+      // Torch is a small post — light passes around it. opaque:true here
+      // (combined with the registry being idempotent on duplicate names)
+      // overrode the second webmc:torch definition further down that
+      // already had opaque:false, so torches were carving dark pockets.
+      opaque: false,
       color: [245, 215, 110] as RGB,
       lightEmission: 14,
       hardness: 0,
@@ -213,6 +255,170 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: false,
       opaque: false,
       color: [176, 143, 86] as RGB,
+      hardness: 0.5,
+    },
+    // Missing wood pressure plates (11 of 12 — only oak existed). Wiki:
+    // all wood-tier hardness 0.5.
+    {
+      name: 'webmc:spruce_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:birch_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:jungle_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:acacia_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:dark_oak_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:cherry_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:mangrove_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:pale_oak_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:bamboo_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:crimson_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [110, 55, 80] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:warped_pressure_plate',
+      solid: false,
+      opaque: false,
+      color: [50, 110, 110] as RGB,
+      hardness: 0.5,
+    },
+    // Wood buttons — registry only had stone_button. Wiki: hardness 0.5.
+    {
+      name: 'webmc:oak_button',
+      solid: false,
+      opaque: false,
+      color: [176, 143, 86] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:spruce_button',
+      solid: false,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:birch_button',
+      solid: false,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:jungle_button',
+      solid: false,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:acacia_button',
+      solid: false,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:dark_oak_button',
+      solid: false,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:cherry_button',
+      solid: false,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:mangrove_button',
+      solid: false,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:pale_oak_button',
+      solid: false,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:bamboo_button',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:crimson_button',
+      solid: false,
+      opaque: false,
+      color: [110, 55, 80] as RGB,
+      hardness: 0.5,
+    },
+    {
+      name: 'webmc:warped_button',
+      solid: false,
+      opaque: false,
+      color: [50, 110, 110] as RGB,
       hardness: 0.5,
     },
     {
@@ -240,6 +446,32 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:magma_block', color: [150, 60, 20] as RGB, lightEmission: 3, hardness: 0.5 },
     { name: 'webmc:obsidian', color: [20, 10, 30] as RGB, hardness: 50 },
     { name: 'webmc:bedrock', color: [50, 50, 50] as RGB, hardness: -1 },
+    // Barrier — admin/creative-only block, invisible to players, blocks
+    // movement. Wiki: hardness -1 unbreakable. Was referenced by
+    // block_resistance + block_hardness + vex_summon but missing.
+    {
+      name: 'webmc:barrier',
+      solid: true,
+      opaque: false,
+      color: [255, 0, 0] as RGB,
+      hardness: -1,
+    },
+    // Admin/creative-only blocks (command_block, structure_block, jigsaw).
+    // Wiki: all hardness -1 unbreakable. Modules exist (command_block.ts,
+    // structure_block.ts, world/jigsaw_block.ts) but the blocks were
+    // never registered.
+    { name: 'webmc:command_block', color: [180, 130, 80] as RGB, hardness: -1 },
+    { name: 'webmc:chain_command_block', color: [80, 130, 180] as RGB, hardness: -1 },
+    { name: 'webmc:repeating_command_block', color: [120, 80, 180] as RGB, hardness: -1 },
+    { name: 'webmc:structure_block', color: [110, 90, 110] as RGB, hardness: -1 },
+    { name: 'webmc:jigsaw', color: [90, 110, 110] as RGB, hardness: -1 },
+    {
+      name: 'webmc:structure_void',
+      solid: false,
+      opaque: false,
+      color: [0, 0, 0] as RGB,
+      hardness: -1,
+    },
     {
       name: 'webmc:portal',
       solid: false,
@@ -264,6 +496,18 @@ export function createDefaultRegistry(): BlockRegistry {
       opaque: false,
       color: [12, 6, 20] as RGB,
       hardness: 3,
+    },
+    // Turtle egg — 1.13 block. 1-4 eggs per block, hatch into baby
+    // turtles after several night ticks. Wiki: hardness 0.5; mob
+    // collision damages eggs (zombies seek them out at night). Was in
+    // DROP_NOTHING list but missing from block registry → silk-touch-only
+    // flag never applied (and the block was unplaceable in survival).
+    {
+      name: 'webmc:turtle_egg',
+      solid: false,
+      opaque: false,
+      color: [220, 230, 200] as RGB,
+      hardness: 0.5,
     },
     { name: 'webmc:purpur_block', color: [170, 130, 170] as RGB, hardness: 1.5 },
     {
@@ -326,8 +570,151 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:stripped_spruce_log', color: [115, 85, 49] as RGB, hardness: 2 },
     { name: 'webmc:stripped_birch_log', color: [205, 192, 145] as RGB, hardness: 2 },
     { name: 'webmc:stripped_jungle_log', color: [167, 124, 79] as RGB, hardness: 2 },
+    {
+      name: 'webmc:jungle_log',
+      top: [124, 96, 56] as RGB,
+      side: [85, 64, 36] as RGB,
+      bottom: [124, 96, 56] as RGB,
+      color: [85, 64, 36] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:acacia_log',
+      top: [180, 90, 40] as RGB,
+      side: [110, 110, 100] as RGB,
+      bottom: [180, 90, 40] as RGB,
+      color: [110, 110, 100] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_log',
+      top: [56, 38, 18] as RGB,
+      side: [40, 26, 12] as RGB,
+      bottom: [56, 38, 18] as RGB,
+      color: [40, 26, 12] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_log',
+      top: [180, 175, 168] as RGB,
+      side: [195, 188, 178] as RGB,
+      bottom: [180, 175, 168] as RGB,
+      color: [195, 188, 178] as RGB,
+      hardness: 2,
+    },
+    { name: 'webmc:pale_oak_leaves', color: [165, 175, 168] as RGB, hardness: 0.2, opaque: false },
+    { name: 'webmc:pale_oak_planks', color: [200, 195, 188] as RGB, hardness: 2 },
+    {
+      name: 'webmc:resin_clump',
+      color: [255, 165, 70] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+    },
+    { name: 'webmc:resin_brick', color: [220, 130, 35] as RGB, hardness: 1.5 },
+    {
+      name: 'webmc:creaking_heart',
+      top: [170, 110, 60] as RGB,
+      side: [120, 80, 50] as RGB,
+      bottom: [170, 110, 60] as RGB,
+      color: [120, 80, 50] as RGB,
+      hardness: 5,
+    },
+    {
+      name: 'webmc:eyeblossom',
+      color: [240, 90, 220] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+    },
+    {
+      name: 'webmc:firefly_bush',
+      color: [180, 160, 80] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+      lightEmission: 5,
+    },
+    {
+      name: 'webmc:pink_petals',
+      color: [240, 180, 200] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+    },
+    {
+      name: 'webmc:pitcher_pod',
+      color: [110, 70, 130] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+    },
+    {
+      name: 'webmc:closed_eyeblossom',
+      color: [120, 90, 130] as RGB,
+      hardness: 0,
+      opaque: false,
+      solid: false,
+    },
+    // 1.21 trial-chamber + tuff additions.
+    { name: 'webmc:breeze_rod', color: [200, 200, 220] as RGB, hardness: 1, opaque: false },
+    {
+      name: 'webmc:ominous_trial_spawner',
+      color: [40, 50, 80] as RGB,
+      hardness: 50,
+      lightEmission: 4,
+    },
+    { name: 'webmc:ominous_vault', color: [50, 70, 90] as RGB, hardness: 50, lightEmission: 6 },
+    { name: 'webmc:chiseled_copper', color: [200, 110, 80] as RGB, hardness: 3 },
+    { name: 'webmc:waxed_chiseled_copper', color: [205, 115, 85] as RGB, hardness: 3 },
+    // Chiseled copper oxidation states + waxed variants (1.21). The
+    // chiseled_copper_progression module references all 4 oxidation
+    // stages; adding all 6 missing variants. Wiki: hardness 3.
+    { name: 'webmc:exposed_chiseled_copper', color: [170, 100, 80] as RGB, hardness: 3 },
+    { name: 'webmc:weathered_chiseled_copper', color: [115, 145, 110] as RGB, hardness: 3 },
+    { name: 'webmc:oxidized_chiseled_copper', color: [85, 165, 130] as RGB, hardness: 3 },
+    { name: 'webmc:waxed_exposed_chiseled_copper', color: [170, 100, 80] as RGB, hardness: 3 },
+    {
+      name: 'webmc:waxed_weathered_chiseled_copper',
+      color: [115, 145, 110] as RGB,
+      hardness: 3,
+    },
+    { name: 'webmc:waxed_oxidized_chiseled_copper', color: [85, 165, 130] as RGB, hardness: 3 },
+    {
+      name: 'webmc:exposed_copper_door',
+      color: [180, 130, 110] as RGB,
+      hardness: 3,
+      opaque: false,
+    },
+    {
+      name: 'webmc:weathered_copper_door',
+      color: [110, 165, 115] as RGB,
+      hardness: 3,
+      opaque: false,
+    },
+    {
+      name: 'webmc:oxidized_copper_door',
+      color: [80, 200, 165] as RGB,
+      hardness: 3,
+      opaque: false,
+    },
+    { name: 'webmc:tuff_wall', color: [110, 110, 110] as RGB, hardness: 1.5 },
+    { name: 'webmc:tuff_brick_wall', color: [100, 100, 100] as RGB, hardness: 1.5 },
+    { name: 'webmc:polished_tuff_wall', color: [120, 120, 120] as RGB, hardness: 1.5 },
+    { name: 'webmc:tuff_brick_slab', color: [100, 100, 100] as RGB, hardness: 1.5 },
+    { name: 'webmc:tuff_brick_stairs', color: [100, 100, 100] as RGB, hardness: 1.5 },
+    { name: 'webmc:polished_tuff_stairs', color: [120, 120, 120] as RGB, hardness: 1.5 },
+    { name: 'webmc:cobbled_deepslate_wall', color: [70, 70, 75] as RGB, hardness: 3.5 },
     { name: 'webmc:stripped_mangrove_log', color: [120, 73, 60] as RGB, hardness: 2 },
     { name: 'webmc:stripped_cherry_log', color: [220, 175, 165] as RGB, hardness: 2 },
+    // Missing stripped log variants — registry had 6 of 10 wood types.
+    // Per wiki, axe-stripping any log produces the stripped variant.
+    { name: 'webmc:stripped_acacia_log', color: [200, 142, 86] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_dark_oak_log', color: [105, 73, 38] as RGB, hardness: 2 },
+    { name: 'webmc:stripped_pale_oak_log', color: [220, 215, 210] as RGB, hardness: 2 },
+    // bamboo_block is the bamboo-equivalent of a log; stripped variant is
+    // stripped_bamboo_block.
+    { name: 'webmc:stripped_bamboo_block', color: [240, 220, 130] as RGB, hardness: 2 },
     { name: 'webmc:dirt_path', color: [148, 117, 73] as RGB, hardness: 0.65 },
     { name: 'webmc:farmland', color: [120, 80, 50] as RGB, hardness: 0.6 },
     { name: 'webmc:coarse_dirt', color: [110, 80, 53] as RGB, hardness: 0.5 },
@@ -345,6 +732,24 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: false,
       opaque: false,
       color: [110, 195, 90] as RGB,
+      hardness: 0,
+    },
+    // Fern + large_fern — taiga/jungle grass variants. Both referenced
+    // by REPLACEABLE_BLOCKS list in main.ts but missing from registry,
+    // so byName returned undefined and players couldn't place blocks
+    // through fern (it acted solid).
+    {
+      name: 'webmc:fern',
+      solid: false,
+      opaque: false,
+      color: [95, 160, 80] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:large_fern',
+      solid: false,
+      opaque: false,
+      color: [95, 160, 80] as RGB,
       hardness: 0,
     },
     {
@@ -420,6 +825,17 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [255, 140, 30] as RGB,
       hardness: 0,
       lightEmission: 15,
+    },
+    // Soul fire — blue variant on soul_sand or soul_soil. Wiki: light
+    // level 10 (vs regular fire's 15), repels piglins, also repels via
+    // soul_torch + soul_lantern. Was in REPLACEABLE_BLOCKS but unregistered.
+    {
+      name: 'webmc:soul_fire',
+      solid: false,
+      opaque: false,
+      color: [80, 200, 230] as RGB,
+      hardness: 0,
+      lightEmission: 10,
     },
     // Terracotta — full 17 colors (plain + 16 dyed).
     { name: 'webmc:terracotta', color: [152, 94, 67] as RGB, hardness: 1.25 },
@@ -558,6 +974,10 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:andesite', color: [128, 128, 128] as RGB, hardness: 1.5 },
     { name: 'webmc:diorite', color: [200, 200, 200] as RGB, hardness: 1.5 },
     { name: 'webmc:granite', color: [148, 100, 80] as RGB, hardness: 1.5 },
+    // Base stone_bricks was missing — only the chiseled/cracked/mossy
+    // variants existed, and recipes targeting the base block silently
+    // failed. Wiki: hardness 1.5, recipe is 4 stone in 2x2.
+    { name: 'webmc:stone_bricks', color: [125, 125, 125] as RGB, hardness: 1.5 },
     { name: 'webmc:chiseled_stone_bricks', color: [122, 122, 122] as RGB, hardness: 1.5 },
     { name: 'webmc:cracked_stone_bricks', color: [120, 117, 117] as RGB, hardness: 1.5 },
     { name: 'webmc:mossy_stone_bricks', color: [115, 130, 100] as RGB, hardness: 1.5 },
@@ -576,6 +996,25 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:chiseled_tuff_bricks', color: [110, 110, 105] as RGB, hardness: 1.5 },
     // Misc lights.
     { name: 'webmc:redstone_lamp', color: [180, 105, 50] as RGB, hardness: 0.3, lightEmission: 15 },
+    // Daylight detector — outputs redstone signal proportional to skylight.
+    // Recipe (3 glass + 3 wood slabs + 3 nether quartz) targets this name.
+    // Wiki: hardness 0.2.
+    {
+      name: 'webmc:daylight_detector',
+      solid: false,
+      opaque: false,
+      color: [200, 175, 130] as RGB,
+      hardness: 0.2,
+    },
+    // Tripwire hook — wall-mounted redstone trigger. Recipe target.
+    // Wiki: hardness 0.0 (instabreak), iron tier.
+    {
+      name: 'webmc:tripwire_hook',
+      solid: false,
+      opaque: false,
+      color: [200, 200, 200] as RGB,
+      hardness: 0,
+    },
     {
       name: 'webmc:lantern',
       solid: false,
@@ -665,6 +1104,44 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:redstone_block', color: [180, 30, 30] as RGB, hardness: 5 },
     { name: 'webmc:lapis_block', color: [40, 70, 170] as RGB, hardness: 3 },
     { name: 'webmc:netherite_block', color: [70, 60, 60] as RGB, hardness: 50 },
+    // Clay block — common building material near water. Wiki: hardness 0.6,
+    // drops 4 clay balls without silk touch.
+    { name: 'webmc:clay', color: [160, 165, 180] as RGB, hardness: 0.6 },
+    // Chain — iron-tier decorative block. Wiki: hardness 5, only minable
+    // with stone pickaxe or higher.
+    {
+      name: 'webmc:chain',
+      solid: true,
+      opaque: false,
+      color: [50, 50, 50] as RGB,
+      hardness: 5,
+    },
+    // Dried kelp block — 9 dried_kelp → 1 block. Common fuel (smelts 20
+    // items per block). Wiki: hardness 0.5.
+    { name: 'webmc:dried_kelp_block', color: [50, 90, 60] as RGB, hardness: 0.5 },
+    // Deepslate slab/stairs/wall — referenced in modules but missing.
+    // Wiki: hardness 3.5 matching cobbled_deepslate.
+    {
+      name: 'webmc:deepslate_slab',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:deepslate_stairs',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:deepslate_wall',
+      solid: true,
+      opaque: false,
+      color: [70, 70, 70] as RGB,
+      hardness: 3.5,
+    },
     { name: 'webmc:copper_block', color: [195, 110, 70] as RGB, hardness: 3 },
     { name: 'webmc:exposed_copper', color: [165, 105, 75] as RGB, hardness: 3 },
     { name: 'webmc:weathered_copper', color: [110, 145, 110] as RGB, hardness: 3 },
@@ -679,6 +1156,40 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:raw_copper_block', color: [165, 105, 80] as RGB, hardness: 5 },
     { name: 'webmc:raw_gold_block', color: [220, 175, 65] as RGB, hardness: 5 },
     { name: 'webmc:hay_block', color: [200, 165, 35] as RGB, hardness: 0.5 },
+    // Storage/utility blocks referenced by recipes (default-recipes.ts) but
+    // missing from the registry — recipes silently produced no output.
+    // bone_block: 9 bones → 1 block (wiki: hardness 2.0).
+    // coal_block: 9 coal → 1 block (wiki: hardness 5.0, fuel value 800s).
+    // iron_trapdoor: 4 iron ingots → 1 trapdoor (wiki: hardness 5.0).
+    { name: 'webmc:bone_block', color: [220, 220, 200] as RGB, hardness: 2 },
+    { name: 'webmc:coal_block', color: [40, 40, 40] as RGB, hardness: 5 },
+    { name: 'webmc:iron_trapdoor', color: [200, 200, 200] as RGB, hardness: 5 },
+    // Pressure plates — missing wood/stone/iron/gold variants. The wood
+    // pressure plate is registered as part of the wood family elsewhere;
+    // these three are the metal/stone variants needed for redstone setups.
+    {
+      name: 'webmc:stone_pressure_plate',
+      color: [125, 125, 125] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
+    {
+      name: 'webmc:heavy_weighted_pressure_plate',
+      color: [220, 220, 220] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
+    {
+      name: 'webmc:light_weighted_pressure_plate',
+      color: [250, 215, 80] as RGB,
+      hardness: 0.5,
+      solid: false,
+    },
+    // Honeycomb block — crafting result of 4 honeycombs (default-recipes.ts).
+    // Block was missing from registry, so the recipe silently produced no
+    // block (byName('webmc:honeycomb_block') returned undefined → 'air').
+    // Wiki: hardness 0.6, used for decoration + waxing copper variants.
+    { name: 'webmc:honeycomb_block', color: [220, 160, 50] as RGB, hardness: 0.6 },
     {
       name: 'webmc:slime_block',
       solid: true,
@@ -719,6 +1230,40 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:stripped_warped_stem', color: [85, 145, 140] as RGB, hardness: 2 },
     { name: 'webmc:crimson_planks', color: [110, 55, 80] as RGB, hardness: 2 },
     { name: 'webmc:warped_planks', color: [50, 110, 110] as RGB, hardness: 2 },
+    // Crimson + warped fungus — small mushroom plant variants. Hoglins
+    // breed on crimson_fungus, striders on warped_fungus (both are in
+    // BREED_FOOD), so without these blocks registered the breed-feed
+    // path silently failed. Wiki: hardness 0, instabreak plant blocks,
+    // also used for crafting stripped-stem warped/crimson fungus on stick.
+    {
+      name: 'webmc:crimson_fungus',
+      solid: false,
+      opaque: false,
+      color: [180, 30, 30] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:warped_fungus',
+      solid: false,
+      opaque: false,
+      color: [50, 130, 110] as RGB,
+      hardness: 0,
+    },
+    // Crimson + warped roots — ground vegetation that drops itself.
+    {
+      name: 'webmc:crimson_roots',
+      solid: false,
+      opaque: false,
+      color: [140, 30, 70] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:warped_roots',
+      solid: false,
+      opaque: false,
+      color: [40, 130, 110] as RGB,
+      hardness: 0,
+    },
     // End expansion.
     { name: 'webmc:purpur_stairs', color: [170, 130, 170] as RGB, hardness: 1.5 },
     { name: 'webmc:end_stone_bricks', color: [225, 225, 175] as RGB, hardness: 3 },
@@ -785,6 +1330,16 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: false,
       opaque: false,
       color: [240, 195, 215] as RGB,
+      hardness: 0,
+    },
+    // Pale oak (1.21 Pale Garden biome). Log + leaves + planks were
+    // already registered; sapling was the missing piece for the full
+    // tree-replant cycle.
+    {
+      name: 'webmc:pale_oak_sapling',
+      solid: false,
+      opaque: false,
+      color: [200, 200, 195] as RGB,
       hardness: 0,
     },
     {
@@ -1095,11 +1650,91 @@ export function createDefaultRegistry(): BlockRegistry {
       hardness: 3,
     },
     // Decorative: signs, item frame, painting (placeholders, no entity yet).
+    // Signs — wiki: all 12 wood types have a sign + hanging_sign variant.
+    // Was oak only — recipes for spruce_sign etc. silently produced no
+    // output. All hardness 1.
     {
       name: 'webmc:oak_sign',
       solid: false,
       opaque: false,
       color: [156, 124, 76] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:spruce_sign',
+      solid: false,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:birch_sign',
+      solid: false,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:jungle_sign',
+      solid: false,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:acacia_sign',
+      solid: false,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:dark_oak_sign',
+      solid: false,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:cherry_sign',
+      solid: false,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:mangrove_sign',
+      solid: false,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:pale_oak_sign',
+      solid: false,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:bamboo_sign',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:crimson_sign',
+      solid: false,
+      opaque: false,
+      color: [110, 55, 80] as RGB,
+      hardness: 1,
+    },
+    {
+      name: 'webmc:warped_sign',
+      solid: false,
+      opaque: false,
+      color: [50, 110, 110] as RGB,
       hardness: 1,
     },
     {
@@ -1160,10 +1795,101 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:dead_bubble_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
     { name: 'webmc:dead_fire_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
     { name: 'webmc:dead_horn_coral_block', color: [105, 105, 105] as RGB, hardness: 1.5 },
+    // Coral plants (5 alive) + coral fans (5 alive). Wiki: hardness 0
+    // instabreak plants. Dead variants exist too but are far less
+    // commonly used; adding the live ones unblocks decorative reefs.
+    {
+      name: 'webmc:tube_coral',
+      solid: false,
+      opaque: false,
+      color: [40, 70, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brain_coral',
+      solid: false,
+      opaque: false,
+      color: [200, 90, 130] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:bubble_coral',
+      solid: false,
+      opaque: false,
+      color: [180, 60, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:fire_coral',
+      solid: false,
+      opaque: false,
+      color: [205, 50, 60] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:horn_coral',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 60] as RGB,
+      hardness: 0,
+    },
+    // Coral fans — wall-mounted decorative variants of the plant.
+    {
+      name: 'webmc:tube_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [40, 70, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brain_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [200, 90, 130] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:bubble_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [180, 60, 200] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:fire_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [205, 50, 60] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:horn_coral_fan',
+      solid: false,
+      opaque: false,
+      color: [220, 200, 60] as RGB,
+      hardness: 0,
+    },
     // Mushroom blocks.
     { name: 'webmc:red_mushroom_block', color: [195, 50, 50] as RGB, hardness: 0.2 },
     { name: 'webmc:brown_mushroom_block', color: [150, 110, 80] as RGB, hardness: 0.2 },
     { name: 'webmc:mushroom_stem', color: [200, 195, 175] as RGB, hardness: 0.2 },
+    // Small mushroom plant variants (the foot-tall version). Recipe targets
+    // for mushroom_stew + ingredients for fermented_spider_eye. Wiki:
+    // hardness 0, instabreak. Plant blocks (solid:false, opaque:false).
+    {
+      name: 'webmc:red_mushroom',
+      solid: false,
+      opaque: false,
+      color: [220, 50, 50] as RGB,
+      hardness: 0,
+    },
+    {
+      name: 'webmc:brown_mushroom',
+      solid: false,
+      opaque: false,
+      color: [165, 120, 90] as RGB,
+      hardness: 0,
+    },
     // Prismarine + ocean blocks.
     { name: 'webmc:prismarine', color: [99, 156, 151] as RGB, hardness: 1.5 },
     { name: 'webmc:prismarine_bricks', color: [88, 167, 158] as RGB, hardness: 1.5 },
@@ -1178,7 +1904,8 @@ export function createDefaultRegistry(): BlockRegistry {
     },
     { name: 'webmc:bookshelf', color: [165, 130, 80] as RGB, hardness: 1.5 },
     { name: 'webmc:chiseled_bookshelf', color: [180, 140, 90] as RGB, hardness: 1.5 },
-    { name: 'webmc:enchanting_table', color: [135, 90, 165] as RGB, hardness: 5, lightEmission: 7 },
+    // Wiki: enchanting_table emits 0 light. Was 7 — non-vanilla glow.
+    { name: 'webmc:enchanting_table', color: [135, 90, 165] as RGB, hardness: 5 },
     { name: 'webmc:anvil', color: [80, 80, 80] as RGB, hardness: 5 },
     { name: 'webmc:chipped_anvil', color: [85, 85, 85] as RGB, hardness: 5 },
     { name: 'webmc:damaged_anvil', color: [90, 90, 90] as RGB, hardness: 5 },
@@ -1191,6 +1918,17 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:composter', color: [165, 130, 70] as RGB, hardness: 0.6 },
     { name: 'webmc:barrel', color: [165, 130, 75] as RGB, hardness: 2.5 },
     { name: 'webmc:lectern', color: [180, 140, 80] as RGB, hardness: 2.5 },
+    // Bee nest + beehive — produced by world-gen (nest in flower forests
+    // and similar) or crafted (hive from honeycomb + planks). Both have
+    // a bee_nest_populate module modeling occupants/honey level. Wiki:
+    // bee_nest hardness 0.3, beehive hardness 0.6.
+    { name: 'webmc:bee_nest', color: [200, 145, 65] as RGB, hardness: 0.3 },
+    { name: 'webmc:beehive', color: [180, 145, 90] as RGB, hardness: 0.6 },
+    // Bell — village mob-summon center block. Wiki: hardness 5, drops
+    // itself when mined with wood pickaxe or higher. Has multiple bell
+    // modules (bell_ring, bell_resonate, bell_ring_damage_raiders) but
+    // the block itself was unregistered.
+    { name: 'webmc:bell', color: [220, 180, 70] as RGB, hardness: 5 },
     { name: 'webmc:respawn_anchor', color: [60, 25, 65] as RGB, hardness: 50, lightEmission: 15 },
     { name: 'webmc:lodestone', color: [120, 130, 135] as RGB, hardness: 3.5 },
     { name: 'webmc:conduit', color: [195, 175, 100] as RGB, hardness: 3, lightEmission: 15 },
@@ -1251,6 +1989,25 @@ export function createDefaultRegistry(): BlockRegistry {
       opaque: false,
       color: [85, 130, 60] as RGB,
       hardness: 0.1,
+    },
+    // Pale Garden / pale_moss family (1.21). Pale moss is the
+    // grayish-white biome variant in the pale garden biome.
+    { name: 'webmc:pale_moss_block', color: [185, 195, 175] as RGB, hardness: 0.1 },
+    {
+      name: 'webmc:pale_moss_carpet',
+      solid: false,
+      opaque: false,
+      color: [185, 195, 175] as RGB,
+      hardness: 0.1,
+    },
+    // Hanging moss — drops from pale moss block via shears, hangs down
+    // up to 8 blocks. Wiki: hardness 0, instabreak plant.
+    {
+      name: 'webmc:hanging_moss',
+      solid: false,
+      opaque: false,
+      color: [185, 195, 175] as RGB,
+      hardness: 0,
     },
     {
       name: 'webmc:azalea',
@@ -1491,6 +2248,16 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [205, 145, 105] as RGB,
       hardness: 1,
     },
+    // Bogged skull (1.21) — drops 2.5% when bogged is killed by a
+    // charged creeper. Was referenced in entities/bogged.ts but missing
+    // from registry.
+    {
+      name: 'webmc:bogged_skull',
+      solid: false,
+      opaque: false,
+      color: [120, 130, 90] as RGB,
+      hardness: 1,
+    },
     // Plank variants for missing wood types.
     { name: 'webmc:spruce_planks', color: [115, 85, 50] as RGB, hardness: 2 },
     { name: 'webmc:birch_planks', color: [220, 200, 145] as RGB, hardness: 2 },
@@ -1614,14 +2381,14 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:green_concrete_powder', color: [105, 130, 55] as RGB, hardness: 0.5 },
     { name: 'webmc:red_concrete_powder', color: [180, 70, 70] as RGB, hardness: 0.5 },
     { name: 'webmc:black_concrete_powder', color: [25, 25, 30] as RGB, hardness: 0.5 },
-    { name: 'webmc:cherry_leaves', color: [235, 180, 205] as RGB, hardness: 0.2 },
-    { name: 'webmc:azalea_leaves', color: [100, 135, 55] as RGB, hardness: 0.2 },
-    { name: 'webmc:spruce_leaves', color: [56, 92, 38] as RGB, hardness: 0.2 },
-    { name: 'webmc:birch_leaves', color: [120, 167, 76] as RGB, hardness: 0.2 },
-    { name: 'webmc:jungle_leaves', color: [76, 152, 41] as RGB, hardness: 0.2 },
-    { name: 'webmc:acacia_leaves', color: [106, 165, 60] as RGB, hardness: 0.2 },
-    { name: 'webmc:dark_oak_leaves', color: [62, 110, 36] as RGB, hardness: 0.2 },
-    { name: 'webmc:mangrove_leaves', color: [60, 132, 50] as RGB, hardness: 0.2 },
+    { name: 'webmc:cherry_leaves', opaque: false, color: [235, 180, 205] as RGB, hardness: 0.2 },
+    { name: 'webmc:azalea_leaves', opaque: false, color: [100, 135, 55] as RGB, hardness: 0.2 },
+    { name: 'webmc:spruce_leaves', opaque: false, color: [56, 92, 38] as RGB, hardness: 0.2 },
+    { name: 'webmc:birch_leaves', opaque: false, color: [120, 167, 76] as RGB, hardness: 0.2 },
+    { name: 'webmc:jungle_leaves', opaque: false, color: [76, 152, 41] as RGB, hardness: 0.2 },
+    { name: 'webmc:acacia_leaves', opaque: false, color: [106, 165, 60] as RGB, hardness: 0.2 },
+    { name: 'webmc:dark_oak_leaves', opaque: false, color: [62, 110, 36] as RGB, hardness: 0.2 },
+    { name: 'webmc:mangrove_leaves', opaque: false, color: [60, 132, 50] as RGB, hardness: 0.2 },
     { name: 'webmc:flowering_azalea_leaves', color: [180, 80, 175] as RGB, hardness: 0.2 },
     // Crimson + warped wood family (slabs/stairs/fence/door).
     {
@@ -1638,6 +2405,53 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [50, 110, 110] as RGB,
       hardness: 2,
     },
+    // Missing wood slab variants — block registry had oak/spruce/birch/
+    // jungle/crimson/warped but not acacia/dark_oak/cherry/mangrove/
+    // pale_oak. default-recipes.ts doesn't have slab recipes for those
+    // five but they were referenced elsewhere. Wiki: all wood slabs
+    // hardness 2.
+    {
+      name: 'webmc:acacia_slab',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_slab',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_slab',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_slab',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_slab',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_slab',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 2,
+    },
     {
       name: 'webmc:crimson_stairs',
       solid: true,
@@ -1652,6 +2466,72 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [50, 110, 110] as RGB,
       hardness: 2,
     },
+    // Missing wood stairs — registry had oak/crimson/warped but missed
+    // spruce/birch/jungle/acacia/dark_oak/cherry/mangrove/pale_oak/bamboo
+    // (9 of 12 wood types). All hardness 2 per wiki.
+    {
+      name: 'webmc:spruce_stairs',
+      solid: true,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:birch_stairs',
+      solid: true,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:jungle_stairs',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:acacia_stairs',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_stairs',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_stairs',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_stairs',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_stairs',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_stairs',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 2,
+    },
     {
       name: 'webmc:crimson_fence',
       solid: true,
@@ -1661,6 +2541,135 @@ export function createDefaultRegistry(): BlockRegistry {
     },
     {
       name: 'webmc:warped_fence',
+      solid: true,
+      opaque: false,
+      color: [50, 110, 110] as RGB,
+      hardness: 2,
+    },
+    // Missing wood fences — registry had oak/spruce/birch/crimson/warped
+    // but missed jungle/acacia/dark_oak/cherry/mangrove/pale_oak/bamboo.
+    {
+      name: 'webmc:jungle_fence',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:acacia_fence',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_fence',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_fence',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_fence',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_fence',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_fence',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 2,
+    },
+    // Missing wood fence_gates — registry only had oak. All hardness 2.
+    {
+      name: 'webmc:spruce_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:birch_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:jungle_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:acacia_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:dark_oak_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:cherry_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:mangrove_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:pale_oak_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:bamboo_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:crimson_fence_gate',
+      solid: true,
+      opaque: false,
+      color: [110, 55, 80] as RGB,
+      hardness: 2,
+    },
+    {
+      name: 'webmc:warped_fence_gate',
       solid: true,
       opaque: false,
       color: [50, 110, 110] as RGB,
@@ -1680,6 +2689,44 @@ export function createDefaultRegistry(): BlockRegistry {
       color: [50, 110, 110] as RGB,
       hardness: 3,
     },
+    // Missing wood doors — registry had oak/spruce/birch/dark_oak/
+    // cherry/crimson/warped (+iron+copper) but not jungle/acacia/
+    // mangrove/pale_oak/bamboo. All hardness 3.
+    {
+      name: 'webmc:jungle_door',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:acacia_door',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:mangrove_door',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:pale_oak_door',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:bamboo_door',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
+      hardness: 3,
+    },
     {
       name: 'webmc:crimson_trapdoor',
       solid: true,
@@ -1692,6 +2739,71 @@ export function createDefaultRegistry(): BlockRegistry {
       solid: true,
       opaque: false,
       color: [50, 110, 110] as RGB,
+      hardness: 3,
+    },
+    // Missing wood trapdoors — registry had oak/crimson/warped (+iron+
+    // copper). All hardness 3.
+    {
+      name: 'webmc:spruce_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [114, 84, 48] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:birch_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [216, 200, 142] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:jungle_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [171, 121, 84] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:acacia_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [168, 85, 50] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:dark_oak_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [66, 43, 20] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:cherry_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [225, 175, 165] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:mangrove_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [125, 60, 70] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:pale_oak_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [200, 195, 188] as RGB,
+      hardness: 3,
+    },
+    {
+      name: 'webmc:bamboo_trapdoor',
+      solid: true,
+      opaque: false,
+      color: [220, 200, 110] as RGB,
       hardness: 3,
     },
     // Carpets — 16 dyed.
@@ -2361,6 +3473,34 @@ export function createDefaultRegistry(): BlockRegistry {
     { name: 'webmc:ice', opaque: false, color: [180, 200, 240] as RGB, hardness: 0.5 },
     { name: 'webmc:snow_block', color: [240, 250, 255] as RGB, hardness: 0.2 },
     { name: 'webmc:packed_ice', color: [145, 180, 230] as RGB, hardness: 0.5 },
+    // Blue ice — densest ice variant. Wiki: hardness 2.8, faster boats.
+    { name: 'webmc:blue_ice', opaque: false, color: [120, 180, 245] as RGB, hardness: 2.8 },
+    // Snow layer (1-8 layers, separate from snow_block which is the full
+    // packed cube). Wiki: hardness 0.1.
+    {
+      name: 'webmc:snow',
+      solid: false,
+      opaque: false,
+      color: [245, 250, 255] as RGB,
+      hardness: 0.1,
+    },
+    // Powder snow — 1.17, traps entities, climbable with leather boots,
+    // lit on contact gives a slow_falling effect. Wiki: hardness 0.25.
+    {
+      name: 'webmc:powder_snow',
+      solid: false,
+      opaque: false,
+      color: [250, 252, 255] as RGB,
+      hardness: 0.25,
+    },
+    // Frosted ice — block created by Frost Walker enchant on water.
+    // Decays back to water in light. Wiki: hardness 0.5, decay tick.
+    {
+      name: 'webmc:frosted_ice',
+      opaque: false,
+      color: [200, 220, 250] as RGB,
+      hardness: 0.5,
+    },
     // End cities.
     { name: 'webmc:purpur_pillar', color: [170, 130, 170] as RGB, hardness: 1.5 },
     // Utility blocks (interactable).
@@ -2412,6 +3552,48 @@ export function createDefaultRegistry(): BlockRegistry {
       bottom: [72, 72, 72] as RGB,
       color: [96, 96, 96] as RGB,
       hardness: 3.5,
+    },
+    {
+      name: 'webmc:smoker',
+      top: [80, 80, 80] as RGB,
+      side: [110, 92, 60] as RGB,
+      bottom: [70, 70, 70] as RGB,
+      color: [110, 92, 60] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:blast_furnace',
+      top: [80, 80, 90] as RGB,
+      side: [120, 120, 130] as RGB,
+      bottom: [70, 70, 80] as RGB,
+      color: [110, 110, 120] as RGB,
+      hardness: 3.5,
+    },
+    {
+      name: 'webmc:cauldron',
+      color: [70, 70, 70] as RGB,
+      hardness: 2,
+      opaque: false,
+    },
+    {
+      name: 'webmc:brewing_stand',
+      color: [120, 100, 70] as RGB,
+      hardness: 0.5,
+      opaque: false,
+    },
+    {
+      name: 'webmc:crafter',
+      top: [80, 75, 70] as RGB,
+      side: [115, 95, 60] as RGB,
+      bottom: [90, 80, 65] as RGB,
+      color: [115, 95, 60] as RGB,
+      hardness: 1.5,
+    },
+    {
+      name: 'webmc:heavy_core',
+      color: [60, 60, 70] as RGB,
+      hardness: -1,
+      opaque: false,
     },
   ] as SimpleBlock[]) {
     r.register(makeDef(def));

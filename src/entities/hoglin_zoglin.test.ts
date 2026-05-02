@@ -2,10 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { fleesWarpedFungus, makePorcine, tickPorcineConversion } from './hoglin_zoglin';
 
 describe('hoglin / zoglin', () => {
-  it('hoglin converts in overworld after 300s', () => {
+  it('hoglin converts in overworld after 15s (wiki)', () => {
+    // Wiki: "transforms into a zoglin after 15 seconds."
     const h = makePorcine('hoglin');
     let converted = false;
-    for (let i = 0; i < 3100; i++) {
+    for (let i = 0; i < 200; i++) {
       if (tickPorcineConversion(h, { inNether: false, dtSec: 0.1 }).converted) {
         converted = true;
         break;
@@ -17,15 +18,15 @@ describe('hoglin / zoglin', () => {
 
   it('nether pauses conversion', () => {
     const h = makePorcine('hoglin');
-    for (let i = 0; i < 3100; i++) {
+    for (let i = 0; i < 200; i++) {
       tickPorcineConversion(h, { inNether: true, dtSec: 0.1 });
     }
     expect(h.variant).toBe('hoglin');
   });
 
-  it('shaking during the last 15s', () => {
+  it('shakes in the seconds leading up to conversion', () => {
     const h = makePorcine('hoglin');
-    h.conversionTimerSec = 290;
+    h.conversionTimerSec = 11; // within the 5-second shake lead
     const r = tickPorcineConversion(h, { inNether: false, dtSec: 0.1 });
     expect(r.shaking).toBe(true);
   });

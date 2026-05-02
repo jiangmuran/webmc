@@ -24,9 +24,12 @@ describe('stray tipped arrow', () => {
     expect(dropsOnDeath(() => 0)).toContain('arrow_slowness');
   });
 
-  it('snowy biome check', () => {
+  it('Java spawn biomes (wiki: snowy_plains and ice_spikes only)', () => {
     expect(onlySpawnsInSnowyBiomes('snowy_plains')).toBe(true);
-    expect(onlySpawnsInSnowyBiomes('frozen_ocean')).toBe(true);
+    expect(onlySpawnsInSnowyBiomes('ice_spikes')).toBe(true);
     expect(onlySpawnsInSnowyBiomes('plains')).toBe(false);
+    expect(onlySpawnsInSnowyBiomes('frozen_ocean')).toBe(false); // BE-only
+    expect(onlySpawnsInSnowyBiomes('frozen_river')).toBe(false); // BE-only
+    expect(onlySpawnsInSnowyBiomes('snowy_slopes')).toBe(false); // BE-only
   });
 });

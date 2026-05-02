@@ -27,4 +27,14 @@ describe('helmet slot head', () => {
   it('turtle grants water breathing', () => {
     expect(conduitWaterBreathing('turtle_helmet')).toBe(true);
   });
+
+  it('turtle_shell (webmc registry name) also wearable + WB', () => {
+    // Wiki: Java ID is turtle_helmet, Bedrock ID is turtle_shell;
+    // webmc main.ts registers `webmc:turtle_shell` so both spellings
+    // must resolve. Head slot + protection + water-breathing all need
+    // to accept the registry name.
+    expect(isHeadWearable('turtle_shell')).toBe(true);
+    expect(protectionFromHelmet('turtle_shell')).toBe(2);
+    expect(conduitWaterBreathing('turtle_shell')).toBe(true);
+  });
 });

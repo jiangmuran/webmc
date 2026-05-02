@@ -1,13 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { instrumentForBlockAbove, notePitch } from './note_block_instrument';
+import { instrumentForBlockBelow, notePitch } from './note_block_instrument';
 
 describe('note block instrument', () => {
-  it('wood = bass', () => {
-    expect(instrumentForBlockAbove('wood')).toBe('bass');
+  // Wiki (minecraft.wiki/w/Note_Block): real game block names are
+  // oak_planks / oak_log / oak_wood / etc. — there is no bare "wood"
+  // block. Use canonical names so behavior matches real placements.
+  it('oak_planks = bass', () => {
+    expect(instrumentForBlockBelow('oak_planks')).toBe('bass');
   });
 
   it('default harp', () => {
-    expect(instrumentForBlockAbove('grass_block')).toBe('harp');
+    expect(instrumentForBlockBelow('grass_block')).toBe('harp');
   });
 
   it('pitch doubles per octave', () => {

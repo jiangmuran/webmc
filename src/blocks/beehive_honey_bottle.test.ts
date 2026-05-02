@@ -30,6 +30,10 @@ describe('beehive honey bottle', () => {
     expect(beesAngered({ ...full, isSmoked: true }, true)).toBe(false);
   });
 
+  it('full but undisturbed hive does NOT anger (wiki)', () => {
+    expect(beesAngered(full, false)).toBe(false);
+  });
+
   it('harvest empties hive', () => {
     expect(harvestHoneyBottle(full).newHive.honeyLevel).toBe(0);
   });

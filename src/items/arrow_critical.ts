@@ -38,10 +38,19 @@ export interface ArrowDamageQuery {
   rng: () => number;
 }
 
+// Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+// 25% × (level + 1), rounded up to nearest half-heart."
+//
+// Damage in MC is in half-heart units (1 HP = 1 half-heart), so
+// "rounded up to nearest half-heart" = Math.ceil. Old Math.floor
+// rounded DOWN, under-shooting whenever the bonus had a fractional
+// half-heart (e.g. base=5, Power IV → bonus 6.25: floor=6, ceil=7).
+// Sibling src/entities/arrow_trajectory.ts already uses Math.ceil
+// after a previous fix; this module now matches wiki canon.
 export function arrowDamage(q: ArrowDamageQuery): number {
   let base = Math.max(1, Math.ceil(q.arrowSpeed * 2));
   if (q.powerEnchantLevel > 0) {
-    base += Math.floor(0.25 * (q.powerEnchantLevel + 1) + 0.5);
+    base += Math.ceil(base * (0.25 * q.powerEnchantLevel + 0.25));
   }
   if (q.critical) base += Math.floor(q.rng() * (base / 2 + 1));
   return base;

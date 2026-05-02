@@ -1,5 +1,7 @@
-// Sponge absorbs up to 65 water blocks in a 7x7x7 volume (flood-fill
-// capped at 65). Becomes wet sponge; dried in furnace/nether.
+// Sponge absorbs up to 118 water source/flowing blocks within a
+// taxicab (Manhattan) distance of 6 from the sponge. Becomes wet
+// sponge; dried in furnace/nether. Wiki:
+// minecraft.wiki/w/Sponge#Absorption.
 
 export interface AbsorbQuery {
   at: (x: number, y: number, z: number) => 'water' | 'air' | 'solid';
@@ -8,7 +10,11 @@ export interface AbsorbQuery {
   sz: number;
 }
 
-export const ABSORB_LIMIT = 65;
+// Wiki body text: "absorbs both flowing and source blocks of water up
+// to 6 blocks away (taken as a taxicab distance) ... A sponge does
+// not absorb more than 118 blocks of water". 7 / 65 was the original
+// 1.8 implementation; current in-game value is 6 / 118.
+export const ABSORB_LIMIT = 118;
 export const ABSORB_RADIUS = 6;
 
 type QEntry = [number, number, number, number];
@@ -17,8 +23,10 @@ export function absorbFrom(q: AbsorbQuery): { positions: [number, number, number
   const visited = new Set<string>();
   const queue: QEntry[] = [[q.sx, q.sy, q.sz, 0]];
   const absorbed: [number, number, number][] = [];
-  while (queue.length > 0 && absorbed.length < ABSORB_LIMIT) {
-    const entry = queue.shift();
+  // Head-pointer dequeue (Array.shift is O(N) per pop).
+  let qHead = 0;
+  while (qHead < queue.length && absorbed.length < ABSORB_LIMIT) {
+    const entry = queue[qHead++];
     if (!entry) break;
     const [x, y, z, d] = entry;
     const key = `${x},${y},${z}`;

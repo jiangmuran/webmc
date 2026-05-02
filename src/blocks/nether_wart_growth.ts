@@ -30,7 +30,12 @@ export function randomTick(n: NetherWart, q: GrowQuery): 'grew' | 'noop' {
 export function breakDrops(n: NetherWart, fortuneLevel: number, rand: () => number): number {
   if (n.age < MAX_AGE) return 1;
   const base = 2 + Math.floor(rand() * 3); // 2..4
-  return Math.min(8, base + fortuneLevel);
+  // Wiki (minecraft.wiki/w/Nether_Wart#Drops): fortune adds a uniform
+  // 0..level bonus, not a deterministic +level. Old formula gave the
+  // full level every time (e.g. Fortune III always +3) instead of the
+  // wiki's 0..3 roll. Cap remains 8 to match wiki's hard maximum.
+  const fortuneBonus = fortuneLevel > 0 ? Math.floor(rand() * (fortuneLevel + 1)) : 0;
+  return Math.min(8, base + fortuneBonus);
 }
 
 // Bone meal does not work on nether wart (vanilla).

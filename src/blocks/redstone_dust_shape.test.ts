@@ -4,8 +4,12 @@ import { dustShape, hasUpward, type DustConnections } from './redstone_dust_shap
 const none: DustConnections = { north: 'none', south: 'none', east: 'none', west: 'none' };
 
 describe('redstone dust shape', () => {
-  it('isolated dot', () => {
-    expect(dustShape(none)).toBe('dot');
+  it('isolated defaults to cross (wiki: + plus sign)', () => {
+    expect(dustShape(none)).toBe('cross');
+  });
+
+  it('isolated + right-clicked = dot (wiki: toggles to dot)', () => {
+    expect(dustShape({ ...none, dottedByPlayer: true })).toBe('dot');
   });
 
   it('straight NS line', () => {

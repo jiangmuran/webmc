@@ -18,20 +18,43 @@ export function keyOf(p: PosKey): string {
   return `${p.x.toString()},${p.y.toString()},${p.z.toString()}`;
 }
 
+// Same encoding as keyOf but takes raw coords — saves callers building
+// a {x,y,z} literal just to pass through. The hot tickFluid path hits
+// this dozens of times per cell per tick (downward, four horizontal
+// neighbors, snapshot-during-flow, BFS dry-up).
+export function keyOfXYZ(x: number, y: number, z: number): string {
+  return `${x.toString()},${y.toString()},${z.toString()}`;
+}
+
 export function parseKey(k: string): PosKey {
-  const [x, y, z] = k.split(',').map(Number);
-  return { x: x ?? 0, y: y ?? 0, z: z ?? 0 };
+  const out: PosKey = { x: 0, y: 0, z: 0 };
+  parseKeyInto(k, out);
+  return out;
+}
+
+// In-place variant that mutates `out` instead of allocating. The split
+// + map(Number) version allocated a string array, a number array, AND
+// a {x,y,z} literal per call — for a 5k-cell lava lake that was 15k
+// throwaway objects per tick. tickFluid uses a module-scope scratch
+// across both the per-cell loop and the BFS dry-up.
+export function parseKeyInto(k: string, out: PosKey): PosKey {
+  const c1 = k.indexOf(',');
+  const c2 = k.indexOf(',', c1 + 1);
+  out.x = +k.substring(0, c1);
+  out.y = +k.substring(c1 + 1, c2);
+  out.z = +k.substring(c2 + 1);
+  return out;
 }
 
 export type SolidSampler = (x: number, y: number, z: number) => boolean;
 export type FluidSampler = (x: number, y: number, z: number) => FluidCell | null;
 
-const HORIZ: readonly (readonly [number, number])[] = [
-  [-1, 0],
-  [1, 0],
-  [0, -1],
-  [0, 1],
-];
+// Parallel horizontal-neighbor arrays. Was a tuple-of-tuples requiring
+// `for (const [dx, dz] of HORIZ)` per iteration — paid iterator
+// + destructure overhead per neighbor visit. tickFluid hits these
+// loops 4 times per cell × 5000+ cells per tick at active flow.
+const HORIZ_DX: readonly number[] = [-1, 1, 0, 0];
+const HORIZ_DZ: readonly number[] = [0, 0, -1, 1];
 
 export interface FluidTickResult {
   updates: Map<string, FluidCell | null>;
@@ -42,6 +65,44 @@ function attenuation(kind: FluidKind): number {
   return kind === 'water' ? 1 : 2;
 }
 
+// Reused per-call scratches. tickFluid is called from FluidWorld.tick
+// synchronously; the caller drains `updates` via applyFluidUpdates and
+// reads `stabilized` immediately, then doesn't keep references. All
+// four collections grow with active fluid cells (5000+ at big lakes),
+// so recycling rather than re-allocating each tick saves substantial
+// GC pressure.
+const TICK_UPDATES_SCRATCH = new Map<string, FluidCell | null>();
+const TICK_MERGED_SCRATCH = new Map<string, FluidCell>();
+const TICK_REACHABLE_SCRATCH = new Set<string>();
+const TICK_QUEUE_SCRATCH: string[] = [];
+const TICK_RESULT_SCRATCH: FluidTickResult = {
+  updates: TICK_UPDATES_SCRATCH,
+  stabilized: false,
+};
+// Per-cell parseKey scratch — see parseKeyInto. Single instance is
+// safe because the per-cell + BFS loops below read pos.x/y/z
+// synchronously and don't recurse into parseKey.
+const TICK_POS_SCRATCH: PosKey = { x: 0, y: 0, z: 0 };
+
+// Module-scope snapshot helper. Was a fresh arrow closure allocated
+// per tickFluid call, capturing the per-tick `cells` + `updates`
+// maps. Pulling it out to a free function with explicit args
+// eliminates the closure allocation (one per fluid tick = 4Hz
+// baseline) while keeping the same fast-path: post-update value
+// shadows the pre-tick cell value.
+function snapshotCell(
+  cells: ReadonlyMap<string, FluidCell>,
+  updates: Map<string, FluidCell | null>,
+  x: number,
+  y: number,
+  z: number,
+): FluidCell | null {
+  const k = keyOfXYZ(x, y, z);
+  const u = updates.get(k);
+  if (u !== undefined) return u;
+  return cells.get(k) ?? null;
+}
+
 // One fluid tick. Given sources (current fluid cells) + a solid-block sampler,
 // returns the new/changed cells. Horizontal flow decreases level by
 // attenuation per step; downward flow is unconditional at full level.
@@ -49,22 +110,30 @@ export function tickFluid(
   cells: ReadonlyMap<string, FluidCell>,
   isSolid: SolidSampler,
 ): FluidTickResult {
-  const updates = new Map<string, FluidCell | null>();
-  const snapshot: FluidSampler = (x, y, z) => {
-    const u = updates.get(keyOf({ x, y, z }));
-    if (u !== undefined) return u;
-    return cells.get(keyOf({ x, y, z })) ?? null;
-  };
+  const updates = TICK_UPDATES_SCRATCH;
+  updates.clear();
+  // Fast path: no fluid cells exist (most worlds away from oceans/lava
+  // pools). Skip the loop setup, BFS dry-up scratch clears, and the
+  // merged-state mirror — all of which are no-ops on empty input.
+  if (cells.size === 0) {
+    TICK_RESULT_SCRATCH.stabilized = true;
+    return TICK_RESULT_SCRATCH;
+  }
 
-  for (const [key, cell] of cells) {
-    if (cell.level <= 0) continue;
-    const pos = parseKey(key);
+  // Iterate keys + lookup vs entries — destructuring `[key, cell]`
+  // allocates a fresh 2-tuple per iteration, paid for every fluid cell
+  // every tick (5000+ at active lava lakes / waterlogged structures).
+  for (const key of cells.keys()) {
+    const cell = cells.get(key);
+    if (cell === undefined || cell.level <= 0) continue;
+    const pos = parseKeyInto(key, TICK_POS_SCRATCH);
 
     // Downward flow: if below is empty and not solid, fill at this cell's
     // level (capped). Source cells spread downward at full level.
-    const belowKey = keyOf({ x: pos.x, y: pos.y - 1, z: pos.z });
-    if (!isSolid(pos.x, pos.y - 1, pos.z)) {
-      const below = snapshot(pos.x, pos.y - 1, pos.z);
+    const belowKey = keyOfXYZ(pos.x, pos.y - 1, pos.z);
+    const belowSolid = isSolid(pos.x, pos.y - 1, pos.z);
+    if (!belowSolid) {
+      const below = snapshotCell(cells, updates, pos.x, pos.y - 1, pos.z);
       const targetLevel = cell.source ? LEVEL_SOURCE - 1 : Math.max(cell.level, LEVEL_SOURCE - 1);
       if (below?.kind !== cell.kind || below.level < targetLevel) {
         updates.set(belowKey, {
@@ -76,28 +145,34 @@ export function tickFluid(
     }
 
     // Horizontal flow only if there's a surface under this cell (it can't
-    // flow horizontally mid-air).
-    const supported =
-      isSolid(pos.x, pos.y - 1, pos.z) ||
-      (() => {
-        const b = snapshot(pos.x, pos.y - 1, pos.z);
-        return b !== null && b.kind === cell.kind;
-      })();
+    // flow horizontally mid-air). Inlined the previous IIFE — was a
+    // fresh arrow allocated per cell that wasn't directly solid-supported.
+    let supported = belowSolid;
+    if (!supported) {
+      const b = snapshotCell(cells, updates, pos.x, pos.y - 1, pos.z);
+      supported = b !== null && b.kind === cell.kind;
+    }
     if (!supported) continue;
 
     const step = attenuation(cell.kind);
     const outLevel = cell.source ? LEVEL_SOURCE - step : cell.level - step;
     if (outLevel <= 0) continue;
 
-    for (const [dx, dz] of HORIZ) {
-      const nx = pos.x + dx;
-      const ny = pos.y;
-      const nz = pos.z + dz;
-      if (isSolid(nx, ny, nz)) continue;
-      const neighbour = snapshot(nx, ny, nz);
+    // Hoist pos.x/y/z outside the 4-neighbor loop — was three property
+    // reads per iteration × 4 iters × per cell × per fluid tick. At
+    // active flow with thousands of cells the property-read overhead
+    // adds up.
+    const px = pos.x;
+    const py = pos.y;
+    const pz = pos.z;
+    for (let ni = 0; ni < 4; ni++) {
+      const nx = px + HORIZ_DX[ni]!;
+      const nz = pz + HORIZ_DZ[ni]!;
+      if (isSolid(nx, py, nz)) continue;
+      const neighbour = snapshotCell(cells, updates, nx, py, nz);
       if (neighbour && neighbour.kind !== cell.kind) continue;
       if (neighbour && neighbour.level >= outLevel) continue;
-      updates.set(keyOf({ x: nx, y: ny, z: nz }), {
+      updates.set(keyOfXYZ(nx, py, nz), {
         kind: cell.kind,
         level: outLevel,
         source: false,
@@ -109,35 +184,53 @@ export function tickFluid(
   // reached (disconnected puddles) are removed. A neighbour is reachable
   // below unconditionally (gravity) or horizontally if strictly lower
   // level (downhill flow).
-  const merged = new Map<string, FluidCell>();
-  for (const [k, c] of cells) merged.set(k, c);
-  for (const [k, u] of updates) {
-    if (u === null) merged.delete(k);
-    else merged.set(k, u);
+  const merged = TICK_MERGED_SCRATCH;
+  merged.clear();
+  // keys()+get() saves a tuple alloc per cell across the merge build
+  // and the BFS source seed loop. Active fluid spread iterates these
+  // ~3 times per cell per tick.
+  for (const k of cells.keys()) {
+    const c = cells.get(k);
+    if (c !== undefined) merged.set(k, c);
   }
-  const reachable = new Set<string>();
-  const queue: string[] = [];
-  for (const [k, c] of merged) {
-    if (c.source) {
+  for (const k of updates.keys()) {
+    const u = updates.get(k);
+    if (u === null) merged.delete(k);
+    else if (u !== undefined) merged.set(k, u);
+  }
+  const reachable = TICK_REACHABLE_SCRATCH;
+  reachable.clear();
+  const queue = TICK_QUEUE_SCRATCH;
+  queue.length = 0;
+  for (const k of merged.keys()) {
+    if (merged.get(k)?.source) {
       reachable.add(k);
       queue.push(k);
     }
   }
-  while (queue.length > 0) {
-    const k = queue.shift();
+  // Head-pointer dequeue: queue.shift() is O(N) per pop, making
+  // this BFS O(N^2) in fluid-cell count. Big lava lake or an aqueduct
+  // can have ~5000 cells; head pointer keeps it linear.
+  let qHead = 0;
+  while (qHead < queue.length) {
+    const k = queue[qHead++];
     if (k === undefined) break;
     const c = merged.get(k);
     if (c === undefined) continue;
-    const pos = parseKey(k);
-    const belowKey = keyOf({ x: pos.x, y: pos.y - 1, z: pos.z });
+    const pos = parseKeyInto(k, TICK_POS_SCRATCH);
+    // Hoist pos.x/y/z outside the 4-neighbor loop and the below probe.
+    const px = pos.x;
+    const py = pos.y;
+    const pz = pos.z;
+    const belowKey = keyOfXYZ(px, py - 1, pz);
     if (!reachable.has(belowKey)) {
       if (merged.get(belowKey)?.kind === c.kind) {
         reachable.add(belowKey);
         queue.push(belowKey);
       }
     }
-    for (const [dx, dz] of HORIZ) {
-      const nk = keyOf({ x: pos.x + dx, y: pos.y, z: pos.z + dz });
+    for (let ni = 0; ni < 4; ni++) {
+      const nk = keyOfXYZ(px + HORIZ_DX[ni]!, py, pz + HORIZ_DZ[ni]!);
       if (reachable.has(nk)) continue;
       const nc = merged.get(nk);
       if (nc?.kind !== c.kind) continue;
@@ -147,20 +240,26 @@ export function tickFluid(
       }
     }
   }
-  for (const [k, c] of merged) {
-    if (c.source || reachable.has(k)) continue;
+  for (const k of merged.keys()) {
+    const c = merged.get(k);
+    if (c === undefined || c.source || reachable.has(k)) continue;
     updates.set(k, null);
   }
 
-  return { updates, stabilized: updates.size === 0 };
+  TICK_RESULT_SCRATCH.stabilized = updates.size === 0;
+  return TICK_RESULT_SCRATCH;
 }
 
 export function applyFluidUpdates(
   cells: Map<string, FluidCell>,
   updates: ReadonlyMap<string, FluidCell | null>,
 ): void {
-  for (const [key, cell] of updates) {
+  // Iterate keys + lookup vs entries — destructuring `[key, cell]`
+  // allocates a fresh 2-tuple per update. Active fluid spread can
+  // produce thousands of updates per tick.
+  for (const key of updates.keys()) {
+    const cell = updates.get(key);
     if (cell === null) cells.delete(key);
-    else cells.set(key, cell);
+    else if (cell !== undefined) cells.set(key, cell);
   }
 }

@@ -15,11 +15,16 @@ export function makeShelf(): ChiseledBookshelf {
   };
 }
 
+// Wiki (minecraft.wiki/w/Chiseled_Bookshelf): accepts the full
+// book family — book, enchanted_book, written_book, writable_book,
+// knowledge_book. Old set missed knowledge_book (creative-only but
+// still a valid shelf item per wiki).
 const ACCEPTED = new Set<string>([
   'webmc:book',
   'webmc:enchanted_book',
   'webmc:written_book',
   'webmc:writable_book',
+  'webmc:knowledge_book',
 ]);
 
 export function canHold(id: string): boolean {

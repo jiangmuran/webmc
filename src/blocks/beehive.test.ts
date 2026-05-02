@@ -24,11 +24,11 @@ describe('beehive', () => {
     expect(h.honeyLevel).toBe(5);
   });
 
-  it('shears harvest at full produces honeycomb + agitates', () => {
+  it('shears harvest at full produces 3 honeycombs + agitates (wiki)', () => {
     const h = makeBeehive();
     h.honeyLevel = 5;
     const r = harvest(h, { useBottle: false, campfireBelow: false });
-    expect(r.drop).toBe('webmc:honeycomb');
+    expect(r.drop).toEqual({ item: 'webmc:honeycomb', count: 3 });
     expect(r.agitated).toBe(true);
   });
 
@@ -36,7 +36,7 @@ describe('beehive', () => {
     const h = makeBeehive();
     h.honeyLevel = 5;
     const r = harvest(h, { useBottle: true, campfireBelow: true });
-    expect(r.drop).toBe('webmc:honey_bottle');
+    expect(r.drop).toEqual({ item: 'webmc:honey_bottle', count: 1 });
     expect(r.agitated).toBe(false);
   });
 

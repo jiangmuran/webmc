@@ -551,32 +551,75 @@ export class SurvivalHud {
     this.root.style.display = on ? 'flex' : 'none';
   }
 
+  // Edge-trigger flags for the shake-clear writes. Most frames the
+  // player isn't at low HP / low hunger, and the inner else branch
+  // was writing transform='' to all 10 hearts + 10 hungers every
+  // frame for nothing.
+  private heartShakeActive = false;
+  private hungerShakeActive = false;
+  // Per-heart opacity diff cache. style.opacity was being written
+  // every frame even at full HP (pulse=1 → '1.00' for non-empty
+  // hearts), invalidating browser style for nothing.
+  private readonly lastHeartOpacity: string[] = new Array<string>(HEARTS).fill('');
+  // Per-heart shake-transform diff caches. The shake offsets are
+  // already integer-bucketed (`| 0` over a [-1.5, 1.5] sin range = 5
+  // distinct ints), so the same transform string is rewritten many
+  // frames in a row. NaN sentinels force first-frame writes.
+  private readonly lastHeartShakeX: number[] = new Array<number>(HEARTS).fill(NaN);
+  private readonly lastHeartShakeY: number[] = new Array<number>(HEARTS).fill(NaN);
+  private readonly lastHungerShakeX: number[] = new Array<number>(DRUMSTICKS).fill(NaN);
+  private readonly lastHungerShakeY: number[] = new Array<number>(DRUMSTICKS).fill(NaN);
+  // Diff caches for the per-frame display + xp + label writes.
+  // Each style/text write triggers browser invalidation; cumulative
+  // ~60Hz × per-element waste in steady state.
+  private lastArmorVisible = false;
+  private lastBubblesVisible = false;
+  private lastXpFillPct = -1;
+  private lastXpLabel = '';
+
   render(frame: SurvivalFrame): void {
     if (!this.visible) return;
+    // Single performance.now syscall per render — was three (one for
+    // pulse, one for heart-shake `hbT`, one for hunger-shake `t`),
+    // all sampled in the same render call.
+    const nowMs = performance.now();
     const hpPerHeart = frame.maxHealth / HEARTS;
     const lowHp = frame.health < 6;
-    const pulse = lowHp ? 0.5 + 0.5 * Math.sin(performance.now() * 0.01) : 1;
+    const pulse = lowHp ? 0.5 + 0.5 * Math.sin(nowMs * 0.01) : 1;
     const heartShake = lowHp;
-    const hbT = performance.now();
+    const hbT = nowMs;
     for (let i = 0; i < HEARTS; i++) {
       const start = i * hpPerHeart;
       const v = Math.max(0, Math.min(hpPerHeart, frame.health - start));
       const name: IconName =
         v >= hpPerHeart * 0.9 ? 'heart_full' : v >= hpPerHeart * 0.4 ? 'heart_half' : 'heart_empty';
       this.blit(this.hearts[i]!, name);
-      this.hearts[i]!.style.opacity = name === 'heart_empty' ? '1' : String(pulse.toFixed(2));
+      const opacity = name === 'heart_empty' ? '1' : pulse.toFixed(2);
+      if (this.lastHeartOpacity[i] !== opacity) {
+        this.hearts[i]!.style.opacity = opacity;
+        this.lastHeartOpacity[i] = opacity;
+      }
       if (heartShake) {
         const ox = (Math.sin(hbT * 0.05 + i * 1.3) * 1.5) | 0;
         const oy = (Math.cos(hbT * 0.06 + i * 0.7) * 1.5) | 0;
-        this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
-      } else {
+        if (ox !== this.lastHeartShakeX[i] || oy !== this.lastHeartShakeY[i]) {
+          this.hearts[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+          this.lastHeartShakeX[i] = ox;
+          this.lastHeartShakeY[i] = oy;
+        }
+      } else if (this.heartShakeActive) {
+        // Only clear once on the falling edge — was writing
+        // transform='' every frame the player wasn't at low HP.
         this.hearts[i]!.style.transform = '';
+        this.lastHeartShakeX[i] = NaN;
+        this.lastHeartShakeY[i] = NaN;
       }
     }
+    this.heartShakeActive = heartShake;
 
     const hungerPer = frame.maxHunger / DRUMSTICKS;
     const shake = shakeOnLowFood(frame.hunger);
-    const t = performance.now();
+    const t = nowMs;
     for (let i = 0; i < DRUMSTICKS; i++) {
       const start = i * hungerPer;
       const v = Math.max(0, Math.min(hungerPer, frame.hunger - start));
@@ -586,15 +629,25 @@ export class SurvivalHud {
       if (shake) {
         const ox = (Math.sin(t * 0.04 + i * 1.7) * 2) | 0;
         const oy = (Math.cos(t * 0.05 + i * 0.9) * 2) | 0;
-        this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
-      } else {
+        if (ox !== this.lastHungerShakeX[i] || oy !== this.lastHungerShakeY[i]) {
+          this.hungers[i]!.style.transform = `translate(${String(ox)}px,${String(oy)}px)`;
+          this.lastHungerShakeX[i] = ox;
+          this.lastHungerShakeY[i] = oy;
+        }
+      } else if (this.hungerShakeActive) {
         this.hungers[i]!.style.transform = '';
+        this.lastHungerShakeX[i] = NaN;
+        this.lastHungerShakeY[i] = NaN;
       }
     }
+    this.hungerShakeActive = shake;
 
     const armorPts = frame.armorPoints ?? 0;
     if (armorVisible(armorPts)) {
-      this.armorRow.style.display = 'flex';
+      if (!this.lastArmorVisible) {
+        this.armorRow.style.display = 'flex';
+        this.lastArmorVisible = true;
+      }
       const icons = armorIcons(armorPts);
       for (let i = 0; i < ARMORS; i++) {
         const which = icons[i];
@@ -602,37 +655,55 @@ export class SurvivalHud {
           which === 'full' ? 'armor_full' : which === 'half' ? 'armor_half' : 'armor_empty';
         this.blit(this.armors[i]!, name);
       }
-    } else {
+    } else if (this.lastArmorVisible) {
       this.armorRow.style.display = 'none';
+      this.lastArmorVisible = false;
     }
 
     const showBubbles = frame.underwater || frame.breathSec < frame.maxBreathSec;
     if (showBubbles) {
       const breathPer = frame.maxBreathSec / BUBBLES;
+      const turningOn = !this.lastBubblesVisible;
       for (let i = 0; i < BUBBLES; i++) {
         const start = i * breathPer;
         const v = Math.max(0, Math.min(breathPer, frame.breathSec - start));
         const name: IconName = v > breathPer * 0.5 ? 'bubble_full' : 'bubble_empty';
         const el = this.bubbles[i]!;
-        el.style.display = 'inline-block';
+        if (turningOn) el.style.display = 'inline-block';
         this.blit(el, name);
       }
-    } else {
+      this.lastBubblesVisible = true;
+    } else if (this.lastBubblesVisible) {
       for (const c of this.bubbles) c.style.display = 'none';
+      this.lastBubblesVisible = false;
     }
 
     const pct = frame.xpToNext > 0 ? frame.xpProgress / frame.xpToNext : 0;
-    this.xpFill.style.width = `${String(Math.round(Math.max(0, Math.min(1, pct)) * 100))}%`;
-    this.xpLabel.textContent = frame.xpLevel > 0 ? String(frame.xpLevel) : '';
+    const pctRounded = Math.round(Math.max(0, Math.min(1, pct)) * 100);
+    if (pctRounded !== this.lastXpFillPct) {
+      this.xpFill.style.width = `${String(pctRounded)}%`;
+      this.lastXpFillPct = pctRounded;
+    }
+    const label = frame.xpLevel > 0 ? String(frame.xpLevel) : '';
+    if (label !== this.lastXpLabel) {
+      this.xpLabel.textContent = label;
+      this.lastXpLabel = label;
+    }
   }
 
+  private readonly lastBlit = new WeakMap<HTMLCanvasElement, IconName>();
   private blit(target: HTMLCanvasElement, name: IconName): void {
+    // Skip identical re-blit. Hot path: render() runs every frame and
+    // most heart/hunger/armor icons stay the same icon for many frames
+    // in a row. clearRect + drawImage triggers a GPU upload each time.
+    if (this.lastBlit.get(target) === name) return;
     const src = this.atlas.get(name);
     const ctx = target.getContext('2d');
     if (!ctx || !src) return;
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, target.width, target.height);
     ctx.drawImage(src, 0, 0);
+    this.lastBlit.set(target, name);
   }
 }
 

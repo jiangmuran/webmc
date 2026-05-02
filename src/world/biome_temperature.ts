@@ -53,12 +53,16 @@ export function isDry(biome: string): boolean {
   return climateOf(biome).temperature >= 2.0;
 }
 
-// Altitude adjustment: every block above y=80 subtracts 0.0005 per block
-// from temperature, causing mountain peaks to freeze even in warm biomes.
+// Wiki (minecraft.wiki/w/Biome#Temperature): temperature decreases by
+// 0.00125 per block above y=81. Old constant 0.0005 was less than half
+// the wiki rate, so peaks stayed too warm to ever snow on warm biomes.
+export const TEMP_FALLOFF_PER_BLOCK = 0.00125;
+export const TEMP_ALTITUDE_REF_Y = 81;
+
 export function temperatureAt(biome: string, y: number): number {
   const base = climateOf(biome).temperature;
-  if (y <= 80) return base;
-  return base - (y - 80) * 0.0005;
+  if (y <= TEMP_ALTITUDE_REF_Y) return base;
+  return base - (y - TEMP_ALTITUDE_REF_Y) * TEMP_FALLOFF_PER_BLOCK;
 }
 
 export function canSnowAt(biome: string, y: number): boolean {

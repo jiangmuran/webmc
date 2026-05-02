@@ -12,7 +12,8 @@ describe('banner pattern layer apply', () => {
     expect(r).toHaveLength(1);
   });
 
-  it('cap at 16', () => {
+  it('cap at MAX_LAYERS (wiki: 6)', () => {
+    expect(MAX_LAYERS).toBe(6);
     const full = Array.from({ length: MAX_LAYERS }, () => ({ pattern: 'p', color: 'c' }));
     expect(addLayerOrFail(full, { pattern: 'x', color: 'y' })).toBeUndefined();
   });

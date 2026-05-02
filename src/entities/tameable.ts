@@ -17,8 +17,18 @@ export function makeTameable(kind: TameableKind): TameableState {
 
 const TAME_ITEMS: Record<TameableKind, readonly string[]> = {
   wolf: ['webmc:bone'],
-  cat: ['webmc:raw_fish', 'webmc:raw_salmon'],
-  parrot: ['webmc:wheat_seeds', 'webmc:melon_seeds', 'webmc:pumpkin_seeds'],
+  // 1.13+ renamed raw_fish → cod, raw_salmon → salmon. Old names were
+  // never registered, so feeding cats with raw fish silently failed.
+  cat: ['webmc:cod', 'webmc:salmon'],
+  // Wiki: parrots tame on any seed — wheat, melon, pumpkin, beetroot,
+  // and torchflower (1.20+). All five are item-registered in webmc.
+  parrot: [
+    'webmc:wheat_seeds',
+    'webmc:melon_seeds',
+    'webmc:pumpkin_seeds',
+    'webmc:beetroot_seeds',
+    'webmc:torchflower_seeds',
+  ],
   horse: [], // horses are tamed by riding, not feeding
   donkey: [],
   mule: [],

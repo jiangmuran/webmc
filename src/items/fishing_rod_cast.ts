@@ -8,20 +8,32 @@ export interface FishingAttempt {
   rand: () => number;
 }
 
+// Wiki (minecraft.wiki/w/Fishing_Rod): wait is uniform [100, 600]
+// ticks (5-30s), Lure subtracts 100 ticks per level (-15s at Lure
+// III), rain effectively halves the bite rate. With Lure III on a
+// low roll the wait can drop to 0 ticks per wiki — sibling
+// fishing_hook_bite_timer.ts already floors at 0. Old floor of 20
+// (1 second) was too restrictive: Lure III on a low roll should be
+// allowed to bite immediately.
 export function waitTicks(a: FishingAttempt): number {
   const base = 100 + Math.floor(a.rand() * 500); // 5s..30s
   const lureMs = a.lureLevel * 5 * 20;
   const rainMod = a.rainingAbove ? -100 : 0;
-  return Math.max(20, base - lureMs + rainMod);
+  return Math.max(0, base - lureMs + rainMod);
 }
 
 export type Rarity = 'fish' | 'treasure' | 'junk';
 
+// Wiki (minecraft.wiki/w/Luck_of_the_Sea): "Each level of Luck of
+// the Sea reduces the chance of getting junk by 2.1% and increases
+// the chance of getting treasure by 2%." Old junk reduction 0.025
+// (2.5%) was slightly over-aggressive; sibling
+// fishing_rod_reel_drops.ts uses the wiki-canonical 0.021.
 export function rollRarity(a: FishingAttempt): Rarity {
   const loot = a.luckOfTheSeaLevel;
   const r = a.rand();
   const treasure = 0.05 + 0.02 * loot;
-  const junk = Math.max(0, 0.1 - 0.025 * loot);
+  const junk = Math.max(0, 0.1 - 0.021 * loot);
   if (r < treasure) return 'treasure';
   if (r < treasure + junk) return 'junk';
   return 'fish';

@@ -52,6 +52,16 @@ export class SkyCelestials {
   readonly sun: THREE.Sprite;
   readonly moon: THREE.Sprite;
   private readonly radius: number;
+  // Diff caches. The visible flags and sun-color RGB are stable for
+  // long stretches of in-game day / night and only change at the
+  // dawn/dusk transitions. Was writing all three every frame
+  // unconditionally. NaN sentinel for the color so the first call
+  // always writes through.
+  private lastSunVisible = false;
+  private lastMoonVisible = false;
+  private lastSunR = NaN;
+  private lastSunG = NaN;
+  private lastSunB = NaN;
 
   constructor(radius = 300) {
     this.radius = radius;
@@ -87,24 +97,43 @@ export class SkyCelestials {
   }
 
   update(camPos: THREE.Vector3, sunDir: THREE.Vector3): void {
-    this.sun.position.set(
-      camPos.x + sunDir.x * this.radius,
-      camPos.y + sunDir.y * this.radius,
-      camPos.z + sunDir.z * this.radius,
-    );
-    this.moon.position.set(
-      camPos.x - sunDir.x * this.radius,
-      camPos.y - sunDir.y * this.radius,
-      camPos.z - sunDir.z * this.radius,
-    );
-    this.sun.visible = sunDir.y > -0.05;
-    this.moon.visible = sunDir.y < 0.05;
+    const sunVisible = sunDir.y > -0.05;
+    if (sunVisible !== this.lastSunVisible) {
+      this.sun.visible = sunVisible;
+      this.lastSunVisible = sunVisible;
+    }
+    const moonVisible = sunDir.y < 0.05;
+    if (moonVisible !== this.lastMoonVisible) {
+      this.moon.visible = moonVisible;
+      this.lastMoonVisible = moonVisible;
+    }
+    // Skip position writes for hidden celestials. Sun is hidden during
+    // half the day, moon during the other half — we used to write 6
+    // setter-callback-firing position fields per frame regardless.
+    if (sunVisible) {
+      this.sun.position.set(
+        camPos.x + sunDir.x * this.radius,
+        camPos.y + sunDir.y * this.radius,
+        camPos.z + sunDir.z * this.radius,
+      );
+    }
+    if (moonVisible) {
+      this.moon.position.set(
+        camPos.x - sunDir.x * this.radius,
+        camPos.y - sunDir.y * this.radius,
+        camPos.z - sunDir.z * this.radius,
+      );
+    }
     // Tint sun warmer near horizon: sunDir.y close to 0 → orange/red.
-    const sunMat = this.sun.material;
     const horizonness = 1 - Math.min(1, Math.max(0, sunDir.y) * 1.5);
     const r = 1;
     const g = 1 - horizonness * 0.45;
     const b = 1 - horizonness * 0.85;
-    sunMat.color.setRGB(r, g, b);
+    if (r !== this.lastSunR || g !== this.lastSunG || b !== this.lastSunB) {
+      this.sun.material.color.setRGB(r, g, b);
+      this.lastSunR = r;
+      this.lastSunG = g;
+      this.lastSunB = b;
+    }
   }
 }

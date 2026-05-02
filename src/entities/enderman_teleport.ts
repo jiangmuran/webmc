@@ -1,6 +1,13 @@
 // Enderman teleport. On damage or when stuck in water/rain, teleport
-// to a random block up to 32 blocks away. Must land on a solid block
-// with 2 blocks of clearance above.
+// to a random block up to ±32 blocks on each axis. Must land on a
+// solid block with 2 blocks of clearance above. Wiki
+// (minecraft.wiki/w/Enderman): "16 random teleport attempts before
+// failing."
+//
+// Old `floor((rand-0.5) * 2 * 32)` gave the asymmetric range
+// [-32, +31] — floor of a pre-shifted negative range silently drops
+// the +32 endpoint. Same off-by-one already fixed in chorus_fruit
+// teleport and dragon_egg_hop. Now uses an inclusive offset helper.
 
 export interface TeleportQuery {
   from: { x: number; y: number; z: number };
@@ -11,12 +18,16 @@ export interface TeleportQuery {
 
 export const TP_RADIUS = 32;
 
+function offsetInclusive(rand: () => number): number {
+  return Math.floor(rand() * (2 * TP_RADIUS + 1)) - TP_RADIUS;
+}
+
 export function tryTeleport(q: TeleportQuery): { x: number; y: number; z: number } | null {
   const attempts = q.maxAttempts ?? 16;
   for (let i = 0; i < attempts; i++) {
-    const dx = Math.floor((q.rand() - 0.5) * 2 * TP_RADIUS);
-    const dy = Math.floor((q.rand() - 0.5) * 2 * TP_RADIUS);
-    const dz = Math.floor((q.rand() - 0.5) * 2 * TP_RADIUS);
+    const dx = offsetInclusive(q.rand);
+    const dy = offsetInclusive(q.rand);
+    const dz = offsetInclusive(q.rand);
     const x = q.from.x + dx;
     const y = q.from.y + dy;
     const z = q.from.z + dz;

@@ -14,17 +14,22 @@ describe('bogged', () => {
     expect(b.drawTicks).toBe(0);
   });
 
-  it('fires after 30 ticks with a target', () => {
+  it('fires after 70 ticks with a target (wiki: Easy/Normal cooldown)', () => {
+    // Wiki (minecraft.wiki/w/Bogged): "The cooldown is 3.5 seconds on
+    // Easy and Normal." 70 game ticks = 3.5s. Skeletons fire every
+    // 40 ticks (2s); bogged are 1.5s slower per wiki.
     const b = makeBogged(1, { x: 0, y: 0, z: 0 });
-    let fired = false;
-    for (let i = 0; i < 30; i++) {
+    let firedAtTick = -1;
+    for (let i = 1; i <= 70; i++) {
       const r = tickBogged(b, { hasTarget: true });
-      if (r.fireArrow) fired = true;
+      if (r.fireArrow && firedAtTick === -1) firedAtTick = i;
     }
-    expect(fired).toBe(true);
+    expect(firedAtTick).toBe(70);
   });
 
-  it('arrow is poison-tipped', () => {
-    expect(boggedArrow().tip).toBe('poison');
+  it('arrow is poison-tipped for 4 seconds (wiki)', () => {
+    const a = boggedArrow();
+    expect(a.tip).toBe('poison');
+    expect(a.durationSec).toBe(4);
   });
 });

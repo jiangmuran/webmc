@@ -8,10 +8,18 @@ export interface Vec3 {
   z: number;
 }
 
+// Wiki (minecraft.wiki/w/Sculk_Catalyst): "A sculk charge also has
+// a 9% chance to grow a sculk sensor, and a 1% chance to grow a
+// sculk shrieker." JE bloom radius is 8 blocks (BE is 10). Old
+// SENSOR_PROB = 0.02 was 4.5× under wiki canon; SHRIEKER_PROB =
+// 0.005 was 2× under canon — sculk farms produced visibly fewer
+// sensors and shriekers than vanilla. VEIN_PROB has no precise
+// wiki number (veins always spread around blooms); kept at 0.1 as
+// a reasonable proxy.
 const SPREAD_RADIUS = 8;
 const VEIN_PROB = 0.1;
-const SENSOR_PROB = 0.02;
-const SHRIEKER_PROB = 0.005;
+const SENSOR_PROB = 0.09;
+const SHRIEKER_PROB = 0.01;
 
 export type SculkSpreadBlock = 'sculk' | 'sculk_vein' | 'sculk_sensor' | 'sculk_shrieker';
 

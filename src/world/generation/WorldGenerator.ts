@@ -45,7 +45,12 @@ interface OreBand {
 }
 
 const CAVE_FREQ = 1 / 24;
-const CAVE_THRESHOLD = 0.32;
+// Carve when noise is within ±THRESHOLD of zero (noodle-style passages).
+// 0.32 was way too wide — fbm3 clusters tightly around 0, so |n| < 0.32
+// carved ~50% of underground, leaving a swiss-cheese world. 0.03 keeps
+// caves to thin worm-like passages around noise zero-crossings (~10-20%
+// of underground volume).
+const CAVE_THRESHOLD = 0.03;
 const DEEPSLATE_Y = 4;
 const DUNGEON_CHANCE = 1 / 30;
 const DUNGEON_SALT = 0xd00f00d;
@@ -111,11 +116,16 @@ export class WorldGenerator {
 
   oreAt(wx: number, wy: number, wz: number): BlockState | null {
     if (wy > 70) return null;
+    // y-dependent component of the hash seed: invariant within one
+    // oreAt call but the original recomputed it per band (up to 6×
+    // per call). Math.imul preserves the int32-multiply semantics of
+    // the prior `* X` (which `^` coerces to int32 anyway).
+    const ySeed = (this.seed ^ Math.imul(wy, 0x9e3779b1)) >>> 0;
     for (const band of ORE_BANDS) {
       const dist = Math.abs(wy - band.peak);
       if (dist > band.halfWidth) continue;
       const density = 1 - dist / band.halfWidth;
-      const h = hash32(wx, wz ^ band.salt, (this.seed ^ (wy * 0x9e3779b1)) >>> 0);
+      const h = hash32(wx, wz ^ band.salt, ySeed);
       if ((h % band.rarity) / band.rarity < density * 0.04) {
         return this.blocks[band.block];
       }
@@ -138,22 +148,48 @@ export class WorldGenerator {
     const { stone, dirt, grass, sand, log, leaves, deepslate, water, bedrock } = this.blocks;
     const cx = chunk.cx;
     const cz = chunk.cz;
+    // Hoist this.caveNoise once. Method-dispatch through `this.isCave`
+    // was inlined into the y-loop below — one method-call per cave-
+    // eligible cell × 16x16x~50 = ~13K calls per chunk gen.
+    const caveNoise = this.caveNoise;
     for (let lx = 0; lx < CHUNK_DIM; lx++) {
       for (let lz = 0; lz < CHUNK_DIM; lz++) {
         const wx = cx * CHUNK_DIM + lx;
         const wz = cz * CHUNK_DIM + lz;
         const surface = this.surfaceAt(wx, wz);
-        const biome = this.biomeAt(wx, wz);
-        const topBlock = surface <= SEA_LEVEL ? sand : grass;
+        const isUnderwater = surface <= SEA_LEVEL;
+        const topBlock = isUnderwater ? sand : grass;
+        // Subsurface band (the 3 cells below topBlock): sand under
+        // beaches/oceans, dirt under regular terrain. Hoist out of the
+        // y-loop instead of recomputing `topBlock === sand ? sand :
+        // dirt` per cell — saves ~4 ternaries per column × 256 cols
+        // per chunk = ~1K ternary evals per chunk gen.
+        const subSurfaceBlock = isUnderwater ? sand : dirt;
+        // biomeAt is only consulted below for tree placement, which
+        // never happens underwater (gated by topBlock === grass). Skip
+        // the fbm noise call entirely for underwater columns — large
+        // ocean chunks gen substantially faster.
+        const biome = isUnderwater ? PLAINS : this.biomeAt(wx, wz);
+        // Pre-multiply the per-column components of the cave-noise
+        // sample. wy varies per cell but wx/wz are loop-invariant —
+        // hoist their *CAVE_FREQ multiplies once per column instead
+        // of per cave-check call (~50 cave checks per column).
+        const cavewx = wx * CAVE_FREQ;
+        const cavewz = wz * CAVE_FREQ;
         for (let y = 0; y <= surface; y++) {
           let state = stone;
           if (y === 0) state = bedrock;
           else if (y <= DEEPSLATE_Y) state = deepslate;
           if (y === surface) state = topBlock;
-          else if (y >= surface - 3) state = topBlock === sand ? sand : dirt;
-          if (y < surface && this.isCave(wx, y, wz)) {
-            chunk.set(lx, y, lz, AIR);
-            continue;
+          else if (y >= surface - 3) state = subSurfaceBlock;
+          // Cave carve — inlined isCave with hoisted CAVE_FREQ multiplies.
+          // Same y range gate (2..60) as the public method.
+          if (y < surface && y >= 2 && y <= 60) {
+            const n = caveNoise.fbm3(cavewx, y * CAVE_FREQ, cavewz, 3);
+            if (n < CAVE_THRESHOLD && n > -CAVE_THRESHOLD) {
+              chunk.set(lx, y, lz, AIR);
+              continue;
+            }
           }
           if (y < surface - 4 && y > DEEPSLATE_Y) {
             const ore = this.oreAt(wx, y, wz);

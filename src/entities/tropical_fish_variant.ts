@@ -3,15 +3,26 @@
 export const SHAPES = ['flopper', 'stripey', 'glitter', 'blockfish', 'betty', 'clayfish'] as const;
 export type FishShape = (typeof SHAPES)[number];
 
+// Wiki (minecraft.wiki/w/Tropical_Fish): tropical fish use the full
+// 16 dye-color palette for body + pattern. Old list had only 8 of
+// them, so half the wiki variants couldn't be encoded.
 export type FishColor =
   | 'white'
   | 'orange'
   | 'magenta'
+  | 'light_blue'
   | 'yellow'
-  | 'red'
-  | 'black'
+  | 'lime'
+  | 'pink'
   | 'gray'
-  | 'blue';
+  | 'light_gray'
+  | 'cyan'
+  | 'purple'
+  | 'blue'
+  | 'brown'
+  | 'green'
+  | 'red'
+  | 'black';
 
 export interface FishVariant {
   shape: FishShape;
@@ -44,11 +55,19 @@ const COLORS: FishColor[] = [
   'white',
   'orange',
   'magenta',
+  'light_blue',
   'yellow',
+  'lime',
+  'pink',
+  'gray',
+  'light_gray',
+  'cyan',
+  'purple',
+  'blue',
+  'brown',
+  'green',
   'red',
   'black',
-  'gray',
-  'blue',
 ];
 
 function colorIndex(c: FishColor): number {

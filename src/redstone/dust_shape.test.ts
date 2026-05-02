@@ -16,8 +16,8 @@ const EMPTY: DustLookup = {
 };
 
 describe('redstone dust shape', () => {
-  it('isolated = dot', () => {
-    expect(dustShape(EMPTY).renderKind).toBe('dot');
+  it('isolated defaults to cross (wiki: + plus sign powers all sides)', () => {
+    expect(dustShape(EMPTY).renderKind).toBe('cross');
   });
 
   it('single-axis = side', () => {

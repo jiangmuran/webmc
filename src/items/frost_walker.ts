@@ -1,6 +1,11 @@
 // Frost Walker — boots enchant that freezes water blocks into frosted_ice
-// under the player's feet in a radius of (level + 1) blocks. Frosted ice
-// decays after ~3-4s if not standing on it.
+// under the player's feet. Frosted ice decays after ~3-4s if not stood on.
+//
+// Wiki (minecraft.wiki/w/Frost_Walker): the affected area is a
+// "circle radius (Java) or square radius (Bedrock) of 2 + level
+// around the player's destination block". Old code used `level + 1`,
+// shrinking the wiki radius by 1 — Frost Walker I covered radius 2
+// (vs wiki 3) and Frost Walker II covered radius 3 (vs wiki 4).
 
 import type { Enchanted } from './enchantment';
 import { hasEnchant } from './enchantment';
@@ -24,7 +29,7 @@ export function frostWalkerStep(
 ): readonly Vec3[] {
   const level = hasEnchant(boots, 'frost_walker');
   if (level <= 0) return [];
-  const radius = level + 1;
+  const radius = level + 2;
   const footY = Math.floor(playerPos.y - 0.01);
   const frozen: Vec3[] = [];
   for (let dx = -radius; dx <= radius; dx++) {

@@ -34,3 +34,17 @@ export function toIntent(g: GamepadState): MovementIntent {
     use: g.buttons[6] ?? false, // LT
   };
 }
+
+// In-place variant for the per-frame poller. Same mapping as toIntent
+// but mutates the caller-provided result + nested look object so a
+// 60 Hz gamepad poll doesn't allocate two objects per frame.
+export function toIntentInto(g: GamepadState, out: MovementIntent): void {
+  out.forward = -applyDeadzone(g.axes[1]);
+  out.strafe = applyDeadzone(g.axes[0]);
+  out.look.yaw = applyDeadzone(g.axes[2]);
+  out.look.pitch = applyDeadzone(g.axes[3]);
+  out.jump = g.buttons[0] ?? false;
+  out.sneak = g.buttons[10] ?? false;
+  out.attack = g.buttons[7] ?? false;
+  out.use = g.buttons[6] ?? false;
+}

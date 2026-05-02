@@ -26,11 +26,16 @@ export const DEFAULT_RADII: GeodeLayerRadii = {
   innerEnd: 6,
 };
 
+// Wiki (minecraft.wiki/w/Amethyst_Geode): geode layers from inside out
+// are air → amethyst_block → calcite → smooth_basalt. Old mapping had
+// smooth_basalt on the MIDDLE ring and calcite on the OUTER ring,
+// which inverts the wiki order (calcite is the inner shell next to
+// amethyst_block; smooth_basalt is the outermost).
 export function blockAt(radius: number, r: GeodeLayerRadii): string {
   if (radius <= r.innerStart) return 'air';
   if (radius <= r.innerEnd) return 'amethyst_block';
-  if (radius <= r.middle) return 'smooth_basalt';
-  if (radius <= r.outer) return 'calcite';
+  if (radius <= r.middle) return 'calcite';
+  if (radius <= r.outer) return 'smooth_basalt';
   return 'netherrack';
 }
 

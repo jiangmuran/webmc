@@ -35,7 +35,17 @@ export function shedInk(s: SquidState, nowTick: number): InkResult {
   };
 }
 
-// Ink sac drops. 1..3 when killed, unaffected by looting.
-export function inkSacDrops(rand: () => number): number {
-  return 1 + Math.floor(rand() * 3);
+// Wiki (minecraft.wiki/w/Ink_Sac, /w/Squid): squid drop "1-3 ink
+// sacs (lootingquantity=0-1)" — i.e. Looting adds an EXTRA 0-1 per
+// level. With Looting III: 1-3 base + 0-3 from Looting = 1-6 total.
+//
+// Old comment "unaffected by looting" was wrong (sibling
+// glow_squid drop tables follow the same rule). Function now
+// accepts an optional lootingLevel and applies the per-level
+// 0..lootingLevel bonus that wiki canon documents.
+export function inkSacDrops(rand: () => number, lootingLevel = 0): number {
+  const base = 1 + Math.floor(rand() * 3);
+  if (lootingLevel <= 0) return base;
+  const bonus = Math.floor(rand() * (lootingLevel + 1));
+  return base + bonus;
 }

@@ -36,4 +36,13 @@ describe('spider climb jumpy', () => {
   it('neutral in daylight', () => {
     expect(shouldAggro(15, true, false)).toBe(false);
   });
+
+  it('neutral at night under torch (wiki: light ≥ 12 → passive any time)', () => {
+    // Spider stays hostile when light ≤ 11 regardless of day/night.
+    // Light ≥ 12 → passive, even at night.
+    expect(shouldAggro(12, false, false)).toBe(false);
+    expect(shouldAggro(15, false, false)).toBe(false);
+    // light = 11 → hostile (boundary)
+    expect(shouldAggro(11, false, false)).toBe(true);
+  });
 });

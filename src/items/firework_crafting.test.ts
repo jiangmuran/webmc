@@ -30,10 +30,24 @@ describe('firework craft', () => {
     expect(flightTimeTicks(r)).toBe(40);
   });
 
-  it('explosion damage falls off', () => {
+  it('starless rocket does 0 damage (wiki)', () => {
     const r = { flightDuration: 1 as const, stars: [] };
-    expect(explosionDamage(r, 0)).toBe(5);
+    expect(explosionDamage(r, 0)).toBe(0);
     expect(explosionDamage(r, 10)).toBe(0);
-    expect(explosionDamage(r, 2.5)).toBe(2);
+  });
+
+  it('1-star rocket does 7 damage at center, falls off', () => {
+    const star = {
+      shape: 'small_ball' as const,
+      colors: ['red'],
+      fadeColors: [],
+      trail: false,
+      twinkle: false,
+    };
+    const r = { flightDuration: 1 as const, stars: [star] };
+    expect(explosionDamage(r, 0)).toBe(7);
+    expect(explosionDamage(r, 10)).toBe(0);
+    // Halfway: 7 * 0.5 = 3.5 → floor = 3.
+    expect(explosionDamage(r, 2.5)).toBe(3);
   });
 });

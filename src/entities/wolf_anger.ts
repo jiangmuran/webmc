@@ -13,8 +13,15 @@ export interface WolfState {
   health: number;
 }
 
-export const WOLF_MAX_HEALTH_TAMED = 20;
+// Wiki (minecraft.wiki/w/Wolf): "health = Wild: 8 / Tamed: 40."
+// Old TAMED constant was 20, exactly half the wiki value. A "Tamed
+// wolves whine when they have low health (below 20 [java])" wiki
+// clue may have been read as the max — but 20 is the LOW-HEALTH
+// THRESHOLD, not the max. Actual max is 40 HP (20 hearts).
+export const WOLF_MAX_HEALTH_TAMED = 40;
 export const WOLF_MAX_HEALTH_WILD = 8;
+// Threshold below which a tamed wolf whines.
+export const WOLF_TAMED_LOW_HEALTH = 20;
 
 export function makeWolf(id: number, tamed = false, ownerId: string | null = null): WolfState {
   return {

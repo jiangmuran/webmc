@@ -34,4 +34,15 @@ describe('enchant conflicts', () => {
     expect(conflicts('riptide', 'loyalty')).toBe(true);
     expect(conflicts('riptide', 'channeling')).toBe(true);
   });
+
+  it('breach (mace) conflicts with damage enchants and density (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Breach): "Breach is incompatible with
+    // Density, Smite, and Bane of Arthropods. It is also incompatible
+    // with Sharpness and Impaling..."
+    expect(conflicts('breach', 'density')).toBe(true);
+    expect(conflicts('breach', 'smite')).toBe(true);
+    expect(conflicts('breach', 'bane_of_arthropods')).toBe(true);
+    expect(conflicts('breach', 'sharpness')).toBe(true);
+    expect(conflicts('breach', 'impaling')).toBe(true);
+  });
 });

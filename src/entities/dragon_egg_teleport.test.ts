@@ -15,6 +15,15 @@ describe('dragon egg teleport', () => {
     }
   });
 
+  it('+MAX is reachable on each horizontal axis (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Dragon_Egg): "up to 15 blocks horizontally"
+    // — old `floor(rng() * 2*MAX) - MAX` capped reach at +MAX-1.
+    // rng() = 0.999 should now hit +MAX on each axis.
+    const o = teleportOffset(() => 0.999);
+    expect(o.dx).toBe(MAX_TELEPORT_DISTANCE);
+    expect(o.dz).toBe(MAX_TELEPORT_DISTANCE);
+  });
+
   it('click teleports', () => {
     expect(onInteract('click')).toBe('teleport');
   });

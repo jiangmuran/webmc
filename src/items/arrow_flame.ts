@@ -21,16 +21,27 @@ export function onFlameArrowHit(q: FlameArrowQuery): FlameArrowHitResult {
   return { burnDurationSec: FLAME_BURN_SEC, applied: true };
 }
 
-// Arrow damage formula: base 2 HP + critical bonus + 0.5 per Power level.
-// Flame does NOT modify damage — only ignition.
+// Arrow damage formula. Flame does NOT modify damage — only ignition.
+//
+// Wiki (minecraft.wiki/w/Power): "Power increases arrow damage by
+// 25% × (level + 1), rounded up to nearest half-heart." Damage in
+// MC is in half-heart units, so "rounded up" = Math.ceil. Old
+// Math.floor rounded DOWN, under-shooting on fractional bonuses
+// (e.g. base=5, Power IV: bonus 6.25 → floor=6 vs ceil=7).
+// Siblings arrow_critical.ts, arrow_trajectory.ts, and
+// arrow_crit_damage.ts all use Math.ceil now.
 export function arrowDamage(powerLevel: number, velocity: number, critical: boolean): number {
   const base = Math.max(1, Math.ceil(2 * velocity));
-  const powerBonus = powerLevel > 0 ? Math.floor(0.25 * (powerLevel + 1) + 0.5) : 0;
+  const powerBonus = powerLevel > 0 ? Math.ceil(base * (0.25 * powerLevel + 0.25)) : 0;
   const critBonus = critical ? Math.floor(Math.random() * (base / 2 + 1)) : 0;
   return base + powerBonus + critBonus;
 }
 
-// Fire-immune mobs (zombified piglins, blazes, magma cubes, etc.).
+// Wiki (minecraft.wiki/w/Damage#Immunity): mobs immune to fire damage.
+// Removed `skeleton_horse` — wiki says it does not burn in SUNLIGHT
+// (a separate mechanic) but takes normal fire damage from arrows,
+// lava, and fire blocks. Added `ender_dragon` which is wiki-canonical
+// fire-immune (e.g. lava in The End deals no damage to it).
 const FIRE_IMMUNE = new Set<string>([
   'blaze',
   'magma_cube',
@@ -39,7 +50,7 @@ const FIRE_IMMUNE = new Set<string>([
   'wither',
   'wither_skeleton',
   'zombified_piglin',
-  'skeleton_horse',
+  'ender_dragon',
 ]);
 
 export function isFireImmune(mob: string): boolean {

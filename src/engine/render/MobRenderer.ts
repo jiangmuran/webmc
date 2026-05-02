@@ -92,9 +92,53 @@ interface MobVisual {
   lastHpRatio: number;
   nameSprite: THREE.Sprite;
   nameMat: THREE.SpriteMaterial;
+  // -1 = unknown / dirty (force a re-set). Otherwise the last "normal"
+  // hex applied. Used to skip setHex(c) every frame when the color
+  // didn't change — mobs spend most of their life in non-hurt,
+  // non-fusing state and a constant-color setHex still writes through
+  // three.js's material color and flags the material dirty.
+  lastNormalColorHex: number;
+  // True when the previous frame applied a hurt-flash / fuse-pulse
+  // tint, so the next "normal" frame must force a re-set even if the
+  // base palette color hasn't changed.
+  needsColorRestore: boolean;
+  // Cached transform values — three.js Euler fires _onChangeCallback
+  // (quaternion.setFromEuler — 6 trig + multiple muls) on every per-
+  // axis set, so writing rotation.x=0 + rotation.y=yaw + rotation.z=0
+  // fires the recompute three times per mob per frame even when the
+  // values didn't change. Diff-skip the whole rotation via .set().
+  lastRotX: number;
+  lastRotY: number;
+  lastRotZ: number;
+  lastScale: number;
+  // Pre-resolved base color hex for this mob's kind. Kind never
+  // changes after construction, so we can skip the per-frame
+  // `COLORS[kind] ?? DEFAULT_COLOR` Record lookup + fallback in the
+  // hurt-flash, creeper-fuse, and normal-restore paths. Saves ~50
+  // (mobs) × 60 (Hz) = 3000 string-keyed lookups/sec at busy worlds.
+  kindBaseHex: number;
+  // Diff-cache for the nameplate opacity. Mobs within 28 blocks all
+  // write 0.9 every frame; the SpriteMaterial setter still flags the
+  // material dirty even when the value is identical. -1 is the
+  // "force first set" sentinel.
+  lastNameOpacity: number;
+  // Position diff-cache. Vector3.set fires _onChangeCallback (sets
+  // matrixWorldNeedsUpdate); stationary mobs (idle, sleeping, fenced
+  // pen) write the same x/y/z every frame for nothing. NaN sentinel
+  // forces the first set.
+  lastPosX: number;
+  lastPosY: number;
+  lastPosZ: number;
 }
 
+// Cache by label string. Mob nameplates with the same name (e.g.
+// every 'zombie') were each getting a fresh canvas + texture. With
+// ~70 mob kinds + custom names this caps the texture count to the
+// number of unique labels (~80) rather than mob count (~200).
+const nameTextureCache = new Map<string, THREE.CanvasTexture>();
 function makeNameTexture(label: string): THREE.CanvasTexture {
+  const cached = nameTextureCache.get(label);
+  if (cached) return cached;
   const w = 128;
   const h = 24;
   const c = document.createElement('canvas');
@@ -110,10 +154,22 @@ function makeNameTexture(label: string): THREE.CanvasTexture {
     ctx.textBaseline = 'middle';
     ctx.fillText(label, w / 2, h / 2);
   }
-  return new THREE.CanvasTexture(c);
+  const tex = new THREE.CanvasTexture(c);
+  nameTextureCache.set(label, tex);
+  return tex;
 }
 
+// Texture cache keyed by 21-bucket ratio (0%, 5%, 10%, ..., 100%). Was
+// creating + disposing a CanvasTexture per mob per damage event — 50
+// damaged mobs taking damage each tick allocated 50 textures/sec. Now
+// shared: at most 21 textures total, never disposed.
+const HP_BAR_BUCKETS = 21;
+const hpBarTextureCache = new Map<number, THREE.CanvasTexture>();
 function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
+  const r = Math.max(0, Math.min(1, ratio));
+  const bucket = Math.round(r * (HP_BAR_BUCKETS - 1));
+  const cached = hpBarTextureCache.get(bucket);
+  if (cached) return cached;
   const w = 64;
   const h = 8;
   const c = document.createElement('canvas');
@@ -124,12 +180,14 @@ function makeHpBarTexture(ratio: number): THREE.CanvasTexture {
     ctx.fillStyle = '#300';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#f33';
-    ctx.fillRect(0, 0, Math.round(w * Math.max(0, Math.min(1, ratio))), h);
+    ctx.fillRect(0, 0, Math.round((w * bucket) / (HP_BAR_BUCKETS - 1)), h);
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, w, 1);
     ctx.fillRect(0, h - 1, w, 1);
   }
-  return new THREE.CanvasTexture(c);
+  const tex = new THREE.CanvasTexture(c);
+  hpBarTextureCache.set(bucket, tex);
+  return tex;
 }
 
 export class MobRenderer {
@@ -139,6 +197,8 @@ export class MobRenderer {
   private readonly headGeoms = new Map<MobKind, THREE.BoxGeometry>();
   private readonly customNames = new Map<number, string>();
   private readonly customScales = new Map<number, number>();
+  // Reused 'seen this frame' scratch set — was allocated per sync().
+  private readonly seenScratch = new Set<number>();
 
   setMobScale(mobId: number, scale: number): void {
     if (Math.abs(scale - 1) < 0.001) this.customScales.delete(mobId);
@@ -150,7 +210,7 @@ export class MobRenderer {
     this.customNames.set(mobId, name);
     const vis = this.visuals.get(mobId);
     if (vis) {
-      vis.nameMat.map?.dispose();
+      // Don't dispose the previous map — it's shared from the cache.
       vis.nameMat.map = makeNameTexture(name);
       vis.nameMat.needsUpdate = true;
     }
@@ -158,6 +218,10 @@ export class MobRenderer {
 
   constructor() {
     this.group.name = 'webmc-mob-group';
+    // Group sits at world origin; per-mob visuals carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
   }
 
   private bodyGeomFor(mob: Mob): THREE.BoxGeometry {
@@ -181,22 +245,40 @@ export class MobRenderer {
   }
 
   sync(mobs: IterableIterator<Mob>, cameraPos?: { x: number; y: number; z: number }): void {
-    const seen = new Set<number>();
+    const seen = this.seenScratch;
+    seen.clear();
+    // Hoist per-frame time + creeper-fuse phase basis. Was calling
+    // performance.now() per mob inside the per-mob loop.
+    const nowMs = performance.now();
+    // Hoist the customScales presence check — most servers have zero
+    // entries (no /scale, no growth-stunted babies), so the per-mob
+    // Map.get + ?? 1 was firing for every alive mob every frame
+    // returning the same default. With the gate, the Map.get only
+    // runs when at least one custom scale is set anywhere.
+    const customScales = this.customScales;
+    const anyCustomScales = customScales.size > 0;
     for (const mob of mobs) {
       seen.add(mob.id);
       // LOD culling: hide mob group entirely past 96 blocks (still tracked, just not rendered).
+      // Cache distSq for the nameplate-fade block below — was
+      // recomputing dx/dy/dz + Math.hypot once more per mob per frame.
+      let cDistSq = -1;
       if (cameraPos) {
-        const dx = mob.position.x - cameraPos.x;
-        const dy = mob.position.y - cameraPos.y;
-        const dz = mob.position.z - cameraPos.z;
-        if (dx * dx + dy * dy + dz * dz > 96 * 96) {
+        const cdx = mob.position.x - cameraPos.x;
+        const cdy = mob.position.y - cameraPos.y;
+        const cdz = mob.position.z - cameraPos.z;
+        cDistSq = cdx * cdx + cdy * cdy + cdz * cdz;
+        if (cDistSq > 96 * 96) {
           const v = this.visuals.get(mob.id);
-          if (v) v.group.visible = false;
+          // Skip the visible=false write when already hidden — three.js
+          // setter triggers matrix-update flagging and per-frame writes
+          // for nothing add up at high mob count.
+          if (v?.group.visible) v.group.visible = false;
           continue;
         }
       }
       let vis = this.visuals.get(mob.id);
-      if (vis) vis.group.visible = true;
+      if (vis && !vis.group.visible) vis.group.visible = true;
       if (!vis) {
         const color = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
         const bodyMat = new THREE.MeshBasicMaterial({ color });
@@ -244,32 +326,77 @@ export class MobRenderer {
           lastHpRatio: 1,
           nameSprite,
           nameMat,
+          lastNormalColorHex: color,
+          needsColorRestore: false,
+          lastRotX: 0,
+          lastRotY: 0,
+          lastRotZ: 0,
+          lastScale: 1,
+          kindBaseHex: color,
+          lastNameOpacity: 0.9,
+          lastPosX: NaN,
+          lastPosY: NaN,
+          lastPosZ: NaN,
         };
         this.visuals.set(mob.id, visual);
         this.group.add(group);
         vis = visual;
       }
-      vis.group.position.set(mob.position.x, mob.position.y, mob.position.z);
-      vis.group.rotation.y = mob.yaw;
+      // Diff-cache position writes — stationary mobs (idle, sleeping,
+      // fenced pens) ran position.set every frame, firing the Vector3
+      // _onChangeCallback (matrixWorldNeedsUpdate flag) for the same
+      // values.
+      const mpx = mob.position.x;
+      const mpy = mob.position.y;
+      const mpz = mob.position.z;
+      if (vis.lastPosX !== mpx || vis.lastPosY !== mpy || vis.lastPosZ !== mpz) {
+        vis.group.position.set(mpx, mpy, mpz);
+        vis.lastPosX = mpx;
+        vis.lastPosY = mpy;
+        vis.lastPosZ = mpz;
+      }
+      let targetRotX: number;
+      let targetRotZ: number;
+      let targetScale: number;
       if (mob.dyingSec > 0) {
         const s = mob.dyingSec / 0.35;
-        vis.group.scale.setScalar(Math.max(0.01, s));
-        vis.group.rotation.z = (1 - s) * Math.PI * 0.6;
-        vis.group.rotation.x = 0;
+        targetScale = Math.max(0.01, s);
+        targetRotZ = (1 - s) * Math.PI * 0.6;
+        targetRotX = 0;
       } else {
-        vis.group.scale.setScalar(this.customScales.get(mob.id) ?? 1);
-        vis.group.rotation.z = 0;
-        // Walk bob: lean forward/back based on horizontal velocity magnitude.
-        const vh = Math.hypot(mob.velocity.x, mob.velocity.z);
-        if (vh > 0.3) {
-          const phase = performance.now() * 0.012 + mob.id * 0.37;
-          vis.group.rotation.x = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
+        targetScale = anyCustomScales ? (customScales.get(mob.id) ?? 1) : 1;
+        targetRotZ = 0;
+        // sqrt(x²+z²) replaces Math.hypot — per-mob per-frame walk-bob
+        // calc, mob velocity components are always in normal range so
+        // hypot's overflow safety margin is wasted CPU.
+        const vx = mob.velocity.x;
+        const vz = mob.velocity.z;
+        const vhSq = vx * vx + vz * vz;
+        if (vhSq > 0.09) {
+          const vh = Math.sqrt(vhSq);
+          const phase = nowMs * 0.012 + mob.id * 0.37;
+          targetRotX = Math.sin(phase) * 0.08 * Math.min(1, vh / 3);
         } else {
-          vis.group.rotation.x = 0;
+          targetRotX = 0;
         }
       }
+      if (vis.lastScale !== targetScale) {
+        vis.group.scale.setScalar(targetScale);
+        vis.lastScale = targetScale;
+      }
+      const targetRotY = mob.yaw;
+      if (
+        vis.lastRotX !== targetRotX ||
+        vis.lastRotY !== targetRotY ||
+        vis.lastRotZ !== targetRotZ
+      ) {
+        vis.group.rotation.set(targetRotX, targetRotY, targetRotZ);
+        vis.lastRotX = targetRotX;
+        vis.lastRotY = targetRotY;
+        vis.lastRotZ = targetRotZ;
+      }
       if (mob.hurtFlashSec > 0) {
-        const base = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
+        const base = vis.kindBaseHex;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
@@ -279,59 +406,89 @@ export class MobRenderer {
         const bb = b * (1 - k) + 0.2 * k;
         vis.bodyMat.color.setRGB(rr, gg, bb);
         vis.headMat.color.setRGB(rr, gg, bb);
+        vis.needsColorRestore = true;
       } else if (mob.def.behavior === 'creeper' && mob.fuseSec > 0) {
         // Creeper fuse: pulse white as it primes (faster as fuse approaches 1.5).
         const phase = 1 - Math.min(1, mob.fuseSec / 1.5);
-        const k =
-          (Math.sin(performance.now() * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
-        const base = COLORS['creeper'] ?? DEFAULT_COLOR;
+        const k = (Math.sin(nowMs * (0.012 + phase * 0.04)) * 0.5 + 0.5) * (0.4 + phase * 0.6);
+        // creeper visuals are guaranteed to be a creeper kind, so
+        // kindBaseHex is the same as COLORS['creeper'].
+        const base = vis.kindBaseHex;
         const r = ((base >> 16) & 0xff) / 255;
         const g = ((base >> 8) & 0xff) / 255;
         const b = (base & 0xff) / 255;
         vis.bodyMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
         vis.headMat.color.setRGB(r * (1 - k) + k, g * (1 - k) + k, b * (1 - k) + k);
+        vis.needsColorRestore = true;
       } else {
-        const c = COLORS[mob.def.kind] ?? DEFAULT_COLOR;
-        vis.bodyMat.color.setHex(c);
-        vis.headMat.color.setHex(c);
+        // Normal palette color. Mobs spend most of their life in this
+        // state, so skip the setHex (which still writes through the
+        // material color and flags it dirty) when nothing changed.
+        const c = vis.kindBaseHex;
+        if (vis.needsColorRestore || vis.lastNormalColorHex !== c) {
+          vis.bodyMat.color.setHex(c);
+          vis.headMat.color.setHex(c);
+          vis.lastNormalColorHex = c;
+          vis.needsColorRestore = false;
+        }
       }
 
       // Distance-aware nameplate visibility: fade past 28 blocks, hide past 64.
       if (this.showNameplates && cameraPos) {
-        const dx = mob.position.x - cameraPos.x;
-        const dy = mob.position.y - cameraPos.y;
-        const dz = mob.position.z - cameraPos.z;
-        const dist = Math.hypot(dx, dy, dz);
-        if (dist > 64) {
-          vis.nameSprite.visible = false;
+        // Reuse the LOD distSq above instead of recomputing dx/dy/dz +
+        // sqrt for every mob. Compare against squared cutoffs first so
+        // we only sqrt for mobs in the fade band.
+        if (cDistSq > 64 * 64) {
+          if (vis.nameSprite.visible) vis.nameSprite.visible = false;
         } else {
-          vis.nameSprite.visible = true;
-          const fade = dist > 28 ? Math.max(0, 1 - (dist - 28) / 36) : 1;
-          vis.nameMat.opacity = 0.9 * fade;
+          if (!vis.nameSprite.visible) vis.nameSprite.visible = true;
+          let targetOpacity: number;
+          if (cDistSq > 28 * 28) {
+            const dist = Math.sqrt(cDistSq);
+            targetOpacity = 0.9 * Math.max(0, 1 - (dist - 28) / 36);
+          } else {
+            targetOpacity = 0.9;
+          }
+          if (vis.lastNameOpacity !== targetOpacity) {
+            vis.nameMat.opacity = targetOpacity;
+            vis.lastNameOpacity = targetOpacity;
+          }
         }
-      } else {
+      } else if (vis.nameSprite.visible !== this.showNameplates) {
+        // Diff-cache: when the player has nameplates disabled (or no
+        // cameraPos was passed), this branch fires per mob per frame
+        // and was writing the same boolean every time, flagging the
+        // sprite for recompose.
         vis.nameSprite.visible = this.showNameplates;
       }
       const hpRatio = Math.max(0, mob.health / mob.def.maxHealth);
       const showBar = hpRatio < 1 && mob.dyingSec === 0;
       if (showBar) {
         if (Math.abs(vis.lastHpRatio - hpRatio) > 0.02 || vis.hpMat.opacity === 0) {
-          if (vis.hpMat.map) vis.hpMat.map.dispose();
+          // Don't dispose old map — it's shared from the bucket cache.
           vis.hpMat.map = makeHpBarTexture(hpRatio);
           vis.lastHpRatio = hpRatio;
         }
-        vis.hpMat.opacity = 0.92;
-      } else {
+        // Diff-cache opacity — was writing 0.92 every frame for every
+        // damaged mob even when the bar was already shown.
+        if (vis.hpMat.opacity !== 0.92) vis.hpMat.opacity = 0.92;
+      } else if (vis.hpMat.opacity !== 0) {
         vis.hpMat.opacity = 0;
       }
     }
-    for (const [id, vis] of this.visuals) {
+    // Iterate keys + lookup vs entries — destructuring `[id, vis]`
+    // allocates a fresh 2-tuple per iteration, including for visuals
+    // we early-continue on (the dominant case — most frames every mob
+    // is still alive, so this loop is mostly continues).
+    for (const id of this.visuals.keys()) {
       if (seen.has(id)) continue;
+      const vis = this.visuals.get(id);
+      if (!vis) continue;
       vis.bodyMat.dispose();
       vis.headMat.dispose();
-      vis.hpMat.map?.dispose();
+      // hpMat.map is shared (bucket cache) — don't dispose here.
       vis.hpMat.dispose();
-      vis.nameMat.map?.dispose();
+      // nameMat.map is shared (label cache) — don't dispose.
       vis.nameMat.dispose();
       this.group.remove(vis.group);
       this.visuals.delete(id);
@@ -344,9 +501,9 @@ export class MobRenderer {
     for (const vis of this.visuals.values()) {
       vis.bodyMat.dispose();
       vis.headMat.dispose();
-      vis.hpMat.map?.dispose();
+      // hpMat.map is shared (bucket cache) — don't dispose.
       vis.hpMat.dispose();
-      vis.nameMat.map?.dispose();
+      // nameMat.map is shared (label cache) — don't dispose.
       vis.nameMat.dispose();
       this.group.remove(vis.group);
     }

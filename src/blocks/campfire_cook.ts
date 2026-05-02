@@ -27,14 +27,27 @@ export function makeCampfire(lit = true): Campfire {
   };
 }
 
+// webmc registry (src/items/food.ts) uses `webmc:raw_*` for raw
+// meats but `webmc:cod` / `webmc:salmon` (no `raw_` prefix) for
+// fish. Old recipes here used non-prefixed `webmc:beef` /
+// `webmc:porkchop` etc. — IDs that don't exist in the registry,
+// so a player placing actual raw meat (`webmc:raw_beef`) on a
+// campfire silently failed both `isCookable` and `addItem`.
+//
+// Both spellings are accepted to be tolerant of older callers.
 const COOKABLE: Record<string, string> = {
+  'webmc:raw_beef': 'webmc:cooked_beef',
+  'webmc:raw_porkchop': 'webmc:cooked_porkchop',
+  'webmc:raw_chicken': 'webmc:cooked_chicken',
+  'webmc:raw_mutton': 'webmc:cooked_mutton',
+  'webmc:raw_rabbit': 'webmc:cooked_rabbit',
   'webmc:beef': 'webmc:cooked_beef',
   'webmc:porkchop': 'webmc:cooked_porkchop',
   'webmc:chicken': 'webmc:cooked_chicken',
-  'webmc:cod': 'webmc:cooked_cod',
-  'webmc:salmon': 'webmc:cooked_salmon',
   'webmc:mutton': 'webmc:cooked_mutton',
   'webmc:rabbit': 'webmc:cooked_rabbit',
+  'webmc:cod': 'webmc:cooked_cod',
+  'webmc:salmon': 'webmc:cooked_salmon',
   'webmc:potato': 'webmc:baked_potato',
   'webmc:kelp': 'webmc:dried_kelp',
 };

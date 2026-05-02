@@ -2,9 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { absorbWater, shouldDry } from './sponge';
 
 describe('sponge', () => {
-  it('absorbs adjacent water up to 65 blocks', () => {
+  it('absorbs adjacent water up to 118 blocks (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Sponge#Absorption): "A sponge does not
+    // absorb more than 118 blocks of water however".
     const out = absorbWater({ x: 0, y: 0, z: 0 }, { isWaterSource: () => true });
-    expect(out.length).toBeLessThanOrEqual(65);
+    expect(out.length).toBeLessThanOrEqual(118);
     expect(out.length).toBeGreaterThan(0);
   });
 
@@ -13,7 +15,8 @@ describe('sponge', () => {
     expect(out.length).toBe(0);
   });
 
-  it('only absorbs within 7-block reach', () => {
+  it('only absorbs within 6-block taxicab reach (wiki)', () => {
+    // Wiki: "up to 6 blocks away (taken as a taxicab distance)".
     const out = absorbWater(
       { x: 0, y: 0, z: 0 },
       {

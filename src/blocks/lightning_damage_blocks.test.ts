@@ -12,8 +12,13 @@ describe('lightning blocks', () => {
     expect(ignitesBlock({ groundBlockId: 'webmc:stone', rand: () => 0 })).toBe(false);
   });
 
-  it('copper de-oxidize', () => {
-    expect(onCopperStrike('webmc:oxidized_copper')).toBe('webmc:weathered_copper');
+  it('lightning fully resets copper oxidation (wiki: removes ALL)', () => {
+    // Wiki: "A lightning bolt striking a non-waxed copper block removes
+    // all oxidation from the block." Not just one stage back.
+    expect(onCopperStrike('webmc:oxidized_copper')).toBe('webmc:copper_block');
+    expect(onCopperStrike('webmc:weathered_copper')).toBe('webmc:copper_block');
+    expect(onCopperStrike('webmc:exposed_copper')).toBe('webmc:copper_block');
+    // Already un-oxidized: no change reported.
     expect(onCopperStrike('webmc:copper_block')).toBeNull();
   });
 

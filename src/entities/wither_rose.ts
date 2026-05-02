@@ -39,11 +39,29 @@ export function isWitherRoseBoneMealable(): boolean {
   return false;
 }
 
-// Planting a wither rose on any dirt/grass/podzol/farmland succeeds;
-// all other targets reject.
+// Wiki (minecraft.wiki/w/Wither_Rose#Placement): "Wither roses can
+// be placed on dirt, grass blocks, podzol, mycelium, farmland, mud,
+// coarse dirt, rooted dirt, moss blocks, nether wart blocks, warped
+// wart blocks, and soul soil." Old set was missing coarse_dirt,
+// mycelium, mud, muddy_mangrove_roots, rooted_dirt, moss_block, and
+// warped_wart_block — six of the canonical surfaces.
+const PLACEABLE_ON = new Set([
+  'webmc:dirt',
+  'webmc:grass_block',
+  'webmc:podzol',
+  'webmc:mycelium',
+  'webmc:farmland',
+  'webmc:mud',
+  'webmc:coarse_dirt',
+  'webmc:rooted_dirt',
+  'webmc:muddy_mangrove_roots',
+  'webmc:moss_block',
+  'webmc:pale_moss_block',
+  'webmc:nether_wart_block',
+  'webmc:warped_wart_block',
+  'webmc:soul_soil',
+]);
+
 export function canPlantWitherRoseOn(surface: string): boolean {
-  const ok = ['webmc:dirt', 'webmc:grass_block', 'webmc:podzol', 'webmc:farmland'];
-  return (
-    ok.includes(surface) || surface === 'webmc:nether_wart_block' || surface === 'webmc:soul_soil'
-  );
+  return PLACEABLE_ON.has(surface);
 }

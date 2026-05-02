@@ -47,8 +47,21 @@ export interface ApplyResult {
   durationTicks: number;
 }
 
-export const EFFECT_DURATION_TICKS = 180; // 9s; refreshed every 4s
+// Wiki (minecraft.wiki/w/Beacon): "Every 4 seconds, the selected powers
+// are applied with a duration of (9 + 2 × pyramid tier) seconds." Old
+// flat EFFECT_DURATION_TICKS=180 (9 s) ignored tier entirely, so a
+// tier-IV beacon refreshed at the 4-second cycle but only granted 9 s
+// of effect — half the wiki value, leaving the player with stale
+// expiring buffs. Sibling beacon_effect_pyramid.ts already uses
+// `(9 + tier * 2) * 20`. Constant kept as the BASE (9 s, no tier
+// bonus); effectAt now scales by tier.
+export const EFFECT_DURATION_TICKS = 180;
 export const REFRESH_INTERVAL_TICKS = 80;
+
+export function effectDurationTicksForTier(tier: number): number {
+  if (tier <= 0) return 0;
+  return (9 + tier * 2) * 20;
+}
 
 export function effectAt(q: ApplyQuery): ApplyResult {
   if (q.playerDistance > q.radius) {
@@ -59,6 +72,6 @@ export function effectAt(q: ApplyQuery): ApplyResult {
   return {
     effect: q.beacon.primary,
     amplifier: upgraded ? 1 : 0,
-    durationTicks: EFFECT_DURATION_TICKS,
+    durationTicks: effectDurationTicksForTier(q.beacon.level),
   };
 }

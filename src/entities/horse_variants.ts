@@ -75,14 +75,21 @@ export function variantTextureId(v: HorseVariant): string {
 // Baby horses take ~20 MC minutes to grow to adult.
 export const HORSE_GROW_TICKS = 24_000;
 
-// Feeding helps accelerate growth (MC: golden apple -40% growth time).
+// Wiki (minecraft.wiki/w/Horse#Growth): feeding babies subtracts a
+// fixed wall-clock time from growth, not a percentage. Total growth
+// is 20 min (24000 ticks); reductions in minutes:
+//   sugar 30s, wheat 20s, apple 1m, golden_carrot 1m,
+//   golden_apple 4m, hay_block (bale) 3m, bread 1m.
+// Old % multipliers were too aggressive (sugar -10% ≈ 2 min, golden
+// apple -40% ≈ 8 min). Now values are share-of-20-minutes.
 const GROW_REDUCTION: Record<string, number> = {
-  'webmc:sugar': -0.1,
-  'webmc:wheat': -0.05,
-  'webmc:apple': -0.15,
-  'webmc:hay_block': -0.15,
-  'webmc:golden_carrot': -0.3,
-  'webmc:golden_apple': -0.4,
+  'webmc:sugar': -30 / 1200, // -30s
+  'webmc:wheat': -20 / 1200, // -20s
+  'webmc:apple': -60 / 1200, // -1 min
+  'webmc:bread': -60 / 1200,
+  'webmc:hay_block': -180 / 1200, // -3 min
+  'webmc:golden_carrot': -60 / 1200, // -1 min
+  'webmc:golden_apple': -240 / 1200, // -4 min
 };
 
 export function growthReductionOf(item: string): number {

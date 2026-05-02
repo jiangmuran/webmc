@@ -21,9 +21,15 @@ export interface EatResult {
   remove: boolean;
 }
 
-export function eat(c: Cake, eaterHunger: number): EatResult {
+// Wiki (minecraft.wiki/w/Cake#Usage): "Unlike most foods, cake can
+// be eaten with a full hunger bar." Old `if (eaterHunger >= 20)`
+// rejected the bite at max hunger — exactly the case the wiki
+// explicitly carves out, and the only case where the cake's
+// "satisfy hunger without filling slots" feature actually matters.
+// `eaterHunger` is now ignored; kept in the signature for back-compat
+// but flagged unused so callers know it has no effect.
+export function eat(c: Cake, _eaterHunger: number): EatResult {
   if (c.bitesRemaining <= 0) return { ate: false, hunger: 0, saturation: 0, remove: true };
-  if (eaterHunger >= 20) return { ate: false, hunger: 0, saturation: 0, remove: false };
   c.bitesRemaining -= 1;
   return {
     ate: true,

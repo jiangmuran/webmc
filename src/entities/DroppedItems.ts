@@ -5,6 +5,10 @@ export interface DroppedItemData {
   itemId: number;
   count: number;
   color: readonly [number, number, number];
+  // Tool/armor damage. Was missing — dropping a 50% diamond sword and
+  // picking it back up returned a fresh full-durability one. Default 0
+  // (intact) so non-tool items don't have to pass it.
+  damage?: number;
 }
 
 interface DroppedItem {
@@ -28,6 +32,7 @@ const ITEM_SIZE = 0.25;
 export interface PickupOutcome {
   itemId: number;
   count: number;
+  damage?: number;
 }
 
 export class DroppedItemWorld {
@@ -37,9 +42,24 @@ export class DroppedItemWorld {
   private readonly sharedGeom: THREE.BoxGeometry;
   private readonly materialPool = new Map<number, THREE.MeshBasicMaterial>();
   private nextId = 1;
+  private mergeAccumSec = 0;
+  private mergeDirty = false;
+  // Reused per-tick scratch list — was allocated fresh each call.
+  private readonly toRemoveScratch: number[] = [];
+  // Reused PickupOutcome scratch passed to the onPickup callback.
+  // The callback reads itemId/count/damage synchronously into its own
+  // scratch (main's pickupAddArg) and never retains the reference, so
+  // a single shared object is safe and skips one fresh literal per
+  // pickup attempt — meaningful when the player walks through a pile
+  // of dropped items at a mob farm or chest break.
+  private readonly pickupOutScratch: PickupOutcome = { itemId: 0, count: 0 };
 
   constructor() {
     this.group = new THREE.Group();
+    // Group sits at world origin; per-item meshes carry their own
+    // positions. Skip three.js's per-frame group matrix update.
+    this.group.matrixAutoUpdate = false;
+    this.group.updateMatrix();
     this.sharedGeom = new THREE.BoxGeometry(ITEM_SIZE, ITEM_SIZE, ITEM_SIZE);
   }
 
@@ -69,6 +89,7 @@ export class DroppedItemWorld {
       data,
     };
     this.items.set(it.id, it);
+    this.mergeDirty = true;
     const [r, g, b] = data.color;
     const mesh = new THREE.Mesh(this.sharedGeom, this.materialFor(r, g, b));
     mesh.position.set(it.x, it.y, it.z);
@@ -85,15 +106,29 @@ export class DroppedItemWorld {
     mesh.scale.setScalar(scale);
   }
 
+  // onPickup may return leftover count — entity stays (with reduced
+  // count) when leftover > 0. Returning undefined = treat as full pickup.
   tick(
     dtSec: number,
     isSolid: SolidSampler,
     playerPos: { x: number; y: number; z: number },
-    onPickup: (out: PickupOutcome) => void,
+    onPickup: (out: PickupOutcome) => number | undefined,
   ): void {
-    const toRemove: number[] = [];
-    const twoPi = Math.PI * 2;
-    this.mergeNearby();
+    // Skip the entire tick when no items exist. The per-tick scratches
+    // (toRemove + mergeAccumSec) only matter if we do work; otherwise
+    // we'd just clear, no-op iterate, and clear again.
+    if (this.items.size === 0) return;
+    const toRemove = this.toRemoveScratch;
+    toRemove.length = 0;
+    // O(n^2) merge ran every tick — at chest break / mob farm sites this
+    // burned big CPU. Run only on dirty (new spawn) or every 0.5s for
+    // moving-into-each-other items, and only when there are enough items.
+    this.mergeAccumSec += dtSec;
+    if (this.items.size >= 2 && (this.mergeDirty || this.mergeAccumSec >= 0.5)) {
+      this.mergeAccumSec = 0;
+      this.mergeDirty = false;
+      this.mergeNearby();
+    }
     for (const it of this.items.values()) {
       it.ageSec += dtSec;
       it.pickupDelaySec = Math.max(0, it.pickupDelaySec - dtSec);
@@ -120,7 +155,11 @@ export class DroppedItemWorld {
       const mesh = this.meshes.get(it.id);
       if (mesh) {
         mesh.position.set(it.x, it.y + Math.sin(it.ageSec * 2) * 0.08, it.z);
-        mesh.rotation.y = (it.ageSec * 1.2) % twoPi;
+        // ageSec maxes at MAX_LIFETIME_SEC (300s) → max angle 360 rad,
+        // well within float64 precision for cos/sin via three.js Euler →
+        // quaternion conversion. The modulo was a divide per item per
+        // tick; rendering is identical without it.
+        mesh.rotation.y = it.ageSec * 1.2;
       }
 
       if (it.pickupDelaySec === 0) {
@@ -129,17 +168,37 @@ export class DroppedItemWorld {
         const dz = playerPos.z - it.z;
         const distSq = dx * dx + dy * dy + dz * dz;
         if (distSq < 1.6 * 1.6) {
-          const pullSpeed = 7;
+          // Hoist (pullSpeed * dtSec) / len so the three position writes
+          // do one division then three multiplies (vs. three divisions
+          // in the prior `(d / len) * pullSpeed * dtSec` form).
           const len = Math.sqrt(distSq) || 1;
-          const pullX = (dx / len) * pullSpeed * dtSec;
-          const pullY = (dy / len) * pullSpeed * dtSec;
-          const pullZ = (dz / len) * pullSpeed * dtSec;
-          it.x += pullX;
-          it.y += pullY;
-          it.z += pullZ;
+          const pullStep = (7 * dtSec) / len;
+          it.x += dx * pullStep;
+          it.y += dy * pullStep;
+          it.z += dz * pullStep;
           if (distSq < 0.5 * 0.5) {
-            onPickup({ itemId: it.data.itemId, count: it.data.count });
-            toRemove.push(it.id);
+            const out = this.pickupOutScratch;
+            out.itemId = it.data.itemId;
+            out.count = it.data.count;
+            // The callback reads damage with `?? 0`, so passing 0 for
+            // missing damage is observationally identical and keeps the
+            // scratch fields strictly typed as numbers.
+            out.damage = it.data.damage ?? 0;
+            const leftover = onPickup(out);
+            if (leftover === undefined || leftover <= 0) {
+              toRemove.push(it.id);
+            } else if (leftover < it.data.count) {
+              // Partial pickup — keep the entity but lower its count and
+              // re-arm the pickup delay so the player has a chance to
+              // make space before it re-fires.
+              it.data = { ...it.data, count: leftover };
+              this.updateMeshScale(it.id, leftover);
+              it.pickupDelaySec = 1.0;
+            } else {
+              // Inventory full — push the pickup attempt out so we don't
+              // spam onPickup every frame while the player stands here.
+              it.pickupDelaySec = 1.0;
+            }
           }
         }
       }
@@ -165,6 +224,10 @@ export class DroppedItemWorld {
         if (!b) continue;
         if (!this.items.has(b.id)) continue;
         if (a.data.itemId !== b.data.itemId) continue;
+        // Only merge stacks with identical durability — otherwise two
+        // damaged tools would coalesce and the worse one's wear value
+        // would be silently lost.
+        if ((a.data.damage ?? 0) !== (b.data.damage ?? 0)) continue;
         const dx = a.x - b.x;
         const dy = a.y - b.y;
         const dz = a.z - b.z;
@@ -185,19 +248,44 @@ export class DroppedItemWorld {
     return this.items.size;
   }
 
+  // Shared mutable position scratch + iterator wrappers. Was
+  // allocating an Iterable wrapper, an Iterator wrapper, an
+  // IteratorResult, AND a fresh {x,z} value object per iteration.
+  // Callers (minimap) read x/z synchronously before .next(), so the
+  // value object is safe to share. The wrappers are reused too.
+  private readonly positionsIterValue = { x: 0, z: 0 };
+  private readonly positionsIterResult: IteratorResult<{ x: number; z: number }> = {
+    done: false,
+    value: this.positionsIterValue,
+  };
+  private positionsIterMapIter: IterableIterator<DroppedItem> | null = null;
+  private readonly positionsIter: Iterator<{ x: number; z: number }> = {
+    next: (): IteratorResult<{ x: number; z: number }> => {
+      const it = this.positionsIterMapIter;
+      if (!it) {
+        return { done: true, value: undefined };
+      }
+      const n = it.next();
+      if (n.done) {
+        this.positionsIterMapIter = null;
+        return { done: true, value: undefined };
+      }
+      this.positionsIterValue.x = n.value.x;
+      this.positionsIterValue.z = n.value.z;
+      this.positionsIterResult.done = false;
+      this.positionsIterResult.value = this.positionsIterValue;
+      return this.positionsIterResult;
+    },
+  };
+  private readonly positionsIterable: Iterable<{ x: number; z: number }> = {
+    [Symbol.iterator]: (): Iterator<{ x: number; z: number }> => {
+      this.positionsIterMapIter = this.items.values();
+      return this.positionsIter;
+    },
+  };
+
   positions(): Iterable<{ x: number; z: number }> {
-    const vals = this.items.values();
-    return {
-      [Symbol.iterator](): Iterator<{ x: number; z: number }> {
-        return {
-          next(): IteratorResult<{ x: number; z: number }> {
-            const n = vals.next();
-            if (n.done) return { done: true, value: undefined };
-            return { done: false, value: { x: n.value.x, z: n.value.z } };
-          },
-        };
-      },
-    };
+    return this.positionsIterable;
   }
 
   clear(): void {

@@ -52,7 +52,7 @@ describe('sword sweep attack', () => {
       sprinting: false,
       sweepingArea: 1,
     });
-    expect(strong).toBeLessThanOrEqual(plain);
+    expect(strong).toBeGreaterThan(plain);
   });
 
   it('radius 1 block', () => {

@@ -15,7 +15,10 @@ export function pickPotion(ctx: WitchContext): WitchPotion | undefined {
   return undefined;
 }
 
-export const DRINK_DURATION_TICKS = 20;
+// Wiki (minecraft.wiki/w/Witch): drinking a potion takes 32 ticks
+// (1.6 s). Old constant was 20 ticks (1 s), out of sync with the
+// witch_potion_throw module's DRINK_DURATION_MS = 1600.
+export const DRINK_DURATION_TICKS = 32;
 
 export function tickDrink(remainingTicks: number): { done: boolean; remaining: number } {
   const r = Math.max(0, remainingTicks - 1);

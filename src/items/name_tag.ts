@@ -1,12 +1,18 @@
 // Name tag — anvil + name on a paper-like item, used on a mob to give it
 // a permanent name. Named mobs don't despawn and show their name above.
+//
+// Wiki (minecraft.wiki/w/Anvil): "The anvil rename text field accepts up
+// to 50 characters." A renamed name tag carries that string verbatim,
+// so the per-mob name cap matches anvil input. Sibling
+// name_tag_rename.ts already uses 50; the old 40 here truncated names
+// 10 chars shorter than vanilla allows.
 
 export interface NamedMob {
   customName: string | null;
   customNameVisible: boolean;
 }
 
-const MAX_NAME_LEN = 40;
+const MAX_NAME_LEN = 50;
 
 export function renameViaTag(mob: NamedMob, tagName: string | null): boolean {
   if (!tagName || tagName.length === 0) return false;

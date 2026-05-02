@@ -30,7 +30,7 @@ describe('door power open', () => {
     expect(canHandOpen('iron_door')).toBe(false);
   });
 
-  it('copper door needs power', () => {
-    expect(canHandOpen('copper_door')).toBe(false);
+  it('copper door is hand-openable per wiki', () => {
+    expect(canHandOpen('copper_door')).toBe(true);
   });
 });

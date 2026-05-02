@@ -36,6 +36,17 @@ export function makeBreedable(kind: BreedableKind, isAdult = true): BreedableSta
   return { kind, isAdult, loveModeSec: 0, breedCooldownSec: 0, ageSec: isAdult ? 1200 : 0 };
 }
 
+// Wiki (minecraft.wiki/w/Breeding) per-mob food lists.
+//   - Chicken: any of 6 seeds incl. torchflower_seeds + pitcher_pod
+//     (1.20 added the latter two; old set only had the original 4).
+//   - Wolf: any meat (raw or cooked) EXCEPT fish, plus rabbit_stew
+//     and rotten_flesh — 11 items total, NOT only the 3 cooked
+//     variants. Old set excluded raw meats and the rotten/stew
+//     entries the wiki explicitly calls out.
+//   - Bee: any flower; expanded from 4 to the canonical wiki list
+//     (small + tall flowers, flowering_azalea, torchflower, wither
+//     rose, pitcher plant). Bees still gather from these whether or
+//     not they're being bred.
 const BREED_ITEMS: Record<BreedableKind, readonly string[]> = {
   cow: ['webmc:wheat'],
   pig: ['webmc:carrot', 'webmc:potato', 'webmc:beetroot'],
@@ -45,17 +56,56 @@ const BREED_ITEMS: Record<BreedableKind, readonly string[]> = {
     'webmc:melon_seeds',
     'webmc:pumpkin_seeds',
     'webmc:beetroot_seeds',
+    'webmc:torchflower_seeds',
+    'webmc:pitcher_pod',
   ],
-  wolf: ['webmc:cooked_beef', 'webmc:cooked_chicken', 'webmc:cooked_mutton'],
-  cat: ['webmc:raw_fish', 'webmc:raw_salmon'],
+  wolf: [
+    'webmc:chicken',
+    'webmc:cooked_chicken',
+    'webmc:beef',
+    'webmc:cooked_beef',
+    'webmc:porkchop',
+    'webmc:cooked_porkchop',
+    'webmc:mutton',
+    'webmc:cooked_mutton',
+    'webmc:rabbit',
+    'webmc:cooked_rabbit',
+    'webmc:rabbit_stew',
+    'webmc:rotten_flesh',
+  ],
+  // Wiki (minecraft.wiki/w/Cat + /w/Ocelot): tamed/bred with raw cod
+  // and raw salmon. Project canonical (smelting.ts) uses
+  // `webmc:cod` / `webmc:salmon` (not the pre-1.13 `raw_fish`).
+  cat: ['webmc:cod', 'webmc:salmon'],
   horse: ['webmc:golden_apple', 'webmc:golden_carrot'],
   donkey: ['webmc:golden_apple', 'webmc:golden_carrot'],
   rabbit: ['webmc:dandelion', 'webmc:carrot', 'webmc:golden_carrot'],
   fox: ['webmc:sweet_berries', 'webmc:glow_berries'],
   panda: ['webmc:bamboo'],
   turtle: ['webmc:seagrass'],
-  bee: ['webmc:dandelion', 'webmc:poppy', 'webmc:blue_orchid', 'webmc:allium'],
-  ocelot: ['webmc:raw_fish', 'webmc:raw_salmon'],
+  bee: [
+    'webmc:dandelion',
+    'webmc:poppy',
+    'webmc:blue_orchid',
+    'webmc:allium',
+    'webmc:azure_bluet',
+    'webmc:red_tulip',
+    'webmc:orange_tulip',
+    'webmc:white_tulip',
+    'webmc:pink_tulip',
+    'webmc:oxeye_daisy',
+    'webmc:cornflower',
+    'webmc:lily_of_the_valley',
+    'webmc:wither_rose',
+    'webmc:torchflower',
+    'webmc:sunflower',
+    'webmc:lilac',
+    'webmc:rose_bush',
+    'webmc:peony',
+    'webmc:pitcher_plant',
+    'webmc:flowering_azalea',
+  ],
+  ocelot: ['webmc:cod', 'webmc:salmon'],
   hoglin: ['webmc:crimson_fungus'],
   strider: ['webmc:warped_fungus'],
   axolotl: ['webmc:tropical_fish_bucket'],

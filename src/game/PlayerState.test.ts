@@ -18,14 +18,21 @@ describe('PlayerState', () => {
     expect(p.isDead).toBe(false);
   });
 
-  it('takeDamage reduces health and triggers respawn at zero', () => {
+  it('takeDamage reduces health and flags death at zero (caller respawns)', () => {
     const p = build();
     p.takeDamage({ amount: 5 });
     expect(p.health).toBe(15);
     // Rapid hits are blocked by MC-style i-frames; wait out.
     p.hitImmuneSec = 0;
     p.takeDamage({ amount: 100 });
-    // Lethal damage immediately triggers respawn → back to full HP.
+    // takeDamage no longer auto-respawns — it just flags justDied so the
+    // caller (main.ts) can run totem-of-undying / drop logic before
+    // resetting state.
+    expect(p.health).toBe(0);
+    expect(p.justDied).toBe(true);
+    expect(p.isDead).toBe(true);
+    // Caller-driven respawn restores everything.
+    p.respawn();
     expect(p.health).toBe(MAX_HEALTH);
     expect(p.isDead).toBe(false);
   });
@@ -126,8 +133,10 @@ describe('PlayerState', () => {
 
   it('poison damages down to 1 HP but not below', () => {
     const p = build();
-    p.hunger = 0;
-    p.saturation = 0;
+    // Keep saturation positive so starvation doesn't compound — poison alone
+    // is what we're testing, and poison stops at 1 HP per vanilla rules.
+    p.hunger = 20;
+    p.saturation = 20;
     p.applyEffect('poison', 2, 10);
     for (let i = 0; i < 50; i++) p.tick(0.5);
     expect(p.health).toBeGreaterThanOrEqual(1);
@@ -150,5 +159,33 @@ describe('PlayerState', () => {
     p.respawn();
     expect(p.xpLevel).toBe(0);
     expect(p.effects.size).toBe(0);
+  });
+
+  it('drainHunger=false keeps hunger and breath full (creative parity)', () => {
+    const p = build();
+    p.hunger = 20;
+    p.saturation = 5;
+    p.sprinting = true;
+    for (let i = 0; i < 60; i++) p.tick(1, { drainHunger: false });
+    expect(p.hunger).toBe(20);
+    expect(p.saturation).toBe(5);
+    p.breath = 5;
+    for (let i = 0; i < 30; i++) p.tick(1, { inFluid: 'water', drainHunger: false });
+    expect(p.breath).toBe(15);
+    expect(p.health).toBe(20);
+  });
+
+  it('wither effect ticks past i-frames', () => {
+    const p = build();
+    p.hunger = 20;
+    p.saturation = 20;
+    // Simulate fresh hit-immunity from a zombie strike.
+    p.takeDamage({ amount: 1, source: 'mob' });
+    expect(p.hitImmuneSec).toBeGreaterThan(0);
+    const before = p.health;
+    p.applyEffect('wither', 1, 10);
+    p.tick(0.1);
+    // Wither should have actually applied damage despite i-frames.
+    expect(p.health).toBeLessThan(before);
   });
 });

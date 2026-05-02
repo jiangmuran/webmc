@@ -32,14 +32,20 @@ export function placeTorch(variant: TorchVariant, q: TorchPlaceQuery): TorchPlac
 }
 
 // Torches extinguish when their support is removed, dropping the torch
-// item. Soul torches are also extinguished by water contact; regular
-// torches break on water contact (no drop).
+// item.
+//
+// Wiki (minecraft.wiki/w/Torch / minecraft.wiki/w/Soul_Torch): "Torches
+// (and soul torches) are destroyed by water with no item drop." Old
+// onWaterContact had soul_torch drop=true and regular=false — inverted
+// for soul torches; both should be destroyed without drop.
 export function onSupportRemoved(variant: TorchVariant): { item: string; count: number }[] {
   return [{ item: `webmc:${variant}`, count: 1 }];
 }
 
-export function onWaterContact(variant: TorchVariant): { extinguished: boolean; dropped: boolean } {
-  if (variant === 'soul_torch') return { extinguished: true, dropped: true };
+export function onWaterContact(_variant: TorchVariant): {
+  extinguished: boolean;
+  dropped: boolean;
+} {
   return { extinguished: true, dropped: false };
 }
 

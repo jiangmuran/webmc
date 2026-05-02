@@ -32,15 +32,40 @@ export function canEat(id: string, playerHungerPct: number): boolean {
   return s.alwaysEdible || playerHungerPct < 1;
 }
 
+// Wiki references:
+//   minecraft.wiki/w/Golden_Apple — Regen II 5s, Absorption I 2 min
+//   minecraft.wiki/w/Enchanted_Golden_Apple — Regen II 20s,
+//     Absorption IV 2 min, Resistance I 5 min, Fire Resistance I 5 min
+//   minecraft.wiki/w/Rotten_Flesh — Hunger 30s, 80% chance (chance is
+//     applied at call site)
+//   minecraft.wiki/w/Spider_Eye — Poison 5s
+//   minecraft.wiki/w/Pufferfish — eating raw inflicts Hunger III for
+//     15s (300 ticks, amp 2), Poison II for 60s (1200 ticks, amp 1),
+//     Nausea for 15s (300 ticks, amp 0). Old code returned no
+//     effects for pufferfish — players could eat raw pufferfish for
+//     free hunger restore, missing the wiki's signature triple-debuff.
 export function postEatEffects(
   id: string,
 ): { id: string; durationTicks: number; amplifier: number }[] {
   if (id === 'rotten_flesh') return [{ id: 'hunger', durationTicks: 600, amplifier: 0 }];
   if (id === 'spider_eye') return [{ id: 'poison', durationTicks: 100, amplifier: 0 }];
+  if (id === 'pufferfish')
+    return [
+      { id: 'hunger', durationTicks: 300, amplifier: 2 },
+      { id: 'poison', durationTicks: 1200, amplifier: 1 },
+      { id: 'nausea', durationTicks: 300, amplifier: 0 },
+    ];
   if (id === 'golden_apple')
     return [
       { id: 'regeneration', durationTicks: 100, amplifier: 1 },
       { id: 'absorption', durationTicks: 2400, amplifier: 0 },
+    ];
+  if (id === 'enchanted_golden_apple')
+    return [
+      { id: 'regeneration', durationTicks: 400, amplifier: 1 },
+      { id: 'absorption', durationTicks: 2400, amplifier: 3 },
+      { id: 'resistance', durationTicks: 6000, amplifier: 0 },
+      { id: 'fire_resistance', durationTicks: 6000, amplifier: 0 },
     ];
   return [];
 }

@@ -47,7 +47,18 @@ describe('totem', () => {
     expect(r.newHp).toBe(0);
   });
 
-  it('applies 3 effects', () => {
+  it('off-hand consumed first when both hold totems (wiki)', () => {
+    const r = tryTotem({
+      mainhand: 'webmc:totem_of_undying',
+      offhand: 'webmc:totem_of_undying',
+      incomingDamage: 100,
+      currentHp: 5,
+    });
+    expect(r.saved).toBe(true);
+    expect(r.consumedFromMain).toBe(false);
+  });
+
+  it('applies 3 effects with wiki durations (regen 45s, fire 40s, abs 5s)', () => {
     const r = tryTotem({
       mainhand: 'webmc:totem_of_undying',
       offhand: null,
@@ -55,5 +66,11 @@ describe('totem', () => {
       currentHp: 5,
     });
     expect(r.effects.length).toBe(3);
+    const regen = r.effects.find((e) => e.id === 'regeneration');
+    const abs = r.effects.find((e) => e.id === 'absorption');
+    const fire = r.effects.find((e) => e.id === 'fire_resistance');
+    expect(regen?.durationTicks).toBe(900); // 45s
+    expect(abs?.durationTicks).toBe(100); // 5s
+    expect(fire?.durationTicks).toBe(800); // 40s
   });
 });

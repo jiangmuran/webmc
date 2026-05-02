@@ -57,4 +57,34 @@ describe('iron golem', () => {
     const healed = feedIronIngot(g);
     expect(healed).toBe(25);
   });
+
+  it('damage scales by difficulty per wiki', () => {
+    // minecraft.wiki/w/Iron_Golem damage table:
+    //   Easy   4.75–11.75  → midpoint 8.25
+    //   Normal 7.5 –21.5   → midpoint 14.5
+    //   Hard   11.25–32.25 → midpoint 21.75
+    const ge = makeIronGolem(1, { x: 0, y: 0, z: 0 });
+    const re = tryAttack(ge, {
+      target: { id: 2, position: { x: 1, y: 0, z: 0 } },
+      rng: () => 0.5,
+      difficulty: 'easy',
+    });
+    expect(re.damage).toBeCloseTo(8.25, 2);
+
+    const gn = makeIronGolem(1, { x: 0, y: 0, z: 0 });
+    const rn = tryAttack(gn, {
+      target: { id: 2, position: { x: 1, y: 0, z: 0 } },
+      rng: () => 0.5,
+      difficulty: 'normal',
+    });
+    expect(rn.damage).toBeCloseTo(14.5, 2);
+
+    const gh = makeIronGolem(1, { x: 0, y: 0, z: 0 });
+    const rh = tryAttack(gh, {
+      target: { id: 2, position: { x: 1, y: 0, z: 0 } },
+      rng: () => 0.5,
+      difficulty: 'hard',
+    });
+    expect(rh.damage).toBeCloseTo(21.75, 2);
+  });
 });

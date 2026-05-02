@@ -7,6 +7,12 @@ describe('sniffer digging', () => {
     expect(isSniffable('webmc:stone')).toBe(false);
   });
 
+  it('mycelium is NOT sniffable per wiki (MC-260259 WAI)', () => {
+    // Wiki minecraft.wiki/w/Sniffer: "Sniffers cannot dig on
+    // mycelium." Bug report MC-260259 marked WAI.
+    expect(isSniffable('webmc:mycelium')).toBe(false);
+  });
+
   it('wandering → sniffing when on diggable', () => {
     const s = makeSnifferDig();
     const r = tickSnifferDig(

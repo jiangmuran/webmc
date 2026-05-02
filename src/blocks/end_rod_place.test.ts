@@ -24,9 +24,10 @@ describe('end rod place', () => {
     );
   });
 
-  it('craft requires 4 popped chorus + 1 blaze', () => {
-    expect(craftEndRod({ poppedChorusFruit: 4, blazeRod: 1 })?.count).toBe(4);
-    expect(craftEndRod({ poppedChorusFruit: 3, blazeRod: 1 })).toBeNull();
-    expect(craftEndRod({ poppedChorusFruit: 4, blazeRod: 0 })).toBeNull();
+  it('craft 1 popped chorus + 1 blaze → 4 rods (wiki)', () => {
+    // Wiki: 1 Blaze Rod + 1 Popped Chorus Fruit → 4 End Rods
+    expect(craftEndRod({ poppedChorusFruit: 1, blazeRod: 1 })?.count).toBe(4);
+    expect(craftEndRod({ poppedChorusFruit: 0, blazeRod: 1 })).toBeNull();
+    expect(craftEndRod({ poppedChorusFruit: 1, blazeRod: 0 })).toBeNull();
   });
 });

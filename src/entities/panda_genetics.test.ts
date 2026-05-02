@@ -11,8 +11,9 @@ describe('panda genetics', () => {
     expect(visiblePersonality('aggressive', 'normal')).toBe('aggressive');
   });
 
-  it('recessive-only dominant yields recessive side if dominant', () => {
-    expect(visiblePersonality('brown', 'aggressive')).toBe('aggressive');
+  it('heterozygous recessive falls back to normal (wiki)', () => {
+    expect(visiblePersonality('brown', 'aggressive')).toBe('normal');
+    expect(visiblePersonality('weak', 'lazy')).toBe('normal');
   });
 
   it('breed inherits one gene from each', () => {

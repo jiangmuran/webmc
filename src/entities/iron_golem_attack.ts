@@ -1,7 +1,22 @@
 // Iron golem combat. Protects villagers; attacks hostile mobs in a 16-
-// block radius with a swinging arm that launches targets up 0.4 + random
-// (0, 0.4). Damage range: 7.5–21.5 HP depending on the golem's attack
-// attribute.
+// block radius with a swinging arm that launches targets up
+// 0.4 + random(0, 0.4).
+//
+// Wiki (minecraft.wiki/w/Iron_Golem) damage by difficulty:
+//   Easy: 4.75–11.75
+//   Normal: 7.5–21.5
+//   Hard: 11.25–32.25
+// Old `7.5 + rng()*14` was Normal-only; on Easy a golem hit ~50% too
+// hard, on Hard ~50% too soft. `difficulty` is optional on the ctx
+// (default 'normal') for caller compatibility.
+
+export type Difficulty = 'easy' | 'normal' | 'hard';
+
+const DAMAGE_RANGE: Record<Difficulty, { min: number; max: number }> = {
+  easy: { min: 4.75, max: 11.75 },
+  normal: { min: 7.5, max: 21.5 },
+  hard: { min: 11.25, max: 32.25 },
+};
 
 export interface Vec3 {
   x: number;
@@ -35,6 +50,7 @@ export const GOLEM_DETECT_RADIUS = 16;
 export interface GolemAttackCtx {
   target: { id: number; position: Vec3 } | null;
   rng: () => number;
+  difficulty?: Difficulty;
 }
 
 export interface GolemAttackResult {
@@ -55,7 +71,8 @@ export function tryAttack(state: GolemState, ctx: GolemAttackCtx): GolemAttackRe
   const dist = Math.hypot(dx, dy, dz);
   if (dist > 2.5) return { hit: false, damage: 0, launchY: 0 };
   state.attackCooldownTicks = ATTACK_COOLDOWN_TICKS;
-  const damage = 7.5 + ctx.rng() * 14;
+  const range = DAMAGE_RANGE[ctx.difficulty ?? 'normal'];
+  const damage = range.min + ctx.rng() * (range.max - range.min);
   const launchY = 0.4 + ctx.rng() * 0.4;
   return { hit: true, damage, launchY };
 }

@@ -33,4 +33,19 @@ describe('dispenser armor equip', () => {
       kind: 'ejected_item',
     });
   });
+
+  it('equips mob heads + carved pumpkin in helmet slot (wiki)', () => {
+    // Wiki (minecraft.wiki/w/Dispenser): "Mob heads, skulls, and
+    // carved pumpkins / jack o'lanterns can be equipped in the
+    // helmet slot by a dispenser."
+    expect(slotOf('creeper_head')).toBe('helmet');
+    expect(slotOf('skeleton_skull')).toBe('helmet');
+    expect(slotOf('wither_skeleton_skull')).toBe('helmet');
+    expect(slotOf('zombie_head')).toBe('helmet');
+    expect(slotOf('player_head')).toBe('helmet');
+    expect(slotOf('dragon_head')).toBe('helmet');
+    expect(slotOf('piglin_head')).toBe('helmet');
+    expect(slotOf('carved_pumpkin')).toBe('helmet');
+    expect(slotOf('jack_o_lantern')).toBe('helmet');
+  });
 });

@@ -13,17 +13,18 @@ describe('cocoa', () => {
     expect(randomTick(c, { rand: () => 0, jungleLogAttached: false })).toBe('fell_off');
   });
 
-  it('mature gives 2-3 beans', () => {
+  it('mature drops exactly 3 beans (wiki)', () => {
     const c = makeCocoa('north');
     c.stage = 2;
-    const n = beansOnBreak(c, 0, () => 0);
-    expect([2, 3]).toContain(n);
+    expect(beansOnBreak(c, 0, () => 0)).toBe(3);
+    expect(beansOnBreak(c, 0, () => 0.99)).toBe(3);
   });
 
-  it('fortune increases', () => {
+  it('Fortune does not increase yield (wiki)', () => {
     const c = makeCocoa('north');
     c.stage = 2;
-    expect(beansOnBreak(c, 3, () => 0)).toBeGreaterThan(beansOnBreak(c, 0, () => 0));
+    expect(beansOnBreak(c, 3, () => 0)).toBe(3);
+    expect(beansOnBreak(c, 3, () => 0.99)).toBe(3);
   });
 
   it('bone meal advances', () => {

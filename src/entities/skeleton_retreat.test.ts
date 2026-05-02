@@ -22,10 +22,12 @@ describe('skeleton retreat', () => {
     expect(planMove(s, { distance: 30, losBlocked: true, nowMs: 0 })).toBe('close');
   });
 
-  it('bow drop chance', () => {
-    const low = dropBowChance({ lootingLevel: 0, rand: () => 0.99 });
-    const high = dropBowChance({ lootingLevel: 3, rand: () => 0.01 });
-    expect(high).toBe(true);
-    expect(low).toBe(false);
+  it('bow drop chance scales 8.5% + 1%/level (wiki)', () => {
+    // Looting III: 8.5 + 3 = 11.5%
+    expect(dropBowChance({ lootingLevel: 3, rand: () => 0.114 })).toBe(true);
+    expect(dropBowChance({ lootingLevel: 3, rand: () => 0.116 })).toBe(false);
+    // No looting: 8.5%
+    expect(dropBowChance({ lootingLevel: 0, rand: () => 0.084 })).toBe(true);
+    expect(dropBowChance({ lootingLevel: 0, rand: () => 0.086 })).toBe(false);
   });
 });

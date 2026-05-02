@@ -1,7 +1,9 @@
-// Creaking (Pale Garden, 1.21.4). Hostile mob spawned by the Creaking Heart
-// block; can only move when no player has line-of-sight; damaging the mob
-// is reflected as damage to the heart block (~80 blocks away). The Creaking
-// de-spawns if its heart is destroyed.
+// Creaking (Pale Garden, 1.21.4). Hostile mob spawned by the Creaking
+// Heart block; can only move when no player has line-of-sight; damaging
+// the mob is reflected as damage to the heart block. The link range is
+// 32 blocks (not 80) per minecraft.wiki/w/Creaking — beyond 32 blocks
+// the creaking teleports back to its heart. The Creaking despawns if
+// its heart is destroyed.
 
 export interface Vec3 {
   x: number;

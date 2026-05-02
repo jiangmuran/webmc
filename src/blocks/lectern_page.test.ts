@@ -32,4 +32,10 @@ describe('lectern', () => {
     const l = makeLectern();
     expect(comparatorOutput(l)).toBe(0);
   });
+
+  it('1-page book outputs 15 (wiki: only page = last page)', () => {
+    const l = makeLectern();
+    placeBook(l, 1);
+    expect(comparatorOutput(l)).toBe(15);
+  });
 });

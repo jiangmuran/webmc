@@ -49,9 +49,15 @@ export function tickSnowball(state: Snowball, ctx: SnowballTickCtx): SnowballRes
   return { impacted: false, expired: state.ageSec >= LIFETIME_SEC };
 }
 
+// Wiki (minecraft.wiki/w/Snowball): "Snowballs deal 3 damage to
+// blazes ... 0 damage to other mobs (besides knockback)."
+// Endermen are immune to projectiles — a snowball triggers their
+// teleport-away response but deals 0 damage. Old code returned 2
+// for enderman ('deflected — counts as hurt'); that's not in the
+// wiki and conflicts with sibling snowball_impact.ts which returns
+// 0 for everything but blaze.
 export function damageOnHit(victimKind: string): number {
   if (victimKind === 'blaze') return 3;
-  if (victimKind === 'enderman') return 2; // deflected — counts as hurt
   return 0;
 }
 

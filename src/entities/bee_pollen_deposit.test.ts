@@ -3,6 +3,7 @@ import {
   shouldReturnHive,
   growsCropBelow,
   incrementHoneyLevel,
+  POLLEN_FERTILIZE_CHANCE,
   type BeeState,
 } from './bee_pollen_deposit';
 
@@ -31,6 +32,13 @@ describe('bee pollen', () => {
 
   it('crop growth chance', () => {
     expect(growsCropBelow(true, { ...base, pollenLoaded: true }, () => 0.001)).toBe(true);
+  });
+
+  it('crop growth chance is wiki ~5% per tick (not stub 1/30)', () => {
+    expect(POLLEN_FERTILIZE_CHANCE).toBe(0.05);
+    // boundary: 0.04999 < 0.05 → true; 0.05 NOT < 0.05 → false
+    expect(growsCropBelow(true, { ...base, pollenLoaded: true }, () => 0.04999)).toBe(true);
+    expect(growsCropBelow(true, { ...base, pollenLoaded: true }, () => 0.05)).toBe(false);
   });
 
   it('honey level increments', () => {

@@ -31,9 +31,18 @@ export function randomTick(q: CropQuery): 'grew' | 'stays' {
   return 'stays';
 }
 
-// Bone meal advance (beetroot random 0-1, wheat/carrot/potato 2-5).
+// Bone meal advance.
+//
+// Wiki (minecraft.wiki/w/Beetroot_Seeds): "One application of bone
+// meal has a 75% chance of advancing growth by one stage."
+// Old `Math.floor(rand() * 2)` gave 0 or 1 with 50/50 probability —
+// 25 percentage points under the wiki canon for the +1 case (would
+// take ~6.4 bone meals on average to fully grow vs the wiki's 5⅓).
+//
+// Wheat/carrot/potato/melon/pumpkin: wiki says 2-5 stages per
+// application (uniform). Nether wart: not affected by bone meal.
 export function boneMealSteps(crop: CropQuery['crop'], rand: () => number): number {
-  if (crop === 'beetroot') return Math.floor(rand() * 2);
-  if (crop === 'nether_wart') return 0; // nether wart ignores bone meal
+  if (crop === 'beetroot') return rand() < 0.75 ? 1 : 0;
+  if (crop === 'nether_wart') return 0;
   return 2 + Math.floor(rand() * 4);
 }

@@ -12,12 +12,13 @@ export function returnsToOriginDirection(deflected: boolean): boolean {
   return deflected;
 }
 
-export const GHAST_SHOOT_INTERVAL_MIN = 40;
-export const GHAST_SHOOT_INTERVAL_MAX = 60;
+// Wiki (minecraft.wiki/w/Ghast#Behavior): "When within range, a ghast
+// faces the player and shoots a fireball every 3 seconds" — exactly
+// 3 s = 60 ticks, not a 2-3 s random range. Sibling ghast_behavior.ts
+// uses 3000 ms; this module keeps the rng signature for caller
+// compatibility but returns a flat 60.
+export const GHAST_SHOOT_INTERVAL_TICKS = 60;
 
-export function shootInterval(rng: () => number): number {
-  return (
-    GHAST_SHOOT_INTERVAL_MIN +
-    Math.floor(rng() * (GHAST_SHOOT_INTERVAL_MAX - GHAST_SHOOT_INTERVAL_MIN))
-  );
+export function shootInterval(_rng: () => number): number {
+  return GHAST_SHOOT_INTERVAL_TICKS;
 }

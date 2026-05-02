@@ -14,7 +14,12 @@ export function hoglinAvoidsWarpedFungus(): boolean {
   return true;
 }
 
-export const HOGLIN_ZOMBIFY_TICKS = 300; // 15s
+// Wiki (minecraft.wiki/w/Hoglin#Zombification): "Hoglins in the
+// Overworld or End shake and convert into zoglins after 15 seconds
+// (300 game ticks)." A previous fix mistakenly inflated this to
+// 6000 ticks (5 minutes) — 20× too long. Sibling hoglin_zoglin.ts
+// uses the correct 15 s.
+export const HOGLIN_ZOMBIFY_TICKS = 300;
 
 export interface OverworldTickResult {
   zombified: boolean;

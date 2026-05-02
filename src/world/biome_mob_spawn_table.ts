@@ -166,9 +166,14 @@ const BIOMES: Record<string, BiomeCategoryPool> = {
   mushroom_fields: {
     creature: [{ mob: 'mooshroom', weight: 8, minGroup: 4, maxGroup: 8 }],
   },
-  deep_dark: {
-    monster: [{ mob: 'warden', weight: 1, minGroup: 1, maxGroup: 1 }],
-  },
+  // Wiki (minecraft.wiki/w/Deep_Dark): "No regular mob spawning occurs
+  // in this biome." Warden is summoned only from a triggered sculk
+  // shrieker, never via the natural biome spawn table. Other mobs
+  // (silverfish, zombies, etc.) come from monster rooms — not from
+  // biome spawn pools. Old listing of warden weight 1 here would let
+  // the natural spawner pick warden anywhere in a deep_dark chunk,
+  // bypassing the wiki-required shrieker trigger.
+  deep_dark: {},
   river: {
     water_creature: [{ mob: 'salmon', weight: 5, minGroup: 1, maxGroup: 5 }],
   },

@@ -40,8 +40,14 @@ describe('fishing luck', () => {
     expect(rollWaitSec({ lure: 3, rng: () => 0 })).toBeGreaterThanOrEqual(1);
   });
 
-  it('treasure pool picks', () => {
-    expect(pickTreasureItem(0.01)).toBe('webmc:enchanted_book');
-    expect(pickTreasureItem(0.99)).toBe('webmc:lily_pad');
+  it('treasure pool picks 6 wiki items, lily_pad is junk not treasure', () => {
+    // First slot in pool
+    expect(pickTreasureItem(0.01)).toBe('webmc:enchanted_bow');
+    // Last slot
+    expect(pickTreasureItem(0.99)).toBe('webmc:saddle');
+    // No lily_pad anywhere in the treasure pool
+    const allRolls: string[] = [];
+    for (let i = 0; i < 100; i++) allRolls.push(pickTreasureItem(i / 100));
+    expect(allRolls).not.toContain('webmc:lily_pad');
   });
 });

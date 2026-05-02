@@ -1,6 +1,11 @@
-// Blaze fireball. Shoots 3 small fireballs per volley, 5 volleys
-// per attack. 20-tick pause between shots, ~60-tick pause between
-// attacks.
+// Blaze fireball. Wiki (minecraft.wiki/w/Blaze): "shoots 3 small
+// fireballs over the course of 0.9 seconds, then extinguishes its
+// flames and waits for 5 seconds before attacking again." So a
+// single trio per attack, ~0.3 s between shots (matching siblings
+// blaze_fireball.ts and blaze_fireball_bursts.ts), 5 s cooldown.
+// Old values (5 volleys/attack, 1000 ms inter-shot, 3000 ms
+// cooldown) were ~5× the rate of fireballs and inconsistent with
+// both other blaze modules.
 
 export interface BlazeAttack {
   volleysFiredThisAttack: number;
@@ -10,9 +15,9 @@ export interface BlazeAttack {
 }
 
 export const SHOTS_PER_VOLLEY = 3;
-export const VOLLEYS_PER_ATTACK = 5;
-export const SHOT_INTERVAL_MS = 1000;
-export const ATTACK_COOLDOWN_MS = 3000;
+export const VOLLEYS_PER_ATTACK = 1;
+export const SHOT_INTERVAL_MS = 300;
+export const ATTACK_COOLDOWN_MS = 5000;
 
 export function makeBlaze(): BlazeAttack {
   return {

@@ -9,8 +9,12 @@ import {
 } from './jukebox';
 
 describe('jukebox', () => {
-  it('has 15 music discs', () => {
-    expect(Object.keys(MUSIC_DISCS).length).toBe(15);
+  it('has all canonical discs (13 + 14 newer + relic)', () => {
+    // Original 15 comparator-distinct discs (13 → cat → … → 5)
+    // plus the Relic addition that reuses signal 14.
+    expect(Object.keys(MUSIC_DISCS).length).toBeGreaterThanOrEqual(15);
+    expect(MUSIC_DISCS.thirteen?.comparatorValue).toBe(1);
+    expect(MUSIC_DISCS.five?.comparatorValue).toBe(15);
   });
 
   it('insert + eject cycles the disc', () => {
@@ -30,9 +34,9 @@ describe('jukebox', () => {
 
   it('tickJukebox advances playback and signals done', () => {
     const j = makeJukebox();
-    insertDisc(j, 'five'); // 36s
+    insertDisc(j, 'five'); // 178s per minecraft.wiki/w/Music_Disc_5
     let finished = false;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
       if (tickJukebox(j, 1)) finished = true;
     }
     expect(finished).toBe(true);
@@ -43,5 +47,15 @@ describe('jukebox', () => {
     expect(comparatorOutput(j)).toBe(0);
     insertDisc(j, 'five');
     expect(comparatorOutput(j)).toBe(15);
+  });
+
+  it('modern discs (creator/precipice/lava chicken/tears/and action)', () => {
+    // Wiki per-disc pages: comparator values reuse older disc values.
+    expect(MUSIC_DISCS.creator?.comparatorValue).toBe(12);
+    expect(MUSIC_DISCS.creator_music_box?.comparatorValue).toBe(11);
+    expect(MUSIC_DISCS.precipice?.comparatorValue).toBe(13);
+    expect(MUSIC_DISCS.lava_chicken?.comparatorValue).toBe(9);
+    expect(MUSIC_DISCS.tears?.comparatorValue).toBe(10);
+    expect(MUSIC_DISCS.and_action?.comparatorValue).toBe(15);
   });
 });

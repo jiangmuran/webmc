@@ -6,10 +6,13 @@ describe('tnt', () => {
     expect(primeTnt('flint_and_steel', false).fuseTicks).toBe(FUSE_TICKS);
   });
 
-  it('chained explosion prime shorter', () => {
-    const t = primeTnt('explosion', false);
-    expect(t.fuseTicks).toBeGreaterThanOrEqual(10);
-    expect(t.fuseTicks).toBeLessThan(31);
+  it('chained explosion prime shorter (10..30 ticks per wiki)', () => {
+    // Wiki (minecraft.wiki/w/TNT): "If TNT is ignited by another
+    // explosion, the fuse is randomized between 10 and 30 ticks."
+    // Sample low and high RNG to verify span.
+    expect(primeTnt('explosion', false, () => 0).fuseTicks).toBe(10);
+    expect(primeTnt('explosion', false, () => 0.999).fuseTicks).toBe(30);
+    expect(primeTnt('explosion', false, () => 0.5).fuseTicks).toBe(20);
   });
 
   it('tick down to explode', () => {
